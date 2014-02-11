@@ -24,6 +24,11 @@
 *.rar
 *.tar
 *.zip
+*.opensdf
+*.sdf
+*.sln
+*.vcxproj
+*.vcxproj.filters
 
 # Logs and databases #
 ######################

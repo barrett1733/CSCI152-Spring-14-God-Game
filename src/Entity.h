@@ -7,7 +7,8 @@
 
 #include "Position.h"
 #include "Task.h"
-#include "Possession.h"
+#include "Position.h"
+#include <string>
 
 enum EntityType {
 	ET_NONE = 0x00,
@@ -40,7 +41,7 @@ enum EntityType {
 class Entity
 {
 public:
-	string name;
+	std::string name;
 	Position position;
 	int health;
 	EntityType type;
