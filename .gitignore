@@ -1,21 +1,23 @@
-# Compiled Object files
+# Compiled Object files #
+#########################
 *.slo
 *.lo
 *.o
+*.out
 
-# Compiled Dynamic libraries
+# Compiled Dynamic libraries #
+##############################
 *.so
 *.dylib
 
-# Compiled Static libraries
+# Compiled Static libraries #
+#############################
 *.lai
 *.la
 *.a
 
 # Packages #
 ############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
 *.7z
 *.dmg
 *.gz
@@ -24,11 +26,7 @@
 *.rar
 *.tar
 *.zip
-*.opensdf
-*.sdf
-*.sln
-*.vcxproj
-*.vcxproj.filters
+*.pdf
 
 # Logs and databases #
 ######################
@@ -51,9 +49,16 @@ Thumbs.db
 ###########################
 .idea
 
+# Visual C++ files #
+####################
+*.opensdf
+*.sdf
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
 # Utility files #
 #################
 .ssh
-tomcat
 *.orig
 ~*
