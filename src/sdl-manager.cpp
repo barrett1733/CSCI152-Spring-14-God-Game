@@ -117,19 +117,21 @@ SDL_Surface * SdlManager::createSurface(int width, int height)
 
 ////////
 
-SDL_Surface * SdlManager::createText(const char * text)
+SDL_Surface * SdlManager::createTextSurface(const char * text)
 {
 	SDL_Color textColor = {0,0,0};
-	return TTF_RenderText_Solid( font, text, textColor);
+	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
+	return surface;
 }
 
-void SdlManager::renderText(const char * text, int xPos, int yPos)
+TextWidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yPos)
 {
-	SDL_Surface * textSurface = createText(text);
-	SDL_Texture * my_text = SDL_CreateTextureFromSurface( renderer, textSurface);
-	SDL_Rect textBox = {xPos, yPos, textSurface->w, textSurface->h};
-	SDL_FreeSurface(textSurface);
-	SDL_RenderCopy( renderer, my_text, NULL, &textBox );
+	SDL_Surface * surface = createTextSurface(text);
+	SDL_Rect rect = {xPos, yPos, surface->w, surface->h};
+
+	SdlTextWidget * textWidget = new SdlTextWidget(surface, rect);
+	widgetList.push_back(textWidget);
+	return textWidget;
 }
 
 ////////
@@ -197,7 +199,7 @@ ButtonReference SdlManager::createButton(void (*callback)(), SDL_Surface * backg
 		SDL_FreeSurface(buttonFill);
 	}
 
-	SDL_Surface * textSurface = createText(labelText);
+	SDL_Surface * textSurface = createTextSurface(labelText);
 
 	rect = {(width - textSurface->w)/2, (height - textSurface->h)/2, width, height };
 	if(rect.x < 8) rect.x = 8;

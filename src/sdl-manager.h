@@ -43,8 +43,8 @@ public:
 	SDL_Surface * createSurface(int width, int height);
 
 	// Text functions
-	SDL_Surface * createText(const char * text);
-	void renderText(const char * text, int xPos, int yPos);
+	SDL_Surface * createTextSurface(const char * text);
+	TextWidgetReference createTextWidget(const char * text, int xPos, int yPos);
 
 	// Image functions
 	SDL_Texture * loadImage( const char * file);
@@ -67,6 +67,7 @@ public:
 		ButtonReference buttonRef = createButton(testCallback, 0, "Buttaaaaaaaaaaaaaaaaaaaaaaaan!", 100, 100, 128, 32);
 
 		SDL_Texture * my_dot  = loadImage("res/dot.bmp");
+		TextWidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
 
 		// dot position and size
 		float xPos, yPos;
@@ -139,7 +140,6 @@ public:
 			for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
 				renderWidget(widgetList[widgetIndex]);//widgetList[widgetIndex]->render(renderer);
 			renderImage(my_dot, xPos, yPos, 8, 8);
-			renderText("my text", 16, 8);
 
 			// Update screen
 			SDL_RenderPresent( renderer );
