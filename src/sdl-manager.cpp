@@ -231,7 +231,7 @@ void SdlManager::renderWidget(SdlWidgetBase * widget)
 {
 	SDL_Surface * surface = widget->getSurface();
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_RenderCopy(renderer, texture, NULL, widget->getBoundingBox());
+	SDL_RenderCopy(renderer, texture, widget->getClipping(), widget->getBoundingBox());
 	SDL_DestroyTexture(texture);
 }
 
