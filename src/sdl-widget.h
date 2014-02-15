@@ -17,7 +17,7 @@ public:
 	SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect) :
 		surface(surface_arg)
 	{
-		clipping = {0,0,0,0};
+		clipping = {0,0,rect.w,rect.h};
 		boundingBox = {rect.x, rect.y, rect.w, rect.h};
 	}
 

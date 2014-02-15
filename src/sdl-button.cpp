@@ -74,4 +74,7 @@ void SdlButton::handleEvent(SDL_Event & event)
 			}
 		}
 	}
+
+	// Update button appearance for button state
+	clipping.y = boundingBox.h * state;
 }
