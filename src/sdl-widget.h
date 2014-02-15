@@ -34,4 +34,17 @@ public:
 	virtual void handleEvent(SDL_Event&) = 0;
 };
 
+typedef SdlWidget * WidgetReference;
+
+class SdlTextWidget : public SdlWidget
+{
+public:
+	SdlTextWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
+		SdlWidget(surface_arg, rect)
+	{}
+	void handleEvent(SDL_Event&) {};
+};
+
+typedef SdlTextWidget * TextWidgetReference;
+
 #endif
