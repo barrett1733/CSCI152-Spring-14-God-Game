@@ -25,7 +25,7 @@ class SdlManager
 	SDL_Renderer * renderer;
 	TTF_Font * font;
 
-	std::vector<SdlWidget*> widgetList;
+	std::vector<SdlWidgetBase*> widgetList;
 	int widgetCount;
 	int widgetIndex;
 
@@ -45,7 +45,7 @@ public:
 
 	// Text functions
 	SDL_Surface * createTextSurface(const char * text);
-	TextWidgetReference createTextWidget(const char * text, int xPos, int yPos);
+	WidgetReference createTextWidget(const char * text, int xPos, int yPos);
 
 	// Image functions
 	SDL_Texture * loadImage( const char * file);
@@ -53,7 +53,7 @@ public:
 	void renderImage(SDL_Texture * image, int xPos, int yPos);
 
 	// Widget functions
-	void renderWidget(SdlWidget * widget);
+	void renderWidget(SdlWidgetBase * widget);
 
 	// Button functions
 	ButtonReference createButton(void (*callback)(), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
@@ -65,7 +65,7 @@ public:
 		launchWindow("Window Title!", 1024, 768);
 
 		ButtonReference buttonRef = createButton(testCallback, 0, "Buttan!", 100, 100, 128, 32);
-		TextWidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
+		WidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
 
 		// Main loop flag
 		bool running = true;

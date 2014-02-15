@@ -9,7 +9,7 @@
 
 enum ButtonState { BUTTON_OFF, BUTTON_HOVER, BUTTON_ACTIVE, BUTTON_ON };
 
-class SdlButton : public SdlWidget
+class SdlButton : public SdlWidgetBase
 {
 	ButtonState state;
 	void (*callback)();

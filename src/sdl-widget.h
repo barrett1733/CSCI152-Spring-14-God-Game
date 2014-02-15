@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-class SdlWidget
+class SdlWidgetBase
 {
 protected:
 	SDL_Surface * surface;
@@ -14,14 +14,14 @@ protected:
 	SDL_Rect boundingBox;
 
 public:
-	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
+	SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect) :
 		surface(surface_arg)
 	{
 		clipping = {0,0,0,0};
 		boundingBox = {rect.x, rect.y, rect.w, rect.h};
 	}
 
-	virtual ~SdlWidget() {
+	virtual ~SdlWidgetBase() {
 
 		if(surface) SDL_FreeSurface(surface);
 		clipping = boundingBox = {0, 0, 0, 0};
@@ -34,17 +34,17 @@ public:
 	virtual void handleEvent(SDL_Event&) = 0;
 };
 
-typedef SdlWidget * WidgetReference;
+typedef SdlWidgetBase * WidgetBaseReference;
 
-class SdlTextWidget : public SdlWidget
+class SdlWidget : public SdlWidgetBase
 {
 public:
-	SdlTextWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
-		SdlWidget(surface_arg, rect)
+	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
+		SdlWidgetBase(surface_arg, rect)
 	{}
 	void handleEvent(SDL_Event&) {};
 };
 
-typedef SdlTextWidget * TextWidgetReference;
+typedef SdlWidget * WidgetReference;
 
 #endif

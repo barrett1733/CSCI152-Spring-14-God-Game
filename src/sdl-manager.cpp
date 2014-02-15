@@ -178,14 +178,14 @@ SDL_Surface * SdlManager::createTextSurface(const char * text)
 	return surface;
 }
 
-TextWidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yPos)
+WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yPos)
 {
 	SDL_Surface * surface = createTextSurface(text);
 	SDL_Rect rect = {xPos, yPos, surface->w, surface->h};
 
-	SdlTextWidget * textWidget = new SdlTextWidget(surface, rect);
-	widgetList.push_back(textWidget);
-	return textWidget;
+	SdlWidget * widget = new SdlWidget(surface, rect);
+	widgetList.push_back(widget);
+	return widget;
 }
 
 ////////
@@ -227,7 +227,7 @@ void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
 
 ////////
 
-void SdlManager::renderWidget(SdlWidget * widget)
+void SdlManager::renderWidget(SdlWidgetBase * widget)
 {
 	SDL_Surface * surface = widget->getSurface();
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
