@@ -50,6 +50,60 @@ SdlManager::~SdlManager()
 
 ////////
 
+bool SdlManager::update()
+{
+	bool running = true;
+	SDL_Event event;
+
+	//Handle events on queue
+	while(SDL_PollEvent(&event) != 0)
+	{
+		//User requests quit
+		switch(event.type)
+		{
+			case SDL_MOUSEMOTION:
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+				widgetCount = widgetList.size();
+				for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+					widgetList[widgetIndex]->handleEvent(event);
+				break;
+
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym)
+				{
+					// case SDLK_UP: yVel -= velocityIncrement; break;
+					// case SDLK_DOWN: yVel += velocityIncrement; break;
+					// case SDLK_LEFT: xVel -= velocityIncrement; break;
+					// case SDLK_RIGHT: xVel += velocityIncrement; break;
+					case '\e' : running = false;; break;
+
+					default: std::cout << event.key.keysym.sym << std::endl; break;
+				}
+				break;
+
+			case SDL_QUIT:
+				running = false;
+				break;
+		}
+	} // end event handler loop
+
+	// Clear screen
+	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_RenderClear( renderer );
+	SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
+
+	// Render everything
+	for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+		renderWidget(widgetList[widgetIndex]);//widgetList[widgetIndex]->render(renderer);
+
+	// Update screen
+	SDL_RenderPresent( renderer );
+
+	wait();
+	return running;
+}
+
 void SdlManager::wait()
 {
 	unsigned long now = SDL_GetTicks();

@@ -68,57 +68,12 @@ public:
 		TextWidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
 
 		// Main loop flag
-		bool quit = false;
-
-		//Event handler
-		SDL_Event event;
+		bool running = true;
 
 		//While application is running
-		while( !quit )
+		while( running )
 		{
-			//Handle events on queue
-			while(SDL_PollEvent(&event) != 0)
-			{
-				//User requests quit
-				switch(event.type)
-				{
-					case SDL_MOUSEMOTION:
-					case SDL_MOUSEBUTTONDOWN:
-					case SDL_MOUSEBUTTONUP:
-						widgetCount = widgetList.size();
-						for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-							widgetList[widgetIndex]->handleEvent(event);
-						break;
-
-					case SDL_KEYDOWN:
-						switch(event.key.keysym.sym)
-						{
-							case '\e' : quit = true; break;
-							default : std::cout << event.key.keysym.sym << std::endl; break;
-						}
-						break;
-
-					case SDL_QUIT:
-						quit = true;
-						break;
-
-				}
-
-			}
-
-			// Clear screen
-			SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-			SDL_RenderClear( renderer );
-			SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
-
-			// Render everything
-			for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-				renderWidget(widgetList[widgetIndex]);//widgetList[widgetIndex]->render(renderer);
-
-			// Update screen
-			SDL_RenderPresent( renderer );
-
-			wait();
+			running = update();
 		} // end while(!quit)
 
 		destroyButton(buttonRef);
