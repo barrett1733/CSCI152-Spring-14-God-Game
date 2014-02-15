@@ -14,11 +14,13 @@ protected:
 	SDL_Rect boundingBox;
 
 public:
-	SdlWidget(SDL_Rect & rect) {
-		surface = NULL;
+	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
+		surface(surface_arg)
+	{
 		clipping = {0,0,0,0};
 		boundingBox = {rect.x, rect.y, rect.w, rect.h};
 	}
+
 	virtual ~SdlWidget() {
 
 		if(surface) SDL_FreeSurface(surface);
