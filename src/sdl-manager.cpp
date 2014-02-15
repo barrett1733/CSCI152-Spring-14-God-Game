@@ -64,7 +64,6 @@ bool SdlManager::update()
 			case SDL_MOUSEMOTION:
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
-				widgetCount = widgetList.size();
 				for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
 					widgetList[widgetIndex]->handleEvent(event);
 				break;
@@ -185,6 +184,7 @@ WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yP
 
 	SdlWidget * widget = new SdlWidget(surface, rect);
 	widgetList.push_back(widget);
+	widgetCount = widgetList.size();
 	return widget;
 }
 
@@ -264,6 +264,7 @@ ButtonReference SdlManager::createButton(void (*callback)(), SDL_Surface * backg
 	rect = {xPos, yPos, width, height};
 	SdlButton * button = new SdlButton(background, rect, callback);
 	widgetList.push_back(button);
+	widgetCount = widgetList.size();
 
 	std::cout << "createButton() finished" << std::endl;
 	return button;
@@ -275,6 +276,7 @@ void SdlManager::destroyButton(ButtonReference & buttonRef)
 		if(widgetList[widgetIndex] == buttonRef)
 			widgetList.erase(widgetList.begin()+widgetIndex);
 	delete buttonRef;
+	widgetCount = widgetList.size();
 }
 
 ////////
