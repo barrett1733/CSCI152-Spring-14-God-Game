@@ -33,6 +33,9 @@ class SdlManager
 
 	void wait();
 
+	// Private text functions
+	SDL_Surface * createTextSurface(const char * text);
+
 public:
 
 	SdlManager();
@@ -44,7 +47,6 @@ public:
 	SDL_Surface * createSurface(int width, int height);
 
 	// Text functions
-	SDL_Surface * createTextSurface(const char * text);
 	WidgetReference createTextWidget(const char * text, int xPos, int yPos);
 
 	// Image functions

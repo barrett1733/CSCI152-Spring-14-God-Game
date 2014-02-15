@@ -42,7 +42,7 @@ public:
 	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 		SdlWidgetBase(surface_arg, rect)
 	{}
-	void handleEvent(SDL_Event&) {};
+	void handleEvent(SDL_Event&) {}
 };
 
 typedef SdlWidget * WidgetReference;
