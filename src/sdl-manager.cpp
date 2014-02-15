@@ -50,14 +50,17 @@ SdlManager::~SdlManager()
 
 ////////
 
-bool SdlManager::update()
+void SdlManager::update()
 {
-	bool running = true;
 	SDL_Event event;
 
 	//Handle events on queue
 	while(SDL_PollEvent(&event) != 0)
 	{
+		int subscriberCount = subscriberList.size();
+		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
+			subscriberList[subscriberIndex]->handleEvent(event);
+
 		//User requests quit
 		switch(event.type)
 		{
@@ -75,14 +78,9 @@ bool SdlManager::update()
 					// case SDLK_DOWN: yVel += velocityIncrement; break;
 					// case SDLK_LEFT: xVel -= velocityIncrement; break;
 					// case SDLK_RIGHT: xVel += velocityIncrement; break;
-					case '\e' : running = false;; break;
 
 					default: std::cout << event.key.keysym.sym << std::endl; break;
 				}
-				break;
-
-			case SDL_QUIT:
-				running = false;
 				break;
 		}
 	} // end event handler loop
@@ -100,7 +98,6 @@ bool SdlManager::update()
 	SDL_RenderPresent( renderer );
 
 	wait();
-	return running;
 }
 
 void SdlManager::wait()
@@ -141,6 +138,23 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
 	std::cerr << "sdl.launchWindow() finished" << std::endl;
+}
+
+////////
+
+SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(), int type)
+{
+	return subscribeToEvent(callback, type, SDLK_UNKNOWN);
+}
+
+SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(), int type, int sym)
+{
+	SdlEventSubscriber * subscriber = new SdlEventSubscriber( callback, type, sym );
+	subscriberList.push_back(subscriber);
+
+	std::cout << "SdlManager::subscribeToEvent()" << std::endl;
+
+	return subscriber;
 }
 
 ////////

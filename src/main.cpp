@@ -1,17 +1,29 @@
 #include <iostream>
 #include "sdl-manager.h"
 
+static bool running = true;
+
+void stopRunning()
+{
+	std::cout << "stop running" << std::endl;
+	running = false;
+}
+
 int main(int argc, char **argv)
 {
 	sdl.test_setUp();
 
 	// Main loop flag
-	bool running = true;
+	//bool running = true;
+
+	sdl.subscribeToEvent(stopRunning, SDL_QUIT);
+	sdl.subscribeToEvent(stopRunning, SDL_KEYDOWN, '\e');
+	sdl.createButton(stopRunning, 0, "Quit", 16, 700, 128, 32);
 
 	// While application is running
-	while( running )
+	while(running)
 	{
-		running = sdl.update();
+		sdl.update();
 	}
 
 	return 0;

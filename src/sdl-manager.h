@@ -13,6 +13,7 @@
 
 #include "sdl-widget.h"
 #include "sdl-button.h"
+#include "sdl-event-subscriber.h"
 
 const int FRAME_RATE = 30;
 const int TICK_INTERVAL = 1000/FRAME_RATE;
@@ -28,11 +29,14 @@ class SdlManager
 	int widgetCount;
 	int widgetIndex;
 
+	std::vector<SdlEventSubscriber*> subscriberList;
+
 	unsigned long next_time;
 
 	void wait();
 
-	// Private text functions
+	// Private functions
+	SDL_Surface * createSurface(int width, int height);
 	SDL_Surface * createTextSurface(const char * text);
 
 	static void testCallback()
@@ -46,9 +50,11 @@ public:
 	~SdlManager();
 
 	void launchWindow(const char * title, int width, int height);
-	bool update();
+	void update();
 
-	SDL_Surface * createSurface(int width, int height);
+	// Event functions
+	SubscriptionReference subscribeToEvent(void (*callback)(), int type);
+	SubscriptionReference subscribeToEvent(void (*callback)(), int type, int sym);
 
 	// Text functions
 	WidgetReference createTextWidget(const char * text, int xPos, int yPos);
@@ -63,6 +69,7 @@ public:
 
 	// Button functions
 	ButtonReference createButton(void (*callback)(), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
+	ButtonReference createButton(void (*callback)(), SDL_Surface * background, const char * label, int xPos, int yPos);
 	void destroyButton(ButtonReference&);
 
 	// Test function.
