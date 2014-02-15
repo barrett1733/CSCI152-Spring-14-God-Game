@@ -278,8 +278,3 @@ void SdlManager::destroyButton(ButtonReference & buttonRef)
 }
 
 ////////
-
-void testCallback()
-{
-	std::cout << "Callback!" << std::endl;
-}

@@ -17,7 +17,6 @@
 const int FRAME_RATE = 30;
 const int TICK_INTERVAL = 1000/FRAME_RATE;
 
-void testCallback();
 
 class SdlManager
 {
@@ -35,6 +34,11 @@ class SdlManager
 
 	// Private text functions
 	SDL_Surface * createTextSurface(const char * text);
+
+	static void testCallback()
+	{
+		std::cout << "Callback!" << std::endl;
+	}
 
 public:
 
