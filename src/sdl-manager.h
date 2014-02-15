@@ -66,23 +66,13 @@ public:
 	void destroyButton(ButtonReference&);
 
 	// Test function.
-	void test()
+	void test_setUp()
 	{
 		launchWindow("Window Title!", 1024, 768);
 
 		ButtonReference buttonRef = createButton(testCallback, 0, "Buttan!", 100, 100, 128, 32);
 		WidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
 
-		// Main loop flag
-		bool running = true;
-
-		//While application is running
-		while( running )
-		{
-			running = update();
-		} // end while(!quit)
-
-		destroyButton(buttonRef);
 	} // end test()
 };
 
