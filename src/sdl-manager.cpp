@@ -236,29 +236,45 @@ void SdlManager::renderWidget(SdlWidgetBase * widget)
 }
 
 ////////
-
+ButtonReference SdlManager::createButton(void (*callback)(), SDL_Surface * background, const char * labelText, int xPos, int yPos)
+{
+	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
+}
 ButtonReference SdlManager::createButton(void (*callback)(), SDL_Surface * background, const char * labelText, int xPos, int yPos, int width, int height)
 {
 	SDL_Rect rect = {xPos, yPos, width, height};
+	SDL_Rect clip;
 
 	if(!background)
 	{
-		background = createSurface(width, height);
-		SDL_FillRect(background, NULL, 0xFF000000);
+		background = createSurface(width, 4*height);
+		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 0, 0, 0, 255));
 
 		SDL_Surface * buttonFill = createSurface(width, height);
-		SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(buttonFill->format, 127, 127, 127, 255));
-		rect = {1,1,width-2, height-2};
-		SDL_BlitSurface(buttonFill, &rect, background, &rect);
+
+		for(int i = 0; i < 4; i++)
+		{
+			int tone = 32 * (6-i);
+			SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(buttonFill->format, tone, tone, tone, 255));
+			rect = {1, 1,            width-2, height-2};
+			clip = {1, 1 + i*height, width-2, height-2};
+			SDL_BlitSurface(buttonFill, &rect, background, &clip);
+		}
 		SDL_FreeSurface(buttonFill);
 	}
 
 	SDL_Surface * textSurface = createTextSurface(labelText);
 
-	rect = {(width - textSurface->w)/2, (height - textSurface->h)/2, width, height };
-	if(rect.x < 8) rect.x = 8;
+	int yPosText = (height - textSurface->h)/2;
+	int xPosText = (width - textSurface->w)/2;
+	if(xPosText < 8) xPosText = 8;
 
-	SDL_BlitSurface(textSurface, NULL, background, &rect);
+	for(int i = 0; i < 4; i++)
+	{
+		rect = {xPosText, yPosText, width, height };
+		clip = {xPosText, yPosText + i*height, width, height };
+		SDL_BlitSurface(textSurface, NULL, background, &clip);
+	}
 	SDL_FreeSurface(textSurface);
 
 	rect = {xPos, yPos, width, height};
