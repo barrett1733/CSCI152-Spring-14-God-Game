@@ -39,6 +39,7 @@ public:
 	~SdlManager();
 
 	void launchWindow(const char * title, int width, int height);
+	bool update();
 
 	SDL_Surface * createSurface(int width, int height);
 
@@ -63,21 +64,8 @@ public:
 	{
 		launchWindow("Window Title!", 1024, 768);
 
-		ButtonReference buttonRef = createButton(testCallback, 0, "Buttaaaaaaaaaaaaaaaaaaaaaaaan!", 100, 100, 128, 32);
-
+		ButtonReference buttonRef = createButton(testCallback, 0, "Buttan!", 100, 100, 128, 32);
 		TextWidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
-		// SDL_Texture * my_dot  = loadImage("res/dot.bmp");
-
-		// dot position and size
-		// float xPos, yPos;
-		// xPos = 400;
-		// yPos = 300;
-
-		// dot velocity
-		// float velocityIncrement = 0.5;
-		// float xVel, yVel;
-		// xVel = 0;
-		// yVel = 0;
 
 		// Main loop flag
 		bool quit = false;
