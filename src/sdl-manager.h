@@ -61,24 +61,23 @@ public:
 	// Test function.
 	void test()
 	{
-
 		launchWindow("Window Title!", 1024, 768);
 
 		ButtonReference buttonRef = createButton(testCallback, 0, "Buttaaaaaaaaaaaaaaaaaaaaaaaan!", 100, 100, 128, 32);
 
-		SDL_Texture * my_dot  = loadImage("res/dot.bmp");
 		TextWidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
+		// SDL_Texture * my_dot  = loadImage("res/dot.bmp");
 
 		// dot position and size
-		float xPos, yPos;
-		xPos = 400;
-		yPos = 300;
+		// float xPos, yPos;
+		// xPos = 400;
+		// yPos = 300;
 
 		// dot velocity
-		float velocityIncrement = 0.5;
-		float xVel, yVel;
-		xVel = 0;
-		yVel = 0;
+		// float velocityIncrement = 0.5;
+		// float xVel, yVel;
+		// xVel = 0;
+		// yVel = 0;
 
 		// Main loop flag
 		bool quit = false;
@@ -106,10 +105,6 @@ public:
 					case SDL_KEYDOWN:
 						switch(event.key.keysym.sym)
 						{
-							case SDLK_UP: yVel -= velocityIncrement; break;
-							case SDLK_DOWN: yVel += velocityIncrement; break;
-							case SDLK_LEFT: xVel -= velocityIncrement; break;
-							case SDLK_RIGHT: xVel += velocityIncrement; break;
 							case '\e' : quit = true; break;
 							default : std::cout << event.key.keysym.sym << std::endl; break;
 						}
@@ -123,14 +118,6 @@ public:
 
 			}
 
-			xPos += xVel;
-			yPos += yVel;
-
-			if(xPos < 0)    xPos = 1023;
-			if(xPos > 1023) xPos = 0;
-			if(yPos < 0)    yPos = 767;
-			if(yPos > 767)  yPos = 0;
-
 			// Clear screen
 			SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 			SDL_RenderClear( renderer );
@@ -139,7 +126,6 @@ public:
 			// Render everything
 			for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
 				renderWidget(widgetList[widgetIndex]);//widgetList[widgetIndex]->render(renderer);
-			renderImage(my_dot, xPos, yPos, 8, 8);
 
 			// Update screen
 			SDL_RenderPresent( renderer );
