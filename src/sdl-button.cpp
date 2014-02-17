@@ -1,7 +1,7 @@
 
 #include "sdl-button.h"
 
-SdlButton::SdlButton(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)()) :
+SdlButton::SdlButton(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
 	SdlWidgetBase(surface_arg, rect),
 	state(BUTTON_OFF),
 	callback(callback_arg)
@@ -65,7 +65,7 @@ void SdlButton::handleEvent(SDL_Event & event)
 				{
 					state = BUTTON_ON;
 					if(callback)
-						callback();
+						callback(event);
 					else
 						std::cout << "Button clicked without callback!" << std::endl;
 					state = BUTTON_OFF;

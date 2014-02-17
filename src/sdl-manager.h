@@ -39,7 +39,7 @@ class SdlManager
 	SDL_Surface * createSurface(int width, int height);
 	SDL_Surface * createTextSurface(const char * text);
 
-	static void testCallback()
+	static void testCallback(SDL_Event & event)
 	{
 		std::cout << "Callback!" << std::endl;
 	}
@@ -53,8 +53,8 @@ public:
 	void update();
 
 	// Event functions
-	SubscriptionReference subscribeToEvent(void (*callback)(), int type);
-	SubscriptionReference subscribeToEvent(void (*callback)(), int type, int sym);
+	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event & event), int type);
+	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event & event), int type, int sym);
 
 	// Text functions
 	WidgetReference createTextWidget(const char * text, int xPos, int yPos);
@@ -68,8 +68,8 @@ public:
 	void renderWidget(SdlWidgetBase * widget);
 
 	// Button functions
-	ButtonReference createButton(void (*callback)(), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
-	ButtonReference createButton(void (*callback)(), SDL_Surface * background, const char * label, int xPos, int yPos);
+	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
+	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos);
 	void destroyButton(ButtonReference&);
 
 	// Test function.

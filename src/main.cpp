@@ -3,7 +3,7 @@
 
 static bool running = true;
 
-void stopRunning()
+void stopRunning(SDL_Event & event)
 {
 	std::cout << "stop running" << std::endl;
 	running = false;

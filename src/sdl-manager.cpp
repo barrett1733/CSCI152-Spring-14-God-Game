@@ -142,12 +142,12 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 ////////
 
-SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(), int type)
+SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event & event), int type)
 {
 	return subscribeToEvent(callback, type, SDLK_UNKNOWN);
 }
 
-SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(), int type, int sym)
+SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event & event), int type, int sym)
 {
 	SdlEventSubscriber * subscriber = new SdlEventSubscriber( callback, type, sym );
 	subscriberList.push_back(subscriber);
@@ -250,11 +250,11 @@ void SdlManager::renderWidget(SdlWidgetBase * widget)
 }
 
 ////////
-ButtonReference SdlManager::createButton(void (*callback)(), SDL_Surface * background, const char * labelText, int xPos, int yPos)
+ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos)
 {
 	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
 }
-ButtonReference SdlManager::createButton(void (*callback)(), SDL_Surface * background, const char * labelText, int xPos, int yPos, int width, int height)
+ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos, int width, int height)
 {
 	SDL_Rect rect = {xPos, yPos, width, height};
 	SDL_Rect clip;

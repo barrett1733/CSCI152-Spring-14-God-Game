@@ -6,12 +6,12 @@
 
 struct SdlEventSubscriber
 {
-	void (*callback)();
+	void (*callback)(SDL_Event & event);
 	int type;
 	int sym;
 
 	SdlEventSubscriber();
-	SdlEventSubscriber(void (*callback_arg)(), int type_arg, int sym_arg) :
+	SdlEventSubscriber(void (*callback_arg)(SDL_Event & event), int type_arg, int sym_arg) :
 		callback(callback_arg),
 		type(type_arg),
 		sym(sym_arg)
@@ -23,11 +23,11 @@ struct SdlEventSubscriber
 		{
 			if(type == SDL_KEYDOWN || type == SDL_KEYUP)
 			{
-				if(event.key.keysym.sym == sym)
-					callback();
+				if(sym == SDLK_UNKNOWN || event.key.keysym.sym == sym)
+					callback(event);
 			}
 			else
-				callback();
+				callback(event);
 		}
 	} // end handleEvent()
 };
