@@ -92,7 +92,7 @@ void SdlManager::update()
 
 	// Render everything
 	for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-		renderWidget(widgetList[widgetIndex]);//widgetList[widgetIndex]->render(renderer);
+		renderWidget(widgetList[widgetIndex]);
 
 	// Update screen
 	SDL_RenderPresent( renderer );
@@ -271,8 +271,8 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 		{
 			int tone = 32 * (6-i);
 			SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(pixelFormat, tone, tone, tone, 255));
-			rect = {1, 1,            width-2, height-2};
-			clip = {1, 1 + i*height, width-2, height-2};
+			rect = makeRect(1, 1,            width-2, height-2);
+			clip = makeRect(1, 1 + i*height, width-2, height-2);
 			SDL_BlitSurface(buttonFill, &rect, background, &clip);
 		}
 		SDL_FreeSurface(buttonFill);
@@ -286,13 +286,13 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 
 	for(int i = 0; i < 4; i++)
 	{
-		rect = {xPosText, yPosText, width, height };
-		clip = {xPosText, yPosText + i*height, width, height };
+		rect = makeRect(xPosText, yPosText, width, height);
+		clip = makeRect(xPosText, yPosText + i*height, width, height );
 		SDL_BlitSurface(textSurface, NULL, background, &clip);
 	}
 	SDL_FreeSurface(textSurface);
 
-	rect = {xPos, yPos, width, height};
+	rect = makeRect(xPos, yPos, width, height);
 	SdlButton * button = new SdlButton(background, rect, callback);
 	widgetList.push_back(button);
 	widgetCount = widgetList.size();

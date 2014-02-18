@@ -9,7 +9,7 @@
 #include <vector>
 
 #include <iostream>
-#include <unistd.h>
+//#include <unistd.h>
 
 #include "sdl-widget.h"
 #include "sdl-button.h"
@@ -34,6 +34,11 @@ class SdlManager
 	unsigned long next_time;
 
 	void wait();
+	SDL_Rect makeRect(int x, int y, int w, int h)
+	{
+		SDL_Rect rect = {x, y, w, h};
+		return rect;
+	}
 
 	// Private functions
 	SDL_Surface * createSurface(int width, int height);
