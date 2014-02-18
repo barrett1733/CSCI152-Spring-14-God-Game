@@ -14,6 +14,7 @@
 #include "sdl-widget.h"
 #include "sdl-button.h"
 #include "sdl-slider.h"
+#include "sdl-text-display.h"
 #include "sdl-event-subscriber.h"
 
 const int FRAME_RATE = 30;
@@ -64,6 +65,7 @@ public:
 
 	// Text functions
 	WidgetReference createTextWidget(const char * text, int xPos, int yPos);
+	TextDisplayReference createTextDisplay(char * text, int xPos, int yPos);
 
 	// Image functions
 	SDL_Texture * loadImage( const char * file);

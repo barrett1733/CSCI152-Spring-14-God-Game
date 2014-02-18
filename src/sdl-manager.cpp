@@ -182,6 +182,25 @@ WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yP
 	return widget;
 }
 
+TextDisplayReference SdlManager::createTextDisplay(char * text, int xPos, int yPos)
+{
+	std::cout << "SdlManager::createTextDisplay()" << std::endl;
+
+	int width = 256;
+	int height = 32;
+
+
+	SDL_Surface * surface = createSurface(width, 4*height);
+
+	SDL_Rect rect = makeRect(xPos, yPos, width, height);
+	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
+	widgetList.push_back(textDisplay);
+	widgetCount = widgetList.size();
+
+	std::cout << "SdlManager::createTextDisplay() finished" << std::endl;
+	return textDisplay;
+}
+
 ////////
 //  IMAGE METHODS
 ////////
