@@ -27,7 +27,7 @@ public:
 	const SDL_Rect * getClipping();
 	const SDL_Rect * getBoundingBox();
 
-	virtual void handleEvent(SDL_Event&) = 0;
+	virtual void handleEvent(SDL_Event&);
 };
 
 typedef SdlWidgetBase * WidgetBaseReference;

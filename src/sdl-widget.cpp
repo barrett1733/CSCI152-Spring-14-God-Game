@@ -31,6 +31,11 @@ SdlWidgetBase::~SdlWidgetBase() {
 	callback = 0;
 }
 
+void SdlWidgetBase::handleEvent(SDL_Event & event)
+{
+	updateState(event);
+}
+
 SDL_Surface * SdlWidgetBase::getSurface()
 {
 	return surface;
