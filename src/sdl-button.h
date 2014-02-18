@@ -10,7 +10,6 @@ enum ButtonState { BUTTON_OFF, BUTTON_HOVER, BUTTON_ACTIVE, BUTTON_ON };
 
 class SdlButton : public SdlWidgetBase
 {
-	void (*callback)(SDL_Event & event);
 
 public:
 	SdlButton(SDL_Surface * surface, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));

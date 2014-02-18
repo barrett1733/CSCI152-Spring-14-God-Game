@@ -1,7 +1,8 @@
 
 #include "sdl-widget.h"
 
-SdlWidgetBase::SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect) :
+SdlWidgetBase::SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+	callback(callback_arg),
 	surface(surface_arg),
 	state(WIDGET_OFF)
 {
@@ -27,6 +28,7 @@ SdlWidgetBase::~SdlWidgetBase() {
 	boundingBox.w = 0;
 	boundingBox.h = 0;
 	state = WIDGET_OFF;
+	callback = 0;
 }
 
 SDL_Surface * SdlWidgetBase::getSurface()

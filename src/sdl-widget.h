@@ -9,8 +9,9 @@ enum WidgetState { WIDGET_OFF, WIDGET_HOVER, WIDGET_ACTIVE, WIDGET_ON };
 class SdlWidgetBase
 {
 protected:
-	WidgetState state;
+	void (*callback)(SDL_Event & event);
 	SDL_Surface * surface;
+	WidgetState state;
 	SDL_Rect clipping;
 	SDL_Rect boundingBox;
 
@@ -18,7 +19,7 @@ protected:
 
 	bool isInside(int xMouse, int yMouse);
 public:
-	SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect);
+	SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
 
 	virtual ~SdlWidgetBase();
 
@@ -38,7 +39,7 @@ class SdlWidget : public SdlWidgetBase
 {
 public:
 	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
-		SdlWidgetBase(surface_arg, rect)
+		SdlWidgetBase(surface_arg, rect, 0)
 	{}
 	void handleEvent(SDL_Event&) {}
 };
