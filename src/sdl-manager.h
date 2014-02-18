@@ -13,6 +13,7 @@
 
 #include "sdl-widget.h"
 #include "sdl-button.h"
+#include "sdl-slider.h"
 #include "sdl-event-subscriber.h"
 
 const int FRAME_RATE = 30;
@@ -76,6 +77,10 @@ public:
 	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
 	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos);
 	void destroyButton(ButtonReference&);
+
+	// Slider functions
+	SliderReference createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos, int width, int height);
+	SliderReference createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos);
 
 	// Test function.
 	void test_setUp()

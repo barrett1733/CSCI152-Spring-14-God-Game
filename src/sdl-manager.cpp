@@ -230,6 +230,7 @@ void SdlManager::renderWidget(SdlWidgetBase * widget)
 }
 
 ////////
+
 ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos)
 {
 	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
@@ -288,6 +289,40 @@ void SdlManager::destroyButton(ButtonReference & buttonRef)
 			widgetList.erase(widgetList.begin()+widgetIndex);
 	delete buttonRef;
 	widgetCount = widgetList.size();
+}
+
+////////
+
+SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos)
+{
+	return createSlider(callback, background, xPos, yPos, 256, 32);
+}
+SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos, int width, int height)
+{
+	std::cout << "SdlManager::createSlider()" << std::endl;
+
+	int handleWidth = height/2;
+
+	if(!background)
+	{
+		background = createSurface(width*2 - handleWidth*2, height);
+		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 127, 127, 127, 255));
+
+		SDL_Surface * handle = createSurface(handleWidth, height);
+		SDL_FillRect(handle, NULL, SDL_MapRGBA(handle->format, 64, 64, 64, 255));
+
+		SDL_Rect clip = makeRect(width - handleWidth, 0, handleWidth, height);
+		SDL_BlitSurface(handle, NULL, background, &clip);
+		SDL_FreeSurface(handle);
+	}
+
+	SDL_Rect rect = makeRect(xPos, yPos, width, height);
+	SdlSlider * slider = new SdlSlider(background, rect, callback);
+	widgetList.push_back(slider);
+	widgetCount = widgetList.size();
+
+	std::cout << "createSlider() finished" << std::endl;
+	return slider;
 }
 
 ////////
