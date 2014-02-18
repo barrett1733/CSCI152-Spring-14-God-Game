@@ -161,7 +161,7 @@ SDL_Surface * SdlManager::createSurface(int width, int height)
 }
 
 ////////
-
+//  TEXT WIDTH METHODS
 ////////
 
 SDL_Surface * SdlManager::createTextSurface(const char * text)
@@ -182,6 +182,8 @@ WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yP
 	return widget;
 }
 
+////////
+//  IMAGE METHODS
 ////////
 
 SDL_Texture * SdlManager::loadImage(const char * file)
@@ -220,6 +222,8 @@ void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
 }
 
 ////////
+//  BASE WIDGET METHODS
+////////
 
 void SdlManager::renderWidget(SdlWidgetBase * widget)
 {
@@ -229,6 +233,8 @@ void SdlManager::renderWidget(SdlWidgetBase * widget)
 	SDL_DestroyTexture(texture);
 }
 
+////////
+//  BUTTON WIDGET METHODS
 ////////
 
 ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos)
