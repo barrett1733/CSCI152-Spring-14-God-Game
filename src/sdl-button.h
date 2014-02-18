@@ -2,11 +2,7 @@
 #ifndef SDL_BUTTON_H_
 #define SDL_BUTTON_H_
 
-#include <SDL2/SDL.h>
-
 #include "sdl-widget.h"
-
-enum ButtonState { BUTTON_OFF, BUTTON_HOVER, BUTTON_ACTIVE, BUTTON_ON };
 
 class SdlButton : public SdlWidgetBase
 {
