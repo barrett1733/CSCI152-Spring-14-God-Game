@@ -265,11 +265,12 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 0, 0, 0, 255));
 
 		SDL_Surface * buttonFill = createSurface(width, height);
+		SDL_PixelFormat * pixelFormat = buttonFill->format;
 
 		for(int i = 0; i < 4; i++)
 		{
 			int tone = 32 * (6-i);
-			SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(buttonFill->format, tone, tone, tone, 255));
+			SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(pixelFormat, tone, tone, tone, 255));
 			rect = {1, 1,            width-2, height-2};
 			clip = {1, 1 + i*height, width-2, height-2};
 			SDL_BlitSurface(buttonFill, &rect, background, &clip);
