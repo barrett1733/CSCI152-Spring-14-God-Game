@@ -1,9 +1,8 @@
+
 #ifndef SDL_BUTTON_H_
 #define SDL_BUTTON_H_
 
 #include <SDL2/SDL.h>
-
-#include <iostream>
 
 #include "sdl-widget.h"
 
