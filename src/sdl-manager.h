@@ -80,7 +80,7 @@ public:
 	// Test function.
 	void test_setUp()
 	{
-		launchWindow("Window Title!", 1024, 768);
+		launchWindow("Window Title!", 800, 600);
 
 		ButtonReference buttonRef = createButton(testCallback, 0, "Buttan!", 100, 100, 128, 32);
 		WidgetReference textWidgetRef = createTextWidget("my text", 16, 8);

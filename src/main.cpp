@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
 	sdl.subscribeToEvent(stopRunning, SDL_QUIT);
 	sdl.subscribeToEvent(stopRunning, SDL_KEYDOWN, '\e');
-	sdl.createButton(stopRunning, 0, "Quit", 16, 700, 128, 32);
+	sdl.createButton(stopRunning, 0, "Quit", 16, 552, 128, 32);
 
 	// While application is running
 	while(running)
