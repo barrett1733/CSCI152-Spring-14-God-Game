@@ -8,13 +8,13 @@ EXE = a.out
 
 all: $(EXE)
 
-$(EXE): main.o sdl-manager.o sdl-widget.o sdl-button.o sdl-slider.o
+$(EXE): main.o sdl-manager.o sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o
 	$(CXX) $(LDFLAGS) $^ -o $@
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-sdl-manager.o: sdl-manager.cpp sdl-widget.o sdl-button.o sdl-slider.o
+sdl-manager.o: sdl-manager.cpp sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 sdl-widget.o: sdl-widget.cpp
@@ -24,6 +24,9 @@ sdl-button.o: sdl-button.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 sdl-slider.o: sdl-slider.cpp
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+sdl-text-display.o: sdl-text-display.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 run:
