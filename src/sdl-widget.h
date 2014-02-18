@@ -13,6 +13,28 @@ protected:
 	SDL_Rect clipping;
 	SDL_Rect boundingBox;
 
+	bool isInside(int xMouse, int yMouse)
+	{
+		bool inside = true;
+
+		//Mouse is left of the button
+		if( xMouse < boundingBox.x )
+			inside = false;
+
+		//Mouse is right of the button
+		else if( xMouse > boundingBox.x + boundingBox.w )
+			inside = false;
+
+		//Mouse above the button
+		else if( yMouse < boundingBox.y )
+			inside = false;
+
+		//Mouse below the button
+		else if( yMouse > boundingBox.y + boundingBox.h )
+			inside = false;
+
+		return inside;
+	}
 public:
 	SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect) :
 		surface(surface_arg)

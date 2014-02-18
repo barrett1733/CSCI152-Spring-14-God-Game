@@ -19,27 +19,11 @@ void SdlButton::handleEvent(SDL_Event & event)
 	if( event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP )
 	{
 		//Get mouse position
-		int x, y;
-		SDL_GetMouseState( &x, &y );
+		int xMouse, yMouse;
+		SDL_GetMouseState( &xMouse, &yMouse );
 
 		//Check if mouse is in button
-		bool inside = true;
-
-		//Mouse is left of the button
-		if( x < boundingBox.x )
-			inside = false;
-
-		//Mouse is right of the button
-		else if( x > boundingBox.x + boundingBox.w )
-			inside = false;
-
-		//Mouse above the button
-		else if( y < boundingBox.y )
-			inside = false;
-
-		//Mouse below the button
-		else if( y > boundingBox.y + boundingBox.h )
-			inside = false;
+		bool inside = isInside(xMouse, yMouse);
 
 		//Mouse is outside button
 		if( !inside )
