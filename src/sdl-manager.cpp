@@ -61,28 +61,8 @@ void SdlManager::update()
 		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
 			subscriberList[subscriberIndex]->handleEvent(event);
 
-		//User requests quit
-		switch(event.type)
-		{
-			case SDL_MOUSEMOTION:
-			case SDL_MOUSEBUTTONDOWN:
-			case SDL_MOUSEBUTTONUP:
-				for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-					widgetList[widgetIndex]->handleEvent(event);
-				break;
-
-			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym)
-				{
-					// case SDLK_UP: yVel -= velocityIncrement; break;
-					// case SDLK_DOWN: yVel += velocityIncrement; break;
-					// case SDLK_LEFT: xVel -= velocityIncrement; break;
-					// case SDLK_RIGHT: xVel += velocityIncrement; break;
-
-					default: std::cout << event.key.keysym.sym << std::endl; break;
-				}
-				break;
-		}
+		for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+			widgetList[widgetIndex]->handleEvent(event);
 	} // end event handler loop
 
 	// Clear screen
