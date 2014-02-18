@@ -52,7 +52,7 @@ void SdlWidgetBase::updateState(SDL_Event & event)
 		int xMouse, yMouse;
 		SDL_GetMouseState( &xMouse, &yMouse );
 
-		//Check if mouse is in button
+		//Check if mouse is in boundary
 		bool inside = isInside(xMouse, yMouse);
 
 		//Set mouse over sprite
@@ -61,6 +61,8 @@ void SdlWidgetBase::updateState(SDL_Event & event)
 		case SDL_MOUSEMOTION:
 			if(inside && state == WIDGET_OFF)
 				state = WIDGET_HOVER;
+			else if(!inside && state != WIDGET_ACTIVE)
+				state = WIDGET_OFF;
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:
@@ -71,7 +73,7 @@ void SdlWidgetBase::updateState(SDL_Event & event)
 		case SDL_MOUSEBUTTONUP:
 			if(inside && state == WIDGET_ACTIVE)
 				state = WIDGET_ON;
-			else
+			else if(!inside)
 				state = WIDGET_OFF;
 			break;
 		}
