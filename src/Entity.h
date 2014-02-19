@@ -55,6 +55,6 @@ public:
 	int faction;
 };
 
-extern Entity * EntityList;
+//extern Entity * EntityList;
 
 #endif

@@ -5,6 +5,9 @@
 #ifndef TASK_H_
 #define TASK_H_
 
+#include "Entity.h"
+#include "Position.h"
+
 enum TaskType
 {
 	TASK_NONE = 0x00,
