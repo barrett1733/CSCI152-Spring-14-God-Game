@@ -166,8 +166,11 @@ SDL_Surface * SdlManager::createSurface(int width, int height)
 
 SDL_Surface * SdlManager::createTextSurface(const char * text)
 {
+	std::cout << "SdlManager::createTextSurface() starting" << std::endl;
 	SDL_Color textColor = {0,0,0};
+	std::cout << "SdlManager::createTextSurface() half way" << std::endl;
 	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
+	std::cout << "SdlManager::createTextSurface() finished" << std::endl;
 	return surface;
 }
 
