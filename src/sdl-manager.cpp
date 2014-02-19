@@ -31,6 +31,8 @@ SdlManager::SdlManager() :
 		throw TTF_GetError();
 
 	font = TTF_OpenFont( "res/arial.ttf", 16 );
+	if(!font)
+		throw TTF_GetError();
 
 	std::cerr << "Ready." << std::endl;
 }
@@ -170,8 +172,6 @@ SDL_Surface * SdlManager::createTextSurface(const char * text)
 	SDL_Color textColor = {0,0,0};
 	std::cout << "SdlManager::createTextSurface() half way" << std::endl;
 	if(!font) std::cout << "No font!" << std::endl;
-	//if(!text) std::cout << "No text!" << std::endl;
-	//if(!textColor) std::cout << "No color!" << std::endl;
 	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
 	std::cout << "SdlManager::createTextSurface() finished" << std::endl;
 	return surface;
