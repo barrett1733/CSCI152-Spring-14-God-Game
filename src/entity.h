@@ -5,9 +5,8 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
-#include "Position.h"
-#include "Task.h"
-#include "Position.h"
+#include "position.h"
+#include "task.h"
 #include <string>
 
 enum EntityType {

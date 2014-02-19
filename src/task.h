@@ -5,8 +5,8 @@
 #ifndef TASK_H_
 #define TASK_H_
 
-#include "Entity.h"
-#include "Position.h"
+#include "entity.h"
+#include "position.h"
 
 enum TaskType
 {
