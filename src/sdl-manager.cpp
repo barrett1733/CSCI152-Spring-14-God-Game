@@ -14,7 +14,10 @@ SdlManager::SdlManager() :
 
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-		throw SDL_GetError(); //std::cerr << "Init failed." << std::endl;
+	{
+		std::cerr << SDL_GetError() << std::endl;
+		throw "SDL_Init()";
+	}
 
 	SDL_SetHint( SDL_HINT_RENDER_VSYNC, "1");
 	SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1");
@@ -23,16 +26,22 @@ SdlManager::SdlManager() :
 	std::cerr << "IMG_Init()" << std::endl;
 	int imgFlags = IMG_INIT_PNG;
 	if( ! ( IMG_Init( imgFlags ) & imgFlags ) )
-		throw "IMG_Init";
+	{
+		std::cerr << SDL_GetError() << std::endl;
+		throw "IMG_Init()";
+	}
 
 	// Initialize Fonts
 	std::cerr << "TTF_Init()" << std::endl;
 	if( TTF_Init() == -1 )
-		throw TTF_GetError();
+	{
+		std::cerr << TTF_GetError() << std::endl;
+		throw "TTF_Init()";
+	}
 
 	font = TTF_OpenFont( "res/arial.ttf", 16 );
 	if(!font)
-		throw TTF_GetError();
+		std::cerr << TTF_GetError() << std::endl;
 
 	std::cerr << "Ready." << std::endl;
 }
