@@ -262,17 +262,21 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 }
 ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos, int width, int height)
 {
+	std::cout << "SdlManager::createButton() starting" << std::endl;
+
 	SDL_Rect rect = {xPos, yPos, width, height};
 	SDL_Rect clip;
 
 	if(!background)
 	{
+		std::cout << "CreateButton(): Generating button images... ";
 		background = createSurface(width, 4*height);
 		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 0, 0, 0, 255));
 
 		SDL_Surface * buttonFill = createSurface(width, height);
 		SDL_PixelFormat * pixelFormat = buttonFill->format;
 
+		std::cout << "0/4";
 		for(int i = 0; i < 4; i++)
 		{
 			int tone = 32 * (6-i);
@@ -280,8 +284,11 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 			rect = makeRect(1, 1,            width-2, height-2);
 			clip = makeRect(1, 1 + i*height, width-2, height-2);
 			SDL_BlitSurface(buttonFill, &rect, background, &clip);
+			std::cout << "\b\b\b" << (i+1) << "/4";
 		}
 		SDL_FreeSurface(buttonFill);
+
+		std::cout << " done." << std::endl;
 	}
 
 	SDL_Surface * textSurface = createTextSurface(labelText);
@@ -290,20 +297,25 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 	int xPosText = (width - textSurface->w)/2;
 	if(xPosText < 8) xPosText = 8;
 
+	std::cout << "CreateButton(): Writing text to button images... ";
+	std::cout << "0/4";
 	for(int i = 0; i < 4; i++)
 	{
 		rect = makeRect(xPosText, yPosText, width, height);
 		clip = makeRect(xPosText, yPosText + i*height, width, height );
 		SDL_BlitSurface(textSurface, NULL, background, &clip);
+		std::cout << "\b\b\b" << (i+1) << "/4";
 	}
 	SDL_FreeSurface(textSurface);
+	std::cout << " done." << std::endl;
 
+	std::cout << "CreateButton(): Creating the button." << std::endl;
 	rect = makeRect(xPos, yPos, width, height);
 	SdlButton * button = new SdlButton(background, rect, callback);
 	widgetList.push_back(button);
 	widgetCount = widgetList.size();
 
-	std::cout << "createButton() finished" << std::endl;
+	std::cout << "SdlManager::createButton() finished" << std::endl;
 	return button;
 }
 

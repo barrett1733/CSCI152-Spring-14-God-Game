@@ -87,10 +87,16 @@ public:
 	// Test function.
 	void test_setUp()
 	{
+		std::cout << "Running test set-up." << std::endl;
 		launchWindow("Window Title!", 800, 600);
 
+		std::cout << "Test Set-up: Creating button..." << std::endl;
 		createButton(testCallback, 0, "Buttan!", 100, 100, 128, 32);
+
+		std::cout << "Test Set-up: Creating text widget..." << std::endl;
 		createTextWidget("my text", 16, 8);
+
+		std::cout << "Test set-up done." << std::endl;
 
 	} // end test()
 };
