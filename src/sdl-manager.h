@@ -89,8 +89,8 @@ public:
 	{
 		launchWindow("Window Title!", 800, 600);
 
-		ButtonReference buttonRef = createButton(testCallback, 0, "Buttan!", 100, 100, 128, 32);
-		WidgetReference textWidgetRef = createTextWidget("my text", 16, 8);
+		createButton(testCallback, 0, "Buttan!", 100, 100, 128, 32);
+		createTextWidget("my text", 16, 8);
 
 	} // end test()
 };

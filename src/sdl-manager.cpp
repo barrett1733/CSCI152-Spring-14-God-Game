@@ -161,7 +161,7 @@ SDL_Surface * SdlManager::createSurface(int width, int height)
 }
 
 ////////
-//  TEXT WIDTH METHODS
+//  TEXT WIDGET METHODS
 ////////
 
 SDL_Surface * SdlManager::createTextSurface(const char * text)
