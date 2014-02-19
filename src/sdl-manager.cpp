@@ -5,9 +5,9 @@
 SdlManager sdl;
 
 SdlManager::SdlManager() :
-	window(nullptr),
-	renderer(nullptr),
-	font(nullptr)
+	window(0),
+	renderer(0),
+	font(0)
 {
 
 	std::cerr << "SDL_Init()" << std::endl;
@@ -207,7 +207,7 @@ TextDisplayReference SdlManager::createTextDisplay(char * text, int xPos, int yP
 
 SDL_Texture * SdlManager::loadImage(const char * file)
 {
-	SDL_Texture * texture = nullptr;
+	SDL_Texture * texture = 0;
 
 	SDL_Surface * surface = IMG_Load(file);
 	if( ! surface)
