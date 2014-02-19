@@ -18,7 +18,7 @@
 #include "sdl-event-subscriber.h"
 
 const int FRAME_RATE = 30;
-const int TICK_INTERVAL = 1000/FRAME_RATE;
+const unsigned int TICK_INTERVAL = 1000/FRAME_RATE;
 
 
 class SdlManager
