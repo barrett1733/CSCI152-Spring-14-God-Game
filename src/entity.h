@@ -6,7 +6,6 @@
 #define ENTITY_H_
 
 #include "position.h"
-#include "task.h"
 #include <string>
 
 enum EntityType {
@@ -49,7 +48,6 @@ public:
 class MobileEntity : public Entity
 {
 public:
-	Task task;
 	int hunger;
 	int faction;
 };
