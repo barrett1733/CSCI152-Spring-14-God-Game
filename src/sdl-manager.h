@@ -65,7 +65,7 @@ public:
 
 	// Text functions
 	WidgetReference createTextWidget(const char * text, int xPos, int yPos);
-	TextDisplayReference createTextDisplay(char * text, int xPos, int yPos);
+	TextDisplayReference createTextDisplay(std::string text, int xPos, int yPos);
 
 	// Image functions
 	SDL_Texture * loadImage( const char * file);

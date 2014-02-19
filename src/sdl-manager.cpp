@@ -182,7 +182,7 @@ WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yP
 	return widget;
 }
 
-TextDisplayReference SdlManager::createTextDisplay(char * text, int xPos, int yPos)
+TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, int yPos)
 {
 	std::cout << "SdlManager::createTextDisplay()" << std::endl;
 
