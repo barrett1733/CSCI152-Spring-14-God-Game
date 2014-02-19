@@ -7,11 +7,11 @@
 struct SdlEventSubscriber
 {
 	void (*callback)(SDL_Event & event);
-	int type;
+	unsigned int type;
 	int sym;
 
 	SdlEventSubscriber();
-	SdlEventSubscriber(void (*callback_arg)(SDL_Event & event), int type_arg, int sym_arg) :
+	SdlEventSubscriber(void (*callback_arg)(SDL_Event & event), unsigned int type_arg, int sym_arg) :
 		callback(callback_arg),
 		type(type_arg),
 		sym(sym_arg)
