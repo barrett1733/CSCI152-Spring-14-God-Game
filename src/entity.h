@@ -23,8 +23,9 @@ enum EntityType {
 	ET_COPPER,
 
 	// VILLAGERS
-	ET_MALE_VILLAGER = 0x000100,
-	ET_FEMALE_VILLAGER,
+	ET_VILLAGER = 0x000100,
+	ET_ELDER_VILLAGER,
+	ET_CHILD_VILLAGER,
 
 	// PASSIVE ANIMALS
 	ET_SHEEP,
@@ -52,7 +53,8 @@ enum EntityType {
 	ET_CYCLOPS,
 
 	// BUILDINGS
-	ET_TOWN_HALL = 0x010000,
+	ET_FOUNDATION = 0x010000,
+	ET_TOWN_HALL,
 	ET_HOVEL,
 	ET_HOUSE,
 	ET_MANSION,
@@ -69,18 +71,42 @@ enum EntityType {
 
 class Entity
 {
-public:
+private:
 	std::string name;
 	Position position;
-	int health;
+	int maxHealth;
+	int currentHealth;
 	EntityType type;
+public:
+	Entity(EntityType,int,Position);
+	std::string getName();
+	Position getPosition();
+	int getMaxHealth();
+	int getCurrentHealth();
+	EntityType getEntityType();
+	void setName(std::string);
+	void setPosition(Position);
+	void setMaxHealth(int);
+	void setCurrentHealth(int);
+	void setEntityType(EntityType);
 };
 
 class MobileEntity : public Entity
 {
-public:
+private:
 	int hunger;
 	int faction;
+	int strength;
+	int defense;
+public:
+	int getHunger();
+	int getFaction();
+	int getStrength();
+	int getDefense();
+	void setHunger();
+	void setFaction();
+	void setStrength();
+	void setDefense();
 };
 
 //extern Entity * EntityList;
