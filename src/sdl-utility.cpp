@@ -31,7 +31,7 @@ SdlUtility::~SdlUtility()
 
 ////////
 
-SDL_Rect SdlUtility::makeRect(int x, int y, int w, int h)
+SDL_Rect SdlUtility::createRect(int x, int y, int w, int h)
 {
 	SDL_Rect rect = {x, y, w, h};
 	return rect;
@@ -161,6 +161,39 @@ ImageReference SdlUtility::createCircle(COLOR color, int width, int height)
 			error -= x;
 			error -= x;
 		}
+	}
+
+	return image;
+}
+
+ImageReference SdlUtility::createTriangle(COLOR color, int width, int height)
+{
+	ImageReference image = createSurface(width, height);;
+
+	Uint32 inner = getColor(image, color);
+	Uint32 outer = getColor(image, C_BLACK);
+
+	double m = 2.0 * height / width;
+	int mid = width/2;
+
+	int y,x;
+
+	for(y = 0; y < height; y++)
+	{
+		for(x = mid - y / m; x <= mid; x ++)
+		{
+			set_pixel(image, x, y, inner);
+			set_pixel(image, width - x, y, inner);
+		}
+
+
+		set_pixel(image, mid - y / m, y, outer);
+		set_pixel(image, width - mid + y / m + 1, y, outer);
+	}
+	for(x = 0; x <= mid; x ++)
+	{
+		set_pixel(image, x, height-1, outer);
+		set_pixel(image, width - x, height-1, outer);
 	}
 
 	return image;

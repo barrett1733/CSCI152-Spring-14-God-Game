@@ -23,7 +23,7 @@ protected:
 
 	void updateState(SDL_Event & event);
 
-	bool isInside(int xMouse, int yMouse);
+	virtual bool isInside(int xMouse, int yMouse);
 public:
 	SdlWidget();
 	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect);
