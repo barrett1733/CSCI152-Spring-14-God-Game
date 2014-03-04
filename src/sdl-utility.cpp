@@ -65,3 +65,103 @@ SDL_Surface * SdlUtility::createTextSurface(const char * text)
 	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
 	return surface;
 }
+
+Uint32 SdlUtility::getColor(ImageReference image, COLOR color)
+{
+	switch(color)
+	{
+	case C_WHITE:   return SDL_MapRGBA(image->format, 255, 255, 255, 255); break;
+	case C_GRAY:    return SDL_MapRGBA(image->format, 127, 127, 127, 255); break;
+	case C_BLACK:   return SDL_MapRGBA(image->format,   0,   0,   0, 255); break;
+	case C_RED:     return SDL_MapRGBA(image->format, 255,  31,  31, 255); break;
+	case C_GREEN:   return SDL_MapRGBA(image->format,  31, 255,  31, 255); break;
+	case C_BLUE:    return SDL_MapRGBA(image->format,  31,  31, 255, 255); break;
+	case C_CYAN:    return SDL_MapRGBA(image->format,   0, 255, 255, 255); break;
+	case C_MAGENTA: return SDL_MapRGBA(image->format, 255,   0, 255, 255); break;
+	case C_YELLOW:  return SDL_MapRGBA(image->format, 255, 255,   0, 255); break;
+	}
+}
+
+void SdlUtility::set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
+{
+    Uint8 *target_pixel = (Uint8 *)surface->pixels + y * surface->pitch + x * 4;
+    *(Uint32 *)target_pixel = pixel;
+}
+
+ImageReference SdlUtility::createCircle(COLOR color, int width, int height)
+{
+	ImageReference image = createSurface(width+1,height+1);
+
+	double cx = width / 2;
+	double cy = height / 2;
+	double radius = cx;
+	Uint32 pixel = getColor(image, color);
+
+	//  From:
+	// http://content.gpwiki.org/index.php/SDL:Tutorials:Drawing_and_Filling_Circles
+
+	static const int BPP = 4;
+
+	double r = (double)radius - 0.5;
+
+	for (double dy = 1; dy <= r; dy += 1.0)
+	{
+		double dx = floor(sqrt((2.0 * r * dy) - (dy * dy)));
+		int x = cx - dx;
+
+		Uint8 *target_pixel_a = (Uint8 *)image->pixels + ((int)(cy + r - dy)) * image->pitch + x * BPP;
+		Uint8 *target_pixel_b = (Uint8 *)image->pixels + ((int)(cy - r + dy)) * image->pitch + x * BPP;
+
+		for (; x <= cx + dx; x++)
+		{
+			*(Uint32 *)target_pixel_a = pixel;
+			*(Uint32 *)target_pixel_b = pixel;
+			target_pixel_a += BPP;
+			target_pixel_b += BPP;
+		}
+	}
+
+	pixel = getColor(image, C_BLACK);
+	double error = (double)-radius;
+	double x = (double)radius -0.5;
+	double y = (double)0.5;
+	cx -= 0.5;
+	cy -= 0.5;
+
+	while (x >= y)
+	{
+		set_pixel(image, (int)(cx + x), (int)(cy + y), pixel);
+		set_pixel(image, (int)(cx + y), (int)(cy + x), pixel);
+
+		if (x != 0)
+		{
+			set_pixel(image, (int)(cx - x), (int)(cy + y), pixel);
+			set_pixel(image, (int)(cx + y), (int)(cy - x), pixel);
+		}
+
+		if (y != 0)
+		{
+			set_pixel(image, (int)(cx + x), (int)(cy - y), pixel);
+			set_pixel(image, (int)(cx - y), (int)(cy + x), pixel);
+		}
+
+		if (x != 0 && y != 0)
+		{
+			set_pixel(image, (int)(cx - x), (int)(cy - y), pixel);
+			set_pixel(image, (int)(cx - y), (int)(cy - x), pixel);
+		}
+
+		error += y;
+		++y;
+		error += y;
+
+		if (error >= 0)
+		{
+			--x;
+			error -= x;
+			error -= x;
+		}
+	}
+
+	return image;
+}
