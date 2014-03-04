@@ -11,9 +11,12 @@ GameManager::GameManager()
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\e');
 
-	newGameButton    = sdl.createButton(newGame, 0, "New Game", 200, 100, 200, 50);
-	showCreditButton = sdl.createButton(showCredits, 0, "Credits", 200, 200, 200, 50);
-	quickButton      = sdl.createButton(quitGame, 0, "Quit", 200, 300, 200, 50);
+	newGameButton     = sdl.createButton(newGame, 0, "New Game", 200, 100, 200, 50);
+	showCreditsButton = sdl.createButton(showCredits, 0, "Credits", 200, 200, 200, 50);
+	quickButton       = sdl.createButton(quitGame, 0, "Quit", 200, 300, 200, 50);
+
+	newGameButton->disable();
+	showCreditsButton->disable();
 
 	// While application is running
 	while(mode != GM_QUIT)

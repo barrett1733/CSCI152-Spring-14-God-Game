@@ -16,7 +16,7 @@ class GameManager
 	static GameMode mode;
 
 	ButtonReference newGameButton;
-	ButtonReference showCreditButton;
+	ButtonReference showCreditsButton;
 	ButtonReference quickButton;
 
 	static void newGame(SDL_Event & event);
