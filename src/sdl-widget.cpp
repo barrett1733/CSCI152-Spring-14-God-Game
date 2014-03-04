@@ -61,9 +61,27 @@ SdlWidget::~SdlWidget() {
 	callback = 0;
 }
 
-void SdlWidget::handleEvent(SDL_Event & event)
+bool SdlWidget::isInside(int xMouse, int yMouse)
 {
-	updateState(event);
+	bool inside = true;
+
+	//Mouse is left of the button
+	if( xMouse < boundingBox.x )
+		inside = false;
+
+	//Mouse is right of the button
+	else if( xMouse > boundingBox.x + boundingBox.w )
+		inside = false;
+
+	//Mouse above the button
+	else if( yMouse < boundingBox.y )
+		inside = false;
+
+	//Mouse below the button
+	else if( yMouse > boundingBox.y + boundingBox.h )
+		inside = false;
+
+	return inside;
 }
 
 SDL_Surface * SdlWidget::getSurface()
@@ -83,6 +101,9 @@ const SDL_Rect * SdlWidget::getBoundingBox()
 
 void SdlWidget::updateState(SDL_Event & event)
 {
+	if(state == WIDGET_DISABLED)
+		return;
+
 	if( event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP )
 	{
 		//Get mouse position
@@ -117,25 +138,22 @@ void SdlWidget::updateState(SDL_Event & event)
 	}
 }
 
-bool SdlWidget::isInside(int xMouse, int yMouse)
+void SdlWidget::handleEvent(SDL_Event & event)
 {
-	bool inside = true;
+	updateState(event);
+}
 
-	//Mouse is left of the button
-	if( xMouse < boundingBox.x )
-		inside = false;
+WidgetState SdlWidget::getState()
+{
+	return state;
+}
 
-	//Mouse is right of the button
-	else if( xMouse > boundingBox.x + boundingBox.w )
-		inside = false;
+void SdlWidget::enable()
+{
+	state = WIDGET_OFF;
+}
 
-	//Mouse above the button
-	else if( yMouse < boundingBox.y )
-		inside = false;
-
-	//Mouse below the button
-	else if( yMouse > boundingBox.y + boundingBox.h )
-		inside = false;
-
-	return inside;
+void SdlWidget::disable()
+{
+	state = WIDGET_DISABLED;
 }
