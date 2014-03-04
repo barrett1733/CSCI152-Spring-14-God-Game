@@ -64,6 +64,11 @@ public:
 	void renderImage(SDL_Texture * image, int xPos, int yPos);
 
 	// Widget functions
+	void addWidget(WidgetReference widget)
+	{
+		widgetList.push_back(widget);
+		widgetCount = widgetList.size();
+	}
 	void renderWidget(SdlWidget * widget);
 
 	// Button functions
