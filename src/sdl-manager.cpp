@@ -241,61 +241,11 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 {
 	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
 }
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos, int width, int height)
+ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * text, int xPos, int yPos, int width, int height)
 {
-	std::cout << "SdlManager::createButton() starting" << std::endl;
-
-	SDL_Rect rect = {xPos, yPos, width, height};
-	SDL_Rect clip;
-
-	if(!background)
-	{
-		std::cout << "CreateButton(): Generating button images... ";
-		background = sdlUtility.createSurface(width, 5*height);
-		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 0, 0, 0, 255));
-
-		SDL_Surface * buttonFill = sdlUtility.createSurface(width, height);
-		SDL_PixelFormat * pixelFormat = buttonFill->format;
-
-		std::cout << "0/5";
-		for(int i = 0; i < 5; i++)
-		{
-			int tone = 32 * (6-i);
-			SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(pixelFormat, tone, tone, tone, 255));
-			rect = sdlUtility.makeRect(1, 1,            width-2, height-2);
-			clip = sdlUtility.makeRect(1, 1 + i*height, width-2, height-2);
-			SDL_BlitSurface(buttonFill, &rect, background, &clip);
-			std::cout << "\b\b\b" << (i+1) << "/5";
-		}
-		SDL_FreeSurface(buttonFill);
-
-		std::cout << " done." << std::endl;
-	}
-
-	SDL_Surface * textSurface = sdlUtility.createTextSurface(labelText);
-
-	int yPosText = (height - textSurface->h)/2;
-	int xPosText = (width - textSurface->w)/2;
-	if(xPosText < 8) xPosText = 8;
-
-	std::cout << "CreateButton(): Writing text to button images... ";
-	std::cout << "0/5";
-	for(int i = 0; i < 5; i++)
-	{
-		rect = sdlUtility.makeRect(xPosText, yPosText, width, height);
-		clip = sdlUtility.makeRect(xPosText, yPosText + i*height, width, height );
-		SDL_BlitSurface(textSurface, NULL, background, &clip);
-		std::cout << "\b\b\b" << (i+1) << "/5";
-	}
-	SDL_FreeSurface(textSurface);
-	std::cout << " done." << std::endl;
-
-	std::cout << "CreateButton(): Creating the button." << std::endl;
-	rect = sdlUtility.makeRect(xPos, yPos, width, height);
-	SdlButton * button = new SdlButton(background, rect, callback);
+	SDL_Rect rect = sdlUtility.makeRect(xPos, yPos, width, height);
+	SdlButton * button = new SdlButton(text, rect, callback);
 	widgetList.push_back(button);
-
-	std::cout << "SdlManager::createButton() finished" << std::endl;
 	return button;
 }
 
