@@ -18,7 +18,10 @@ main.o: main.cpp game-manager.o
 sdl.a: sdl-manager.o
 	ar cr sdl.a sdl*.o
 
-sdl-manager.o: sdl-manager.cpp sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o
+sdl-manager.o: sdl-manager.cpp sdl-utility.o sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o sdl-entity.o
+	$(CC) $(CFLAGS) $< -o $@
+
+sdl-utility.o: sdl-utility.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 sdl-widget.o: sdl-widget.cpp
@@ -31,6 +34,9 @@ sdl-slider.o: sdl-slider.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 sdl-text-display.o: sdl-text-display.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+sdl-entity.o: sdl-entity.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 game-manager.o: game-manager.cpp
