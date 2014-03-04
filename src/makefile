@@ -9,11 +9,14 @@ EXECUTABLE = a.out
 
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): main.o sdl-manager.o sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o
+$(EXECUTABLE): main.o sdl.a game-manager.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-main.o: main.cpp
+main.o: main.cpp game-manager.o
 	$(CC) $(CFLAGS) $< -o $@
+
+sdl.a: sdl-manager.o
+	ar cr sdl.a sdl*.o
 
 sdl-manager.o: sdl-manager.cpp sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o
 	$(CC) $(CFLAGS) $< -o $@
@@ -30,8 +33,13 @@ sdl-slider.o: sdl-slider.cpp
 sdl-text-display.o: sdl-text-display.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
+game-manager.o: game-manager.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
 run:
 	./$(EXECUTABLE)
 
 clean:
-	rm *.o && rm $(EXECUTABLE)
+	rm *.o
+	rm *.a
+	rm $(EXECUTABLE)
