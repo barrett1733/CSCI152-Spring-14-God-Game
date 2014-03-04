@@ -151,46 +151,12 @@ SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event & 
 }
 
 ////////
-
-SDL_Surface * SdlManager::createSurface(int width, int height)
-{
-	SDL_Surface * result;
-	unsigned long rmask, gmask, bmask, amask;
-
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	rmask = 0xff000000;
-	gmask = 0x00ff0000;
-	bmask = 0x0000ff00;
-	amask = 0x000000ff;
-#else
-	rmask = 0x000000ff;
-	gmask = 0x0000ff00;
-	bmask = 0x00ff0000;
-	amask = 0xff000000;
-#endif
-
-	result = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
-	return result;
-}
-
-////////
 //  TEXT WIDGET METHODS
 ////////
 
-SDL_Surface * SdlManager::createTextSurface(const char * text)
-{
-	std::cout << "SdlManager::createTextSurface() starting" << std::endl;
-	SDL_Color textColor = {0,0,0};
-	std::cout << "SdlManager::createTextSurface() half way" << std::endl;
-	if(!font) std::cout << "No font!" << std::endl;
-	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
-	std::cout << "SdlManager::createTextSurface() finished" << std::endl;
-	return surface;
-}
-
 WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yPos)
 {
-	SDL_Surface * surface = createTextSurface(text);
+	SDL_Surface * surface = sdlUtility.createTextSurface(text);
 	SDL_Rect rect = {xPos, yPos, surface->w, surface->h};
 
 	SdlWidget * widget = new SdlWidget(surface, rect);
@@ -206,9 +172,9 @@ TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, i
 	int height = 32;
 
 
-	SDL_Surface * surface = createSurface(width, 4*height);
+	SDL_Surface * surface = sdlUtility.createSurface(width, 4*height);
 
-	SDL_Rect rect = makeRect(xPos, yPos, width, height);
+	SDL_Rect rect = sdlUtility.makeRect(xPos, yPos, width, height);
 	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
 	widgetList.push_back(textDisplay);
 
@@ -285,10 +251,10 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 	if(!background)
 	{
 		std::cout << "CreateButton(): Generating button images... ";
-		background = createSurface(width, 4*height);
+		background = sdlUtility.createSurface(width, 4*height);
 		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 0, 0, 0, 255));
 
-		SDL_Surface * buttonFill = createSurface(width, height);
+		SDL_Surface * buttonFill = sdlUtility.createSurface(width, height);
 		SDL_PixelFormat * pixelFormat = buttonFill->format;
 
 		std::cout << "0/4";
@@ -296,8 +262,8 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 		{
 			int tone = 32 * (6-i);
 			SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(pixelFormat, tone, tone, tone, 255));
-			rect = makeRect(1, 1,            width-2, height-2);
-			clip = makeRect(1, 1 + i*height, width-2, height-2);
+			rect = sdlUtility.makeRect(1, 1,            width-2, height-2);
+			clip = sdlUtility.makeRect(1, 1 + i*height, width-2, height-2);
 			SDL_BlitSurface(buttonFill, &rect, background, &clip);
 			std::cout << "\b\b\b" << (i+1) << "/4";
 		}
@@ -306,7 +272,7 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 		std::cout << " done." << std::endl;
 	}
 
-	SDL_Surface * textSurface = createTextSurface(labelText);
+	SDL_Surface * textSurface = sdlUtility.createTextSurface(labelText);
 
 	int yPosText = (height - textSurface->h)/2;
 	int xPosText = (width - textSurface->w)/2;
@@ -316,8 +282,8 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 	std::cout << "0/4";
 	for(int i = 0; i < 4; i++)
 	{
-		rect = makeRect(xPosText, yPosText, width, height);
-		clip = makeRect(xPosText, yPosText + i*height, width, height );
+		rect = sdlUtility.makeRect(xPosText, yPosText, width, height);
+		clip = sdlUtility.makeRect(xPosText, yPosText + i*height, width, height );
 		SDL_BlitSurface(textSurface, NULL, background, &clip);
 		std::cout << "\b\b\b" << (i+1) << "/4";
 	}
@@ -325,7 +291,7 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 	std::cout << " done." << std::endl;
 
 	std::cout << "CreateButton(): Creating the button." << std::endl;
-	rect = makeRect(xPos, yPos, width, height);
+	rect = sdlUtility.makeRect(xPos, yPos, width, height);
 	SdlButton * button = new SdlButton(background, rect, callback);
 	widgetList.push_back(button);
 
@@ -356,18 +322,18 @@ SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SD
 
 	if(!background)
 	{
-		background = createSurface(width*2 - handleWidth*2, height);
+		background = sdlUtility.createSurface(width*2 - handleWidth*2, height);
 		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 127, 127, 127, 255));
 
-		SDL_Surface * handle = createSurface(handleWidth, height);
+		SDL_Surface * handle = sdlUtility.createSurface(handleWidth, height);
 		SDL_FillRect(handle, NULL, SDL_MapRGBA(handle->format, 64, 64, 64, 255));
 
-		SDL_Rect clip = makeRect(width - handleWidth, 0, handleWidth, height);
+		SDL_Rect clip = sdlUtility.makeRect(width - handleWidth, 0, handleWidth, height);
 		SDL_BlitSurface(handle, NULL, background, &clip);
 		SDL_FreeSurface(handle);
 	}
 
-	SDL_Rect rect = makeRect(xPos, yPos, width, height);
+	SDL_Rect rect = sdlUtility.makeRect(xPos, yPos, width, height);
 	SdlSlider * slider = new SdlSlider(background, rect, callback);
 	widgetList.push_back(slider);
 

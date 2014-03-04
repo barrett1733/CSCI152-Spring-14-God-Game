@@ -36,15 +36,6 @@ class SdlManager
 	unsigned long next_time;
 
 	void wait();
-	SDL_Rect makeRect(int x, int y, int w, int h)
-	{
-		SDL_Rect rect = {x, y, w, h};
-		return rect;
-	}
-
-	// Private functions
-	SDL_Surface * createSurface(int width, int height);
-	SDL_Surface * createTextSurface(const char * text);
 
 	static void testCallback(SDL_Event & event)
 	{

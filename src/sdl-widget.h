@@ -2,7 +2,7 @@
 #ifndef SDL_WIDGET_H_
 #define SDL_WIDGET_H_
 
-#include <SDL2/SDL.h>
+#include "sdl-utility.h"
 
 enum WidgetState {
 	WIDGET_OFF,
