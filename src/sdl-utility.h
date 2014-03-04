@@ -23,15 +23,20 @@ enum COLOR {
 class SdlUtility
 {
 	TTF_Font * font;
+
+	void set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+
 public:
 	SdlUtility();
 	~SdlUtility();
 
 	SDL_Rect makeRect(int x, int y, int w, int h);
 
-	SDL_Surface * createSurface(int width, int height);
-	SDL_Surface * createTextSurface(const char * text);
 	Uint32 getColor(ImageReference image, COLOR color);
+
+	ImageReference createSurface(int width, int height);
+	ImageReference createTextSurface(const char * text);
+	ImageReference createCircle(COLOR, int width, int height);
 };
 
 #endif
