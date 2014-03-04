@@ -46,8 +46,8 @@ ImageReference SdlButton::createButtonBackground(SDL_Rect & rect)
 	{
 		int tone = 32 * (6-i);
 		SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(pixelFormat, tone, tone, tone, 255));
-		rect = sdlUtility.makeRect(1, 1,            width-2, height-2);
-		clip = sdlUtility.makeRect(1, 1 + i*height, width-2, height-2);
+		rect = sdlUtility.createRect(1, 1,            width-2, height-2);
+		clip = sdlUtility.createRect(1, 1 + i*height, width-2, height-2);
 		SDL_BlitSurface(buttonFill, &rect, image, &clip);
 	}
 	SDL_FreeSurface(buttonFill);
@@ -71,8 +71,8 @@ void SdlButton::setText(const char * text)
 
 	for(int i = 0; i < 5; i++)
 	{
-		rect = sdlUtility.makeRect(xPosText, yPosText, width, height);
-		clip = sdlUtility.makeRect(xPosText, yPosText + i*height, width, height );
+		rect = sdlUtility.createRect(xPosText, yPosText, width, height);
+		clip = sdlUtility.createRect(xPosText, yPosText + i*height, width, height );
 		SDL_BlitSurface(textSurface, NULL, surface, &clip);
 	}
 	SDL_FreeSurface(textSurface);

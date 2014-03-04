@@ -186,7 +186,7 @@ TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, i
 
 	SDL_Surface * surface = sdlUtility.createSurface(width, 4*height);
 
-	SDL_Rect rect = sdlUtility.makeRect(xPos, yPos, width, height);
+	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
 	widgetList.push_back(textDisplay);
 
@@ -243,7 +243,7 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 }
 ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * text, int xPos, int yPos, int width, int height)
 {
-	SDL_Rect rect = sdlUtility.makeRect(xPos, yPos, width, height);
+	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlButton * button = new SdlButton(text, rect, callback);
 	widgetList.push_back(button);
 	return button;
@@ -278,12 +278,12 @@ SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SD
 		SDL_Surface * handle = sdlUtility.createSurface(handleWidth, height);
 		SDL_FillRect(handle, NULL, SDL_MapRGBA(handle->format, 64, 64, 64, 255));
 
-		SDL_Rect clip = sdlUtility.makeRect(width - handleWidth, 0, handleWidth, height);
+		SDL_Rect clip = sdlUtility.createRect(width - handleWidth, 0, handleWidth, height);
 		SDL_BlitSurface(handle, NULL, background, &clip);
 		SDL_FreeSurface(handle);
 	}
 
-	SDL_Rect rect = sdlUtility.makeRect(xPos, yPos, width, height);
+	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlSlider * slider = new SdlSlider(background, rect, callback);
 	widgetList.push_back(slider);
 

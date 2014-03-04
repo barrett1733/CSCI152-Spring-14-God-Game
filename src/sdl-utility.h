@@ -30,13 +30,14 @@ public:
 	SdlUtility();
 	~SdlUtility();
 
-	SDL_Rect makeRect(int x, int y, int w, int h);
+	SDL_Rect createRect(int x, int y, int w, int h);
 
 	Uint32 getColor(ImageReference image, COLOR color);
 
 	ImageReference createSurface(int width, int height);
 	ImageReference createTextSurface(const char * text);
 	ImageReference createCircle(COLOR, int width, int height);
+	ImageReference createTriangle(COLOR, int width, int height);
 };
 
 #endif
