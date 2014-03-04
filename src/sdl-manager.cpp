@@ -65,10 +65,12 @@ void SdlManager::update()
 {
 	SDL_Event event;
 
+	int subscriberCount = subscriberList.size();
+	int widgetCount = widgetList.size();
+
 	//Handle events on queue
 	while(SDL_PollEvent(&event) != 0)
 	{
-		int subscriberCount = subscriberList.size();
 		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
 			subscriberList[subscriberIndex]->handleEvent(event);
 
@@ -193,7 +195,6 @@ WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yP
 
 	SdlWidget * widget = new SdlWidget(surface, rect);
 	widgetList.push_back(widget);
-	widgetCount = widgetList.size();
 	return widget;
 }
 
@@ -210,7 +211,6 @@ TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, i
 	SDL_Rect rect = makeRect(xPos, yPos, width, height);
 	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
 	widgetList.push_back(textDisplay);
-	widgetCount = widgetList.size();
 
 	std::cout << "SdlManager::createTextDisplay() finished" << std::endl;
 	return textDisplay;
@@ -328,7 +328,6 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 	rect = makeRect(xPos, yPos, width, height);
 	SdlButton * button = new SdlButton(background, rect, callback);
 	widgetList.push_back(button);
-	widgetCount = widgetList.size();
 
 	std::cout << "SdlManager::createButton() finished" << std::endl;
 	return button;
@@ -336,11 +335,11 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 
 void SdlManager::destroyButton(ButtonReference & buttonRef)
 {
+	int widgetCount = widgetList.size();
 	for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
 		if(widgetList[widgetIndex] == buttonRef)
 			widgetList.erase(widgetList.begin()+widgetIndex);
 	delete buttonRef;
-	widgetCount = widgetList.size();
 }
 
 ////////
@@ -371,7 +370,6 @@ SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SD
 	SDL_Rect rect = makeRect(xPos, yPos, width, height);
 	SdlSlider * slider = new SdlSlider(background, rect, callback);
 	widgetList.push_back(slider);
-	widgetCount = widgetList.size();
 
 	std::cout << "createSlider() finished" << std::endl;
 	return slider;
