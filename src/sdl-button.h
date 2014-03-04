@@ -4,7 +4,7 @@
 
 #include "sdl-widget.h"
 
-class SdlButton : public SdlWidgetBase
+class SdlButton : public SdlWidget
 {
 
 public:

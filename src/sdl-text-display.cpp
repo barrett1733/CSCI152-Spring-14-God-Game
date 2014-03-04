@@ -2,7 +2,7 @@
 #include "sdl-text-display.h"
 
 SdlTextDisplay::SdlTextDisplay(SDL_Surface * surface_arg, SDL_Rect & rect, std::string text_arg) :
-	SdlWidgetBase(surface_arg, rect, 0)
+	SdlWidget(surface_arg, rect, 0)
 {
 	text = text_arg;
 	font = TTF_OpenFont( "res/arial.ttf", 16 );

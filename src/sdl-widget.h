@@ -4,9 +4,15 @@
 
 #include <SDL2/SDL.h>
 
-enum WidgetState { WIDGET_OFF, WIDGET_HOVER, WIDGET_ACTIVE, WIDGET_ON };
+enum WidgetState {
+	WIDGET_OFF,
+	WIDGET_HOVER,
+	WIDGET_ACTIVE,
+	WIDGET_ON,
+	WIDGET_DISABLED
+};
 
-class SdlWidgetBase
+class SdlWidget
 {
 protected:
 	void (*callback)(SDL_Event & event);
@@ -19,29 +25,17 @@ protected:
 
 	bool isInside(int xMouse, int yMouse);
 public:
-	SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
+	SdlWidget();
+	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect);
+	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
 
-	virtual ~SdlWidgetBase();
+	virtual ~SdlWidget();
 
 	SDL_Surface * getSurface();
 	const SDL_Rect * getClipping();
 	const SDL_Rect * getBoundingBox();
 
 	virtual void handleEvent(SDL_Event&);
-};
-
-typedef SdlWidgetBase * WidgetBaseReference;
-
-
-
-
-class SdlWidget : public SdlWidgetBase
-{
-public:
-	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
-		SdlWidgetBase(surface_arg, rect, 0)
-	{}
-	void handleEvent(SDL_Event&) {}
 };
 
 typedef SdlWidget * WidgetReference;

@@ -259,7 +259,7 @@ void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
 //  BASE WIDGET METHODS
 ////////
 
-void SdlManager::renderWidget(SdlWidgetBase * widget)
+void SdlManager::renderWidget(SdlWidget * widget)
 {
 	SDL_Surface * surface = widget->getSurface();
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
