@@ -37,7 +37,7 @@ SDL_Rect SdlUtility::makeRect(int x, int y, int w, int h)
 	return rect;
 }
 
-SDL_Surface * SdlUtility::createSurface(int width, int height)
+ImageReference SdlUtility::createSurface(int width, int height)
 {
 	SDL_Surface * result;
 	unsigned long rmask, gmask, bmask, amask;
@@ -58,7 +58,7 @@ SDL_Surface * SdlUtility::createSurface(int width, int height)
 	return result;
 }
 
-SDL_Surface * SdlUtility::createTextSurface(const char * text)
+ImageReference SdlUtility::createTextSurface(const char * text)
 {
 	SDL_Color textColor = {0,0,0};
 	if(!font) std::cerr << "No font!" << std::endl;
