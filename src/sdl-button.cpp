@@ -2,7 +2,7 @@
 #include "sdl-button.h"
 
 SdlButton::SdlButton(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
-	SdlWidgetBase(surface_arg, rect, callback_arg)
+	SdlWidget(surface_arg, rect, callback_arg)
 {}
 
 SdlButton::~SdlButton()

@@ -1,7 +1,37 @@
 
 #include "sdl-widget.h"
 
-SdlWidgetBase::SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlWidget::SdlWidget() :
+	callback(0),
+	surface(0),
+	state(WIDGET_DISABLED)
+{
+	clipping.x = 0;
+	clipping.y = 0;
+	clipping.w = 0;
+	clipping.h = 0;
+	boundingBox.x = 0;
+	boundingBox.y = 0;
+	boundingBox.w = 0;
+	boundingBox.h = 0;
+}
+
+SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
+	callback(0),
+	surface(surface_arg),
+	state(WIDGET_OFF)
+{
+	clipping.x = 0;
+	clipping.y = 0;
+	clipping.w = rect.w;
+	clipping.h = rect.h;
+	boundingBox.x = rect.x;
+	boundingBox.y = rect.y;
+	boundingBox.w = rect.w;
+	boundingBox.h = rect.h;
+}
+
+SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
 	callback(callback_arg),
 	surface(surface_arg),
 	state(WIDGET_OFF)
@@ -16,7 +46,7 @@ SdlWidgetBase::SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*
 	boundingBox.h = rect.h;
 }
 
-SdlWidgetBase::~SdlWidgetBase() {
+SdlWidget::~SdlWidget() {
 
 	if(surface) SDL_FreeSurface(surface);
 	clipping.x = 0;
@@ -31,27 +61,27 @@ SdlWidgetBase::~SdlWidgetBase() {
 	callback = 0;
 }
 
-void SdlWidgetBase::handleEvent(SDL_Event & event)
+void SdlWidget::handleEvent(SDL_Event & event)
 {
 	updateState(event);
 }
 
-SDL_Surface * SdlWidgetBase::getSurface()
+SDL_Surface * SdlWidget::getSurface()
 {
 	return surface;
 }
 
-const SDL_Rect * SdlWidgetBase::getClipping()
+const SDL_Rect * SdlWidget::getClipping()
 {
 	return & clipping;
 }
 
-const SDL_Rect * SdlWidgetBase::getBoundingBox()
+const SDL_Rect * SdlWidget::getBoundingBox()
 {
 	return & boundingBox;
 }
 
-void SdlWidgetBase::updateState(SDL_Event & event)
+void SdlWidget::updateState(SDL_Event & event)
 {
 	if( event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP )
 	{
@@ -87,7 +117,7 @@ void SdlWidgetBase::updateState(SDL_Event & event)
 	}
 }
 
-bool SdlWidgetBase::isInside(int xMouse, int yMouse)
+bool SdlWidget::isInside(int xMouse, int yMouse)
 {
 	bool inside = true;
 

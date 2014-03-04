@@ -27,7 +27,7 @@ class SdlManager
 	SDL_Renderer * renderer;
 	TTF_Font * font;
 
-	std::vector<SdlWidgetBase*> widgetList;
+	std::vector<SdlWidget*> widgetList;
 	int widgetCount;
 	int widgetIndex;
 
@@ -73,7 +73,7 @@ public:
 	void renderImage(SDL_Texture * image, int xPos, int yPos);
 
 	// Widget functions
-	void renderWidget(SdlWidgetBase * widget);
+	void renderWidget(SdlWidget * widget);
 
 	// Button functions
 	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);

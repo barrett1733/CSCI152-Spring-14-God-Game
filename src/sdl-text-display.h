@@ -7,7 +7,7 @@
 
 #include <string>
 
-class SdlTextDisplay : public SdlWidgetBase
+class SdlTextDisplay : public SdlWidget
 {
 	TTF_Font * font;
 	SDL_Color color;

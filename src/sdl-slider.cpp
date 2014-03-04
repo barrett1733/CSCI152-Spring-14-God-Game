@@ -2,7 +2,7 @@
 #include "sdl-slider.h"
 
 SdlSlider::SdlSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
-	SdlWidgetBase(surface_arg, rect, callback_arg),
+	SdlWidget(surface_arg, rect, callback_arg),
 	percent(0)
 {
 	clipping.x = clipping.w - clipping.h / 2;
