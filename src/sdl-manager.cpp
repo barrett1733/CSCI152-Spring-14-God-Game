@@ -93,6 +93,18 @@ void SdlManager::update()
 	wait();
 }
 
+void SdlManager::renderWidget(SdlWidget * widget)
+{
+	SDL_Surface * surface = widget->getSurface();
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
+	if(!surface) std::cerr << "No surface from widget." << std::endl;
+	const SDL_Rect * rect = widget->getBoundingBox();
+	if(rect->w == 0 || rect->h == 0)
+		std::cerr << "No size of widget." << std::endl;
+	SDL_RenderCopy(renderer, texture, widget->getClipping(), rect);
+	SDL_DestroyTexture(texture);
+}
+
 void SdlManager::wait()
 {
 	unsigned long now = SDL_GetTicks();
@@ -219,18 +231,6 @@ void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
 	SDL_QueryTexture(image, NULL, NULL, &width, &height);
 
 	return renderImage(image, xPos, yPos, width, height);
-}
-
-////////
-//  BASE WIDGET METHODS
-////////
-
-void SdlManager::renderWidget(SdlWidget * widget)
-{
-	SDL_Surface * surface = widget->getSurface();
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_RenderCopy(renderer, texture, widget->getClipping(), widget->getBoundingBox());
-	SDL_DestroyTexture(texture);
 }
 
 ////////
