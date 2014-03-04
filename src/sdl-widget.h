@@ -36,6 +36,16 @@ public:
 	const SDL_Rect * getBoundingBox();
 
 	virtual void handleEvent(SDL_Event&);
+
+	WidgetState getState();
+	void disable();
+	void enable();
+
+	void moveTo(int xPos, int yPos)
+	{
+		boundingBox.x = xPos;
+		boundingBox.y = yPos;
+	}
 };
 
 typedef SdlWidget * WidgetReference;
