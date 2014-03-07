@@ -3,8 +3,6 @@
 
 #include <vector>
 
-#include "position.h"
-
 using namespace std;
 /*
 WorldGeneration will initialize a two dimentional vector and fill every spot with the int that signifies open space(1). 
@@ -16,7 +14,7 @@ same size as the outer vector. Each different placeable item will have a differn
 open space: 1
 trees: 2
 iron: 3
-beasts: 4-8 (cow-4, villager-5, deer-6, wolf-7, ogre-8)
+entities: 4-8 (cow-4, villager-5, deer-6, wolf-7, ogre-8)
 town center: 9 
 shrine: 10
 
@@ -30,15 +28,16 @@ class WorldGeneration
 public:
 	WorldGeneration();
 	~WorldGeneration();
-	void PlaceTrees(/*int mapsize, */int difficulty, vector<vector<int> > & world_positions);
-	void PlaceStone(/*int mapsize, */int difficulty, vector<vector<int> > & world_positions);
-	void PlaceIron(/*int mapsize, */int difficulty, vector<vector<int> > & world_positions);
-	void PlaceBeasts(/*int mapsize, */int difficulty, vector<vector<int> > & world_positions);
-	void PlaceTownCenter(/*int mapsize, */int difficulty, vector<vector<int> > & world_positions);
-	void PlaceShrine(/*int mapsize, */int difficulty, vector<vector<int> > & world_positions);
+	void PlaceTrees(vector<vector<int> > & world_positions);
+	void PlaceStone(vector<vector<int> > & world_positions);
+	void PlaceIron(vector<vector<int> > & world_positions);
+	void PlaceEntities(vector<vector<int> > & world_positions);
+	void PlaceTownCenter(vector<vector<int> > & world_positions);
+	void PlaceShrine(vector<vector<int> > & world_positions);
 
 private:
 	vector<vector<int> > world_positions;
 }
+
 
 #endif

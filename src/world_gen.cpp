@@ -2,6 +2,7 @@
 #include "position.h"
 #include <iostream>
 #include <vector>
+#include<fstream>
 
 /*
 open space: 1
@@ -14,12 +15,25 @@ shrine: 10
 
 void WorldGeneration()
 {
-	int mapEdgeLength=/*get map size from text file*/;
-	std::vector<vector<int>> world_position(mapEdgeLength);
-	for(int outerIndex=0; outerIndex<=world_position.size(); outerIndex++)
+/*************************************************
+        get world info from text file
+*************************************************/
+	ifstream myReadFile;
+	std::vector<int> world_info;
+	void read_from_file();
 	{
-		for(int innerIndex=0; innerIndex<=world_position.size(); innerIndex++)
-			world_position[outerIndex][innerIndex]=1;
+		std::ifstream file("worldInfo.txt");
+		int n;
+		while( file >> n ) world_info.push_back(n) ;
+	}
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+	int mapEdgeLength=world_info[0];
+	std::vector<vector<int> > world_position(mapEdgeLength);
+	for(int outerIndex=0; outerIndex<world_position.size(); outerIndex++)
+	{
+		for(int innerIndex=0; innerIndex<world_position.size(); innerIndex++)
+			world_position[outerIndex].push_back(1);
 	}
 }
 
