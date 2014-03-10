@@ -2,11 +2,17 @@
 #ifndef SDL_WIDGET_H_
 #define SDL_WIDGET_H_
 
-#include <SDL2/SDL.h>
+#include "sdl-utility.h"
 
-enum WidgetState { WIDGET_OFF, WIDGET_HOVER, WIDGET_ACTIVE, WIDGET_ON };
+enum WidgetState {
+	WIDGET_OFF,
+	WIDGET_HOVER,
+	WIDGET_ACTIVE,
+	WIDGET_ON,
+	WIDGET_DISABLED
+};
 
-class SdlWidgetBase
+class SdlWidget
 {
 protected:
 	void (*callback)(SDL_Event & event);
@@ -17,31 +23,29 @@ protected:
 
 	void updateState(SDL_Event & event);
 
-	bool isInside(int xMouse, int yMouse);
+	virtual bool isInside(int xMouse, int yMouse);
 public:
-	SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
+	SdlWidget();
+	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect);
+	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
 
-	virtual ~SdlWidgetBase();
+	virtual ~SdlWidget();
 
 	SDL_Surface * getSurface();
 	const SDL_Rect * getClipping();
 	const SDL_Rect * getBoundingBox();
 
 	virtual void handleEvent(SDL_Event&);
-};
 
-typedef SdlWidgetBase * WidgetBaseReference;
+	WidgetState getState();
+	void disable();
+	void enable();
 
-
-
-
-class SdlWidget : public SdlWidgetBase
-{
-public:
-	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
-		SdlWidgetBase(surface_arg, rect, 0)
-	{}
-	void handleEvent(SDL_Event&) {}
+	void moveTo(int xPos, int yPos)
+	{
+		boundingBox.x = xPos;
+		boundingBox.y = yPos;
+	}
 };
 
 typedef SdlWidget * WidgetReference;

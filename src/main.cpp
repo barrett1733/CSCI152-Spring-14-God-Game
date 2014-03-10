@@ -1,11 +1,14 @@
 
 #include <iostream>
 #include <sstream>
-#include "sdl-manager.h"
+#include "game-manager.h"
+#include "sdl-triangle-slider.h"
 
-static bool running = true;
-static SliderReference slider = 0;
+static TriangleSliderReference triangleSlider;
 static TextDisplayReference textDisplay = 0;
+static TextDisplayReference textDisplayA = 0;
+static TextDisplayReference textDisplayB = 0;
+static TextDisplayReference textDisplayC = 0;
 
 inline std::string toString(double x)
 {
@@ -17,36 +20,48 @@ inline std::string toString(double x)
 void sliderCallback(SDL_Event & event)
 {
 	std::string text;
-	text += toString(100 * slider->getValue());
-	text += "%";
-	std::cout << "Slider set: " << slider->getValue() << std::endl;
-	textDisplay->setText(text);
-}
+	double a = triangleSlider->getValueA();
+	double b = triangleSlider->getValueB();
+	double c = triangleSlider->getValueC();
+	double t = a + b + c;
 
-void stopRunning(SDL_Event & event)
-{
-	std::cout << "stop running" << std::endl;
-	running = false;
+	text = "";
+	text += toString(a);
+	textDisplayA->setText(text);
+
+	text = "";
+	text += toString(b);
+	textDisplayB->setText(text);
+
+	text = "";
+	text += toString(c);
+	textDisplayC->setText(text);
+
+	text = "";
+	text += toString(t);
+	textDisplay->setText(text);
+
+	std::cout << "Slider set: "
+		<< a << " + "
+		<< b << " + "
+		<< c << " = "
+		<< t << std::endl;
 }
 
 int main(int argc, char **argv)
 {
-	sdl.test_setUp();
+	triangleSlider = new SdlTriangleSlider(sliderCallback);
 
-	// Main loop flag
-	//bool running = true;
+	textDisplay = sdl.createTextDisplay("t", 16, 130);
+	textDisplayA = sdl.createTextDisplay("a", 16, 150);
+	textDisplayB = sdl.createTextDisplay("b", 16, 170);
+	textDisplayC = sdl.createTextDisplay("c", 16, 190);
 
-	sdl.subscribeToEvent(stopRunning, SDL_QUIT);
-	sdl.subscribeToEvent(stopRunning, SDL_KEYDOWN, '\e');
-	sdl.createButton(stopRunning, 0, "Quit", 16, 552, 128, 32);
-	slider = sdl.createSlider(sliderCallback, 0, 16, 200);
-	textDisplay = sdl.createTextDisplay("", 16+256+16, 200);
+	sdl.addWidget((WidgetReference)triangleSlider);
 
-	// While application is running
-	while(running)
-	{
-		sdl.update();
-	}
+	triangleSlider->enable();
+
+	GameManager game;
 
 	return 0;
 }

@@ -1,36 +1,63 @@
-CXX = clang++
+CC = clang++
 SDL = -framework SDL2 -framework SDL2_image -framework SDL2_ttf
 # If your compiler is a bit older you may need to change -std=c++11 to -std=c++0x
-CXXFLAGS = -Wall -c
-#-std=c++11
-LDFLAGS = $(SDL)
-EXE = a.out
+CFLAGS = -Wall -c -std=c++11
+LFLAGS = $(SDL)
+SOURCES = main.cpp sdl-manager.cpp sdl-widget.cpp sdl-text-display.cpp sdl-button.cpp sdl-slider.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+EXECUTABLE = a.out
 
-all: $(EXE)
+all: $(EXECUTABLE)
 
-$(EXE): main.o sdl-manager.o sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o
-	$(CXX) $(LDFLAGS) $^ -o $@
+$(EXECUTABLE): main.o config.o sdl.a game-manager.o
+	$(CC) $(LFLAGS) $^ -o $@
 
-main.o: main.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+main.o: main.cpp game-manager.o
+	$(CC) $(CFLAGS) $< -o $@
 
-sdl-manager.o: sdl-manager.cpp sdl-widget.o sdl-button.o sdl-slider.o sdl-text-display.o
-	$(CXX) $(CXXFLAGS) $< -o $@
+config.o: config.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+sdl.a: sdl-manager.o
+	ar cr sdl.a sdl*.o
+
+sdl-manager.o: sdl-manager.cpp sdl-utility.o sdl-widget.o sdl-button.o sdl-slider.o sdl-triangle-slider.o sdl-text-display.o sdl-entity.o
+	$(CC) $(CFLAGS) $< -o $@
+
+sdl-utility.o: sdl-utility.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
 sdl-widget.o: sdl-widget.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 sdl-button.o: sdl-button.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 sdl-slider.o: sdl-slider.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
+
+sdl-triangle-slider.o: sdl-triangle-slider.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
 sdl-text-display.o: sdl-text-display.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
+
+sdl-entity.o: sdl-entity.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+game-manager.o: game-manager.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+astar:
+	$(CC) $(CFLAGS) -c test.cpp -o test.o
+	$(CC) $(CFLAGS) -c a-star.cpp -o a-star.o
+	$(CC) $(LFLAGS) test.o a-star.o -o test.out
 
 run:
-	./$(EXE)
+	./$(EXECUTABLE)
 
 clean:
-	rm *.o && rm $(EXE)
+	rm -f *.o
+	rm -f *.a
+	rm -f *.out
+	rm -f $(EXECUTABLE)

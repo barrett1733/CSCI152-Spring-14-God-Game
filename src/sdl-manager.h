@@ -27,7 +27,7 @@ class SdlManager
 	SDL_Renderer * renderer;
 	TTF_Font * font;
 
-	std::vector<SdlWidgetBase*> widgetList;
+	std::vector<SdlWidget*> widgetList;
 	int widgetCount;
 	int widgetIndex;
 
@@ -36,15 +36,6 @@ class SdlManager
 	unsigned long next_time;
 
 	void wait();
-	SDL_Rect makeRect(int x, int y, int w, int h)
-	{
-		SDL_Rect rect = {x, y, w, h};
-		return rect;
-	}
-
-	// Private functions
-	SDL_Surface * createSurface(int width, int height);
-	SDL_Surface * createTextSurface(const char * text);
 
 	static void testCallback(SDL_Event & event)
 	{
@@ -73,7 +64,12 @@ public:
 	void renderImage(SDL_Texture * image, int xPos, int yPos);
 
 	// Widget functions
-	void renderWidget(SdlWidgetBase * widget);
+	void addWidget(WidgetReference widget)
+	{
+		widgetList.push_back(widget);
+		widgetCount = widgetList.size();
+	}
+	void renderWidget(SdlWidget * widget);
 
 	// Button functions
 	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);

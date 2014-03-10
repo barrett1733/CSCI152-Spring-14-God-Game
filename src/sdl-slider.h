@@ -6,7 +6,7 @@
 
 #include "sdl-widget.h"
 
-class SdlSlider : public SdlWidgetBase
+class SdlSlider : public SdlWidget
 {
 	double percent;
 

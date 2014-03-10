@@ -65,10 +65,12 @@ void SdlManager::update()
 {
 	SDL_Event event;
 
+	int subscriberCount = subscriberList.size();
+	int widgetCount = widgetList.size();
+
 	//Handle events on queue
 	while(SDL_PollEvent(&event) != 0)
 	{
-		int subscriberCount = subscriberList.size();
 		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
 			subscriberList[subscriberIndex]->handleEvent(event);
 
@@ -89,6 +91,18 @@ void SdlManager::update()
 	SDL_RenderPresent( renderer );
 
 	wait();
+}
+
+void SdlManager::renderWidget(SdlWidget * widget)
+{
+	SDL_Surface * surface = widget->getSurface();
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
+	if(!surface) std::cerr << "No surface from widget." << std::endl;
+	const SDL_Rect * rect = widget->getBoundingBox();
+	if(rect->w == 0 || rect->h == 0)
+		std::cerr << "No size of widget." << std::endl;
+	SDL_RenderCopy(renderer, texture, widget->getClipping(), rect);
+	SDL_DestroyTexture(texture);
 }
 
 void SdlManager::wait()
@@ -149,51 +163,16 @@ SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event & 
 }
 
 ////////
-
-SDL_Surface * SdlManager::createSurface(int width, int height)
-{
-	SDL_Surface * result;
-	unsigned long rmask, gmask, bmask, amask;
-
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	rmask = 0xff000000;
-	gmask = 0x00ff0000;
-	bmask = 0x0000ff00;
-	amask = 0x000000ff;
-#else
-	rmask = 0x000000ff;
-	gmask = 0x0000ff00;
-	bmask = 0x00ff0000;
-	amask = 0xff000000;
-#endif
-
-	result = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
-	return result;
-}
-
-////////
 //  TEXT WIDGET METHODS
 ////////
 
-SDL_Surface * SdlManager::createTextSurface(const char * text)
-{
-	std::cout << "SdlManager::createTextSurface() starting" << std::endl;
-	SDL_Color textColor = {0,0,0};
-	std::cout << "SdlManager::createTextSurface() half way" << std::endl;
-	if(!font) std::cout << "No font!" << std::endl;
-	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
-	std::cout << "SdlManager::createTextSurface() finished" << std::endl;
-	return surface;
-}
-
 WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yPos)
 {
-	SDL_Surface * surface = createTextSurface(text);
+	SDL_Surface * surface = sdlUtility.createTextSurface(text);
 	SDL_Rect rect = {xPos, yPos, surface->w, surface->h};
 
 	SdlWidget * widget = new SdlWidget(surface, rect);
 	widgetList.push_back(widget);
-	widgetCount = widgetList.size();
 	return widget;
 }
 
@@ -205,12 +184,11 @@ TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, i
 	int height = 32;
 
 
-	SDL_Surface * surface = createSurface(width, 4*height);
+	SDL_Surface * surface = sdlUtility.createSurface(width, 4*height);
 
-	SDL_Rect rect = makeRect(xPos, yPos, width, height);
+	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
 	widgetList.push_back(textDisplay);
-	widgetCount = widgetList.size();
 
 	std::cout << "SdlManager::createTextDisplay() finished" << std::endl;
 	return textDisplay;
@@ -256,18 +234,6 @@ void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
 }
 
 ////////
-//  BASE WIDGET METHODS
-////////
-
-void SdlManager::renderWidget(SdlWidgetBase * widget)
-{
-	SDL_Surface * surface = widget->getSurface();
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_RenderCopy(renderer, texture, widget->getClipping(), widget->getBoundingBox());
-	SDL_DestroyTexture(texture);
-}
-
-////////
 //  BUTTON WIDGET METHODS
 ////////
 
@@ -275,72 +241,21 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 {
 	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
 }
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos, int width, int height)
+ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * text, int xPos, int yPos, int width, int height)
 {
-	std::cout << "SdlManager::createButton() starting" << std::endl;
-
-	SDL_Rect rect = {xPos, yPos, width, height};
-	SDL_Rect clip;
-
-	if(!background)
-	{
-		std::cout << "CreateButton(): Generating button images... ";
-		background = createSurface(width, 4*height);
-		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 0, 0, 0, 255));
-
-		SDL_Surface * buttonFill = createSurface(width, height);
-		SDL_PixelFormat * pixelFormat = buttonFill->format;
-
-		std::cout << "0/4";
-		for(int i = 0; i < 4; i++)
-		{
-			int tone = 32 * (6-i);
-			SDL_FillRect(buttonFill, NULL, SDL_MapRGBA(pixelFormat, tone, tone, tone, 255));
-			rect = makeRect(1, 1,            width-2, height-2);
-			clip = makeRect(1, 1 + i*height, width-2, height-2);
-			SDL_BlitSurface(buttonFill, &rect, background, &clip);
-			std::cout << "\b\b\b" << (i+1) << "/4";
-		}
-		SDL_FreeSurface(buttonFill);
-
-		std::cout << " done." << std::endl;
-	}
-
-	SDL_Surface * textSurface = createTextSurface(labelText);
-
-	int yPosText = (height - textSurface->h)/2;
-	int xPosText = (width - textSurface->w)/2;
-	if(xPosText < 8) xPosText = 8;
-
-	std::cout << "CreateButton(): Writing text to button images... ";
-	std::cout << "0/4";
-	for(int i = 0; i < 4; i++)
-	{
-		rect = makeRect(xPosText, yPosText, width, height);
-		clip = makeRect(xPosText, yPosText + i*height, width, height );
-		SDL_BlitSurface(textSurface, NULL, background, &clip);
-		std::cout << "\b\b\b" << (i+1) << "/4";
-	}
-	SDL_FreeSurface(textSurface);
-	std::cout << " done." << std::endl;
-
-	std::cout << "CreateButton(): Creating the button." << std::endl;
-	rect = makeRect(xPos, yPos, width, height);
-	SdlButton * button = new SdlButton(background, rect, callback);
+	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
+	SdlButton * button = new SdlButton(text, rect, callback);
 	widgetList.push_back(button);
-	widgetCount = widgetList.size();
-
-	std::cout << "SdlManager::createButton() finished" << std::endl;
 	return button;
 }
 
 void SdlManager::destroyButton(ButtonReference & buttonRef)
 {
+	int widgetCount = widgetList.size();
 	for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
 		if(widgetList[widgetIndex] == buttonRef)
 			widgetList.erase(widgetList.begin()+widgetIndex);
 	delete buttonRef;
-	widgetCount = widgetList.size();
 }
 
 ////////
@@ -357,21 +272,20 @@ SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SD
 
 	if(!background)
 	{
-		background = createSurface(width*2 - handleWidth*2, height);
+		background = sdlUtility.createSurface(width*2 - handleWidth*2, height);
 		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 127, 127, 127, 255));
 
-		SDL_Surface * handle = createSurface(handleWidth, height);
+		SDL_Surface * handle = sdlUtility.createSurface(handleWidth, height);
 		SDL_FillRect(handle, NULL, SDL_MapRGBA(handle->format, 64, 64, 64, 255));
 
-		SDL_Rect clip = makeRect(width - handleWidth, 0, handleWidth, height);
+		SDL_Rect clip = sdlUtility.createRect(width - handleWidth, 0, handleWidth, height);
 		SDL_BlitSurface(handle, NULL, background, &clip);
 		SDL_FreeSurface(handle);
 	}
 
-	SDL_Rect rect = makeRect(xPos, yPos, width, height);
+	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlSlider * slider = new SdlSlider(background, rect, callback);
 	widgetList.push_back(slider);
-	widgetCount = widgetList.size();
 
 	std::cout << "createSlider() finished" << std::endl;
 	return slider;

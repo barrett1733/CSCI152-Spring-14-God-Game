@@ -1,7 +1,37 @@
 
 #include "sdl-widget.h"
 
-SdlWidgetBase::SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlWidget::SdlWidget() :
+	callback(0),
+	surface(0),
+	state(WIDGET_DISABLED)
+{
+	clipping.x = 0;
+	clipping.y = 0;
+	clipping.w = 0;
+	clipping.h = 0;
+	boundingBox.x = 0;
+	boundingBox.y = 0;
+	boundingBox.w = 0;
+	boundingBox.h = 0;
+}
+
+SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
+	callback(0),
+	surface(surface_arg),
+	state(WIDGET_OFF)
+{
+	clipping.x = 0;
+	clipping.y = 0;
+	clipping.w = rect.w;
+	clipping.h = rect.h;
+	boundingBox.x = rect.x;
+	boundingBox.y = rect.y;
+	boundingBox.w = rect.w;
+	boundingBox.h = rect.h;
+}
+
+SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
 	callback(callback_arg),
 	surface(surface_arg),
 	state(WIDGET_OFF)
@@ -16,7 +46,7 @@ SdlWidgetBase::SdlWidgetBase(SDL_Surface * surface_arg, SDL_Rect & rect, void (*
 	boundingBox.h = rect.h;
 }
 
-SdlWidgetBase::~SdlWidgetBase() {
+SdlWidget::~SdlWidget() {
 
 	if(surface) SDL_FreeSurface(surface);
 	clipping.x = 0;
@@ -31,28 +61,49 @@ SdlWidgetBase::~SdlWidgetBase() {
 	callback = 0;
 }
 
-void SdlWidgetBase::handleEvent(SDL_Event & event)
+bool SdlWidget::isInside(int xMouse, int yMouse)
 {
-	updateState(event);
+	bool inside = true;
+
+	//Mouse is left of the button
+	if( xMouse < boundingBox.x )
+		inside = false;
+
+	//Mouse is right of the button
+	else if( xMouse > boundingBox.x + boundingBox.w )
+		inside = false;
+
+	//Mouse above the button
+	else if( yMouse < boundingBox.y )
+		inside = false;
+
+	//Mouse below the button
+	else if( yMouse > boundingBox.y + boundingBox.h )
+		inside = false;
+
+	return inside;
 }
 
-SDL_Surface * SdlWidgetBase::getSurface()
+SDL_Surface * SdlWidget::getSurface()
 {
 	return surface;
 }
 
-const SDL_Rect * SdlWidgetBase::getClipping()
+const SDL_Rect * SdlWidget::getClipping()
 {
 	return & clipping;
 }
 
-const SDL_Rect * SdlWidgetBase::getBoundingBox()
+const SDL_Rect * SdlWidget::getBoundingBox()
 {
 	return & boundingBox;
 }
 
-void SdlWidgetBase::updateState(SDL_Event & event)
+void SdlWidget::updateState(SDL_Event & event)
 {
+	if(state == WIDGET_DISABLED)
+		return;
+
 	if( event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP )
 	{
 		//Get mouse position
@@ -87,25 +138,22 @@ void SdlWidgetBase::updateState(SDL_Event & event)
 	}
 }
 
-bool SdlWidgetBase::isInside(int xMouse, int yMouse)
+void SdlWidget::handleEvent(SDL_Event & event)
 {
-	bool inside = true;
+	updateState(event);
+}
 
-	//Mouse is left of the button
-	if( xMouse < boundingBox.x )
-		inside = false;
+WidgetState SdlWidget::getState()
+{
+	return state;
+}
 
-	//Mouse is right of the button
-	else if( xMouse > boundingBox.x + boundingBox.w )
-		inside = false;
+void SdlWidget::enable()
+{
+	state = WIDGET_OFF;
+}
 
-	//Mouse above the button
-	else if( yMouse < boundingBox.y )
-		inside = false;
-
-	//Mouse below the button
-	else if( yMouse > boundingBox.y + boundingBox.h )
-		inside = false;
-
-	return inside;
+void SdlWidget::disable()
+{
+	state = WIDGET_DISABLED;
 }
