@@ -6,11 +6,19 @@
 
 using namespace std;
 
-Config::Config(string file)
+enum ConfigType {
+	CT_NONE,
+	CT_STRING,
+	CT_NUMBER,
+	CT_DECIMAL
+};
+
+Config::Config(std::string file)
 {
-	string property;
-	string type;
-	string valueString;
+	std::string property;
+	std::string typeString;
+	ConfigType type;
+	std::string valueString;
 	int    valueNumber;
 	double valueDecimal;
 
@@ -21,21 +29,27 @@ Config::Config(string file)
 	else
 	{
 		fin >> property;
-		fin >> type;
+		fin >> typeString;
+		type = CT_NONE;
+
+		if(typeString == "STRING") type = CT_STRING;
+		else if(typeString == "NUMBER") type = CT_NUMBER;
+		else if(typeString == "DECIMAL") type = CT_DECIMAL;
+
 		switch(type)
 		{
-			case "STRING":
+			case CT_STRING:
 				getline(fin, valueString);
 				setProperty(property, valueString);
 				break;
 
-			case "NUMBER":
+			case CT_NUMBER:
 				fin >> valueNumber;
 				setProperty(property, valueNumber);
 				break;
 
-			case "DECIMAL":
-				fin >> valueDecimcal;
+			case CT_DECIMAL:
+				fin >> valueDecimal;
 				setProperty(property, valueDecimal);
 				break;
 
