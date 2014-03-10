@@ -26,6 +26,7 @@ Config::Config(std::string file)
 
 	if(fin.fail())
 		cerr << "Config file not found: " << file << endl;
+
 	else
 	{
 		fin >> property;
