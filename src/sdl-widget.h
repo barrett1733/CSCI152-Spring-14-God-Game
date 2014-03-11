@@ -9,7 +9,8 @@ enum WidgetState {
 	WIDGET_HOVER,
 	WIDGET_ACTIVE,
 	WIDGET_ON,
-	WIDGET_DISABLED
+	WIDGET_DISABLED,
+	WIDGET_HIDDEN,
 };
 
 class SdlWidget
@@ -40,6 +41,8 @@ public:
 	WidgetState getState();
 	void disable();
 	void enable();
+	void hide();
+	void show();
 
 	void moveTo(int xPos, int yPos)
 	{

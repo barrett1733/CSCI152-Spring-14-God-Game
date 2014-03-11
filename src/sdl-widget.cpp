@@ -86,6 +86,8 @@ bool SdlWidget::isInside(int xMouse, int yMouse)
 
 SDL_Surface * SdlWidget::getSurface()
 {
+	if(state == WIDGET_HIDDEN)
+		return 0;
 	return surface;
 }
 
@@ -101,7 +103,7 @@ const SDL_Rect * SdlWidget::getBoundingBox()
 
 void SdlWidget::updateState(SDL_Event & event)
 {
-	if(state == WIDGET_DISABLED)
+	if(state == WIDGET_DISABLED || state == WIDGET_HIDDEN)
 		return;
 
 	if( event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP )
@@ -156,4 +158,14 @@ void SdlWidget::enable()
 void SdlWidget::disable()
 {
 	state = WIDGET_DISABLED;
+}
+
+void SdlWidget::show()
+{
+	state = WIDGET_ACTIVE;
+}
+
+void SdlWidget::hide()
+{
+	state = WIDGET_HIDDEN;
 }

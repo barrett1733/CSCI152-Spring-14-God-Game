@@ -16,7 +16,7 @@ GameManager::GameManager()
 	quickButton       = sdl.createButton(quitGame, 0, "Quit", 200, 300, 200, 50);
 
 	newGameButton->disable();
-	showCreditsButton->disable();
+	showCreditsButton->hide();
 
 	// While application is running
 	while(mode != GM_QUIT)

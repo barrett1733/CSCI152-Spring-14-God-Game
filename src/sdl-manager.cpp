@@ -96,11 +96,10 @@ void SdlManager::update()
 void SdlManager::renderWidget(SdlWidget * widget)
 {
 	SDL_Surface * surface = widget->getSurface();
+	if(!surface) return;
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
-	if(!surface) std::cerr << "No surface from widget." << std::endl;
 	const SDL_Rect * rect = widget->getBoundingBox();
-	if(rect->w == 0 || rect->h == 0)
-		std::cerr << "No size of widget." << std::endl;
+	if(rect->w == 0 || rect->h == 0) return;
 	SDL_RenderCopy(renderer, texture, widget->getClipping(), rect);
 	SDL_DestroyTexture(texture);
 }
