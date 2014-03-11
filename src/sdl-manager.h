@@ -20,6 +20,13 @@
 const int FRAME_RATE = 30;
 const unsigned int TICK_INTERVAL = 1000/FRAME_RATE;
 
+enum {
+	WL_BACKGROUND,
+	WL_NON_INTERACTIVE,
+	WL_INTERACTIVE,
+
+	WL_COUNT
+};
 
 class SdlManager
 {
@@ -27,11 +34,9 @@ class SdlManager
 	SDL_Renderer * renderer;
 	TTF_Font * font;
 
-	std::vector<SdlWidget*> widgetList;
-	int widgetCount;
-	int widgetIndex;
-
 	std::vector<SdlEventSubscriber*> subscriberList;
+	std::vector<SdlWidget*> widgetList[WL_COUNT];
+	int widgetCount[WL_COUNT];
 
 	unsigned long next_time;
 
@@ -64,10 +69,14 @@ public:
 	void renderImage(SDL_Texture * image, int xPos, int yPos);
 
 	// Widget functions
+	void addWidget(WidgetReference widget, int widgetLayer)
+	{
+		widgetList[widgetLayer].push_back(widget);
+		widgetCount[widgetLayer] = widgetList[widgetLayer].size();
+	}
 	void addWidget(WidgetReference widget)
 	{
-		widgetList.push_back(widget);
-		widgetCount = widgetList.size();
+		return addWidget(widget, WL_INTERACTIVE);
 	}
 	void renderWidget(SdlWidget * widget);
 

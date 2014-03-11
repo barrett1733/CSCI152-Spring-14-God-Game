@@ -66,7 +66,6 @@ void SdlManager::update()
 	SDL_Event event;
 
 	int subscriberCount = subscriberList.size();
-	int widgetCount = widgetList.size();
 
 	//Handle events on queue
 	while(SDL_PollEvent(&event) != 0)
@@ -74,8 +73,8 @@ void SdlManager::update()
 		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
 			subscriberList[subscriberIndex]->handleEvent(event);
 
-		for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-			widgetList[widgetIndex]->handleEvent(event);
+		for(int widgetIndex = 0; widgetIndex < widgetCount[WL_INTERACTIVE]; ++widgetIndex)
+			widgetList[WL_INTERACTIVE][widgetIndex]->handleEvent(event);
 	} // end event handler loop
 
 	// Clear screen
@@ -84,8 +83,9 @@ void SdlManager::update()
 	SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
 
 	// Render everything
-	for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-		renderWidget(widgetList[widgetIndex]);
+	for(int layerIndex = 0; layerIndex < WL_COUNT; layerIndex ++)
+		for(int widgetIndex = 0; widgetIndex < widgetCount[layerIndex]; ++widgetIndex)
+			renderWidget(widgetList[layerIndex][widgetIndex]);
 
 	// Update screen
 	SDL_RenderPresent( renderer );
@@ -171,7 +171,7 @@ WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yP
 	SDL_Rect rect = {xPos, yPos, surface->w, surface->h};
 
 	SdlWidget * widget = new SdlWidget(surface, rect);
-	widgetList.push_back(widget);
+	addWidget(widget, WL_NON_INTERACTIVE);
 	return widget;
 }
 
@@ -182,12 +182,11 @@ TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, i
 	int width = 256;
 	int height = 32;
 
-
 	SDL_Surface * surface = sdlUtility.createSurface(width, 4*height);
 
 	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
-	widgetList.push_back(textDisplay);
+	addWidget(textDisplay, WL_NON_INTERACTIVE);
 
 	std::cout << "SdlManager::createTextDisplay() finished" << std::endl;
 	return textDisplay;
@@ -244,16 +243,16 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SD
 {
 	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlButton * button = new SdlButton(text, rect, callback);
-	widgetList.push_back(button);
+	addWidget(button, WL_INTERACTIVE);
 	return button;
 }
 
 void SdlManager::destroyButton(ButtonReference & buttonRef)
 {
-	int widgetCount = widgetList.size();
-	for(widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-		if(widgetList[widgetIndex] == buttonRef)
-			widgetList.erase(widgetList.begin()+widgetIndex);
+	int widgetCount = widgetList[WL_INTERACTIVE].size();
+	for(int widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+		if(widgetList[WL_INTERACTIVE][widgetIndex] == buttonRef)
+			widgetList[WL_INTERACTIVE].erase(widgetList[WL_INTERACTIVE].begin()+widgetIndex);
 	delete buttonRef;
 }
 
@@ -284,7 +283,7 @@ SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SD
 
 	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlSlider * slider = new SdlSlider(background, rect, callback);
-	widgetList.push_back(slider);
+	addWidget(slider, WL_INTERACTIVE);
 
 	std::cout << "createSlider() finished" << std::endl;
 	return slider;
