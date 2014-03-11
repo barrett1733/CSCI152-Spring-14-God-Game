@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 {
 	triangleSlider = new SdlTriangleSlider(sliderCallback);
 
-	textDisplay = sdl.createTextDisplay("t", 16, 130);
+	textDisplay  = sdl.createTextDisplay("t", 16, 130);
 	textDisplayA = sdl.createTextDisplay("a", 16, 150);
 	textDisplayB = sdl.createTextDisplay("b", 16, 170);
 	textDisplayC = sdl.createTextDisplay("c", 16, 190);
