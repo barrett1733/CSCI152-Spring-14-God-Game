@@ -12,23 +12,17 @@
 	int cost;
  }
 
- // Entity class for miracle to enable manager to interact with entities
-class MiracleEntity:Entity{
-	//	static int AOE=0;
-	//	virtual Action()=0;
-}
-
-typedef std::map<std::string, std::int> MiracleMap;
-typedef std::pair<std::string, std::int> MiraclePair;
+typedef std::map<std::int, std::int> MiracleMap;
+typedef std::pair<std::int, std::int> MiraclePair;
 
 //miracle manager. go between for player and map
 class MiracleManager:Config{
 	MiracleMap miracleList;
 	ResourceManager *resources;
 	
-	Miracle(std::string fileName,ResourceManager *);
+	Miracle(std::string fileName,ResourceManager *); // constructor
 	int getCost(std::string);
-	int getET_Name(std::string);
-	bool castMiracle(std::string, Callback input);
-	void setResourceManager(ResourceManager *);
+	EntityType getET_Name(std::string); // finds ET_Name based on string name?
+	bool castMiracle(std::string, Callback input); // casts/creates entity Miracle defined by string, at mouse location on call back?
+	void setResourceManager(ResourceManager *); // sets resource manager to take from
 }
