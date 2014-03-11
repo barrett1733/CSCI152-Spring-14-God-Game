@@ -21,9 +21,9 @@ void SdlButton::handleEvent(SDL_Event & event)
 
 	if(state == WIDGET_ON)
 	{
+		state = WIDGET_OFF;
 		if(callback)
 			callback(event);
-		state = WIDGET_OFF;
 	}
 
 	// Update button appearance for button state

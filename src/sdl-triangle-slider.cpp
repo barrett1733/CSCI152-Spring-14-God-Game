@@ -92,12 +92,11 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 		callback(event);
 	}
 
-
 	if(state == WIDGET_ON)
 	{
+		state = WIDGET_OFF;
 		if(callback)
 			callback(event);
-		state = WIDGET_OFF;
 	}
 }
 
