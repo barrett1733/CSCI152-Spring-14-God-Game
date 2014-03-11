@@ -13,11 +13,14 @@ enum GameMode {
 
 class GameManager
 {
+	static GameManager * self;
 	static GameMode mode;
 
 	ButtonReference newGameButton;
 	ButtonReference showCreditsButton;
-	ButtonReference quickButton;
+	ButtonReference quitGameButton;
+
+	WidgetReference mapView;
 
 	static void newGame(SDL_Event & event);
 	static void showCredits(SDL_Event & event);
