@@ -79,6 +79,8 @@ Uint32 SdlUtility::getColor(ImageReference image, COLOR color)
 	case C_CYAN:    return SDL_MapRGBA(image->format,   0, 255, 255, 255); break;
 	case C_MAGENTA: return SDL_MapRGBA(image->format, 255,   0, 255, 255); break;
 	case C_YELLOW:  return SDL_MapRGBA(image->format, 255, 255,   0, 255); break;
+
+	case C_BEIGE:   return SDL_MapRGBA(image->format, 255, 255, 191, 255); break;
 	}
 }
 

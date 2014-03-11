@@ -18,6 +18,8 @@ enum COLOR {
 	C_CYAN,
 	C_MAGENTA,
 	C_YELLOW,
+
+	C_BEIGE,
 };
 
 class SdlUtility
