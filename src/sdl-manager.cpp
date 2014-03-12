@@ -266,23 +266,9 @@ SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SD
 {
 	std::cout << "SdlManager::createSlider()" << std::endl;
 
-	int handleWidth = height/2;
-
-	if(!background)
-	{
-		background = sdlUtility.createSurface(width*2 - handleWidth*2, height);
-		SDL_FillRect(background, NULL, SDL_MapRGBA(background->format, 127, 127, 127, 255));
-
-		SDL_Surface * handle = sdlUtility.createSurface(handleWidth, height);
-		SDL_FillRect(handle, NULL, SDL_MapRGBA(handle->format, 64, 64, 64, 255));
-
-		SDL_Rect clip = sdlUtility.createRect(width - handleWidth, 0, handleWidth, height);
-		SDL_BlitSurface(handle, NULL, background, &clip);
-		SDL_FreeSurface(handle);
-	}
 
 	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
-	SdlSlider * slider = new SdlSlider(background, rect, callback);
+	SdlSlider * slider = new SdlSlider(rect, callback);
 	addWidget(slider, WL_INTERACTIVE);
 
 	std::cout << "createSlider() finished" << std::endl;
