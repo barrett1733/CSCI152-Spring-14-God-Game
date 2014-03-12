@@ -13,15 +13,34 @@ GameManager::GameManager()
 	self = this;
 	mode = GM_MENU;
 
+	callbackMap["newGame()"]          = newGame;
+	callbackMap["showCredits()"]      = showCredits;
+	callbackMap["quitGame()"]         = quitGame;
+	callbackMap["triangleSliderCallback()"]   = triangleSliderCallback;
+
+	buttonIndexMap["NEW_GAME"]        = MM_NEW_GAME;
+	buttonIndexMap["SHOW_CREDITS"]    = MM_SHOW_CREDITS;
+	buttonIndexMap["QUIT_GAME"]       = MM_QUIT_GAME;
+	buttonIndexMap["TRIANGLE_SLIDER"] = MM_TRIANGLE_SLIDER;
+	buttonIndexMap["WORSHIP_SLIDER"]  = MM_WORSHIP_SLIDER;
+	buttonIndexMap["MAP_VIEW"]        = MM_MAP_VIEW;
+
+	for(widgetIndex = MM_ERROR; widgetIndex < MM_COUNT; widgetIndex ++)
+		self->widgetList[widgetIndex] = 0;
+
+	widgetIndex = MM_ERROR;
+	callbackName = "";
+	buttonConfig = 0;
+
 	load("main-menu.cfg");
 
 	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
 
-	mapView = new SdlMapView(200,0,600,600);
-	mapView->hide();
-	sdl.addWidget(mapView, WL_BACKGROUND);
+	self->widgetList[MM_MAP_VIEW] = new SdlMapView(200,0,600,600);
+	self->widgetList[MM_MAP_VIEW]->hide();
+	sdl.addWidget(self->widgetList[MM_MAP_VIEW], WL_BACKGROUND);
 
 
 	// While application is running
@@ -36,25 +55,31 @@ void GameManager::newGame(SDL_Event & event)
 {
 	std::cout << "New Game" << std::endl;
 
-	if(self->button[MM_NEW_GAME])
-		self->button[MM_NEW_GAME]->hide();
+	std::cout << "Hide Button: New Game " << self->widgetList[MM_NEW_GAME] << std::endl;
+	if(self->widgetList[MM_NEW_GAME])
+		self->widgetList[MM_NEW_GAME]->hide();
 
-	if(self->button[MM_SHOW_CREDITS])
-		self->button[MM_SHOW_CREDITS]->hide();
+	std::cout << "Hide Button: Show Credits " << self->widgetList[MM_SHOW_CREDITS] << std::endl;
+	if(self->widgetList[MM_SHOW_CREDITS])
+		self->widgetList[MM_SHOW_CREDITS]->hide();
 
-	if(self->button[MM_QUIT_GAME])
-		self->button[MM_QUIT_GAME]->moveTo(16,16);
+	std::cout << "Move Button: Quit Game " << self->widgetList[MM_QUIT_GAME] << std::endl;
+	if(self->widgetList[MM_QUIT_GAME])
+		self->widgetList[MM_QUIT_GAME]->moveTo(16,16);
 
+	if(self->widgetList[MM_TRIANGLE_SLIDER])
+		self->widgetList[MM_TRIANGLE_SLIDER]->show();
 
-	if(self->mapView)
-		self->mapView->show();
+	std::cout << "Show: Map View" << std::endl;
+	if(self->widgetList[MM_MAP_VIEW])
+		self->widgetList[MM_MAP_VIEW]->show();
 
 	//mode = GM_QUIT;
 }
 
 void GameManager::showCredits(SDL_Event & event)
 {
-	std::cout << "Show Credits" << std:: endl;
+	std::cout << "Show Credits (NOT IMPLEMENTED - QUITING)" << std:: endl;
 	mode = GM_QUIT;
 }
 
@@ -66,62 +91,77 @@ void GameManager::quitGame(SDL_Event & event)
 
 void GameManager::sliderCallback(SDL_Event & event)
 {
-
-	double a = self->triangleSlider->getValueA();
-	double b = self->triangleSlider->getValueB();
-	double c = self->triangleSlider->getValueC();
-	std::cout << "Triangle Update: " << a << ", " << b << ", " << c << std::endl;
+	double value = ((SliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValue();
+	std::cout << "Slider Update: " << value << std::endl;
+}
+void GameManager::triangleSliderCallback(SDL_Event & event)
+{
+	double valueA = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueA();
+	double valueB = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueB();
+	double valueC = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueC();
+	std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
 }
 
 // From Config
 bool GameManager::setProperty(std::string property, std::string value)
 {
 	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
-	if(property == "label")
+
+	if(property == "widget_id")
 	{
-		targetButtonLabel = value;
-
-		if(value == "New Game")
-		{
-			targetButtonIndex = MM_NEW_GAME;
-			targetButtonCallback = newGame;
-		}
-
-		else if(value == "Show Credits")
-		{
-			targetButtonIndex = MM_SHOW_CREDITS;
-			targetButtonCallback = showCredits;
-		}
-
-		else if(value == "Quit Game")
-		{
-			targetButtonIndex = MM_QUIT_GAME;
-			targetButtonCallback = quitGame;
-		}
-
-		else
+		if(!buttonIndexMap[value])
 			return false;
+		widgetIndex = buttonIndexMap[value];
+		buttonConfig |= BCFG_INDEX;
 	}
-	else if(property == "action")
-	{
-		if(value == "create button")
-		{
-			std::cout << "createRect: " << rect.x << ", " << rect.y << ", " << rect.w << ", " << rect.h << std::endl;
-			std::cout << "new SdlButton: " << targetButtonLabel << std::endl;
-			button[targetButtonIndex] = new SdlButton(targetButtonLabel.c_str(), rect, targetButtonCallback);
 
-			sdl.addWidget(button[targetButtonIndex], WL_INTERACTIVE);
-		}
-		else if(value == "create triangle")
-		{
-			std::cout << "GameManager:  I should totally " << value << std::endl;
-			triangleSlider = new SdlTriangleSlider(rect, sliderCallback);
-			sdl.addWidget(triangleSlider, WL_INTERACTIVE);
-		}
-		else return false;
+	else if(property == "label")
+	{
+		buttonLabel = value;
+		buttonConfig |= BCFG_LABEL;
 	}
-	else
-		return false;
+
+	else if(property == "callback")
+	{
+		if(!callbackMap[value])
+			return false;
+		callbackName = value;
+		buttonConfig |= BCFG_CALLBACK;
+	}
+
+	else if(property == "create")
+	{
+		if(buttonConfig != BCFG_VALID)
+		{
+			std::cerr << "Invalid Button Configuration" << std::endl;
+			return false;
+		}
+
+		if(value == "button")
+			widgetList[widgetIndex] = new SdlButton(buttonLabel.c_str(), rect, callbackMap[callbackName]);
+
+		else if(value == "slider")
+			widgetList[widgetIndex] = new SdlSlider(rect, callbackMap[callbackName]);
+
+		else if(value == "triangle-slider")
+			widgetList[widgetIndex] = new SdlTriangleSlider(rect, callbackMap[callbackName]);
+
+		else return false;
+
+		sdl.addWidget(widgetList[widgetIndex], WL_INTERACTIVE);
+		buttonConfig = 0;
+	}
+
+	else if(property == "visibility")
+	{
+		if(value == "hidden")
+		{
+			widgetList[widgetIndex]->hide();
+			std::cout << "Trying to hide: " << buttonLabel << " [" << widgetIndex << "]" << std::endl;
+		}
+	}
+
+	else return false;
 
 	return true;
 }
