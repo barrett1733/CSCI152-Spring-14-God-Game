@@ -2,7 +2,10 @@
 #include "position.h"
 #include <iostream>
 #include <vector>
-#include<fstream>
+#include <fstream>
+#include <random>
+
+using namespace std;
 
 /*
 open space: 1
@@ -13,28 +16,46 @@ town center: 9
 shrine: 10
 */
 
-void WorldGeneration()
+WorldGeneration::WorldGeneration()
 {
 /*************************************************
         get world info from text file
 *************************************************/
-	ifstream myReadFile;
-	std::vector<int> world_info;
+	
+	vector<int> *world_info=new vector<int>;
 	void read_from_file();
 	{
-		std::ifstream file("worldInfo.txt");
+		ifstream file("worldInfo.txt");
 		int n;
-		while( file >> n ) world_info.push_back(n) ;
+		while( file >> n ) world_info->push_back(n) ;
 	}
+	
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
-	int mapEdgeLength=world_info[0];
-	std::vector<vector<int> > world_position(mapEdgeLength);
-	for(int outerIndex=0; outerIndex<world_position.size(); outerIndex++)
+	int mapsize=0;//the number is the index of the variable name, aka the line number in the text file
+	int difficulty=1;
+	int villagers=2;
+	int cows=3;
+	//vector<int>& world_info = *world_info;
+	int mapEdgeLength=(*world_info)[mapsize];
+	
+	vector<vector<int> > *world_positions=new vector<vector<int> >;
+	world_positions->resize(mapsize);
+	
+}
+
+void WorldGeneration::PlaceEmptySpace(vector<vector<int> > & world_positions)
+{
+	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
-		for(int innerIndex=0; innerIndex<world_position.size(); innerIndex++)
-			world_position[outerIndex].push_back(1);
+		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
+			world_positions[outerIndex].push_back(1);
 	}
+}
+
+void WorldGeneration::PlaceTrees(vector<vector<int> > & world_positions)
+{
+
 }
 
 
