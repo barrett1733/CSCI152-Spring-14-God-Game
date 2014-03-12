@@ -53,6 +53,7 @@ void Config::load(std::string file)
 		switch(type)
 		{
 			case CT_STRING:
+				fin.ignore(1); // ignore the space between TYPE and VALUE;
 				getline(fin, valueString);
 				setProperty(property, valueString);
 				break;
