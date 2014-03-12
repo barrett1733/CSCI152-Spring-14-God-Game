@@ -13,18 +13,18 @@ GameManager::GameManager()
 	self = this;
 	mode = GM_MENU;
 
-	callbackMap["newGame()"]          = newGame;
-	callbackMap["showCredits()"]      = showCredits;
-	callbackMap["quitGame()"]         = quitGame;
-	callbackMap["triangleSliderCallback()"]   = triangleSliderCallback;
+	callbackMap["newGame()"]                = newGame;
+	callbackMap["showCredits()"]            = showCredits;
+	callbackMap["quitGame()"]               = quitGame;
+	callbackMap["triangleSliderCallback()"] = triangleSliderCallback;
 	callbackMap["sliderCallback()"]         = sliderCallback;
 
-	buttonIndexMap["NEW_GAME"]        = MM_NEW_GAME;
-	buttonIndexMap["SHOW_CREDITS"]    = MM_SHOW_CREDITS;
-	buttonIndexMap["QUIT_GAME"]       = MM_QUIT_GAME;
-	buttonIndexMap["TRIANGLE_SLIDER"] = MM_TRIANGLE_SLIDER;
-	buttonIndexMap["WORSHIP_SLIDER"]  = MM_WORSHIP_SLIDER;
-	buttonIndexMap["MAP_VIEW"]        = MM_MAP_VIEW;
+	buttonIndexMap["NEW_GAME"]              = MM_NEW_GAME;
+	buttonIndexMap["SHOW_CREDITS"]          = MM_SHOW_CREDITS;
+	buttonIndexMap["QUIT_GAME"]             = MM_QUIT_GAME;
+	buttonIndexMap["TRIANGLE_SLIDER"]       = MM_TRIANGLE_SLIDER;
+	buttonIndexMap["WORSHIP_SLIDER"]        = MM_WORSHIP_SLIDER;
+	buttonIndexMap["MAP_VIEW"]              = MM_MAP_VIEW;
 
 	for(widgetIndex = MM_ERROR; widgetIndex < MM_COUNT; widgetIndex ++)
 		self->widgetList[widgetIndex] = 0;
