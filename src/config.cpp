@@ -10,7 +10,8 @@ enum ConfigType {
 	CT_ERROR,
 	CT_STRING,
 	CT_NUMBER,
-	CT_DECIMAL
+	CT_DECIMAL,
+	CT_INT_PAIR,
 };
 
 Config::Config()
@@ -25,10 +26,11 @@ void Config::load(std::string file)
 {
 	std::string property;
 	std::string typeString;
-	ConfigType type;
+	ConfigType  type;
 	std::string valueString;
-	int    valueNumber;
-	double valueDecimal;
+	int         valueNumber;
+	int         valueNumber2;
+	double      valueDecimal;
 
 	ifstream fin(file.c_str());
 
@@ -46,6 +48,7 @@ void Config::load(std::string file)
 		if(typeString == "STRING") type = CT_STRING;
 		else if(typeString == "NUMBER") type = CT_NUMBER;
 		else if(typeString == "DECIMAL") type = CT_DECIMAL;
+		else if(typeString == "INT_PAIR") type = CT_INT_PAIR;
 
 		switch(type)
 		{
@@ -62,6 +65,12 @@ void Config::load(std::string file)
 			case CT_DECIMAL:
 				fin >> valueDecimal;
 				setProperty(property, valueDecimal);
+				break;
+
+			case CT_INT_PAIR:
+				fin >> valueNumber;
+				fin >> valueNumber2;
+				setProperty(property, valueNumber, valueNumber2);
 				break;
 
 			default:
