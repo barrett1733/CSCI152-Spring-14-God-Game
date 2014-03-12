@@ -13,7 +13,15 @@ enum ConfigType {
 	CT_DECIMAL
 };
 
+Config::Config()
+{}
+
 Config::Config(std::string file)
+{
+	load(file);
+}
+
+void Config::load(std::string file)
 {
 	std::string property;
 	std::string typeString;
@@ -24,10 +32,10 @@ Config::Config(std::string file)
 
 	ifstream fin(file.c_str());
 
-	if(fin.fail())
+	if (fin.fail())
 		cerr << "Config file not found: " << file << endl;
 
-	else
+	else while (!fin.eof())
 	{
 		fin >> property;
 		fin >> typeString;
