@@ -162,7 +162,7 @@ void SdlWidget::disable()
 
 void SdlWidget::show()
 {
-	state = WIDGET_ACTIVE;
+	state = WIDGET_OFF;
 }
 
 void SdlWidget::hide()
