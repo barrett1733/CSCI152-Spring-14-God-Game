@@ -1,35 +1,40 @@
 #include "resource-manager.h"
-
+// Resource pools are created at ResourceManager creation
 ResourceManager::ResourceManager()
 {
-	resourcePool = new std::vector<int>;
-	resourcePool->resize(20);
-	resourcePoolDeleted = false;
+	clearResourcePool();
+	ptr_resourcePool = &resourcePool;
+}
+// Creates ResourceManager that uses passed ResourceManager resource pool
+ResourceManager::ResourceManager(ResourceManager &resourceManager)
+{
+	clearResourcePool();
+	if(resourcePool != resourceManager.resourcePool)
+		ptr_resourcePool = resourceManager.ptr_resourcePool;
 }
 
 ResourceManager::~ResourceManager()
 {
-	if(!resourcePoolDeleted)
-		delete resourcePool;
-	resourcePool = NULL;
-	resourcePoolDeleted = 1;
+	clearResourcePool();
+	//ptr_resourcePool = NULL;
 }
-void ResourceManager::registerResourcePool(ResourceManager &resourceManager)
+void ResourceManager::clearResourcePool()
 {
-	if(resourcePool != resourceManager.resourcePool)
-	{
-		delete resourcePool;
-		resourcePool = resourceManager.resourcePool;
-		resourcePoolDeleted = resourceManager.resourcePoolDeleted;
-	}
+	for(int i=0; i<NUM_RESOURCETYPES;i++)
+		resourcePool[i] = 0;
 }
-// If availible, subtracts X amount of resource from the pool and returns true
+// Switches to the resource pool of the passed ResourceManager
+void ResourceManager::switchResourcePool(ResourceManager &resourceManager)
+{
+		ptr_resourcePool = resourceManager.ptr_resourcePool;
+}
+// If availible, subtract X amount of resource from the pool and return true
 // Else return false
 bool ResourceManager::requestResource(ResourceType type, int amount)
 {
-	if(resourcePool->at(type) >= amount)
+	if(*ptr_resourcePool[type] >= amount)
 	{
-		resourcePool->at(type) -= amount;
+		*ptr_resourcePool[type] -= amount;
 		return true;
 	}
 	else
@@ -38,10 +43,10 @@ bool ResourceManager::requestResource(ResourceType type, int amount)
 // Adds amount of X resource back to the pool
 void ResourceManager::sendResource(ResourceType type, int amount)
 {
-	resourcePool->at(type) += amount;
+	*ptr_resourcePool[type] += amount;
 }
 // Returns amount of X resource
 int ResourceManager::getResourceAmount(ResourceType type)
 {
-	return resourcePool->at(type);
+	return *ptr_resourcePool[type];
 }

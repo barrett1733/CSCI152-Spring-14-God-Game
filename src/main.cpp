@@ -54,10 +54,9 @@ int main(int argc, char **argv)
 	VillagerAI test(1,1);
 	ResourceManager rtest;
 	rtest.sendResource(RS_FOOD, 100);
-	std::cout<<rtest.getResourceAmount(RS_FOOD)<<std::endl;
-	test.registerResourcePool(rtest);
-	test.registerResourcePool(rtest);
-	std::cout<<test.getResourceAmount(RS_FOOD)<<std::endl;
+	std::cout<<"RM Food: "<<rtest.getResourceAmount(RS_FOOD)<<std::endl;
+	test.switchResourcePool(rtest);
+	std::cout<<"VillAI Access Food:"<<test.getResourceAmount(RS_FOOD)<<std::endl;
 
 	textDisplay = sdl.createTextDisplay("t", 16, 130);
 	textDisplayA = sdl.createTextDisplay("a", 16, 150);

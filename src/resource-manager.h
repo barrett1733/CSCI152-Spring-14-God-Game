@@ -1,4 +1,3 @@
-#include <vector>
 
 enum ResourceType
 {
@@ -9,19 +8,19 @@ enum ResourceType
 	RS_IRON
 };
 
+#define NUM_RESOURCETYPES 20
+
 class ResourceManager
 {
 private:
-	struct
-	{
-	std::vector<int>* resourcePool;
-	int* resourcePoolDeleted;
-	};
+	int resourcePool[NUM_RESOURCETYPES];
+	int (*ptr_resourcePool)[NUM_RESOURCETYPES];
+	void clearResourcePool();
 public:
 	ResourceManager();
+	ResourceManager(ResourceManager&);
 	~ResourceManager();
-	void registerResourcePool(ResourceManager&);
-	void deleteResourcePool();
+	void switchResourcePool(ResourceManager&);
 	bool requestResource(ResourceType,int);
 	void sendResource(ResourceType,int);
 	int getResourceAmount(ResourceType);
