@@ -50,16 +50,9 @@ void sliderCallback(SDL_Event & event)
 
 int main(int argc, char **argv)
 {
-	triangleSlider = new SdlTriangleSlider(sliderCallback);
 
-	textDisplay  = sdl.createTextDisplay("t", 16, 130);
-	textDisplayA = sdl.createTextDisplay("a", 16, 150);
-	textDisplayB = sdl.createTextDisplay("b", 16, 170);
-	textDisplayC = sdl.createTextDisplay("c", 16, 190);
 
-	sdl.addWidget((WidgetReference)triangleSlider, WL_INTERACTIVE);
 
-	triangleSlider->enable();
 
 	GameManager game;
 
