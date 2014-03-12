@@ -5,6 +5,8 @@
 GameManager * GameManager::self = 0;
 GameMode GameManager::mode = GM_ERROR;
 
+void doNothing(SDL_Event & event) {}
+
 GameManager::GameManager()
 {
 	if(self)
@@ -13,27 +15,18 @@ GameManager::GameManager()
 	self = this;
 	mode = GM_MENU;
 
+	callbackMap["none"]                     = doNothing;
 	callbackMap["newGame()"]                = newGame;
+	callbackMap["pauseGame()"]              = pauseGame;
 	callbackMap["showCredits()"]            = showCredits;
 	callbackMap["quitGame()"]               = quitGame;
 	callbackMap["triangleSliderCallback()"] = triangleSliderCallback;
 	callbackMap["sliderCallback()"]         = sliderCallback;
 
-	buttonIndexMap["NEW_GAME"]              = MM_NEW_GAME;
-	buttonIndexMap["SHOW_CREDITS"]          = MM_SHOW_CREDITS;
-	buttonIndexMap["QUIT_GAME"]             = MM_QUIT_GAME;
-	buttonIndexMap["TRIANGLE_SLIDER"]       = MM_TRIANGLE_SLIDER;
-	buttonIndexMap["WORSHIP_SLIDER"]        = MM_WORSHIP_SLIDER;
-	buttonIndexMap["MAP_VIEW"]              = MM_MAP_VIEW;
+	modeMap["loading"] = GM_MENU;
+	modeMap["playing"] = GM_PLAYING;
+	modeMap["pausing"] = GM_PAUSING;
 
-	gameModeMap["loading"] = GM_MENU;
-	gameModeMap["playing"] = GM_PLAYING;
-	gameModeMap["pausing"] = GM_PAUSING;
-
-	for(widgetIndex = MM_ERROR; widgetIndex < MM_COUNT; widgetIndex ++)
-		self->widgetList[widgetIndex] = 0;
-
-	widgetIndex = MM_ERROR;
 	callbackName = "";
 	buttonConfig = 0;
 
@@ -42,11 +35,6 @@ GameManager::GameManager()
 	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
-
-	self->widgetList[MM_MAP_VIEW] = new SdlMapView(200,0,600,600);
-	self->widgetList[MM_MAP_VIEW]->hide();
-	sdl.addWidget(self->widgetList[MM_MAP_VIEW], WL_BACKGROUND);
-
 
 	// While application is running
 	std::cout << "Starting Game Loop" << std::endl;
@@ -60,29 +48,32 @@ void GameManager::newGame(SDL_Event & event)
 {
 	std::cout << "New Game" << std::endl;
 
-	std::cout << "Hide Button: New Game " << self->widgetList[MM_NEW_GAME] << std::endl;
-	if(self->widgetList[MM_NEW_GAME])
-		self->widgetList[MM_NEW_GAME]->hide();
+	mode = GM_PLAYING;
 
-	std::cout << "Hide Button: Show Credits " << self->widgetList[MM_SHOW_CREDITS] << std::endl;
-	if(self->widgetList[MM_SHOW_CREDITS])
-		self->widgetList[MM_SHOW_CREDITS]->hide();
+	int widgetCount = self->widgetList.size();
+	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
+	{
+		if(self->widgetList[widgetIndex]->mode & mode)
+			self->widgetList[widgetIndex]->widget->show();
+		else
+			self->widgetList[widgetIndex]->widget->hide();
+	}
+}
 
-	std::cout << "Move Button: Quit Game " << self->widgetList[MM_QUIT_GAME] << std::endl;
-	if(self->widgetList[MM_QUIT_GAME])
-		self->widgetList[MM_QUIT_GAME]->moveTo(16,16);
+void GameManager::pauseGame(SDL_Event & event)
+{
+	std::cout << "Pause Game" << std::endl;
 
-	if(self->widgetList[MM_TRIANGLE_SLIDER])
-		self->widgetList[MM_TRIANGLE_SLIDER]->show();
+	mode = GM_PAUSING;
 
-	if(self->widgetList[MM_WORSHIP_SLIDER])
-		self->widgetList[MM_WORSHIP_SLIDER]->show();
-
-	std::cout << "Show: Map View" << std::endl;
-	if(self->widgetList[MM_MAP_VIEW])
-		self->widgetList[MM_MAP_VIEW]->show();
-
-	//mode = GM_QUITING;
+	int widgetCount = self->widgetList.size();
+	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
+	{
+		if(self->widgetList[widgetIndex]->mode & mode)
+			self->widgetList[widgetIndex]->widget->show();
+		else
+			self->widgetList[widgetIndex]->widget->hide();
+	}
 }
 
 void GameManager::showCredits(SDL_Event & event)
@@ -99,15 +90,15 @@ void GameManager::quitGame(SDL_Event & event)
 
 void GameManager::sliderCallback(SDL_Event & event)
 {
-	double value = ((SliderReference) self->widgetList[MM_WORSHIP_SLIDER]) -> getValue();
-	std::cout << "Slider Update: " << value << std::endl;
+	// double value = ((SliderReference) self->widgetList[MM_WORSHIP_SLIDER]) -> getValue();
+	// std::cout << "Slider Update: " << value << std::endl;
 }
 void GameManager::triangleSliderCallback(SDL_Event & event)
 {
-	double valueA = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueA();
-	double valueB = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueB();
-	double valueC = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueC();
-	std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
+	// double valueA = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueA();
+	// double valueB = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueB();
+	// double valueC = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueC();
+	// std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
 }
 
 // From Config
@@ -115,15 +106,7 @@ bool GameManager::setProperty(std::string property, std::string value)
 {
 	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
 
-	if(property == "widget_id")
-	{
-		if(!buttonIndexMap[value])
-			return false;
-		widgetIndex = buttonIndexMap[value];
-		buttonConfig |= BCFG_INDEX;
-	}
-
-	else if(property == "label")
+	if(property == "label")
 	{
 		buttonLabel = value;
 		buttonConfig |= BCFG_LABEL;
@@ -139,37 +122,53 @@ bool GameManager::setProperty(std::string property, std::string value)
 
 	else if(property == "create")
 	{
-		if(buttonConfig != BCFG_VALID)
+		if( ! (buttonConfig & BCFG_VALID))
 		{
-			std::cerr << "Invalid Button Configuration: " << buttonConfig << std::endl;
-			if(! (buttonConfig & BCFG_INDEX)) std::cerr << "Missing index." << std::endl;
-			if(! (buttonConfig & BCFG_LABEL)) std::cerr << "Missing label." << std::endl;
-			if(! (buttonConfig & BCFG_CALLBACK)) std::cerr << "Missing callback." << std::endl;
+			std::cerr << "\033[33mInvalid Button Configuration: " << buttonConfig << " != " << BCFG_VALID << "\033[m" << std::endl;
+			if( ! (buttonConfig & BCFG_LABEL)) std::cerr << "Missing label." << std::endl;
+			if( ! (buttonConfig & BCFG_CALLBACK)) std::cerr << "Missing callback." << std::endl;
 			return false;
 		}
 
+		WidgetReference widget;
+		int layer = WL_INTERACTIVE;
+
 		if(value == "button")
-			widgetList[widgetIndex] = new SdlButton(buttonLabel.c_str(), rect, callbackMap[callbackName]);
+			widget = new SdlButton(buttonLabel.c_str(), rect, callbackMap[callbackName]);
 
 		else if(value == "slider")
-			widgetList[widgetIndex] = new SdlSlider(rect, callbackMap[callbackName]);
+			widget = new SdlSlider(rect, callbackMap[callbackName]);
 
 		else if(value == "triangle-slider")
-			widgetList[widgetIndex] = new SdlTriangleSlider(rect, callbackMap[callbackName]);
+			widget = new SdlTriangleSlider(rect, callbackMap[callbackName]);
+
+		else if(value == "map-view")
+		{
+			widget = new SdlMapView(rect.x, rect.y, rect.w, rect.h);
+			layer = WL_BACKGROUND;
+		}
 
 		else return false;
 
-		sdl.addWidget(widgetList[widgetIndex], WL_INTERACTIVE);
+		sdl.addWidget(widget, layer);
+		widgetList.push_back(new GM_Widget(widget, buttonLabel));
 		buttonConfig = 0;
 	}
 
-	else if(property == "visibility")
+	else if(property == "initially")
 	{
 		if(value == "hidden")
 		{
-			widgetList[widgetIndex]->hide();
-			std::cout << "Trying to hide: " << buttonLabel << " [" << widgetIndex << "]" << std::endl;
+			widgetList.back()->widget->hide();
+			std::cout << "Trying to hide: " << widgetList.back()->name << std::endl;
 		}
+	}
+
+	else if(property == "show_when")
+	{
+		if(!modeMap[value])
+			return false;
+		widgetList.back()->mode |= modeMap[value];
 	}
 
 	else return false;

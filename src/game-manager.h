@@ -2,6 +2,7 @@
 #ifndef GAME_MANAGER_H_
 #define GAME_MANAGER_H_
 
+#include <vector>
 #include <map>
 
 #include "config.h"
@@ -25,19 +26,32 @@ enum {
 };
 
 enum GameMode {
-	GM_ERROR,
-	GM_MENU,
-	GM_PLAYING,
-	GM_PAUSING,
-	GM_QUITING
+	GM_ERROR   = 0x00,
+	GM_MENU    = 0x01,
+	GM_PLAYING = 0x02,
+	GM_PAUSING = 0x04,
+	GM_QUITING = 0x08,
 };
 
 enum {
-	BCFG_INDEX = 0x01,
-	BCFG_LABEL = 0x02,
-	BCFG_CALLBACK = 0x04,
+	BCFG_LABEL = 0x01,
+	BCFG_CALLBACK = 0x02,
 
-	BCFG_VALID = 0x07,
+	BCFG_VALID = BCFG_LABEL | BCFG_CALLBACK,
+};
+
+struct GM_Widget
+{
+	WidgetReference widget;
+	std::string name;
+	int mode;
+
+	GM_Widget(WidgetReference reference, std::string label)
+	{
+		widget = reference;
+		name = label;
+		mode = 0;
+	}
 };
 
 class GameManager : public Config
@@ -46,18 +60,17 @@ class GameManager : public Config
 	static GameMode mode;
 
 	std::map<std::string, void (*)(SDL_Event&)> callbackMap;
-	std::map<std::string, int> buttonIndexMap;
-	std::map<std::string, GameMode> gameModeMap;
+	std::map<std::string, GameMode> modeMap;
 
-	WidgetReference widgetList[MM_COUNT];
+	std::vector<GM_Widget*> widgetList;
 
 	SDL_Rect rect;
-	int widgetIndex;
 	std::string buttonLabel;
 	std::string callbackName;
 	int buttonConfig;
 
 	static void newGame(SDL_Event & event);
+	static void pauseGame(SDL_Event & event);
 	static void showCredits(SDL_Event & event);
 	static void quitGame(SDL_Event & event);
 	static void sliderCallback(SDL_Event & event);
