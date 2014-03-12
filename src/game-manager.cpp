@@ -17,6 +17,7 @@ GameManager::GameManager()
 	callbackMap["showCredits()"]      = showCredits;
 	callbackMap["quitGame()"]         = quitGame;
 	callbackMap["triangleSliderCallback()"]   = triangleSliderCallback;
+	callbackMap["sliderCallback()"]         = sliderCallback;
 
 	buttonIndexMap["NEW_GAME"]        = MM_NEW_GAME;
 	buttonIndexMap["SHOW_CREDITS"]    = MM_SHOW_CREDITS;
@@ -70,6 +71,9 @@ void GameManager::newGame(SDL_Event & event)
 	if(self->widgetList[MM_TRIANGLE_SLIDER])
 		self->widgetList[MM_TRIANGLE_SLIDER]->show();
 
+	if(self->widgetList[MM_WORSHIP_SLIDER])
+		self->widgetList[MM_WORSHIP_SLIDER]->show();
+
 	std::cout << "Show: Map View" << std::endl;
 	if(self->widgetList[MM_MAP_VIEW])
 		self->widgetList[MM_MAP_VIEW]->show();
@@ -91,7 +95,7 @@ void GameManager::quitGame(SDL_Event & event)
 
 void GameManager::sliderCallback(SDL_Event & event)
 {
-	double value = ((SliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValue();
+	double value = ((SliderReference) self->widgetList[MM_WORSHIP_SLIDER]) -> getValue();
 	std::cout << "Slider Update: " << value << std::endl;
 }
 void GameManager::triangleSliderCallback(SDL_Event & event)
