@@ -3,17 +3,20 @@
 
 #include "sdl-triangle-slider.h"
 
-SdlTriangleSlider::SdlTriangleSlider(void (*callback_arg)(SDL_Event&)) :
+SdlTriangleSlider::SdlTriangleSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&)) :
 	SdlWidget()
 {
 	callback = callback_arg;
 
-	int width = 128;
-	int height = 96;
+	int width  = rect.w;
+	int height = rect.h;
 
-	boundingBox.x = boundingBox.y = 16;
-	boundingBox.w = clipping.w = width;
-	boundingBox.h = clipping.h = height;
+	clipping.w = width;
+	clipping.h = height;
+	boundingBox.x = rect.x;
+	boundingBox.y = rect.y;
+	boundingBox.w = width;
+	boundingBox.h = height;
 
 	surface = sdlUtility.createSurface(width, height);
 	background = createTriangleSliderBackground();
@@ -21,6 +24,8 @@ SdlTriangleSlider::SdlTriangleSlider(void (*callback_arg)(SDL_Event&)) :
 
 	valueA = valueB = valueC = 1/3.0;
 	renderTriangleSliderSurface();
+
+	state = WIDGET_OFF;
 }
 
 SdlTriangleSlider::SdlTriangleSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
@@ -58,6 +63,9 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 
 		xMouse -= boundingBox.x;
 		yMouse -= boundingBox.y;
+
+		xMouse *= 1 + ((float)padding / boundingBox.w);
+		yMouse *= 1 + (2.0 * padding / boundingBox.h);
 
 		//  CALCULATE A
 		valueA = 1 - (double)yMouse/height;
@@ -126,8 +134,6 @@ bool SdlTriangleSlider::isInside(int xMouse, int yMouse)
 }
 
 //////
-
-const int padding = 4;
 
 ImageReference SdlTriangleSlider::createTriangleSliderBackground()
 {
