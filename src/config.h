@@ -6,10 +6,10 @@
 
 class Config
 {
-	virtual void setProperty(std::string property, std::string value) {}
-	virtual void setProperty(std::string property, int    value) {}
-	virtual void setProperty(std::string property, double value) {}
-	virtual void setProperty(std::string property, int value1, int value2) {}
+	virtual bool setProperty(std::string property, std::string value)      { return false; }
+	virtual bool setProperty(std::string property, int    value)           { return false; }
+	virtual bool setProperty(std::string property, double value)           { return false; }
+	virtual bool setProperty(std::string property, int value1, int value2) { return false; }
 
 protected:
 	void load(std::string file);

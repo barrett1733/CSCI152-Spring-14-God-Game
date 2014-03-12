@@ -39,9 +39,9 @@ class GameManager : public Config
 	static void quitGame(SDL_Event & event);
 
 	// From Config
-	void setProperty(std::string property, std::string value);
-	void setProperty(std::string property, int value);
-	void setProperty(std::string property, int value1, int value2);
+	bool setProperty(std::string property, std::string value);
+	bool setProperty(std::string property, int value);
+	bool setProperty(std::string property, int value1, int value2);
 
 public:
 	GameManager();

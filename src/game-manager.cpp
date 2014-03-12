@@ -65,10 +65,10 @@ void GameManager::quitGame(SDL_Event & event)
 }
 
 // From Config
-void GameManager::setProperty(std::string property, std::string value)
+bool GameManager::setProperty(std::string property, std::string value)
 {
 	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
-	if(property == "button_label")
+	if(property == "label")
 	{
 		targetButtonLabel = value;
 
@@ -91,35 +91,47 @@ void GameManager::setProperty(std::string property, std::string value)
 		}
 
 		else
-			std::cerr << "Unrecognized Button Label: " << value << std::endl;
+			return false;
 	}
-	else if(property == "action" && value == "create button")
+	else if(property == "action")
 	{
-		std::cout << "createRect: " << rect.x << ", " << rect.y << ", " << rect.w << ", " << rect.h << std::endl;
-		std::cout << "new SdlButton: " << targetButtonLabel << std::endl;
-		button[targetButtonIndex] = new SdlButton(targetButtonLabel.c_str(), rect, targetButtonCallback);
+		if(value == "create button")
+		{
+			std::cout << "createRect: " << rect.x << ", " << rect.y << ", " << rect.w << ", " << rect.h << std::endl;
+			std::cout << "new SdlButton: " << targetButtonLabel << std::endl;
+			button[targetButtonIndex] = new SdlButton(targetButtonLabel.c_str(), rect, targetButtonCallback);
 
-		sdl.addWidget(button[targetButtonIndex], WL_INTERACTIVE);
+			sdl.addWidget(button[targetButtonIndex], WL_INTERACTIVE);
+		}
+		else return false;
 	}
+	else
+		return false;
+
+	return true;
 }
 
-void GameManager::setProperty(std::string property, int value)
+bool GameManager::setProperty(std::string property, int value)
 {
 	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
+	return false;
 }
 
 
-void GameManager::setProperty(std::string property, int value1, int value2)
+bool GameManager::setProperty(std::string property, int value1, int value2)
 {
 	std::cout << "GameManager::SetProperty() : " << property << " = (" << value1 << ", " << value2 << ")" << std::endl;
-	if(property == "button_position")
+	if(property == "position")
 	{
 		rect.x = value1;
 		rect.y = value2;
+		return true;
 	}
-	else if(property == "button_size")
+	else if(property == "size")
 	{
 		rect.w = value1;
 		rect.h = value2;
+		return true;
 	}
+	return false;
 }
