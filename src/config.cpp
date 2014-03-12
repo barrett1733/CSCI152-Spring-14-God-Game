@@ -7,7 +7,7 @@
 using namespace std;
 
 enum ConfigType {
-	CT_NONE,
+	CT_ERROR,
 	CT_STRING,
 	CT_NUMBER,
 	CT_DECIMAL
@@ -37,9 +37,11 @@ void Config::load(std::string file)
 
 	else while (!fin.eof())
 	{
+		typeString = "";
+
 		fin >> property;
 		fin >> typeString;
-		type = CT_NONE;
+		type = CT_ERROR;
 
 		if(typeString == "STRING") type = CT_STRING;
 		else if(typeString == "NUMBER") type = CT_NUMBER;
@@ -63,7 +65,8 @@ void Config::load(std::string file)
 				break;
 
 			default:
-				cerr << "Invalid property type: " << type << endl;
+				if(typeString.length())
+					cerr << "Invalid property type: " << typeString << endl;
 				break;
 		}
 	}
