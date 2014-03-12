@@ -16,6 +16,7 @@
 #include "sdl-slider.h"
 #include "sdl-text-display.h"
 #include "sdl-event-subscriber.h"
+#include "villager-ai.h"
 
 const int FRAME_RATE = 30;
 const unsigned int TICK_INTERVAL = 1000/FRAME_RATE;

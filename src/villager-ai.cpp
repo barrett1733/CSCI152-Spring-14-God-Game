@@ -1,28 +1,12 @@
-
-
-class VillagerAI
-{
-private:
-	int faction;
-	int optionalOption;
-	int delay;
-	bool running;
-	void balanceJobs();
-	void checkResources();
-	void getTriangleStats();
-
-public:
-	VillagerAI(int,int);
-	void start();
-	void stop();
-	void run();
-};
+#include "villager-ai.h"
 
 VillagerAI::VillagerAI(int faction,int optionalOption):faction(faction),optionalOption(optionalOption),running(false),delay(1)
 {
 }
+VillagerAI::~VillagerAI()
+{}
 
-void VillagerAI::checkResources()
+void VillagerAI::checkResource(int resource)
 {
 	//food, stone, wood, iron
 }
@@ -47,7 +31,6 @@ void VillagerAI::run()
 	if(running && counter == delay)
 	{
 		counter = 0;
-		checkResources();
 		balanceJobs();
 	}
 	counter++;

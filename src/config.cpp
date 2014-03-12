@@ -14,7 +14,7 @@ Config::Config()
 {
 	ifstream fin(configFile.c_str());
 	if(fin.fail())
-		cerr << "Config file not found: " << configFile << endl;
+		cerr << "Config file not found: "; //<< configFile.c_str << endl;
 	else
 		cout << "Found config." << endl;
 }
