@@ -28,6 +28,7 @@ class WorldGeneration
 public:
 	WorldGeneration();
 	~WorldGeneration();
+	void SizeMap(vector<int> & world_info, vector<vector<int> > & world_positions);
 	void PlaceEmptySpace(vector<vector<int> > & world_positions);
 	void PlaceTrees(vector<vector<int> > & world_positions);
 	void PlaceStone(vector<vector<int> > & world_positions);
@@ -35,11 +36,12 @@ public:
 	void PlaceEntities(vector<vector<int> > & world_positions);
 	void PlaceTownCenter(vector<vector<int> > & world_positions);
 	void PlaceShrine(vector<vector<int> > & world_positions);
+	void PrintMap(vector<int> & world_info);
 
-private:
+//private:
 	vector<vector<int> > world_positions;
 	vector<int> world_info;
-}
+};
 
 
 #endif
