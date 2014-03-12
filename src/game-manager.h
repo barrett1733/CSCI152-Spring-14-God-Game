@@ -27,8 +27,9 @@ enum {
 enum GameMode {
 	GM_ERROR,
 	GM_MENU,
-	GM_RUNNING,
-	GM_QUIT
+	GM_PLAYING,
+	GM_PAUSING,
+	GM_QUITING
 };
 
 enum {
@@ -46,6 +47,7 @@ class GameManager : public Config
 
 	std::map<std::string, void (*)(SDL_Event&)> callbackMap;
 	std::map<std::string, int> buttonIndexMap;
+	std::map<std::string, GameMode> gameModeMap;
 
 	WidgetReference widgetList[MM_COUNT];
 

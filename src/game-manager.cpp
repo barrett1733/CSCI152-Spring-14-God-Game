@@ -26,6 +26,10 @@ GameManager::GameManager()
 	buttonIndexMap["WORSHIP_SLIDER"]        = MM_WORSHIP_SLIDER;
 	buttonIndexMap["MAP_VIEW"]              = MM_MAP_VIEW;
 
+	gameModeMap["loading"] = GM_MENU;
+	gameModeMap["playing"] = GM_PLAYING;
+	gameModeMap["pausing"] = GM_PAUSING;
+
 	for(widgetIndex = MM_ERROR; widgetIndex < MM_COUNT; widgetIndex ++)
 		self->widgetList[widgetIndex] = 0;
 
@@ -46,7 +50,7 @@ GameManager::GameManager()
 
 	// While application is running
 	std::cout << "Starting Game Loop" << std::endl;
-	while(mode != GM_QUIT)
+	while(mode != GM_QUITING)
 	{
 		sdl.update();
 	}
@@ -78,19 +82,19 @@ void GameManager::newGame(SDL_Event & event)
 	if(self->widgetList[MM_MAP_VIEW])
 		self->widgetList[MM_MAP_VIEW]->show();
 
-	//mode = GM_QUIT;
+	//mode = GM_QUITING;
 }
 
 void GameManager::showCredits(SDL_Event & event)
 {
 	std::cout << "Show Credits (NOT IMPLEMENTED - QUITING)" << std:: endl;
-	mode = GM_QUIT;
+	mode = GM_QUITING;
 }
 
 void GameManager::quitGame(SDL_Event & event)
 {
 	std::cout << "Quit Game" << std::endl;
-	mode = GM_QUIT;
+	mode = GM_QUITING;
 }
 
 void GameManager::sliderCallback(SDL_Event & event)
