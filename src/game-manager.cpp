@@ -21,8 +21,8 @@ GameManager::GameManager()
 
 	mapView = new SdlMapView(200,0,600,600);
 	mapView->hide();
-
 	sdl.addWidget(mapView, WL_BACKGROUND);
+
 
 	// While application is running
 	std::cout << "Starting Game Loop" << std::endl;
@@ -64,6 +64,15 @@ void GameManager::quitGame(SDL_Event & event)
 	mode = GM_QUIT;
 }
 
+void GameManager::sliderCallback(SDL_Event & event)
+{
+
+	double a = self->triangleSlider->getValueA();
+	double b = self->triangleSlider->getValueB();
+	double c = self->triangleSlider->getValueC();
+	std::cout << "Triangle Update: " << a << ", " << b << ", " << c << std::endl;
+}
+
 // From Config
 bool GameManager::setProperty(std::string property, std::string value)
 {
@@ -102,6 +111,12 @@ bool GameManager::setProperty(std::string property, std::string value)
 			button[targetButtonIndex] = new SdlButton(targetButtonLabel.c_str(), rect, targetButtonCallback);
 
 			sdl.addWidget(button[targetButtonIndex], WL_INTERACTIVE);
+		}
+		else if(value == "create triangle")
+		{
+			std::cout << "GameManager:  I should totally " << value << std::endl;
+			triangleSlider = new SdlTriangleSlider(rect, sliderCallback);
+			sdl.addWidget(triangleSlider, WL_INTERACTIVE);
 		}
 		else return false;
 	}

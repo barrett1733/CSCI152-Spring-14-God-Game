@@ -4,6 +4,7 @@
 
 #include "config.h"
 #include "sdl-manager.h"
+#include "sdl-triangle-slider.h"
 
 enum {
 	MM_NEW_GAME,
@@ -25,9 +26,9 @@ class GameManager : public Config
 	static GameManager * self;
 	static GameMode mode;
 
-	ButtonReference button[MM_COUNT];
-
+	WidgetReference button[MM_COUNT];
 	WidgetReference mapView;
+	TriangleSliderReference triangleSlider;
 
 	int targetButtonIndex;
 	std::string targetButtonLabel;
@@ -37,6 +38,7 @@ class GameManager : public Config
 	static void newGame(SDL_Event & event);
 	static void showCredits(SDL_Event & event);
 	static void quitGame(SDL_Event & event);
+	static void sliderCallback(SDL_Event & event);
 
 	// From Config
 	bool setProperty(std::string property, std::string value);
