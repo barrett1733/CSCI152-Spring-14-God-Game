@@ -137,7 +137,10 @@ bool GameManager::setProperty(std::string property, std::string value)
 	{
 		if(buttonConfig != BCFG_VALID)
 		{
-			std::cerr << "Invalid Button Configuration" << std::endl;
+			std::cerr << "Invalid Button Configuration: " << buttonConfig << std::endl;
+			if(! (buttonConfig & BCFG_INDEX)) std::cerr << "Missing index." << std::endl;
+			if(! (buttonConfig & BCFG_LABEL)) std::cerr << "Missing label." << std::endl;
+			if(! (buttonConfig & BCFG_CALLBACK)) std::cerr << "Missing callback." << std::endl;
 			return false;
 		}
 
