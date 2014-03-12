@@ -13,30 +13,19 @@ GameManager::GameManager()
 	self = this;
 	mode = GM_MENU;
 
-	SDL_Rect rect;
+	load("main-menu.cfg");
 
 	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
-	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\e');
-
-
-	rect = sdlUtility.createRect(200,100,200,50);
-	newGameButton = new SdlButton("New Game", rect, newGame);
-
-	rect = sdlUtility.createRect(200,200,200,50);
-	showCreditsButton = new SdlButton("Credits", rect, showCredits);
-
-	rect = sdlUtility.createRect(200,300,200,50);
-	quitGameButton = new SdlButton("Quit", rect, quitGame);
+	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
 
 	mapView = new SdlMapView(200,0,600,600);
+	mapView->hide();
 
-	sdl.addWidget(newGameButton, WL_INTERACTIVE);
-	sdl.addWidget(showCreditsButton, WL_INTERACTIVE);
-	sdl.addWidget(quitGameButton, WL_INTERACTIVE);
 	sdl.addWidget(mapView, WL_BACKGROUND);
 
 	// While application is running
+	std::cout << "Starting Game Loop" << std::endl;
 	while(mode != GM_QUIT)
 	{
 		sdl.update();
@@ -46,9 +35,20 @@ GameManager::GameManager()
 void GameManager::newGame(SDL_Event & event)
 {
 	std::cout << "New Game" << std::endl;
-	self->newGameButton->hide();
-	self->showCreditsButton->hide();
-	self->quitGameButton->moveTo(16,16);
+
+	if(self->button[MM_NEW_GAME])
+		self->button[MM_NEW_GAME]->hide();
+
+	if(self->button[MM_SHOW_CREDITS])
+		self->button[MM_SHOW_CREDITS]->hide();
+
+	if(self->button[MM_QUIT_GAME])
+		self->button[MM_QUIT_GAME]->moveTo(16,16);
+
+
+	if(self->mapView)
+		self->mapView->show();
+
 	//mode = GM_QUIT;
 }
 
@@ -62,4 +62,64 @@ void GameManager::quitGame(SDL_Event & event)
 {
 	std::cout << "Quit Game" << std::endl;
 	mode = GM_QUIT;
+}
+
+// From Config
+void GameManager::setProperty(std::string property, std::string value)
+{
+	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
+	if(property == "button_label")
+	{
+		targetButtonLabel = value;
+
+		if(value == "New Game")
+		{
+			targetButtonIndex = MM_NEW_GAME;
+			targetButtonCallback = newGame;
+		}
+
+		else if(value == "Show Credits")
+		{
+			targetButtonIndex = MM_SHOW_CREDITS;
+			targetButtonCallback = showCredits;
+		}
+
+		else if(value == "Quit Game")
+		{
+			targetButtonIndex = MM_QUIT_GAME;
+			targetButtonCallback = quitGame;
+		}
+
+		else
+			std::cerr << "Unrecognized Button Label: " << value << std::endl;
+	}
+	else if(property == "action" && value == "create button")
+	{
+		std::cout << "createRect: " << rect.x << ", " << rect.y << ", " << rect.w << ", " << rect.h << std::endl;
+		std::cout << "new SdlButton: " << targetButtonLabel << std::endl;
+		button[targetButtonIndex] = new SdlButton(targetButtonLabel.c_str(), rect, targetButtonCallback);
+
+		sdl.addWidget(button[targetButtonIndex], WL_INTERACTIVE);
+	}
+}
+
+void GameManager::setProperty(std::string property, int value)
+{
+	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
+}
+
+
+void GameManager::setProperty(std::string property, int value1, int value2)
+{
+	std::cout << "GameManager::SetProperty() : " << property << " = (" << value1 << ", " << value2 << ")" << std::endl;
+	if(property == "button_position")
+	{
+		rect.x = value1;
+		rect.y = value2;
+	}
+	else if(property == "button_size")
+	{
+		rect.w = value1;
+		rect.h = value2;
+	}
 }
