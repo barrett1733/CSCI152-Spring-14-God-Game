@@ -9,7 +9,9 @@ using namespace std;
 enum ConfigType {
 	CT_ERROR,
 	CT_STRING,
+	CT_INT,
 	CT_NUMBER,
+	CT_FLOAT,
 	CT_DECIMAL,
 	CT_INT_PAIR,
 };
@@ -49,7 +51,9 @@ void Config::load(std::string file)
 		type = CT_ERROR;
 
 		if(typeString == "STRING") type = CT_STRING;
+		else if(typeString == "INT") type = CT_INT;
 		else if(typeString == "NUMBER") type = CT_NUMBER;
+		else if(typeString == "FLOAT") type = CT_FLOAT;
 		else if(typeString == "DECIMAL") type = CT_DECIMAL;
 		else if(typeString == "INT_PAIR") type = CT_INT_PAIR;
 
@@ -61,11 +65,13 @@ void Config::load(std::string file)
 				accepted = setProperty(property, valueString);
 				break;
 
+			case CT_INT:
 			case CT_NUMBER:
 				fin >> valueNumber;
 				accepted = setProperty(property, valueNumber);
 				break;
 
+			case CT_FLOAT:
 			case CT_DECIMAL:
 				fin >> valueDecimal;
 				accepted = setProperty(property, valueDecimal);
