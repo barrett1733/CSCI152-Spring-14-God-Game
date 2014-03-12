@@ -85,6 +85,6 @@ void Config::load(std::string file)
 		}
 
 		if(!accepted)
-			cerr << "\033[33m Unrecognized command: " << property << " = " << valueNumber << "|" << valueDecimal << "|" << valueString << "\033[m" << endl;
+			cerr << "\033[33m Invalid command: " << property << " = " << valueNumber << "|" << valueDecimal << "|" << valueString << "\033[m" << endl;
 	}
 }
