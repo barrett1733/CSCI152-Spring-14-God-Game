@@ -13,6 +13,7 @@ public:
 	SdlButton(const char * text, SDL_Rect & rect, void (*)(SDL_Event&));
 	~SdlButton();
 
+	const SDL_Rect * getClipping();
 	void handleEvent(SDL_Event & event);
 
 	void setText(const char * text);

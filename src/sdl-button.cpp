@@ -15,6 +15,11 @@ SdlButton::SdlButton(const char * text, SDL_Rect & rect, void (*callback_arg)(SD
 SdlButton::~SdlButton()
 {}
 
+const SDL_Rect * SdlButton::getClipping()
+{
+	clipping.y = boundingBox.h * state;
+	return & clipping;
+}
 void SdlButton::handleEvent(SDL_Event & event)
 {
 	updateState(event);
@@ -25,9 +30,6 @@ void SdlButton::handleEvent(SDL_Event & event)
 		if(callback)
 			callback(event);
 	}
-
-	// Update button appearance for button state
-	clipping.y = boundingBox.h * state;
 }
 
 ImageReference SdlButton::createButtonBackground(SDL_Rect & rect)

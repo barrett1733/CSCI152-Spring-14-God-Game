@@ -33,8 +33,8 @@ public:
 	virtual ~SdlWidget();
 
 	SDL_Surface * getSurface();
-	const SDL_Rect * getClipping();
-	const SDL_Rect * getBoundingBox();
+	virtual const SDL_Rect * getClipping();
+	virtual const SDL_Rect * getBoundingBox();
 
 	virtual void handleEvent(SDL_Event&);
 
