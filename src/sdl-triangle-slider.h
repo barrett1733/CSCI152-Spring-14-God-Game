@@ -6,7 +6,7 @@
 
 class SdlTriangleSlider : public SdlWidget
 {
-	const int padding = 4;
+	static const int padding = 4;
 
 	ImageReference background;
 	ImageReference handle;

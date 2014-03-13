@@ -1,5 +1,3 @@
-#define RESOURCE_TYPE_MAX 4
-
 enum ResourceType
 {
 	RS_FAITH = 0x00,
@@ -16,8 +14,6 @@ enum ResourceType
 	// I.e., move NUM_RESOURCETYPE from below as a define, to here:
 	RT_COUNT
 };
-
-#define NUM_RESOURCETYPES 5
 
 class ResourceManager
 {
