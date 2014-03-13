@@ -6,8 +6,7 @@
 #include <map>
 
 #include "config.h"
-#include "sdl-manager.h"
-#include "sdl-triangle-slider.h"
+#include "sdl/sdl-manager.h"
 
 enum {
 	// MAIN MENU BUTTONS

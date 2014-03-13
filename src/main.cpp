@@ -2,7 +2,6 @@
 #include <iostream>
 #include <sstream>
 #include "game-manager.h"
-#include "sdl-triangle-slider.h"
 #include "villager-ai.h"
 
 inline std::string toString(double x)

@@ -26,9 +26,10 @@ resource-manager.o: resource-manager.cpp
 village-ai.o: villager-ai.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-sdl.a: $(SDL_SOURCES)
+sdl.a: $(addprefix sdl/, $(SDL_SOURCES))
 	$(CC) $(CFLAGS) $^
 	ar cr sdl.a sdl*.o
+	rm -f sdl*.o
 
 astar:
 	$(CC) $(CFLAGS) -c test.cpp -o test.o

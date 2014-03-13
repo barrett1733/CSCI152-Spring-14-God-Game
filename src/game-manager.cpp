@@ -1,6 +1,7 @@
 
 #include "game-manager.h"
-#include "sdl-map-view.h"
+#include "sdl/sdl-triangle-slider.h"
+#include "sdl/sdl-map-view.h"
 
 GameManager * GameManager::self = 0;
 GameMode GameManager::mode = GM_ERROR;
