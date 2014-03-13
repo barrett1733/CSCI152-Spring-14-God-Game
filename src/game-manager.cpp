@@ -31,7 +31,7 @@ GameManager::GameManager()
 	callbackName = "";
 	buttonConfig = 0;
 
-	load("main-menu.cfg");
+	load("res/main-menu.cfg");
 
 	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
