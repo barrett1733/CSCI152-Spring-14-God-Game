@@ -16,7 +16,7 @@ ResourceManager::ResourceManager(ResourceManager &resourceManager)
 ResourceManager::~ResourceManager()
 {
 	clearResourcePool();
-	//ptr_resourcePool = NULL;
+	ptr_resourcePool = 0;
 }
 void ResourceManager::clearResourcePool()
 {
