@@ -22,6 +22,9 @@ enum ResourceType
 class ResourceManager
 {
 private:
+	// From looking at the implementation, it looks like the resourcePool
+	// should be static. This would also eliminate the need for a pointer.
+	// See additional comments in the implmentation file.
 	int resourcePool[NUM_RESOURCETYPES];
 	int (*ptr_resourcePool)[NUM_RESOURCETYPES];
 	void clearResourcePool();
