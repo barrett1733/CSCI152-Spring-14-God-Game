@@ -111,7 +111,6 @@ void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widg
 // From Config
 bool GameManager::setProperty(std::string property, std::string value)
 {
-	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
 
 	if(property == "label")
 	{
@@ -192,7 +191,6 @@ bool GameManager::setProperty(std::string property, int value)
 
 bool GameManager::setProperty(std::string property, int value1, int value2)
 {
-	std::cout << "GameManager::SetProperty() : " << property << " = (" << value1 << ", " << value2 << ")" << std::endl;
 	if(property == "position")
 	{
 		rect.x = value1;
