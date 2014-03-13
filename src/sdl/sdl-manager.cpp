@@ -6,8 +6,7 @@ SdlManager sdl;
 
 SdlManager::SdlManager() :
 	window(0),
-	renderer(0),
-	font(0)
+	renderer(0)
 {
 
 	std::cerr << "SDL_Init()" << std::endl;
@@ -31,18 +30,6 @@ SdlManager::SdlManager() :
 		throw "IMG_Init()";
 	}
 
-	// Initialize Fonts
-	std::cerr << "TTF_Init()" << std::endl;
-	if( TTF_Init() == -1 )
-	{
-		std::cerr << TTF_GetError() << std::endl;
-		throw "TTF_Init()";
-	}
-
-	font = TTF_OpenFont( "res/arial.ttf", 16 );
-	if(!font)
-		std::cerr << TTF_GetError() << std::endl;
-
 	std::cerr << "Ready." << std::endl;
 }
 
@@ -52,9 +39,7 @@ SdlManager::~SdlManager()
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
-	if(font)     TTF_CloseFont(font);
 
-	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }

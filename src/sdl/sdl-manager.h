@@ -4,12 +4,10 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
 #include <string>
 #include <vector>
 
 #include <iostream>
-//#include <unistd.h>
 
 #include "sdl-widget.h"
 #include "sdl-button.h"
@@ -32,7 +30,6 @@ class SdlManager
 {
 	SDL_Window * window;
 	SDL_Renderer * renderer;
-	TTF_Font * font;
 
 	std::vector<SdlEventSubscriber*> subscriberList;
 	std::vector<SdlWidget*> widgetList[WL_COUNT];
