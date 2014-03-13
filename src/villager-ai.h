@@ -16,7 +16,7 @@ private:
 	// Then again, I'm not sure the village AI needs to know about the triangle at all.
 	// I think it's mostly for the job management.
 	// The Job Manager will set the priority on tasks base on the triangle,
-	// and villages will pick up tasks base on the task priority and their own preference.
+	// and villagers will pick up tasks based on the task priority and their own preference.
 	void getTriangleStats();
 
 public:
