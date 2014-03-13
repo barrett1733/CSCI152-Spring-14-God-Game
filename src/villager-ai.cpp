@@ -1,6 +1,6 @@
 #include "villager-ai.h"
 
-VillagerAI::VillagerAI(int faction,int optionalOption):faction(faction),optionalOption(optionalOption),running(false),delay(1)
+VillagerAI::VillagerAI(int faction,int optionalOption):faction(faction),optionalOption(optionalOption),running(false),delay(1),counter(0)
 {
 }
 VillagerAI::~VillagerAI()
@@ -13,6 +13,16 @@ void VillagerAI::checkResource(int resource)
 
 void VillagerAI::balanceJobs()
 {
+	int total = 0;
+	int average = 0;
+	for(int i = 0; i < NUMBER_OF_RESOURCETYPES; i++)
+		total += getResourceAmount(ResourceType(i));
+	average = total/NUMBER_OF_RESOURCETYPES;
+
+	for(int i = 0; i < NUMBER_OF_RESOURCETYPES; i++)
+		if(getResourceAmount(ResourceType(i)) < average)
+			;//createGatherJob(ResourceType(i));
+
 	//gather
 	//create
 	//	check position of building to create - another class?
@@ -27,8 +37,7 @@ void VillagerAI::getTriangleStats()
 
 void VillagerAI::run()
 {
-	int counter = 0;
-	if(running && counter == delay)
+	if(running && counter >= delay)
 	{
 		counter = 0;
 		balanceJobs();

@@ -1,4 +1,6 @@
 
+#define RESOURCE_TYPE_MAX 4
+
 enum ResourceType
 {
 	RS_FAITH = 0x00,
@@ -8,7 +10,7 @@ enum ResourceType
 	RS_IRON
 };
 
-#define NUM_RESOURCETYPES 20
+#define NUM_RESOURCETYPES 5
 
 class ResourceManager
 {

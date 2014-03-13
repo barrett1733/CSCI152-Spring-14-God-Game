@@ -20,7 +20,7 @@ ResourceManager::~ResourceManager()
 }
 void ResourceManager::clearResourcePool()
 {
-	for(int i=0; i<NUM_RESOURCETYPES;i++)
+	for(int i=0; i<NUMBER_OF_RESOURCETYPES;i++)
 		resourcePool[i] = 0;
 }
 // Switches to the resource pool of the passed ResourceManager

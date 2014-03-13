@@ -6,7 +6,7 @@ class VillagerAI : public ResourceManager
 private:
 	int faction;
 	int optionalOption;
-	int delay;
+	int delay, counter;
 	bool running;
 	void balanceJobs();
 	void checkResource(int);
