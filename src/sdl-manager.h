@@ -42,7 +42,7 @@ class SdlManager
 
 	void wait();
 
-	static void testCallback(SDL_Event & event)
+	static void testCallback(SDL_Event & event, WidgetReference widget)
 	{
 		std::cout << "Callback!" << std::endl;
 	}
@@ -56,8 +56,8 @@ public:
 	void update();
 
 	// Event functions
-	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event & event), int type);
-	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event & event), int type, int sym);
+	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event&), int type);
+	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event&), int type, int sym);
 
 	// Text functions
 	WidgetReference createTextWidget(const char * text, int xPos, int yPos);
@@ -81,13 +81,13 @@ public:
 	void renderWidget(SdlWidget * widget);
 
 	// Button functions
-	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
-	ButtonReference createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * label, int xPos, int yPos);
+	ButtonReference createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
+	ButtonReference createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * label, int xPos, int yPos);
 	void destroyButton(ButtonReference&);
 
 	// Slider functions
-	SliderReference createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos, int width, int height);
-	SliderReference createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos);
+	SliderReference createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos, int width, int height);
+	SliderReference createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos);
 
 	// Test function.
 	void test_setUp()

@@ -5,7 +5,7 @@
 GameManager * GameManager::self = 0;
 GameMode GameManager::mode = GM_ERROR;
 
-void doNothing(SDL_Event & event) {}
+void doNothing(SDL_Event & event, WidgetReference widget) {}
 
 GameManager::GameManager()
 {
@@ -44,7 +44,7 @@ GameManager::GameManager()
 	}
 }
 
-void GameManager::newGame(SDL_Event & event)
+void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "New Game" << std::endl;
 
@@ -60,7 +60,7 @@ void GameManager::newGame(SDL_Event & event)
 	}
 }
 
-void GameManager::pauseGame(SDL_Event & event)
+void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Pause Game" << std::endl;
 
@@ -76,9 +76,15 @@ void GameManager::pauseGame(SDL_Event & event)
 	}
 }
 
-void GameManager::showCredits(SDL_Event & event)
+void GameManager::showCredits(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Show Credits (NOT IMPLEMENTED - QUITING)" << std:: endl;
+	mode = GM_QUITING;
+}
+
+void GameManager::quitGame(SDL_Event & event, WidgetReference widget)
+{
+	std::cout << "Quit Game (from button)" << std::endl;
 	mode = GM_QUITING;
 }
 
@@ -88,12 +94,12 @@ void GameManager::quitGame(SDL_Event & event)
 	mode = GM_QUITING;
 }
 
-void GameManager::sliderCallback(SDL_Event & event)
+void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
 	// double value = ((SliderReference) self->widgetList[MM_WORSHIP_SLIDER]) -> getValue();
 	// std::cout << "Slider Update: " << value << std::endl;
 }
-void GameManager::triangleSliderCallback(SDL_Event & event)
+void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
 {
 	// double valueA = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueA();
 	// double valueB = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueB();

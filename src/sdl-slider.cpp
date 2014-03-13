@@ -1,7 +1,7 @@
 
 #include "sdl-slider.h"
 
-SdlSlider::SdlSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlSlider::SdlSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget(0, rect, callback_arg),
 	percent(0)
 {
@@ -9,7 +9,7 @@ SdlSlider::SdlSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
 	surface = createSliderBackground();
 }
 
-SdlSlider::SdlSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlSlider::SdlSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget(surface_arg, rect, callback_arg),
 	percent(0)
 {
@@ -41,14 +41,14 @@ void SdlSlider::handleEvent(SDL_Event & event)
 		clipping.x = (clipping.w - handleWidth) * (1-percent);
 
 		if(percent != previous && callback)
-			callback(event);
+			callback(event, this);
 	}
 
 	if(state == WIDGET_ON)
 	{
 		state = WIDGET_OFF;
 		if(callback)
-			callback(event);
+			callback(event, this);
 	}
 }
 

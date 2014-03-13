@@ -16,7 +16,7 @@ enum WidgetState {
 class SdlWidget
 {
 protected:
-	void (*callback)(SDL_Event & event);
+	void (*callback)(SDL_Event & event, SdlWidget*);
 	SDL_Surface * surface;
 	WidgetState state;
 	SDL_Rect clipping;
@@ -28,7 +28,7 @@ protected:
 public:
 	SdlWidget();
 	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect);
-	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
+	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event, SdlWidget*));
 
 	virtual ~SdlWidget();
 

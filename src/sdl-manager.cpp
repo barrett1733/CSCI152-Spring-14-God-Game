@@ -146,12 +146,12 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 ////////
 
-SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event & event), int type)
+SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event&), int type)
 {
 	return subscribeToEvent(callback, type, SDLK_UNKNOWN);
 }
 
-SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event & event), int type, int sym)
+SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event&), int type, int sym)
 {
 	SdlEventSubscriber * subscriber = new SdlEventSubscriber( callback, type, sym );
 	subscriberList.push_back(subscriber);
@@ -235,11 +235,11 @@ void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
 //  BUTTON WIDGET METHODS
 ////////
 
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * labelText, int xPos, int yPos)
+ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * labelText, int xPos, int yPos)
 {
 	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
 }
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event & event), SDL_Surface * background, const char * text, int xPos, int yPos, int width, int height)
+ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * text, int xPos, int yPos, int width, int height)
 {
 	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
 	SdlButton * button = new SdlButton(text, rect, callback);
@@ -258,11 +258,11 @@ void SdlManager::destroyButton(ButtonReference & buttonRef)
 
 ////////
 
-SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos)
+SliderReference SdlManager::createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos)
 {
 	return createSlider(callback, background, xPos, yPos, 256, 32);
 }
-SliderReference SdlManager::createSlider(void (*callback)(SDL_Event & event), SDL_Surface * background, int xPos, int yPos, int width, int height)
+SliderReference SdlManager::createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos, int width, int height)
 {
 	std::cout << "SdlManager::createSlider()" << std::endl;
 

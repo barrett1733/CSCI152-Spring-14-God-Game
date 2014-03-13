@@ -1,11 +1,11 @@
 
 #include "sdl-button.h"
 
-SdlButton::SdlButton(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlButton::SdlButton(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget(surface_arg, rect, callback_arg)
 {}
 
-SdlButton::SdlButton(const char * text, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlButton::SdlButton(const char * text, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget(0, rect, callback_arg)
 {
 	surface = createButtonBackground(rect);
@@ -28,7 +28,7 @@ void SdlButton::handleEvent(SDL_Event & event)
 	{
 		state = WIDGET_OFF;
 		if(callback)
-			callback(event);
+			callback(event, this);
 	}
 }
 

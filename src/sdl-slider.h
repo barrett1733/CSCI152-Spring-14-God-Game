@@ -13,8 +13,8 @@ class SdlSlider : public SdlWidget
 	ImageReference createSliderBackground();
 
 public:
-	SdlSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
-	SdlSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
+	SdlSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference));
+	SdlSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference));
 	~SdlSlider();
 
 	void handleEvent(SDL_Event & event);

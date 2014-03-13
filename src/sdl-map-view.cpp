@@ -29,7 +29,7 @@ void SdlMapView::handleEvent(SDL_Event & event)
 	if(state == WIDGET_ON)
 	{
 		if(callback)
-			callback(event);
+			callback(event, this);
 		state = WIDGET_OFF;
 	}
 

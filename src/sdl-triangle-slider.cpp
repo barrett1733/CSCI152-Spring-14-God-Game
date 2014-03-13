@@ -3,7 +3,7 @@
 
 #include "sdl-triangle-slider.h"
 
-SdlTriangleSlider::SdlTriangleSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&)) :
+SdlTriangleSlider::SdlTriangleSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget()
 {
 	callback = callback_arg;
@@ -28,7 +28,7 @@ SdlTriangleSlider::SdlTriangleSlider(SDL_Rect & rect, void (*callback_arg)(SDL_E
 	state = WIDGET_OFF;
 }
 
-SdlTriangleSlider::SdlTriangleSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlTriangleSlider::SdlTriangleSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget(surface_arg, rect, callback_arg)
 {}
 
@@ -97,14 +97,14 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 
 		renderTriangleSliderSurface();
 
-		callback(event);
+		callback(event, this);
 	}
 
 	if(state == WIDGET_ON)
 	{
 		state = WIDGET_OFF;
 		if(callback)
-			callback(event);
+			callback(event, this);
 	}
 }
 

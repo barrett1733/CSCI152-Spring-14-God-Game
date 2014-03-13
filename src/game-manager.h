@@ -59,7 +59,7 @@ class GameManager : public Config
 	static GameManager * self;
 	static GameMode mode;
 
-	std::map<std::string, void (*)(SDL_Event&)> callbackMap;
+	std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
 	std::map<std::string, GameMode> modeMap;
 
 	std::vector<GM_Widget*> widgetList;
@@ -69,12 +69,13 @@ class GameManager : public Config
 	std::string callbackName;
 	int buttonConfig;
 
-	static void newGame(SDL_Event & event);
-	static void pauseGame(SDL_Event & event);
-	static void showCredits(SDL_Event & event);
+	static void newGame(SDL_Event & event, WidgetReference);
+	static void pauseGame(SDL_Event & event, WidgetReference);
+	static void showCredits(SDL_Event & event, WidgetReference);
 	static void quitGame(SDL_Event & event);
-	static void sliderCallback(SDL_Event & event);
-	static void triangleSliderCallback(SDL_Event & event);
+	static void quitGame(SDL_Event & event, WidgetReference);
+	static void sliderCallback(SDL_Event & event, WidgetReference widget);
+	static void triangleSliderCallback(SDL_Event & event, WidgetReference widget);
 
 	// From Config
 	bool setProperty(std::string property, std::string value);
