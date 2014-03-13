@@ -8,6 +8,14 @@ ResourceManager::ResourceManager()
 // Creates ResourceManager that uses passed ResourceManager resource pool
 ResourceManager::ResourceManager(ResourceManager &resourceManager)
 {
+	// If the resource pool was a static member, then ALL instances of type ResourceManager
+	// would have access to the exact same data.
+	// We would not need to assign a pointer and we would not need to 
+	// clear the private resource pool.
+	// For that matter, we would not need a copy constructor,
+	// because any new instance of ResourceManager would automatically have access to the pool.
+	// On the other hand, we need to be able to track the player resources separately from the 
+	// enemy CPU resources. So, maybe we shouldn't have a static resource pool.
 	clearResourcePool();
 	if(resourcePool != resourceManager.resourcePool)
 		ptr_resourcePool = resourceManager.ptr_resourcePool;
