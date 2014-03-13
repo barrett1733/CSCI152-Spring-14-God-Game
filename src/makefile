@@ -8,7 +8,7 @@ EXECUTABLE = a.out
 
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): main.o config.o sdl.a game-manager.o
+$(EXECUTABLE): main.o config.o sdl.a game-manager.o resource-manager.o village-ai.o
 	$(CC) $(LFLAGS) $^ -o $@
 
 main.o: main.cpp game-manager.o
@@ -18,6 +18,12 @@ config.o: config.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 game-manager.o: game-manager.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+resource-manager.o: resource-manager.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+village-ai.o: villager-ai.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 sdl.a: $(SDL_SOURCES)
