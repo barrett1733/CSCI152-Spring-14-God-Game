@@ -22,6 +22,9 @@ WorldGeneration::~WorldGeneration(){}
 
 WorldGeneration::WorldGeneration()
 {
+	// If rand() were not seeded anywhere else in the program, you *could* seed it here:
+	// srand(time(0));
+	// and absolutely no where else, but it should be seeded somewhere else.
 	world_info;
 	world_positions;	
 }
@@ -85,7 +88,7 @@ void WorldGeneration::PlaceTrees(vector<vector<int> > & world_positions)
 {
 	int temp_random_variable;
 	time_t timer;
-	srand(time(&timer));
+	//srand(time(&timer)); // Never seed rand() more than once.
 	int num_of_trees=0;
 	
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
@@ -110,7 +113,7 @@ void WorldGeneration::PlaceIron(vector<vector<int> > & world_positions)
 {
 	int temp_random_variable;
 	time_t timer;
-	srand(time(&timer));
+	//srand(time(&timer)); // Never seed rand() more than once.
 	int num_of_iron=0;
 
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
@@ -133,7 +136,7 @@ void WorldGeneration::PlaceStone(vector<vector<int> > & world_positions)
 {
 	int temp_random_variable;
 	time_t timer;
-	srand(time(&timer));
+	//srand(time(&timer)); // Never seed rand() more than once.
 	int num_of_stone=0;
 
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
@@ -167,11 +170,11 @@ void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<in
 	****************************************/
 
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);	
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int TC1_outerIndex=rand() % world_info[mapsize];	//y-coord	
 	
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int TC1_innerIndex=rand() % world_info[mapsize];	//x-coord
 	
 
@@ -180,11 +183,11 @@ void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<in
 	****************************************/
 	
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);	
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int TC2_outerIndex=rand() % world_info[mapsize];	//y-coord
 	
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);	
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int TC2_innerIndex=rand() % world_info[mapsize];	//x-coord
 
 	//cout<<endl<<TC1_innerIndex<<","<<TC1_outerIndex<<endl;
@@ -354,7 +357,7 @@ void WorldGeneration::PlaceShrine(vector<vector<int> > & world_positions)
 	int y_offset2=1;
 
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int x_offset1_dir=rand()%100;
 	if(x_offset1_dir>=0 && x_offset1_dir<50)
 		x_offset1=-3;
@@ -363,7 +366,7 @@ void WorldGeneration::PlaceShrine(vector<vector<int> > & world_positions)
 	
 
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);	
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int y_offset1_dir=rand()%100;
 	if(y_offset1_dir>=0 && y_offset1_dir<50)
 		y_offset1=-3;
@@ -372,7 +375,7 @@ void WorldGeneration::PlaceShrine(vector<vector<int> > & world_positions)
 	
 
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int x_offset2_dir=rand()%100;
 	if(x_offset2_dir>=0 && x_offset2_dir<50)
 		x_offset2=-3;
@@ -380,7 +383,7 @@ void WorldGeneration::PlaceShrine(vector<vector<int> > & world_positions)
 		x_offset2=3;
 
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	srand(temp_random_variable);	
+	//srand(temp_random_variable); // Never seed rand() more than once.
 	int y_offset2_dir=rand()%100;
 	if(y_offset2_dir>=0 && y_offset2_dir<50)
 		y_offset2=-3;
@@ -542,7 +545,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<int>
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
 		{
 			temp_random_variable=difftime(timer,(timer+rand()%1000));
-			srand(temp_random_variable);
+			//srand(temp_random_variable); // Never seed rand() more than once.
 			int chance_for_entity=rand() % 100;
 			if(world_positions[outerIndex][innerIndex]==0 && chance_for_entity>=0 && chance_for_entity<8)
 			{
@@ -570,7 +573,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<int>
 				double y2_dist=abs(outerIndex-TC2_y_coord_topleft);
 
 				temp_random_variable=difftime(timer,(timer+rand()%1000));
-				srand(temp_random_variable);
+				//srand(temp_random_variable); // Never seed rand() more than once.
 				int chance_to_delete=rand() % 100;
 
 				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=50 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=50 || chance_to_delete>70)
@@ -590,7 +593,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<int>
 				double y2_dist=abs(outerIndex-TC2_y_coord_topleft);
 
 				temp_random_variable=difftime(timer,(timer+rand()%1000));
-				srand(temp_random_variable);
+				//srand(temp_random_variable); // Never seed rand() more than once.
 				int chance_to_delete=rand() % 100;
 
 				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=50 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=50 || chance_to_delete>30)
