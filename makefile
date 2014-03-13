@@ -14,7 +14,7 @@ OBJECTS = main.o config.o village-ai.o sdl.a managers.a
 EXECUTABLE = a.out
 
 define compile
-@mkdir -p $(OBJ_DIR)@
+@mkdir -p $(OBJ_DIR)
 $(CXX) $(CFLAGS) $< -o $(OBJ_DIR)/$@
 endef
 
@@ -39,7 +39,7 @@ village-ai.o: villager-ai.cpp
 managers.a: $(MGR_SOURCES)
 	$(CXX) $(CFLAGS) $^
 	ar cr $(OBJ_DIR)/$@ *manager.o
-#	rm -f *manager.o
+	rm -f *manager.o
 
 sdl.a: $(addprefix $(SDL_DIR)/, $(SDL_SOURCES))
 	$(CXX) $(CFLAGS) $^
@@ -50,10 +50,6 @@ astar:
 	$(CXX) $(CFLAGS) -c test.cpp -o test.o
 	$(CXX) $(CFLAGS) -c a-star.cpp -o a-star.o
 	$(CXX) $(LFLAGS) test.o a-star.o -o test.out
-
-dirs:
-	@mkdir -p $(OBJ_DIR)@
-	@mkdir -p $(EXE_DIR)@
 
 run:
 	cd $(EXE_DIR);./$(EXECUTABLE);cd -
