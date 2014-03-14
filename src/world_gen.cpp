@@ -562,7 +562,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<int>
 					num_of_deer--;
 				}
 			}
-			else if(world_positions[outerIndex][innerIndex]==0 && chance_for_entity>=80 && chance_for_entity<83)
+			else if(world_positions[outerIndex][innerIndex]==0 && chance_for_entity>=20 && chance_for_entity<23)
 			{
 				world_positions[outerIndex][innerIndex]=6;//wolves
 				num_of_wolves++;
@@ -572,11 +572,11 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<int>
 				double x2_dist=abs(innerIndex-TC2_x_coord_topleft);
 				double y2_dist=abs(outerIndex-TC2_y_coord_topleft);
 
-				temp_random_variable=difftime(timer,(timer+rand()%1000));
+				//temp_random_variable=difftime(timer,(timer+rand()%1000));
 				//srand(temp_random_variable); // Never seed rand() more than once.
 				int chance_to_delete=rand() % 100;
 
-				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=50 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=50 || chance_to_delete>70)
+				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=20.0 || (chance_to_delete>=5 && chance_to_delete<=20))
 				{
 					world_positions[outerIndex][innerIndex]=0;
 					num_of_wolves--;
@@ -596,7 +596,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<int>
 				//srand(temp_random_variable); // Never seed rand() more than once.
 				int chance_to_delete=rand() % 100;
 
-				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=50 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=50 || chance_to_delete>30)
+				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=20.0 || (chance_to_delete>20 && chance_to_delete<40))
 				{
 					world_positions[outerIndex][innerIndex]=0;
 					num_of_ogres--;
