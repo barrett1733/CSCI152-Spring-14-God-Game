@@ -37,7 +37,7 @@ astar:
 	$(CC) $(LFLAGS) test.o a-star.o -o test.out
 
 run:
-	./$(EXECUTABLE)
+	cd ..;./src/$(EXECUTABLE); cd -
 
 clean:
 	rm -f *.o
