@@ -97,15 +97,16 @@ void GameManager::quitGame(SDL_Event & event)
 
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	// double value = ((SliderReference) self->widgetList[MM_WORSHIP_SLIDER]) -> getValue();
-	// std::cout << "Slider Update: " << value << std::endl;
+	double value = ((SliderReference) widget) -> getValue();
+	std::cout << "Slider Update: " << value << std::endl;
 }
+
 void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	// double valueA = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueA();
-	// double valueB = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueB();
-	// double valueC = ((TriangleSliderReference) self->widgetList[MM_TRIANGLE_SLIDER]) -> getValueC();
-	// std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
+	double valueA = ((TriangleSliderReference) widget)-> getValueA();
+	double valueB = ((TriangleSliderReference) widget)-> getValueB();
+	double valueC = ((TriangleSliderReference) widget)-> getValueC();
+	std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
 }
 
 // From Config
@@ -164,10 +165,7 @@ bool GameManager::setProperty(std::string property, std::string value)
 	else if(property == "initially")
 	{
 		if(value == "hidden")
-		{
 			widgetList.back()->widget->hide();
-			std::cout << "Trying to hide: " << widgetList.back()->name << std::endl;
-		}
 	}
 
 	else if(property == "show_when")
@@ -187,7 +185,6 @@ bool GameManager::setProperty(std::string property, int value)
 	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
 	return false;
 }
-
 
 bool GameManager::setProperty(std::string property, int value1, int value2)
 {
