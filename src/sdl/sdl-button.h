@@ -6,6 +6,7 @@
 
 class SdlButton : public SdlWidget
 {
+	ImageReference background;
 	ImageReference createButtonBackground(SDL_Rect & rect);
 
 public:

@@ -11,6 +11,8 @@ enum WidgetState {
 	WIDGET_ON,
 	WIDGET_DISABLED,
 	WIDGET_HIDDEN,
+
+	WS_COUNT
 };
 
 class SdlWidget
