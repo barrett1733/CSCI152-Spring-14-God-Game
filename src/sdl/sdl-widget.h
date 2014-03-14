@@ -5,12 +5,12 @@
 #include "sdl-utility.h"
 
 enum WidgetState {
-	WIDGET_OFF,
-	WIDGET_HOVER,
-	WIDGET_ACTIVE,
-	WIDGET_ON,
-	WIDGET_DISABLED,
-	WIDGET_HIDDEN,
+	WS_OFF,
+	WS_HOVER,
+	WS_ACTIVE,
+	WS_ON,
+	WS_DISABLED,
+	WS_HIDDEN,
 
 	WS_COUNT
 };

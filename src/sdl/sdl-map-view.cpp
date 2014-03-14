@@ -26,11 +26,11 @@ void SdlMapView::handleEvent(SDL_Event & event)
 {
 	updateState(event);
 
-	if(state == WIDGET_ON)
+	if(state == WS_ON)
 	{
 		if(callback)
 			callback(event, this);
-		state = WIDGET_OFF;
+		state = WS_OFF;
 	}
 
 	// Update button appearance for button state

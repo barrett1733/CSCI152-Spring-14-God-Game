@@ -15,7 +15,7 @@ public:
 	void handleEvent(SDL_Event & event)
 	{
 		updateState(event);
-		if(state == WIDGET_HOVER)
+		if(state == WS_HOVER)
 			std::cout << "HI" << std::endl;
 	}
 };

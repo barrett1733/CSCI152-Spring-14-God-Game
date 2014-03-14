@@ -25,7 +25,7 @@ SdlTriangleSlider::SdlTriangleSlider(SDL_Rect & rect, void (*callback_arg)(SDL_E
 	valueA = valueB = valueC = 1/3.0;
 	renderTriangleSliderSurface();
 
-	state = WIDGET_OFF;
+	state = WS_OFF;
 }
 
 SdlTriangleSlider::SdlTriangleSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
@@ -39,7 +39,7 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 {
 	updateState(event);
 
-	if(state == WIDGET_ACTIVE)
+	if(state == WS_ACTIVE)
 	{
 		int width = boundingBox.w;
 		int height = boundingBox.h;
@@ -100,9 +100,9 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 		callback(event, this);
 	}
 
-	if(state == WIDGET_ON)
+	if(state == WS_ON)
 	{
-		state = WIDGET_OFF;
+		state = WS_OFF;
 		if(callback)
 			callback(event, this);
 	}

@@ -4,7 +4,7 @@
 SdlWidget::SdlWidget() :
 	callback(0),
 	surface(0),
-	state(WIDGET_DISABLED)
+	state(WS_DISABLED)
 {
 	clipping.x = 0;
 	clipping.y = 0;
@@ -19,7 +19,7 @@ SdlWidget::SdlWidget() :
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	callback(0),
 	surface(surface_arg),
-	state(WIDGET_OFF)
+	state(WS_OFF)
 {
 	clipping.x = 0;
 	clipping.y = 0;
@@ -34,7 +34,7 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, SdlWidget*)) :
 	callback(callback_arg),
 	surface(surface_arg),
-	state(WIDGET_OFF)
+	state(WS_OFF)
 {
 	clipping.x = 0;
 	clipping.y = 0;
@@ -57,7 +57,7 @@ SdlWidget::~SdlWidget() {
 	boundingBox.y = 0;
 	boundingBox.w = 0;
 	boundingBox.h = 0;
-	state = WIDGET_OFF;
+	state = WS_OFF;
 	callback = 0;
 }
 
@@ -86,7 +86,7 @@ bool SdlWidget::isInside(int xMouse, int yMouse)
 
 SDL_Surface * SdlWidget::getSurface()
 {
-	if(state == WIDGET_HIDDEN)
+	if(state == WS_HIDDEN)
 		return 0;
 	return surface;
 }
@@ -103,7 +103,7 @@ const SDL_Rect * SdlWidget::getBoundingBox()
 
 void SdlWidget::updateState(SDL_Event & event)
 {
-	if(state == WIDGET_DISABLED || state == WIDGET_HIDDEN)
+	if(state == WS_DISABLED || state == WS_HIDDEN)
 		return;
 
 	if( event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP )
@@ -119,22 +119,22 @@ void SdlWidget::updateState(SDL_Event & event)
 		switch( event.type )
 		{
 		case SDL_MOUSEMOTION:
-			if(inside && state == WIDGET_OFF)
-				state = WIDGET_HOVER;
-			else if(!inside && state != WIDGET_ACTIVE)
-				state = WIDGET_OFF;
+			if(inside && state == WS_OFF)
+				state = WS_HOVER;
+			else if(!inside && state != WS_ACTIVE)
+				state = WS_OFF;
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:
 			if(inside)
-				state = WIDGET_ACTIVE;
+				state = WS_ACTIVE;
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			if(inside && state == WIDGET_ACTIVE)
-				state = WIDGET_ON;
+			if(inside && state == WS_ACTIVE)
+				state = WS_ON;
 			else if(!inside)
-				state = WIDGET_OFF;
+				state = WS_OFF;
 			break;
 		}
 	}
@@ -152,20 +152,20 @@ WidgetState SdlWidget::getState()
 
 void SdlWidget::enable()
 {
-	state = WIDGET_OFF;
+	state = WS_OFF;
 }
 
 void SdlWidget::disable()
 {
-	state = WIDGET_DISABLED;
+	state = WS_DISABLED;
 }
 
 void SdlWidget::show()
 {
-	state = WIDGET_OFF;
+	state = WS_OFF;
 }
 
 void SdlWidget::hide()
 {
-	state = WIDGET_HIDDEN;
+	state = WS_HIDDEN;
 }

@@ -27,9 +27,9 @@ void SdlButton::handleEvent(SDL_Event & event)
 {
 	updateState(event);
 
-	if(state == WIDGET_ON)
+	if(state == WS_ON)
 	{
-		state = WIDGET_OFF;
+		state = WS_OFF;
 		if(callback)
 			callback(event, this);
 	}
