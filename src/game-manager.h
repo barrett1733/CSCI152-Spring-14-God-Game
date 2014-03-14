@@ -8,22 +8,6 @@
 #include "config.h"
 #include "sdl/sdl-manager.h"
 
-enum {
-	// MAIN MENU BUTTONS
-	MM_ERROR,
-	MM_NEW_GAME,
-	MM_SHOW_CREDITS,
-	MM_QUIT_GAME,
-
-	// GAMEPLAY WIDGETS
-	MM_TRIANGLE_SLIDER,
-	MM_WORSHIP_SLIDER,
-	MM_MAP_VIEW,
-
-	// TOTAL NUMBER OF STATIC WIDGETS
-	MM_COUNT
-};
-
 enum GameMode {
 	GM_ERROR   = 0x00,
 	GM_MENU    = 0x01,

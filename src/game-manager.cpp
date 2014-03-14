@@ -41,7 +41,7 @@ GameManager::GameManager()
 	std::cout << "Starting Game Loop" << std::endl;
 	while(mode != GM_QUITING)
 	{
-		sdl.update();
+		sdl.update(); //  this should be the last call, because it will consume the rest of the frame's time.
 	}
 }
 
@@ -50,6 +50,8 @@ void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 	std::cout << "New Game" << std::endl;
 
 	mode = GM_PLAYING;
+
+	((ButtonReference) widget)->setText("Continue");
 
 	int widgetCount = self->widgetList.size();
 	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
