@@ -80,6 +80,7 @@ void SdlManager::update()
 	// Update screen
 	SDL_RenderPresent( renderer );
 
+	// Update frame rate display
 	frameCount ++;
 	if(timer != time(0))
 	{
@@ -92,6 +93,7 @@ void SdlManager::update()
 		frameCount = 0;
 	}
 
+	// Waste time until the next frame starts
 	wait();
 }
 
