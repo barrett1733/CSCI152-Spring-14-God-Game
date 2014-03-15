@@ -49,9 +49,22 @@ void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "New Game" << std::endl;
 
-	mode = GM_PLAYING;
+	switch(mode)
+	{
+		case GM_MENU:
+			((ButtonReference) widget)->setText("Continue");
+			break;
 
-	((ButtonReference) widget)->setText("Continue");
+		case GM_PAUSING:
+			break;
+
+		default:
+			std::cerr << "\033[33m Invalid transition to 'playing' from mode " << mode << "\033[m" << std::endl;
+			break;
+
+	}
+
+	mode = GM_PLAYING;
 
 	int widgetCount = self->widgetList.size();
 	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
@@ -133,7 +146,7 @@ bool GameManager::setProperty(std::string property, std::string value)
 	{
 		if( ! (buttonConfig & BCFG_VALID))
 		{
-			std::cerr << "\033[33mInvalid Button Configuration: " << buttonConfig << " != " << BCFG_VALID << "\033[m" << std::endl;
+			std::cerr << "\033[33m Invalid Button Configuration: " << buttonConfig << " != " << BCFG_VALID << "\033[m" << std::endl;
 			if( ! (buttonConfig & BCFG_LABEL)) std::cerr << "Missing label." << std::endl;
 			if( ! (buttonConfig & BCFG_CALLBACK)) std::cerr << "Missing callback." << std::endl;
 			return false;
