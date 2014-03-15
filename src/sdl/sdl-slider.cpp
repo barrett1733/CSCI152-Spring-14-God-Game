@@ -5,6 +5,7 @@ SdlSlider::SdlSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetRef
 	SdlWidget(0, rect, callback_arg),
 	percent(0)
 {
+	liveCallback = callback;
 	clipping.x = clipping.w - clipping.h / 2;
 	surface = createSliderBackground();
 }
@@ -13,6 +14,24 @@ SdlSlider::SdlSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 	SdlWidget(surface_arg, rect, callback_arg),
 	percent(0)
 {
+	liveCallback = callback;
+	clipping.x = clipping.w - clipping.h / 2;
+}
+
+SdlSlider::SdlSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference), void (*liveCallback_arg)(SDL_Event&, WidgetReference)) :
+	SdlWidget(0, rect, callback_arg),
+	percent(0)
+{
+	liveCallback = liveCallback_arg;
+	clipping.x = clipping.w - clipping.h / 2;
+	surface = createSliderBackground();
+}
+
+SdlSlider::SdlSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference), void (*liveCallback_arg)(SDL_Event&, WidgetReference)) :
+	SdlWidget(surface_arg, rect, callback_arg),
+	percent(0)
+{
+	liveCallback = liveCallback_arg;
 	clipping.x = clipping.w - clipping.h / 2;
 }
 
@@ -40,8 +59,8 @@ void SdlSlider::handleEvent(SDL_Event & event)
 
 		clipping.x = (clipping.w - handleWidth) * (1-percent);
 
-		if(percent != previous && callback)
-			callback(event, this);
+		if(percent != previous && liveCallback)
+			liveCallback(event, this);
 	}
 
 	if(state == WS_ON)
