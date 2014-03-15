@@ -14,6 +14,22 @@ SdlTextDisplay::SdlTextDisplay(SDL_Surface * surface_arg, SDL_Rect & rect, std::
 	buildSurface();
 }
 
+SdlTextDisplay::SdlTextDisplay(int xPos, int yPos, int width, int height) :
+	SdlWidget()
+{
+	clipping = sdlUtility.createRect(0, 0, width, height);
+	boundingBox = sdlUtility.createRect(xPos, yPos, width, height);
+	surface = sdlUtility.createSurface(width, height);
+	text = "";
+	font = TTF_OpenFont( "res/arial.ttf", 16 );
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	color.a = 255;
+
+	buildSurface();
+}
+
 SdlTextDisplay::~SdlTextDisplay()
 {
 	TTF_CloseFont(font);
