@@ -1,15 +1,16 @@
 
 #include "sdl-manager.h"
 #include <iostream>
+#include <sstream>
 
 SdlManager sdl;
 
 SdlManager::SdlManager() :
 	window(0),
-	renderer(0)
+	renderer(0),
+	next_time(0)
 {
-
-	std::cerr << "SDL_Init()" << std::endl;
+	std::cout << "SDL_Init()" << std::endl;
 
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -22,7 +23,7 @@ SdlManager::SdlManager() :
 	SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	// Initialize PNG loading
-	std::cerr << "IMG_Init()" << std::endl;
+	std::cout << "IMG_Init()" << std::endl;
 	int imgFlags = IMG_INIT_PNG;
 	if( ! ( IMG_Init( imgFlags ) & imgFlags ) )
 	{
@@ -30,12 +31,16 @@ SdlManager::SdlManager() :
 		throw "IMG_Init()";
 	}
 
-	std::cerr << "Ready." << std::endl;
+	std::cout << "Initializing Frame Counter" << std::endl;
+	timer = time(0);
+	frameCount = 0;
+
+	std::cout << "Ready." << std::endl;
 }
 
 SdlManager::~SdlManager()
 {
-	std::cerr << "sdl.destructor()" << std::endl;
+	std::cout << "sdl.destructor()" << std::endl;
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
@@ -75,6 +80,18 @@ void SdlManager::update()
 	// Update screen
 	SDL_RenderPresent( renderer );
 
+	frameCount ++;
+	if(timer != time(0))
+	{
+		timer = time(0);
+
+		std::stringstream ss;
+		ss << (frameCount) << " fps";
+		fpsCounter->setText(ss.str());
+
+		frameCount = 0;
+	}
+
 	wait();
 }
 
@@ -95,10 +112,10 @@ void SdlManager::wait()
 	unsigned long time_left = 0;
 	if(next_time > now)
 		time_left = next_time - now;
-	else
-		next_time = now;
 	if(time_left > TICK_INTERVAL) time_left = TICK_INTERVAL;
 	SDL_Delay(time_left);
+	if(now > next_time)
+		next_time = now;
 	next_time += TICK_INTERVAL;
 }
 
@@ -108,25 +125,29 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 {
 	if(window) throw "Window exists.";
 
-	std::cerr << "sdl.launchWindow() starting" << std::endl;
+	std::cout << "sdl.launchWindow() starting" << std::endl;
 
 	next_time = 0;
 
 	// Create window
-	std::cerr << "SDL_CreateWindow()" << std::endl;
+	std::cout << "SDL_CreateWindow()" << std::endl;
 	if ( ! ( window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN) ) )
 		throw "SDL_CreateWindow";
 
 	// Create renderer for window
-	std::cerr << "SDL_CreateRenderer()" << std::endl;
+	std::cout << "SDL_CreateRenderer()" << std::endl;
 	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED ) ) )
 		throw "SDL_CreateRenderer";
 
 	// Initialize renderer color
-	std::cerr << "SDL_SetRenderDrawColor()" << std::endl;
+	std::cout << "SDL_SetRenderDrawColor()" << std::endl;
 	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
-	std::cerr << "sdl.launchWindow() finished" << std::endl;
+	fpsCounter = new SdlTextDisplay(740, 580, 60, 20);
+	fpsCounter->setText("00 FPS");
+	addWidget(fpsCounter, WL_NON_INTERACTIVE);
+
+	std::cout << "sdl.launchWindow() finished" << std::endl;
 }
 
 ////////
