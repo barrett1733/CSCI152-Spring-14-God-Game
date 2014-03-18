@@ -1,4 +1,4 @@
-
+#include <ctime>
 #include "sdl-manager.h"
 #include <iostream>
 #include <sstream>
