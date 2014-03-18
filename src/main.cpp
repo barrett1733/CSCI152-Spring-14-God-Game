@@ -4,12 +4,6 @@
 #include "game-manager.h"
 #include "villager-ai.h"
 
-inline std::string toString(double x)
-{
-  std::ostringstream o;
-  o << x;
-  return o.str();
-}
 
 int main(int argc, char **argv)
 {
@@ -21,6 +15,13 @@ int main(int argc, char **argv)
 	std::cout<<"VillAI Access Food:"<<test.getResourceAmount(RS_FOOD)<<std::endl;
 
 	GameManager game;
+
+	// While application is running
+	std::cout << "Starting Game Loop" << std::endl;
+	while(game.mode() != GM_QUITING)
+	{
+		sdl.update(); //  this should be the last call, because it will consume the rest of the frame's time.
+	}
 
 	return 0;
 }

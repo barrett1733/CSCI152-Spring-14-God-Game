@@ -40,7 +40,7 @@ struct GM_Widget
 class GameManager : public Config
 {
 	static GameManager * self;
-	static GameMode mode;
+	static GameMode mode_;
 
 	std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
 	std::map<std::string, GameMode> modeMap;
@@ -67,6 +67,8 @@ class GameManager : public Config
 
 public:
 	GameManager();
+
+	GameMode mode() { return mode_; }
 };
 
 #endif

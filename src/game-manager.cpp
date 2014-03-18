@@ -4,7 +4,7 @@
 #include "sdl/sdl-map-view.h"
 
 GameManager * GameManager::self = 0;
-GameMode GameManager::mode = GM_ERROR;
+GameMode GameManager::mode_ = GM_ERROR;
 
 void doNothing(SDL_Event & event, WidgetReference widget) {}
 
@@ -14,7 +14,7 @@ GameManager::GameManager()
 		throw "GameManager already initialized";
 
 	self = this;
-	mode = GM_MENU;
+	mode_ = GM_MENU;
 
 	callbackMap["none"]                     = doNothing;
 	callbackMap["newGame()"]                = newGame;
@@ -36,20 +36,13 @@ GameManager::GameManager()
 	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
-
-	// While application is running
-	std::cout << "Starting Game Loop" << std::endl;
-	while(mode != GM_QUITING)
-	{
-		sdl.update(); //  this should be the last call, because it will consume the rest of the frame's time.
-	}
 }
 
 void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "New Game" << std::endl;
 
-	switch(mode)
+	switch(mode_)
 	{
 		case GM_MENU:
 			((ButtonReference) widget)->setText("Continue");
@@ -59,17 +52,17 @@ void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 			break;
 
 		default:
-			std::cerr << "\033[33m Invalid transition to 'playing' from mode " << mode << "\033[m" << std::endl;
+			std::cerr << "\033[33m Invalid transition to 'playing' from mode " << mode_ << "\033[m" << std::endl;
 			break;
 
 	}
 
-	mode = GM_PLAYING;
+	mode_ = GM_PLAYING;
 
 	int widgetCount = self->widgetList.size();
 	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
 	{
-		if(self->widgetList[widgetIndex]->mode & mode)
+		if(self->widgetList[widgetIndex]->mode & mode_)
 			self->widgetList[widgetIndex]->widget->show();
 		else
 			self->widgetList[widgetIndex]->widget->hide();
@@ -80,12 +73,12 @@ void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Pause Game" << std::endl;
 
-	mode = GM_PAUSING;
+	mode_ = GM_PAUSING;
 
 	int widgetCount = self->widgetList.size();
 	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
 	{
-		if(self->widgetList[widgetIndex]->mode & mode)
+		if(self->widgetList[widgetIndex]->mode & mode_)
 			self->widgetList[widgetIndex]->widget->show();
 		else
 			self->widgetList[widgetIndex]->widget->hide();
@@ -95,19 +88,19 @@ void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
 void GameManager::showCredits(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Show Credits (NOT IMPLEMENTED - QUITING)" << std:: endl;
-	mode = GM_QUITING;
+	mode_ = GM_QUITING;
 }
 
 void GameManager::quitGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Quit Game (from button)" << std::endl;
-	mode = GM_QUITING;
+	mode_ = GM_QUITING;
 }
 
 void GameManager::quitGame(SDL_Event & event)
 {
 	std::cout << "Quit Game" << std::endl;
-	mode = GM_QUITING;
+	mode_ = GM_QUITING;
 }
 
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
