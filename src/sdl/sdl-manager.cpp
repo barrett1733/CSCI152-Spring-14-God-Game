@@ -100,6 +100,7 @@ void SdlManager::update()
 
 void SdlManager::renderWidget(SdlWidget * widget)
 {
+	return widget->render(renderer);
 	SDL_Surface * surface = widget->getSurface();
 	if(!surface) return;
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);

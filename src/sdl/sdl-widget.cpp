@@ -4,6 +4,7 @@
 SdlWidget::SdlWidget() :
 	callback(0),
 	surface(0),
+	texture(0),
 	state(WS_DISABLED)
 {
 	clipping.x = 0;
@@ -19,6 +20,7 @@ SdlWidget::SdlWidget() :
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	callback(0),
 	surface(surface_arg),
+	texture(0),
 	state(WS_OFF)
 {
 	clipping.x = 0;
@@ -34,6 +36,7 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, SdlWidget*)) :
 	callback(callback_arg),
 	surface(surface_arg),
+	texture(0),
 	state(WS_OFF)
 {
 	clipping.x = 0;
@@ -99,6 +102,19 @@ const SDL_Rect * SdlWidget::getClipping()
 const SDL_Rect * SdlWidget::getBoundingBox()
 {
 	return & boundingBox;
+}
+
+void SdlWidget::render(SDL_Renderer * renderer)
+{
+	if(state == WS_HIDDEN) return;
+	if(!surface) return;
+	if(boundingBox.w == 0 || boundingBox.h == 0) return;
+
+	if(!texture)
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	if(texture)
+		SDL_RenderCopy(renderer, texture, &clipping, &boundingBox);
 }
 
 void SdlWidget::updateState(SDL_Event & event)
