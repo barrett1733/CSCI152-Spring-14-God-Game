@@ -12,7 +12,7 @@ enum EntityType {
 	ET_NONE = 0x00,
 
 	// RESOURCES
-	ET_TREE_1 = 0x000001,
+	ET_TREE = 0x000001,
 	ET_TREE_2,
 	ET_SHRUB_1,
 	ET_SHRUB_2,
@@ -24,29 +24,32 @@ enum EntityType {
 
 	// VILLAGERS
 	ET_VILLAGER = 0x000100,
+
 	ET_ELDER_VILLAGER,
 	ET_CHILD_VILLAGER,
 
-	// PASSIVE ANIMALS
-	ET_SHEEP,
+	// DOMESTIC ANIMALS
 	ET_COW,
+
+	ET_SHEEP,
 	ET_HORSE,
 	ET_CHICKEN,
 	ET_PIG,
 	ET_FISH,
 
-	// HOSTILE ANIMALS
+	// PASSIVE
 	ET_DEER,
-	ET_BOAR,
-	ET_WOLVES,
-	ET_FOX,
 
-	// MYTH CREATURES
+	// HOSTILE
+	ET_WOLF,
+	ET_ORGE,
+
+	ET_BOAR,
+	ET_FOX,
 	ET_VAMPIRE,
 	ET_WEREWOLF,
 	ET_HARPY,
 	ET_SNOW_TROLL,
-	ET_ORGE,
 	ET_SIREN,
 	ET_CTHULHU,
 	ET_UNICORN,
@@ -54,17 +57,20 @@ enum EntityType {
 
 	// BUILDINGS
 	ET_FOUNDATION = 0x010000,
-	ET_TOWN_HALL,
-	ET_HOVEL,
-	ET_HOUSE,
-	ET_MANSION,
+	ET_TOWN_CENTER,
 	ET_STOREHOUSE,
-	ET_QUARRY,
-	ET_STONE_CUTTER,
-	ET_WOODSHOP,
+	ET_HOUSE,
+	ET_STONEWORKS,
+	ET_LUMBERMILL,
 	ET_SMELTER,
-	ET_BLACKSMITH,
-	ET_FARMHOUSE,
+	ET_WEAPONSMITH,
+	ET_ARMORSMITH,
+	ET_FARM,
+	ET_TEMPLE,
+
+	ET_HOVEL,
+	ET_MANSION,
+	ET_QUARRY,
 	ET_WATCHTOWER,
 	ET_MINES
 };
@@ -76,35 +82,35 @@ private:
 	Position position;
 	int maxHealth;
 	int currentHealth;
+	int faction;
 	EntityType type;
 public:
-	Entity(EntityType,int,Position);
+	Entity(EntityType,int,Position,int);
 	std::string getName();
 	Position getPosition();
 	int getMaxHealth();
 	int getCurrentHealth();
+	int getFaction();
 	EntityType getEntityType();
 	void setName(std::string);
 	void setPosition(Position);
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
 	void setEntityType(EntityType);
+	void setFaction();
 };
 
 class MobileEntity : public Entity
 {
 private:
 	int hunger;
-	int faction;
 	int strength;
 	int defense;
 public:
 	int getHunger();
-	int getFaction();
 	int getStrength();
 	int getDefense();
 	void setHunger();
-	void setFaction();
 	void setStrength();
 	void setDefense();
 };

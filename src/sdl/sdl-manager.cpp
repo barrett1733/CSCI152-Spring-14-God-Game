@@ -19,7 +19,8 @@ SdlManager::SdlManager() :
 		throw "SDL_Init()";
 	}
 
-	SDL_SetHint( SDL_HINT_RENDER_VSYNC, "1");
+	//SDL_SetHint( SDL_HINT_RENDER_VSYNC, "1");
+	SDL_SetHint( SDL_HINT_RENDER_DRIVER, "opengl");
 	SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	// Initialize PNG loading
