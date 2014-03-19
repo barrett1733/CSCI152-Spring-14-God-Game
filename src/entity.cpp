@@ -3,7 +3,12 @@
 
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
-Entity::Entity(EntityType entityType, int health, Position position, int faction):type(entityType),currentHealth(health),maxHealth(health),position(position),faction(faction)
+Entity::Entity(EntityType entityType, int health, Position position, int faction) :
+	type(entityType),
+	currentHealth(health),
+	maxHealth(health),
+	position(position),
+	faction(faction)
 { }
 
 Entity::Entity(EntityType entityType, int health, int xPos, int yPos) :
