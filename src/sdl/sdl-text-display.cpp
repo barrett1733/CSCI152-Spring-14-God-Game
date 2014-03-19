@@ -55,4 +55,6 @@ void SdlTextDisplay::buildSurface()
 		SDL_BlitSurface(textSurface, NULL, surface, NULL);
 		SDL_FreeSurface(textSurface);
 	}
+
+	texture = 0;
 }

@@ -18,6 +18,12 @@ SdlButton::SdlButton(const char * text, SDL_Rect & rect, void (*callback_arg)(SD
 SdlButton::~SdlButton()
 {}
 
+void SdlButton::setState(WidgetState state)
+{
+	SdlWidget::setState(state);
+	clipping.y = boundingBox.h * state;
+}
+
 const SDL_Rect * SdlButton::getClipping()
 {
 	clipping.y = boundingBox.h * state;
@@ -82,4 +88,6 @@ void SdlButton::setText(const char * text)
 		SDL_BlitSurface(textSurface, NULL, surface, &clip);
 	}
 	SDL_FreeSurface(textSurface);
+
+	texture = 0;
 }

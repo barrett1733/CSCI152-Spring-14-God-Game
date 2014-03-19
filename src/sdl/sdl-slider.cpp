@@ -42,7 +42,6 @@ SdlSlider::~SdlSlider()
 
 void SdlSlider::handleEvent(SDL_Event & event)
 {
-
 	updateState(event);
 
 	if(state == WS_ACTIVE)
@@ -58,6 +57,7 @@ void SdlSlider::handleEvent(SDL_Event & event)
 		if(percent > 1) percent = 1;
 
 		clipping.x = (clipping.w - handleWidth) * (1-percent);
+		texture = 0;
 
 		if(percent != previous && liveCallback)
 			liveCallback(event, this);
