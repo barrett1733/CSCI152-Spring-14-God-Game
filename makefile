@@ -9,7 +9,7 @@ OBJ_DIR = obj
 EXE_DIR = build
 SOURCES = main.cpp config.cpp
 SDL_SOURCES = sdl-manager.cpp sdl-utility.cpp sdl-widget.cpp sdl-text-display.cpp sdl-button.cpp sdl-slider.cpp sdl-triangle-slider.cpp sdl-entity.cpp sdl-map-view.cpp
-MGR_SOURCES = game-manager.cpp resource-manager.cpp
+MGR_SOURCES = game-manager.cpp resource-manager.cpp entity-manager.cpp
 OBJECTS = main.o config.o village-ai.o sdl.a managers.a
 EXECUTABLE = a.out
 
@@ -19,8 +19,9 @@ $(CXX) $(CFLAGS) $< -o $(OBJ_DIR)/$@
 endef
 
 vpath %.cpp $(SRC_DIR)
-vpath %.o $(OBJ_DIR)
-VPATH = $(OBJ_DIR)
+#vpath %.o $(OBJ_DIR)
+#vpath %.a $(OBJ_DIR)
+#VPATH = $(OBJ_DIR)
 
 all: $(EXECUTABLE)
 
