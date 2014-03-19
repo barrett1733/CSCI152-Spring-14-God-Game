@@ -5,7 +5,7 @@
 
 SdlEntity::SdlEntity(COLOR color, int width, int height) : SdlWidget()
 {
-	surface = sdlUtility.createCircle(color, width, height);
+	surface = sdlUtility.createCircle(color, width);
 
 	clipping.w = width;
 	clipping.h = height;
