@@ -3,14 +3,14 @@
 
 #include "sdl-entity.h"
 
-SdlEntity::SdlEntity(COLOR color, int width, int height) : SdlWidget()
+SdlEntity::SdlEntity(COLOR color, int size) : SdlWidget()
 {
-	surface = sdlUtility.createCircle(color, width);
+	surface = sdlUtility.createCircle(color, size);
 
-	clipping.w = width;
-	clipping.h = height;
-	boundingBox.w = width;
-	boundingBox.h = height;
+	clipping.w = size;
+	clipping.h = size;
+	boundingBox.w = size;
+	boundingBox.h = size;
 
 	std::cout << "SDL Entity created." << std::endl;
 }

@@ -9,15 +9,7 @@
 class SdlEntity : public SdlWidget
 {
 public:
-	SdlEntity(COLOR color, int width, int height);
-	SdlEntity(ImageReference image, int width, int height);
-
-	void handleEvent(SDL_Event & event)
-	{
-		updateState(event);
-		if(state == WS_HOVER)
-			std::cout << "HI" << std::endl;
-	}
+	SdlEntity(COLOR color, int size);
 };
 
 typedef SdlEntity * EntityReference;
