@@ -4,32 +4,42 @@ SDL = -framework SDL2 -framework SDL2_image -framework SDL2_ttf
 CFLAGS = -Wall -Werror -pedantic -c -std=c++11
 LFLAGS = $(SDL)
 SDL_SOURCES = sdl-manager.cpp sdl-utility.cpp sdl-widget.cpp sdl-text-display.cpp sdl-button.cpp sdl-slider.cpp sdl-triangle-slider.cpp sdl-entity.cpp sdl-map-view.cpp
+MGR_SOURCES = game-manager.cpp resource-manager.cpp entity-manager.cpp
+OBJECTS = main.o config.o village-ai.o sdl.a managers.a entity.o
 EXECUTABLE = a.out
+
+define compile
+$(CXX) $(CFLAGS) $< -o $@
+endef
 
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): main.o config.o sdl.a game-manager.o resource-manager.o village-ai.o
+$(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LFLAGS) $^ -o $@
 
-main.o: main.cpp game-manager.o
-	$(CC) $(CFLAGS) $< -o $@
+main.o: main.cpp
+	$(compile)
 
 config.o: config.cpp
-	$(CC) $(CFLAGS) $< -o $@
+	$(compile)
 
-game-manager.o: game-manager.cpp
-	$(CC) $(CFLAGS) $< -o $@
-
-resource-manager.o: resource-manager.cpp
-	$(CC) $(CFLAGS) $< -o $@
+entity.o: entity.cpp
+	$(compile)
 
 village-ai.o: villager-ai.cpp
-	$(CC) $(CFLAGS) $< -o $@
+	$(compile)
+
+managers.a: $(MGR_SOURCES)
+	$(CC) $(CFLAGS) $^
+	ar cr $@ *manager.o
+	rm -f *manager.o
 
 sdl.a: $(addprefix sdl/, $(SDL_SOURCES))
 	$(CC) $(CFLAGS) $^
 	ar cr sdl.a sdl*.o
 	rm -f sdl*.o
+
+
 
 astar:
 	$(CC) $(CFLAGS) -c test.cpp -o test.o

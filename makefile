@@ -6,45 +6,44 @@ LFLAGS = $(SDL)
 SRC_DIR = src
 SDL_DIR = sdl
 OBJ_DIR = obj
-EXE_DIR = build
+BIN_DIR = bin
 SOURCES = main.cpp config.cpp
 SDL_SOURCES = sdl-manager.cpp sdl-utility.cpp sdl-widget.cpp sdl-text-display.cpp sdl-button.cpp sdl-slider.cpp sdl-triangle-slider.cpp sdl-entity.cpp sdl-map-view.cpp
 MGR_SOURCES = game-manager.cpp resource-manager.cpp entity-manager.cpp
-OBJECTS = main.o config.o village-ai.o sdl.a managers.a
+OBJECTS = main.o config.o village-ai.o managers.a sdl.a world_gen.o
 EXECUTABLE = a.out
 
 define compile
 @mkdir -p $(OBJ_DIR)
-$(CXX) $(CFLAGS) $< -o $(OBJ_DIR)/$@
+$(CXX) $(CFLAGS) $< -o $@
 endef
 
-vpath %.cpp $(SRC_DIR)
+#vpath %.cpp $(SRC_DIR)
 #vpath %.o $(OBJ_DIR)
 #vpath %.a $(OBJ_DIR)
-#VPATH = $(OBJ_DIR)
+#vpath % $(OBJ_DIR)
+#VPATH = $(SRC_DIR):$(OBJ_DIR)
 
 all: $(EXECUTABLE)
+	@echo "\033[33mDone\033[m"
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CXX) $(LFLAGS) $(addprefix $(OBJ_DIR)/, $^) -o $(EXE_DIR)/$@
+$(EXECUTABLE): $(addprefix $(OBJ_DIR)/, $(OBJECTS))
+	$(CXX) $(LFLAGS) $(addprefix , $^) -o $(BIN_DIR)/$@
 
-main.o: main.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(compile)
 
-config.o: config.cpp
+$(OBJ_DIR)/village-ai.o: $(SRC_DIR)/villager-ai.cpp
 	$(compile)
 
-village-ai.o: villager-ai.cpp
-	$(compile)
-
-managers.a: $(MGR_SOURCES)
+$(OBJ_DIR)/managers.a: $(addprefix $(SRC_DIR)/, $(MGR_SOURCES))
 	$(CXX) $(CFLAGS) $^
-	ar cr $(OBJ_DIR)/$@ *manager.o
+	ar cr $@ *manager.o
 	rm -f *manager.o
 
-sdl.a: $(addprefix $(SDL_DIR)/, $(SDL_SOURCES))
+$(OBJ_DIR)/sdl.a: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
 	$(CXX) $(CFLAGS) $^
-	ar cr $(OBJ_DIR)/$@ sdl*.o
+	ar cr $@ sdl*.o
 	rm -f sdl*.o
 
 astar:
@@ -53,11 +52,11 @@ astar:
 	$(CXX) $(LFLAGS) test.o a-star.o -o test.out
 
 run:
-	cd $(EXE_DIR);./$(EXECUTABLE);cd -
+	cd $(BIN_DIR);./$(EXECUTABLE);cd -
 
 clean:
-	rm -f obj/*
-	rm -f build/a.out
+	rm -f $(OBJ_DIR)/*
+	rm -f $(BIN_DIR)/a.out
 	rm -f *.o
 	rm -f *.a
 	rm -f *.out
