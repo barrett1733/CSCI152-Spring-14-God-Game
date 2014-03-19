@@ -29,7 +29,7 @@ void SdlButton::handleEvent(SDL_Event & event)
 
 	if(state == WS_ON)
 	{
-		state = WS_OFF;
+		setState(WS_OFF);
 		if(callback)
 			callback(event, this);
 	}

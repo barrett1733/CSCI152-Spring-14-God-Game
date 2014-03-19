@@ -25,6 +25,7 @@ protected:
 	SDL_Rect clipping;
 	SDL_Rect boundingBox;
 
+	virtual void setState(WidgetState);
 	void updateState(SDL_Event & event);
 
 	virtual bool isInside(int xMouse, int yMouse);
