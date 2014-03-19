@@ -78,14 +78,16 @@ enum EntityType {
 class Entity
 {
 private:
-	std::string name;
+	EntityType type;
 	Position position;
 	int maxHealth;
 	int currentHealth;
 	int faction;
-	EntityType type;
+	std::string name;
 public:
-	Entity(EntityType,int,Position,int);
+	Entity(EntityType, int health, Position, int faction);
+	Entity(EntityType, int health, int xPos, int yPos);
+
 	std::string getName();
 	Position getPosition();
 	int getMaxHealth();

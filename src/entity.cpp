@@ -6,6 +6,15 @@
 Entity::Entity(EntityType entityType, int health, Position position, int faction):type(entityType),currentHealth(health),maxHealth(health),position(position),faction(faction)
 { }
 
+Entity::Entity(EntityType entityType, int health, int xPos, int yPos) :
+	type(entityType),
+	maxHealth(health),
+	currentHealth(health)
+{
+	position.x = xPos;
+	position.y = yPos;
+}
+
 EntityType Entity::getEntityType() {
 	return this->type;
 }
