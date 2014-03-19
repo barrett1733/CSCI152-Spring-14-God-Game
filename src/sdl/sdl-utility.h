@@ -38,7 +38,7 @@ public:
 
 	ImageReference createSurface(int width, int height);
 	ImageReference createTextSurface(const char * text);
-	ImageReference createCircle(COLOR, int width, int height);
+	ImageReference createCircle(COLOR, int size);
 	ImageReference createTriangle(COLOR, int width, int height);
 };
 

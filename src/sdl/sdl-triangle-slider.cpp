@@ -185,7 +185,7 @@ ImageReference SdlTriangleSlider::createTriangleSliderBackground()
 ImageReference SdlTriangleSlider::createTriangleSliderHandle()
 {
 	int size = padding * 2;
-	ImageReference image = sdlUtility.createCircle(C_BLUE, size, size);
+	ImageReference image = sdlUtility.createCircle(C_BLUE, size);
 
 	return image;
 }

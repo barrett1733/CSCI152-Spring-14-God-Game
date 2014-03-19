@@ -90,12 +90,12 @@ void SdlUtility::set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
     *(Uint32 *)target_pixel = pixel;
 }
 
-ImageReference SdlUtility::createCircle(COLOR color, int width, int height)
+ImageReference SdlUtility::createCircle(COLOR color, int size)
 {
-	ImageReference image = createSurface(width+1,height+1);
+	ImageReference image = createSurface(size+1,size+1);
 
-	double cx = width / 2;
-	double cy = height / 2;
+	double cx = size / 2;
+	double cy = size / 2;
 	double radius = cx;
 	Uint32 pixel = getColor(image, color);
 
