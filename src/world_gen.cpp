@@ -54,12 +54,12 @@ WorldGeneration::WorldGeneration()
 	***place all entities***
 	************************/
 
-	void PlaceTrees();
-	void PlaceStone();
-	void PlaceIron();
-	void PlaceTownCenter();
-	void PlaceShrine();
-	void PlaceEntities();
+	PlaceResource(25, 75, 1);
+	PlaceResource(1, 5, 7);
+	PlaceResource(30, 35, 5);
+	PlaceTownCenter();
+	PlaceTemple();
+	PlaceEntities();
 }
 
 void WorldGeneration::PrintMap()
@@ -83,11 +83,10 @@ void WorldGeneration::PrintMap()
 	}
 }
 
-void WorldGeneration::PlaceTrees()
+void WorldGeneration::PlaceResource(int min, int max, int type)
 {
 	int temp_random_variable;
-	time_t timer;
-	int num_of_trees=0;
+	int num_of_resource=0;
 	
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
@@ -95,59 +94,16 @@ void WorldGeneration::PlaceTrees()
 		{
 			
 			{
-			temp_random_variable=rand() % 100;
-			if(temp_random_variable>25 && temp_random_variable<75)
-			{
-				world_positions[outerIndex][innerIndex]=1;
-				num_of_trees++;
-			}
-			}
-		}
-	}
-	//cout<<"number of trees: "<<num_of_trees<<endl;
-}
-
-void WorldGeneration::PlaceIron()
-{
-	int temp_random_variable;
-	time_t timer;
-	int num_of_iron=0;
-
-	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
-	{
-		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-		{
-			temp_random_variable=rand() % 100;
-			
-			if(temp_random_variable>1 && temp_random_variable<5)
-			{
-				world_positions[outerIndex][innerIndex]=7;
-				num_of_iron++;
+				temp_random_variable=rand() % 100;
+				if(temp_random_variable>min && temp_random_variable<max)
+				{
+					world_positions[outerIndex][innerIndex]=type;
+					num_of_resource++;
+				}
 			}
 		}
 	}
-	//cout<<"number of iron: "<<num_of_iron<<endl;
-}
-
-void WorldGeneration::PlaceStone()
-{
-	int temp_random_variable;
-	time_t timer;
-	int num_of_stone=0;
-
-	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
-	{
-		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-		{
-			temp_random_variable=rand() % 100;
-			if(temp_random_variable>30 && temp_random_variable<35)
-			{
-				world_positions[outerIndex][innerIndex]=5;
-				num_of_stone++;
-			}
-		}
-	}
-	//cout<<"number of stone: "<<num_of_stone<<endl;
+	cout<<"number of type "<<type<<":"<<num_of_resource<<endl;
 }
 
 void WorldGeneration::PlaceTownCenter()

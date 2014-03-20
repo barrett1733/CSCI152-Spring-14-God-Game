@@ -22,9 +22,9 @@ class WorldGeneration
 public:
 	WorldGeneration();
 	~WorldGeneration();
-	void PlaceTrees();
-	void PlaceStone();
-	void PlaceIron();
+	void PlaceResource(int min, int max, int type);
+	//void PlaceStone();
+	//void PlaceIron();
 	void PlaceTownCenter();
 	void PlaceTemple();
 	void PlaceEntities();
