@@ -31,8 +31,8 @@ public:
 	void PrintMap();
 
 private:
-	vector<vector<int> > world_positions;
-	vector<int> world_info;
+	std::vector< std::vector<int> > world_positions;
+	std::vector<int> world_info;
 };
 
 
