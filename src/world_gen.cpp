@@ -17,7 +17,7 @@ WorldGeneration::WorldGeneration()
 	// srand(time(0));
 	// and absolutely no where else, but it should be seeded somewhere else.
 	world_info;
-	//world_positions;
+	world_positions;
 
 	ifstream myReadFile;
 	void read_from_file();
