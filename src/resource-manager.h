@@ -1,3 +1,6 @@
+#ifndef RESOURCE_MANAGER_H_
+#define RESOURCE_MANAGER_H_
+
 enum ResourceType
 {
 	RS_FAITH = 0x00,
@@ -33,3 +36,6 @@ public:
 	void sendResource(ResourceType,int);
 	int getResourceAmount(ResourceType);
 };
+
+
+#endif

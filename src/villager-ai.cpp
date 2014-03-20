@@ -1,16 +1,11 @@
 #include "villager-ai.h"
 
-VillagerAI::VillagerAI(int faction,int optionalOption):faction(faction),optionalOption(optionalOption),running(false),delay(1),counter(0)
-{
-	this->faction = faction;
-	this->optionalOption = optionalOption;
-}
-VillagerAI::~VillagerAI()
-{}
 
-void VillagerAI::checkResource(int resource)
+void VillagerAI::run()
 {
-	//food, stone, wood, iron
+	balanceJobs();
+	createBuildings();
+	needsDefending();
 }
 
 void VillagerAI::balanceJobs()
@@ -32,27 +27,12 @@ void VillagerAI::balanceJobs()
 	//	check position attacked - another class?
 }
 
-void VillagerAI::getTriangleStats()
+void VillagerAI::createBuildings()
 {
 
 }
 
-void VillagerAI::run()
+void VillagerAI::needsDefending()
 {
-	if(running && counter >= delay)
-	{
-		counter = 0;
-		balanceJobs();
-	}
-	counter++;
-}
 
-void VillagerAI::start()
-{
-	running = true;
-}
-
-void VillagerAI::stop()
-{
-	running = false;
 }

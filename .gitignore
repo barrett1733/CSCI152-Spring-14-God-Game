@@ -73,6 +73,9 @@ Thumbs.db
 #####################
 ref
 lib
+
+# Other Files #
+###############
 *.dll
 *.obj
 *.pdb
@@ -84,4 +87,7 @@ lib
 *.cbp
 *.depend
 *.layout
-
+*.cd
+*.dgml
+*.bsc
+*.sbr
