@@ -5,9 +5,9 @@
 
 Entity::Entity(EntityType entityType, int health, Position position, int faction) :
 	type(entityType),
-	currentHealth(health),
-	maxHealth(health),
 	position(position),
+	maxHealth(health),
+	currentHealth(health),
 	faction(faction)
 { }
 
