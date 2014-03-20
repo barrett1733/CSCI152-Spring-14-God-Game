@@ -2,6 +2,7 @@
 #define WORLD_GEN_H_
 
 #include <vector>
+#include "entity.h"
 
 using namespace std;
 /*
@@ -29,18 +30,19 @@ class WorldGeneration
 public:
 	WorldGeneration();
 	~WorldGeneration();
-	void SizeMap(vector<int> & world_info, vector<vector<string> > & world_positions);
-	void PlaceEmptySpace(vector<vector<string> > & world_positions);
-	void PlaceTrees(vector<vector<string> > & world_positions);
-	void PlaceStone(vector<vector<string> > & world_positions);
-	void PlaceIron(vector<vector<string> > & world_positions);
-	void PlaceEntities(vector<int> & world_info, vector<vector<string> > & world_positions);
-	void PlaceTownCenter(vector<int> & world_info, vector<vector<string> > & world_positions);
-	void PlaceShrine(vector<vector<string> > & world_positions);
-	void PrintMap(vector<int> & world_info);
+	//void SizeMap();
+	//void PlaceEmptySpace();
+	void PlaceTrees();
+	void PlaceStone();
+	void PlaceIron();
+	void PlaceTownCenter();
+	void PlaceTemple();
+	void PlaceEntities();
+	void PrintMap();
 
-//private:
-	vector<vector<string> > world_positions;
+private:
+	vector<vector<int> > world_positions;
+	//Entity world_positions[][];
 	vector<int> world_info;
 };
 

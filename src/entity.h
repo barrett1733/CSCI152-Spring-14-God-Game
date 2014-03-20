@@ -23,15 +23,13 @@ enum EntityType {
 	ET_COPPER,
 
 	// VILLAGERS
-	ET_VILLAGER_PC = 0x000100,//player control
-	ET_VILLAGER_CC, //computer control
+	ET_VILLAGER = 0x000100,
 
 	ET_ELDER_VILLAGER,
 	ET_CHILD_VILLAGER,
 
 	// DOMESTIC ANIMALS
-	ET_COW_PC,//player control
-	ET_COW_CC,//computer control
+	ET_COW,
 
 	ET_SHEEP,
 	ET_HORSE,
@@ -44,7 +42,7 @@ enum EntityType {
 
 	// HOSTILE
 	ET_WOLF,
-	ET_ORGE,
+	ET_OGRE,
 
 	ET_BOAR,
 	ET_FOX,
@@ -59,8 +57,8 @@ enum EntityType {
 
 	// BUILDINGS
 	ET_FOUNDATION = 0x010000,
-	ET_TOWN_CENTER_PC,//player control
-	ET_TOWN_CENTER_CC,//computer control
+	ET_TOWN_CENTER,
+	ET_TOWN_CENTER_CC,
 	ET_STOREHOUSE,
 	ET_HOUSE,
 	ET_STONEWORKS,
@@ -69,8 +67,7 @@ enum EntityType {
 	ET_WEAPONSMITH,
 	ET_ARMORSMITH,
 	ET_FARM,
-	ET_TEMPLE_PC,//player control
-	ET_TEMPLE_CC,//computer control
+	ET_TEMPLE,
 
 	ET_HOVEL,
 	ET_MANSION,

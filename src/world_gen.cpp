@@ -17,14 +17,8 @@ WorldGeneration::WorldGeneration()
 	// srand(time(0));
 	// and absolutely no where else, but it should be seeded somewhere else.
 	world_info;
-	world_positions;	
-}
+	world_positions;
 
-void WorldGeneration::SizeMap(vector<int> & world_info, vector<vector<string> > & world_positions)
-{
-/*************************************************
-        get world info from text file
-*************************************************/	
 	ifstream myReadFile;
 	void read_from_file();
 	{
@@ -44,18 +38,65 @@ void WorldGeneration::SizeMap(vector<int> & world_info, vector<vector<string> > 
 	int mapEdgeLength=world_info[mapsize_index];
 		
 	world_positions.resize(mapEdgeLength);
-}
+	
+	/**************************
+	***fill with empty space***
+	**************************/
 
-void WorldGeneration::PlaceEmptySpace(vector<vector<string> > & world_positions)
-{
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-			world_positions[outerIndex].push_back("ET_NONE");
+			world_positions[outerIndex].push_back(0);
 	}
+
+	/************************
+	***place all entities***
+	************************/
+
+	void PlaceTrees();
+	void PlaceStone();
+	void PlaceIron();
+	void PlaceTownCenter();
+	void PlaceShrine();
+	void PlaceEntities();
 }
 
-void WorldGeneration::PrintMap(vector<int> & world_info)
+//void WorldGeneration::SizeMap()
+//{
+///*************************************************
+//        get world info from text file
+//*************************************************/	
+//	ifstream myReadFile;
+//	void read_from_file();
+//	{
+//		ifstream file("worldInfo.txt");
+//		int n;
+//		while( file >> n ) world_info.push_back(n) ;
+//	}
+//	for(int i=0; i<world_info.size(); i++)
+//		std::cout<<world_info[i]<<endl;
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+//	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
+//	int difficulty_index=1;
+//	int villagers_index=2;
+//	int cows_index=3;
+//
+//	int mapEdgeLength=world_info[mapsize_index];
+//		
+//	world_positions.resize(mapEdgeLength);
+//}
+
+//void WorldGeneration::PlaceEmptySpace()
+//{
+//	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
+//	{
+//		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
+//			world_positions[outerIndex].push_back(Entity(ET_NONE, 0, innerIndex, outerIndex));
+//	}
+//}
+
+void WorldGeneration::PrintMap()
 {
 	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
 	int difficulty_index=1;
@@ -67,7 +108,7 @@ void WorldGeneration::PrintMap(vector<int> & world_info)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
 		{
-			string et_type=world_positions[outerIndex][innerIndex];
+			int et_type=world_positions[outerIndex][innerIndex];
 			cout<<et_type;
 			temp_count=temp_count+1;
 			if(temp_count%sidelength==0)
@@ -76,7 +117,7 @@ void WorldGeneration::PrintMap(vector<int> & world_info)
 	}
 }
 
-void WorldGeneration::PlaceTrees(vector<vector<string> > & world_positions)
+void WorldGeneration::PlaceTrees()
 {
 	int temp_random_variable;
 	time_t timer;
@@ -91,7 +132,7 @@ void WorldGeneration::PlaceTrees(vector<vector<string> > & world_positions)
 			temp_random_variable=rand() % 100;
 			if(temp_random_variable>25 && temp_random_variable<75)
 			{
-				world_positions[outerIndex][innerIndex]="ET_TREE";
+				world_positions[outerIndex][innerIndex]=1;
 				num_of_trees++;
 			}
 			}
@@ -100,7 +141,7 @@ void WorldGeneration::PlaceTrees(vector<vector<string> > & world_positions)
 	//cout<<"number of trees: "<<num_of_trees<<endl;
 }
 
-void WorldGeneration::PlaceIron(vector<vector<string> > & world_positions)
+void WorldGeneration::PlaceIron()
 {
 	int temp_random_variable;
 	time_t timer;
@@ -114,7 +155,7 @@ void WorldGeneration::PlaceIron(vector<vector<string> > & world_positions)
 			
 			if(temp_random_variable>1 && temp_random_variable<5)
 			{
-				world_positions[outerIndex][innerIndex]="ET_IRON";
+				world_positions[outerIndex][innerIndex]=7;
 				num_of_iron++;
 			}
 		}
@@ -122,7 +163,7 @@ void WorldGeneration::PlaceIron(vector<vector<string> > & world_positions)
 	//cout<<"number of iron: "<<num_of_iron<<endl;
 }
 
-void WorldGeneration::PlaceStone(vector<vector<string> > & world_positions)
+void WorldGeneration::PlaceStone()
 {
 	int temp_random_variable;
 	time_t timer;
@@ -135,7 +176,7 @@ void WorldGeneration::PlaceStone(vector<vector<string> > & world_positions)
 			temp_random_variable=rand() % 100;
 			if(temp_random_variable>30 && temp_random_variable<35)
 			{
-				world_positions[outerIndex][innerIndex]="ET_STONE";
+				world_positions[outerIndex][innerIndex]=5;
 				num_of_stone++;
 			}
 		}
@@ -143,7 +184,7 @@ void WorldGeneration::PlaceStone(vector<vector<string> > & world_positions)
 	//cout<<"number of stone: "<<num_of_stone<<endl;
 }
 
-void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<string> > & world_positions)
+void WorldGeneration::PlaceTownCenter()
 {
 	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
 	int difficulty_index=1;
@@ -159,10 +200,10 @@ void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<st
 	****************************************/
 
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	int TC1_outerIndex=rand() % world_info[mapsize_index];	//y-coord	
+	double TC1_outerIndex=rand() % world_info[mapsize_index];	//y-coord	
 	
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	int TC1_innerIndex=rand() % world_info[mapsize_index];	//x-coord
+	double TC1_innerIndex=rand() % world_info[mapsize_index];	//x-coord
 	
 
 	/***************************************
@@ -170,10 +211,10 @@ void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<st
 	****************************************/
 	
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	int TC2_outerIndex=rand() % world_info[mapsize_index];	//y-coord
+	double TC2_outerIndex=rand() % world_info[mapsize_index];	//y-coord
 	
 	temp_random_variable=difftime(timer,(timer+rand()%1000));
-	int TC2_innerIndex=rand() % world_info[mapsize_index];	//x-coord
+	double TC2_innerIndex=rand() % world_info[mapsize_index];	//x-coord
 
 	//cout<<endl<<TC1_innerIndex<<","<<TC1_outerIndex<<endl;
 	//cout<<endl<<TC2_innerIndex<<","<<TC2_outerIndex<<endl;
@@ -286,10 +327,11 @@ void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<st
 	/*************************
 	***set locations of TCs***
 	**************************/
+	
 
-	world_positions[TC1_outerIndex][TC1_innerIndex]="ET_TOWN_CENTER_PC";// 1 set that location to the integer that represents team 1's
+	world_positions[TC1_outerIndex][TC1_innerIndex]=65537;// 1 set that location to the integer that represents team 1's
 	//cout<<endl<<TC1_innerIndex<<","<<TC1_outerIndex<<endl;// town center
-	world_positions[TC2_outerIndex][TC2_innerIndex]="ET_TOWN_CENTER_CC";// 2 set that location to the integer that represents team 2's
+	world_positions[TC2_outerIndex][TC2_innerIndex]=65538;// 2 set that location to the integer that represents team 2's
 	//cout<<endl<<TC2_innerIndex<<","<<TC2_outerIndex<<endl;// town center
 
 	/*********************
@@ -300,12 +342,12 @@ void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<st
 	{
 		for(int innerIndex=TC1_innerIndex-7; innerIndex<TC1_innerIndex+7; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_PC") //1
-				world_positions[outerIndex][innerIndex]="ET_TOWN_CENTER_PC";//1
-			else if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_CC")//2
-				world_positions[outerIndex][innerIndex]="ET_TOWN_CENTER_CC";//2
+			if(innerIndex==TC1_innerIndex && outerIndex==TC1_outerIndex) 
+				world_positions[outerIndex][innerIndex]=65537;
+			else if(innerIndex==TC2_innerIndex && outerIndex==TC2_outerIndex)
+				world_positions[outerIndex][innerIndex]=65538;
 			else
-				world_positions[outerIndex][innerIndex]="ET_NONE";
+				world_positions[outerIndex][innerIndex]=0;
 		}
 	}
 	/*********************
@@ -315,17 +357,17 @@ void WorldGeneration::PlaceTownCenter(vector<int> & world_info, vector<vector<st
 	{
 		for(int innerIndex=TC2_innerIndex-7; innerIndex<TC2_innerIndex+7; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_PC") //1
-				world_positions[outerIndex][innerIndex]="ET_TOWN_CENTER_PC";//1
-			else if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_CC")//2
-				world_positions[outerIndex][innerIndex]="ET_TOWN_CENTER_CC";//2
+			if(innerIndex==TC1_innerIndex && outerIndex==TC1_outerIndex) //1
+				world_positions[outerIndex][innerIndex]=65537;//1
+			else if(innerIndex==TC2_innerIndex && outerIndex==TC2_outerIndex)//2
+				world_positions[outerIndex][innerIndex]=65538;//2
 			else
-				world_positions[outerIndex][innerIndex]="ET_NONE";
+				world_positions[outerIndex][innerIndex]=0;
 		}
 	}	
 }
 
-void WorldGeneration::PlaceShrine(vector<vector<string> > & world_positions)
+void WorldGeneration::PlaceTemple()
 {
 	int temp_random_variable;
 	time_t timer;
@@ -377,24 +419,24 @@ void WorldGeneration::PlaceShrine(vector<vector<string> > & world_positions)
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-			if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_PC")//1
+			if(world_positions[outerIndex][innerIndex]==65537 && !65538)//1
 			{
-				world_positions[outerIndex+y_offset1][innerIndex+x_offset1]="ET_TEMPLE_PC";//1
+				world_positions[outerIndex+y_offset1][innerIndex+x_offset1]=65547;//1
 			}
 	}
 
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-			if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_CC")//2
+			if(world_positions[outerIndex][innerIndex]==65538)//2
 			{
-				world_positions[outerIndex+y_offset2][innerIndex+x_offset2]="ET_TEMPLE_CC";//2
+				world_positions[outerIndex+y_offset2][innerIndex+x_offset2]=65547;//2
 			}
 	}
 	//cout<<endl<<"shrine offsets:"<<endl<<"x1: "<<x_offset1<<" y1: "<<y_offset1<<endl<<"x2: "<<x_offset2<<" y2: "<<y_offset2<<endl;
 }
 
-void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<string> > & world_positions)
+void WorldGeneration::PlaceEntities()
 {
 	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
 	int difficulty_index=1;
@@ -418,7 +460,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_PC")
+			if(world_positions[outerIndex][innerIndex]==65537)
 			{
 				TC1_x_coord_topleft=innerIndex;
 				TC1_y_coord_topleft=outerIndex;
@@ -432,7 +474,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_TOWN_CENTER_CC")
+			if(world_positions[outerIndex][innerIndex]==65538)
 			{
 				TC2_x_coord_topleft=innerIndex;
 				TC2_y_coord_topleft=outerIndex;
@@ -449,9 +491,9 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 	{
 		for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_NONE" && team1_villager_count <= world_info[villagers_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team1_villager_count <= world_info[villagers_index])
 			{
-				world_positions[outerIndex][innerIndex]="ET_VILLAGER_PC";
+				world_positions[outerIndex][innerIndex]=256;
 				team1_villager_count++;
 			}
 		}
@@ -463,9 +505,9 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 	{
 		for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_NONE" && team2_villager_count <= world_info[villagers_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team2_villager_count <= world_info[villagers_index])
 			{
-				world_positions[outerIndex][innerIndex]="ET_VILLAGER_CC";
+				world_positions[outerIndex][innerIndex]=256;
 				team2_villager_count++;
 			}
 		}
@@ -479,9 +521,12 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 	{
 		for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_NONE" && team1_cow_count <= world_info[cows_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team1_cow_count <= world_info[cows_index])
 			{
-				world_positions[outerIndex][innerIndex]="ET_COW_PC";
+				Position TC1; 
+				TC1.x=TC1_x_coord_topleft;
+				TC1.y=TC1_y_coord_topleft;
+				world_positions[outerIndex][innerIndex]=259;
 				team1_cow_count++;
 			}
 		}
@@ -493,9 +538,12 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 	{
 		for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]=="ET_NONE" && team2_cow_count <= world_info[cows_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team2_cow_count <= world_info[cows_index])
 			{
-				world_positions[outerIndex][innerIndex]="ET_COW_CC";
+				Position TC2; 
+				TC2.x=TC2_x_coord_topleft;
+				TC2.y=TC2_y_coord_topleft;
+				world_positions[outerIndex][innerIndex]=259;
 				team2_cow_count++;
 			}
 		}
@@ -508,9 +556,9 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
 		{
 			int chance_for_entity=rand() % 100;
-			if(world_positions[outerIndex][innerIndex]=="ET_NONE" && chance_for_entity>=0 && chance_for_entity<8)
+			if(world_positions[outerIndex][innerIndex]==0 && chance_for_entity>=0 && chance_for_entity<8)
 			{
-				world_positions[outerIndex][innerIndex]="ET_DEER";
+				world_positions[outerIndex][innerIndex]=265;
 				num_of_deer++;
 
 				double x1_dist=abs(innerIndex-TC1_x_coord_topleft);//removing if too close to TC
@@ -519,13 +567,13 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 				double y2_dist=abs(outerIndex-TC2_y_coord_topleft);
 				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=15 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=15)
 				{
-					world_positions[outerIndex][innerIndex]="ET_NONE";
+					world_positions[outerIndex][innerIndex]=0;
 					num_of_deer--;
 				}
 			}
-			else if(world_positions[outerIndex][innerIndex]=="ET_NONE" && chance_for_entity>=20 && chance_for_entity<23)
+			else if(world_positions[outerIndex][innerIndex]==0 && chance_for_entity>=20 && chance_for_entity<23)
 			{
-				world_positions[outerIndex][innerIndex]="ET_WOLF";
+				world_positions[outerIndex][innerIndex]=266;
 				num_of_wolves++;
 
 				double x1_dist=abs(innerIndex-TC1_x_coord_topleft);//removing if too close to TC
@@ -538,13 +586,13 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 
 				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=20.0 || (chance_to_delete>=5 && chance_to_delete<=20))
 				{
-					world_positions[outerIndex][innerIndex]="ET_NONE";
+					world_positions[outerIndex][innerIndex]=0;
 					num_of_wolves--;
 				}
 			}
-			else if(world_positions[outerIndex][innerIndex]=="ET_NONE" && chance_for_entity>=50 && chance_for_entity<51)
+			else if(world_positions[outerIndex][innerIndex]==0 && chance_for_entity>=50 && chance_for_entity<51)
 			{
-				world_positions[outerIndex][innerIndex]="ET_OGRE";
+				world_positions[outerIndex][innerIndex]=267;
 				num_of_ogres++;
 
 				double x1_dist=abs(innerIndex-TC1_x_coord_topleft);//removing if too close to TC
@@ -556,7 +604,7 @@ void WorldGeneration::PlaceEntities(vector<int> & world_info, vector<vector<stri
 
 				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=20.0 || (chance_to_delete>20 && chance_to_delete<40))
 				{
-					world_positions[outerIndex][innerIndex]="ET_NONE";
+					world_positions[outerIndex][innerIndex]=0;
 					num_of_ogres--;
 				}
 			}
