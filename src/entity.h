@@ -8,6 +8,14 @@
 #include "position.h"
 #include <string>
 
+enum FactionType {
+	FT_NONE,
+	FT_PLAYER_1,
+	FT_PLAYER_2,
+	FT_PLAYER_3,
+	FT_PLAYER_4
+};
+
 enum EntityType {
 	ET_NONE = 0x00,
 
@@ -17,6 +25,7 @@ enum EntityType {
 	ET_SHRUB_1,
 	ET_SHRUB_2,
 	ET_BOULDER,
+	ET_STONE,
 	ET_COAL,
 	ET_IRON,
 	ET_GOLD,
