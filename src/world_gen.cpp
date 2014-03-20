@@ -17,7 +17,7 @@ WorldGeneration::WorldGeneration()
 	// srand(time(0));
 	// and absolutely no where else, but it should be seeded somewhere else.
 	world_info;
-	world_positions;
+	//world_positions;
 
 	ifstream myReadFile;
 	void read_from_file();
@@ -38,6 +38,7 @@ WorldGeneration::WorldGeneration()
 	int mapEdgeLength=world_info[mapsize_index];
 		
 	world_positions.resize(mapEdgeLength);
+	//int world_positions[mapEdgeLength][mapEdgeLength];
 	
 	/**************************
 	***fill with empty space***
@@ -60,41 +61,6 @@ WorldGeneration::WorldGeneration()
 	void PlaceShrine();
 	void PlaceEntities();
 }
-
-//void WorldGeneration::SizeMap()
-//{
-///*************************************************
-//        get world info from text file
-//*************************************************/	
-//	ifstream myReadFile;
-//	void read_from_file();
-//	{
-//		ifstream file("worldInfo.txt");
-//		int n;
-//		while( file >> n ) world_info.push_back(n) ;
-//	}
-//	for(int i=0; i<world_info.size(); i++)
-//		std::cout<<world_info[i]<<endl;
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-//	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
-//	int difficulty_index=1;
-//	int villagers_index=2;
-//	int cows_index=3;
-//
-//	int mapEdgeLength=world_info[mapsize_index];
-//		
-//	world_positions.resize(mapEdgeLength);
-//}
-
-//void WorldGeneration::PlaceEmptySpace()
-//{
-//	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
-//	{
-//		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-//			world_positions[outerIndex].push_back(Entity(ET_NONE, 0, innerIndex, outerIndex));
-//	}
-//}
 
 void WorldGeneration::PrintMap()
 {
