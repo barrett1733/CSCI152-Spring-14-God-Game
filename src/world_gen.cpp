@@ -19,6 +19,10 @@ WorldGeneration::WorldGeneration()
 	world_info;
 	world_positions;
 
+	/*****************
+	***get map info***
+	*****************/
+
 	ifstream myReadFile;
 	void read_from_file();
 	{
@@ -54,9 +58,9 @@ WorldGeneration::WorldGeneration()
 	***place all entities***
 	************************/
 
-	PlaceResource(25, 75, 1);
-	PlaceResource(1, 5, 7);
-	PlaceResource(30, 35, 5);
+	PlaceResource(25, 75, 1);//trees
+	PlaceResource(1, 5, 8);//iron
+	PlaceResource(30, 35, 6);//stone
 	PlaceTownCenter();
 	PlaceTemple();
 	PlaceEntities();
@@ -176,24 +180,24 @@ void WorldGeneration::PlaceTownCenter()
 	***move away from edges***
 	**************************/
 	if(TC1_outerIndex-10<0)
-		TC1_outerIndex=TC1_outerIndex+15;
+		TC1_outerIndex+=15;
 	else if(TC1_outerIndex+10>world_info[mapsize_index]-1)
-		TC1_outerIndex=TC1_outerIndex-15;
+		TC1_outerIndex-=15;
 
 	if(TC1_innerIndex-10<0)
-		TC1_innerIndex=TC1_innerIndex+15;
+		TC1_innerIndex+=15;
 	else if(TC1_innerIndex+10>world_info[mapsize_index]-1)
-		TC1_innerIndex=TC1_innerIndex-15;
+		TC1_innerIndex-=15;
 
 	if(TC2_outerIndex-10<0)
-		TC2_outerIndex=TC2_outerIndex+15;
+		TC2_outerIndex+=15;
 	else if(TC2_outerIndex+10>world_info[mapsize_index]-1)
-		TC2_outerIndex=TC2_outerIndex-15;
+		TC2_outerIndex-=15;
 
 	if(TC2_innerIndex-10<0)
-		TC2_innerIndex=TC2_innerIndex+15;
+		TC2_innerIndex+=15;
 	else if(TC2_innerIndex+10>world_info[mapsize_index]-1)
-		TC2_innerIndex=TC2_innerIndex-15;
+		TC2_innerIndex-=15;
 
 	/**************************
 	***check closeness again***
@@ -203,22 +207,22 @@ void WorldGeneration::PlaceTownCenter()
 	{
 		if(TC1_innerIndex>TC2_innerIndex)
 		{
-			TC1_innerIndex=TC1_innerIndex+10;
-			TC2_innerIndex=TC2_innerIndex-10;
+			TC1_innerIndex+=10;
+			TC2_innerIndex-=10;
 			if(TC1_innerIndex>world_info[mapsize_index])
-				TC1_innerIndex=TC1_innerIndex-10;
+				TC1_innerIndex-=10;
 			if(TC2_innerIndex<0)
 				TC2_innerIndex=abs(TC2_innerIndex);
 
 		}
 		else
 		{
-			TC1_innerIndex=TC1_innerIndex-10;
-			TC2_innerIndex=TC2_innerIndex+10;
+			TC1_innerIndex-=10;
+			TC2_innerIndex+=10;
 			if(TC1_innerIndex<0)
 				TC1_innerIndex=abs(TC1_innerIndex);
 			if(TC2_innerIndex>world_info[mapsize_index])
-				TC2_innerIndex=TC2_innerIndex-10;
+				TC2_innerIndex-=10;
 		}
 	}
 
@@ -227,49 +231,34 @@ void WorldGeneration::PlaceTownCenter()
 	**************************/
 
 	if(TC1_outerIndex-10<0)
-		TC1_outerIndex=TC1_outerIndex+15;
+		TC1_outerIndex+=15;
 	else if(TC1_outerIndex+10>world_info[mapsize_index]-1)
-		TC1_outerIndex=TC1_outerIndex-15;
+		TC1_outerIndex-=15;
 
 	if(TC1_innerIndex-10<0)
-		TC1_innerIndex=TC1_innerIndex+15;
+		TC1_innerIndex+=15;
 	else if(TC1_innerIndex+10>world_info[mapsize_index]-1)
-		TC1_innerIndex=TC1_innerIndex-15;
+		TC1_innerIndex-=15;
 
 	if(TC2_outerIndex-10<0)
-		TC2_outerIndex=TC2_outerIndex+15;
+		TC2_outerIndex+=15;
 	else if(TC2_outerIndex+10>world_info[mapsize_index]-1)
-		TC2_outerIndex=TC2_outerIndex-15;
+		TC2_outerIndex-=15;
 
 	if(TC2_innerIndex-10<0)
-		TC2_innerIndex=TC2_innerIndex+15;
+		TC2_innerIndex+=15;
 	else if(TC2_innerIndex+10>world_info[mapsize_index]-1)
-		TC2_innerIndex=TC2_innerIndex-15;
-
-	/*************************
-	***set locations of TCs***
-	**************************/
-	
-
-	world_positions[TC1_outerIndex][TC1_innerIndex]=65537;// 1 set that location to the integer that represents team 1's
-	//cout<<endl<<TC1_innerIndex<<","<<TC1_outerIndex<<endl;// town center
-	world_positions[TC2_outerIndex][TC2_innerIndex]=65538;// 2 set that location to the integer that represents team 2's
-	//cout<<endl<<TC2_innerIndex<<","<<TC2_outerIndex<<endl;// town center
+		TC2_innerIndex-=15;
 
 	/*********************
 	***clear TC1's area***
 	**********************/
-	
+
 	for(int outerIndex=TC1_outerIndex-7; outerIndex<TC1_outerIndex+7; outerIndex++)
 	{
 		for(int innerIndex=TC1_innerIndex-7; innerIndex<TC1_innerIndex+7; innerIndex++)
 		{
-			if(innerIndex==TC1_innerIndex && outerIndex==TC1_outerIndex) 
-				world_positions[outerIndex][innerIndex]=65537;
-			else if(innerIndex==TC2_innerIndex && outerIndex==TC2_outerIndex)
-				world_positions[outerIndex][innerIndex]=65538;
-			else
-				world_positions[outerIndex][innerIndex]=0;
+			world_positions[outerIndex][innerIndex]=0;
 		}
 	}
 	/*********************
@@ -279,14 +268,18 @@ void WorldGeneration::PlaceTownCenter()
 	{
 		for(int innerIndex=TC2_innerIndex-7; innerIndex<TC2_innerIndex+7; innerIndex++)
 		{
-			if(innerIndex==TC1_innerIndex && outerIndex==TC1_outerIndex) //1
-				world_positions[outerIndex][innerIndex]=65537;//1
-			else if(innerIndex==TC2_innerIndex && outerIndex==TC2_outerIndex)//2
-				world_positions[outerIndex][innerIndex]=65538;//2
-			else
-				world_positions[outerIndex][innerIndex]=0;
+			world_positions[outerIndex][innerIndex]=0;
 		}
-	}	
+	}
+
+	/*************************
+	***set locations of TCs***
+	**************************/	
+
+	world_positions[TC1_outerIndex][TC1_innerIndex]=65537;// team 1 set that location to the integer that represents team 1's
+	//cout<<endl<<TC1_innerIndex<<","<<TC1_outerIndex<<endl;// town center
+	world_positions[TC2_outerIndex][TC2_innerIndex]=65538;// 2 set that location to the integer that represents team 2's
+	//cout<<endl<<TC2_innerIndex<<","<<TC2_outerIndex<<endl;// town center
 }
 
 void WorldGeneration::PlaceTemple()
@@ -341,7 +334,7 @@ void WorldGeneration::PlaceTemple()
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-			if(world_positions[outerIndex][innerIndex]==65537 && !65538)//1
+			if(world_positions[outerIndex][innerIndex]==65537)//1
 			{
 				world_positions[outerIndex+y_offset1][innerIndex+x_offset1]=65547;//1
 			}
