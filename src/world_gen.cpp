@@ -329,7 +329,7 @@ void WorldGeneration::PlaceVillagersAndCows()
 	{
 		for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]==0 && team1_villager_count <= world_info[ET_NUM_OF_VILLAGERS])
+			if(world_positions[outerIndex][innerIndex]==0 && team1_villager_count < world_info[ET_NUM_OF_VILLAGERS])
 			{
 				world_positions[outerIndex][innerIndex]=256;
 				team1_villager_count++;
@@ -343,7 +343,7 @@ void WorldGeneration::PlaceVillagersAndCows()
 	{
 		for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]==0 && team2_villager_count <= world_info[ET_NUM_OF_VILLAGERS])
+			if(world_positions[outerIndex][innerIndex]==0 && team2_villager_count < world_info[ET_NUM_OF_VILLAGERS])
 			{
 				world_positions[outerIndex][innerIndex]=256;
 				team2_villager_count++;

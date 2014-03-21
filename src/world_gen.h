@@ -39,7 +39,7 @@ public:
 	int TC2_y_coord_topleft;
 };
 
-enum EntityType 
+enum WorldInfo 
 {
 	ET_MAP_SIZE = 0x00,
 	ET_DIFFICULTY = 0x01,
