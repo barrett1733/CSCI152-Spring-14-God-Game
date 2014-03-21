@@ -16,6 +16,10 @@ WorldGeneration::WorldGeneration()
 	// If rand() were not seeded anywhere else in the program, you *could* seed it here:
 	// srand(time(0));
 	// and absolutely no where else, but it should be seeded somewhere else.
+	time_t timer;
+	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
+	//if it is used I will remove it from this location
+
 	world_info;
 	world_positions;
 	TC1_x_coord_topleft;
@@ -58,9 +62,7 @@ WorldGeneration::WorldGeneration()
 	***place all entities***
 	************************/
 
-	time_t timer;
-	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
-
+	
 	PlaceResource(25, 75, ET_TREE);//trees
 	PlaceResource(1, 5, ET_IRON);//iron
 	PlaceResource(30, 35, ET_STONE);//stone
