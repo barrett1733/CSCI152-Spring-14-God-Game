@@ -1,60 +1,49 @@
 #include "resource-manager.h"
-// Resource pools are created at ResourceManager creation
+// Resource Manager with no pool
 ResourceManager::ResourceManager()
 {
-	clearResourcePool();
-	ptr_resourcePool = &resourcePool;
+	ptr_resourcePool = 0;
 }
-// Creates ResourceManager that uses passed ResourceManager resource pool
-ResourceManager::ResourceManager(ResourceManager &resourceManager)
+
+// Creates ResourceManager that uses passed ResourcePool
+ResourceManager::ResourceManager(ResourcePool &resourcePool)
 {
-	// If the resource pool was a static member, then ALL instances of type ResourceManager
-	// would have access to the exact same data.
-	// We would not need to assign a pointer and we would not need to
-	// clear the private resource pool.
-	// For that matter, we would not need a copy constructor,
-	// because any new instance of ResourceManager would automatically have access to the pool.
-	// On the other hand, we need to be able to track the player resources separately from the
-	// enemy CPU resources. So, maybe we shouldn't have a static resource pool.
-	clearResourcePool();
-	if(resourcePool != resourceManager.resourcePool)
-		ptr_resourcePool = resourceManager.ptr_resourcePool;
+	if(ptr_resourcePool != &resourcePool)
+		ptr_resourcePool = &resourcePool;
 }
 
 ResourceManager::~ResourceManager()
 {
-	clearResourcePool();
 	ptr_resourcePool = 0;
 }
-void ResourceManager::clearResourcePool()
+
+// Registers a ResourcePool
+void ResourceManager::registerResourcePool(ResourcePool &resourcePool)
 {
-	for(int i=0; i < RT_COUNT;i++)
-		resourcePool[i] = 0;
+	ptr_resourcePool = &resourcePool;
 }
-// Switches to the resource pool of the passed ResourceManager
-void ResourceManager::switchResourcePool(ResourceManager &resourceManager)
-{
-		ptr_resourcePool = resourceManager.ptr_resourcePool;
-}
-// If availible, subtract X amount of resource from the pool and return true
-// Else return false
+
+// Subtracts XXX amount of resources from the ResourcePool
+// Returns true if successful, false if not
 bool ResourceManager::requestResource(ResourceType type, int amount)
 {
-	if(*ptr_resourcePool[type] >= amount)
+	if(ptr_resourcePool->resourcePool[type] >= amount)
 	{
-		*ptr_resourcePool[type] -= amount;
+		ptr_resourcePool->resourcePool[type] -= amount;
 		return true;
 	}
 	else
 		return false;
 }
-// Adds amount of X resource back to the pool
+
+// Adds XXX amount of resources back to the pool
 void ResourceManager::sendResource(ResourceType type, int amount)
 {
-	*ptr_resourcePool[type] += amount;
+	ptr_resourcePool->resourcePool[type] += amount;
 }
-// Returns amount of X resource
+
+// Get XXX amount of resource
 int ResourceManager::getResourceAmount(ResourceType type)
 {
-	return *ptr_resourcePool[type];
+	return ptr_resourcePool->resourcePool[type];
 }

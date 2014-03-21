@@ -17,21 +17,30 @@ enum ResourceType
 	// I.e., move NUM_RESOURCETYPE from below as a define, to here:
 	RT_COUNT
 };
+struct ResourcePool
+{
+	int resourcePool[RT_COUNT];
+	ResourcePool()
+	{
+		for(int i = 0; i < RT_COUNT; i++)
+			resourcePool[i] = 0;
+	}
+	~ResourcePool()
+	{
+		for(int i = 0; i < RT_COUNT; i++)
+			resourcePool[i] = 0;
+	}
+};
 
 class ResourceManager
 {
 private:
-	// From looking at the implementation, it looks like the resourcePool
-	// should be static. This would also eliminate the need for a pointer.
-	// See additional comments in the implmentation file.
-	int resourcePool[RT_COUNT];
-	int (*ptr_resourcePool)[RT_COUNT];
-	void clearResourcePool();
+	ResourcePool *ptr_resourcePool;
 public:
 	ResourceManager();
-	ResourceManager(ResourceManager&);
+	ResourceManager(ResourcePool&);
 	~ResourceManager();
-	void switchResourcePool(ResourceManager&);
+	void registerResourcePool(ResourcePool&);
 	bool requestResource(ResourceType,int);
 	void sendResource(ResourceType,int);
 	int getResourceAmount(ResourceType);

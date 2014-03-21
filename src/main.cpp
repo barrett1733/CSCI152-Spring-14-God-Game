@@ -7,11 +7,11 @@
 
 int main(int argc, char **argv)
 {
-	VillagerAI test(1,1);
-	ResourceManager rtest;
-	rtest.sendResource(RS_FOOD, 100);
-	std::cout<<"RM Food: "<<rtest.getResourceAmount(RS_FOOD)<<std::endl;
-	test.switchResourcePool(rtest);
+	VillagerAI test;
+	ResourcePool rtest;
+	rtest.resourcePool[RS_FOOD] = 100;
+	std::cout<<"RM Food: "<<rtest.resourcePool[RS_FOOD]<<std::endl;
+	test.registerResourcePool(rtest);
 	std::cout<<"VillAI Access Food:"<<test.getResourceAmount(RS_FOOD)<<std::endl;
 
 	GameManager game;
