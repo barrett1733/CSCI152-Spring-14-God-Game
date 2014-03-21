@@ -18,6 +18,15 @@ each faction will start with 15 villagers and 5 cows. deer, wolf and ogres will 
 the town center and shrine will be a buildings of larger dimension than 1x1, the locations they are placed will 
 be the top-left corner of the building. 2 will be placed, one for each faction.
 */
+
+enum WorldInfo 
+{
+	ET_MAP_SIZE = 0x00,
+	ET_DIFFICULTY,
+	ET_NUM_OF_VILLAGERS,
+	ET_NUM_OF_COWS
+};
+
 class WorldGeneration
 {
 public:
@@ -33,17 +42,10 @@ public:
 //private:
 	std::vector< std::vector<int> > world_positions;
 	std::vector<int> world_info;
-	int TC1_x_coord_topleft;
-	int TC1_y_coord_topleft;
-	int TC2_x_coord_topleft;
-	int TC2_y_coord_topleft;
+	int TC1_x_coord_topleft;//the index of the x coordinate for team 1's town center
+	int TC1_y_coord_topleft;//the index of the y coordinate for team 1's town center
+	int TC2_x_coord_topleft;//the index of the x coordinate for team 2's town center
+	int TC2_y_coord_topleft;//the index of the y coordinate for team 2's town center
 };
 
-enum WorldInfo 
-{
-	ET_MAP_SIZE = 0x00,
-	ET_DIFFICULTY = 0x01,
-	ET_NUM_OF_VILLAGERS = 0x02,
-	ET_NUM_OF_COWS = 0x03
-};
 #endif
