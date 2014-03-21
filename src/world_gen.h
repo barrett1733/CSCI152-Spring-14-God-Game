@@ -24,8 +24,6 @@ public:
 	~WorldGeneration();
 	void PlaceResource(int min, int max, int type);
 	void PlaceWildBeasts(int min, int max, int delete_chance, int type);
-	//void PlaceStone();
-	//void PlaceIron();
 	void PlaceTownCenter();
 	void PlaceTemple();
 	void PlaceVillagersAndCows();
