@@ -38,12 +38,8 @@ WorldGeneration::WorldGeneration()
 		std::cout<<world_info[i]<<endl;
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
-	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
-	int difficulty_index=1;
-	int villagers_index=2;
-	int cows_index=3;
 
-	int mapEdgeLength=world_info[mapsize_index];
+	int mapEdgeLength=world_info[ET_MAP_SIZE];
 		
 	world_positions.resize(mapEdgeLength);
 	//int world_positions[mapEdgeLength][mapEdgeLength];
@@ -78,12 +74,8 @@ WorldGeneration::WorldGeneration()
 
 void WorldGeneration::PrintMap()
 {
-	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
-	int difficulty_index=1;
-	int villagers_index=2;
-	int cows_index=3;
 	int temp_count=0;
-	int sidelength=world_info[mapsize_index];
+	int sidelength=world_info[ET_MAP_SIZE];
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
@@ -122,24 +114,21 @@ void WorldGeneration::PlaceResource(int min, int max, int type)
 
 void WorldGeneration::PlaceTownCenter()
 {
-	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
-	int difficulty_index=1;
-	int villagers_index=2;
-	int cows_index=3;
+	
 
 	/***************************************
 	***first team's town center location***
 	****************************************/
 
-	TC1_y_coord_topleft=rand() % world_info[mapsize_index];	//y-coord
-	TC1_x_coord_topleft=rand() % world_info[mapsize_index];	//x-coord
+	TC1_y_coord_topleft=rand() % world_info[ET_MAP_SIZE];	//y-coord
+	TC1_x_coord_topleft=rand() % world_info[ET_MAP_SIZE];	//x-coord
 	
 	/***************************************
 	***second team's town center location***
 	****************************************/
 	
-	TC2_y_coord_topleft=rand() % world_info[mapsize_index];	//y-coord
-	TC2_x_coord_topleft=rand() % world_info[mapsize_index];	//x-coord
+	TC2_y_coord_topleft=rand() % world_info[ET_MAP_SIZE];	//y-coord
+	TC2_x_coord_topleft=rand() % world_info[ET_MAP_SIZE];	//x-coord
 	
 	/*******************************
 	***check if TCs are too close***
@@ -154,7 +143,7 @@ void WorldGeneration::PlaceTownCenter()
 		{
 			TC1_y_coord_topleft=TC1_y_coord_topleft+10;
 			TC2_y_coord_topleft=TC2_y_coord_topleft-10;
-			if(TC1_y_coord_topleft>world_info[mapsize_index])
+			if(TC1_y_coord_topleft>world_info[ET_MAP_SIZE])
 				TC1_y_coord_topleft=TC1_y_coord_topleft-10;
 			if(TC2_y_coord_topleft<0)
 				TC2_y_coord_topleft=abs(TC2_y_coord_topleft);
@@ -166,7 +155,7 @@ void WorldGeneration::PlaceTownCenter()
 			TC2_y_coord_topleft=TC2_y_coord_topleft+10;
 			if(TC1_y_coord_topleft<0)
 				TC1_y_coord_topleft=abs(TC1_y_coord_topleft);
-			if(TC2_y_coord_topleft>world_info[mapsize_index])
+			if(TC2_y_coord_topleft>world_info[ET_MAP_SIZE])
 				TC2_y_coord_topleft=TC2_y_coord_topleft-10;
 		}
 	}
@@ -176,22 +165,22 @@ void WorldGeneration::PlaceTownCenter()
 	/**************************/
 	if(TC1_y_coord_topleft-10<0)
 		TC1_y_coord_topleft+=15;
-	else if(TC1_y_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC1_y_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC1_y_coord_topleft-=15;
 
 	if(TC1_x_coord_topleft-10<0)
 		TC1_x_coord_topleft+=15;
-	else if(TC1_x_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC1_x_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC1_x_coord_topleft-=15;
 
 	if(TC2_y_coord_topleft-10<0)
 		TC2_y_coord_topleft+=15;
-	else if(TC2_y_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC2_y_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC2_y_coord_topleft-=15;
 
 	if(TC2_x_coord_topleft-10<0)
 		TC2_x_coord_topleft+=15;
-	else if(TC2_x_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC2_x_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC2_x_coord_topleft-=15;
 
 	/***************************/
@@ -204,7 +193,7 @@ void WorldGeneration::PlaceTownCenter()
 		{
 			TC1_x_coord_topleft+=10;
 			TC2_x_coord_topleft-=10;
-			if(TC1_x_coord_topleft>world_info[mapsize_index])
+			if(TC1_x_coord_topleft>world_info[ET_MAP_SIZE])
 				TC1_x_coord_topleft-=10;
 			if(TC2_x_coord_topleft<0)
 				TC2_x_coord_topleft=abs(TC2_x_coord_topleft);
@@ -216,7 +205,7 @@ void WorldGeneration::PlaceTownCenter()
 			TC2_x_coord_topleft+=10;
 			if(TC1_x_coord_topleft<0)
 				TC1_x_coord_topleft=abs(TC1_x_coord_topleft);
-			if(TC2_x_coord_topleft>world_info[mapsize_index])
+			if(TC2_x_coord_topleft>world_info[ET_MAP_SIZE])
 				TC2_x_coord_topleft-=10;
 		}
 	}
@@ -227,22 +216,22 @@ void WorldGeneration::PlaceTownCenter()
 
 	if(TC1_y_coord_topleft-10<0)
 		TC1_y_coord_topleft+=15;
-	else if(TC1_y_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC1_y_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC1_y_coord_topleft-=15;
 
 	if(TC1_x_coord_topleft-10<0)
 		TC1_x_coord_topleft+=15;
-	else if(TC1_x_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC1_x_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC1_x_coord_topleft-=15;
 
 	if(TC2_y_coord_topleft-10<0)
 		TC2_y_coord_topleft+=15;
-	else if(TC2_y_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC2_y_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC2_y_coord_topleft-=15;
 
 	if(TC2_x_coord_topleft-10<0)
 		TC2_x_coord_topleft+=15;
-	else if(TC2_x_coord_topleft+10>world_info[mapsize_index]-1)
+	else if(TC2_x_coord_topleft+10>world_info[ET_MAP_SIZE]-1)
 		TC2_x_coord_topleft-=15;
 
 	/**********************/
@@ -324,10 +313,6 @@ void WorldGeneration::PlaceTemple()
 
 void WorldGeneration::PlaceVillagersAndCows()
 {
-	int mapsize_index=0;//the number is the index of the variable name, aka the line number in the text file
-	int difficulty_index=1;
-	int villagers_index=2;
-	int cows_index=3;
 	int team1_villager_count=0;
 	int team2_villager_count=0;
 	int team1_cow_count=0;
@@ -342,7 +327,7 @@ void WorldGeneration::PlaceVillagersAndCows()
 	{
 		for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]==0 && team1_villager_count <= world_info[villagers_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team1_villager_count <= world_info[ET_NUM_OF_VILLAGERS])
 			{
 				world_positions[outerIndex][innerIndex]=256;
 				team1_villager_count++;
@@ -356,7 +341,7 @@ void WorldGeneration::PlaceVillagersAndCows()
 	{
 		for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]==0 && team2_villager_count <= world_info[villagers_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team2_villager_count <= world_info[ET_NUM_OF_VILLAGERS])
 			{
 				world_positions[outerIndex][innerIndex]=256;
 				team2_villager_count++;
@@ -372,7 +357,7 @@ void WorldGeneration::PlaceVillagersAndCows()
 	{
 		for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]==0 && team1_cow_count <= world_info[cows_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team1_cow_count <= world_info[ET_NUM_OF_COWS])
 			{
 				world_positions[outerIndex][innerIndex]=259;
 				team1_cow_count++;
@@ -386,7 +371,7 @@ void WorldGeneration::PlaceVillagersAndCows()
 	{
 		for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex]==0 && team2_cow_count <= world_info[cows_index])
+			if(world_positions[outerIndex][innerIndex]==0 && team2_cow_count <= world_info[ET_NUM_OF_COWS])
 			{
 				world_positions[outerIndex][innerIndex]=259;
 				team2_cow_count++;

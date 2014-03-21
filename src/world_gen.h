@@ -39,5 +39,11 @@ public:
 	int TC2_y_coord_topleft;
 };
 
-
+enum EntityType 
+{
+	ET_MAP_SIZE = 0x00,
+	ET_DIFFICULTY = 0x01,
+	ET_NUM_OF_VILLAGERS = 0x02,
+	ET_NUM_OF_COWS = 0x03
+};
 #endif
