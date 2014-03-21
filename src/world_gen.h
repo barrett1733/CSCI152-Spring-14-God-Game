@@ -23,16 +23,21 @@ public:
 	WorldGeneration();
 	~WorldGeneration();
 	void PlaceResource(int min, int max, int type);
+	void PlaceWildBeasts(int min, int max, int delete_chance, int type);
 	//void PlaceStone();
 	//void PlaceIron();
 	void PlaceTownCenter();
 	void PlaceTemple();
-	void PlaceEntities();
+	void PlaceVillagersAndCows();
 	void PrintMap();
 
-private:
+//private:
 	std::vector< std::vector<int> > world_positions;
 	std::vector<int> world_info;
+	int TC1_x_coord_topleft;
+	int TC1_y_coord_topleft;
+	int TC2_x_coord_topleft;
+	int TC2_y_coord_topleft;
 };
 
 
