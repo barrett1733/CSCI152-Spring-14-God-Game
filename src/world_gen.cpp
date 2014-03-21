@@ -114,7 +114,7 @@ void WorldGeneration::PlaceResource(int min, int max, int type)
 			}
 		}
 	}
-	cout<<"number of type "<<type<<":"<<num_of_resource<<endl;
+	//cout<<"number of type "<<type<<":"<<num_of_resource<<endl;
 }
 
 void WorldGeneration::PlaceTownCenter()
@@ -128,9 +128,8 @@ void WorldGeneration::PlaceTownCenter()
 	***first team's town center location***
 	****************************************/
 
-	double TC1_y_coord_topleft=rand() % world_info[mapsize_index];	//y-coord	
-	
-	double TC1_x_coord_topleft=rand() % world_info[mapsize_index];	//x-coord
+	TC1_y_coord_topleft=rand() % world_info[mapsize_index];	//y-coord
+	TC1_x_coord_topleft=rand() % world_info[mapsize_index];	//x-coord
 	
 	/***************************************
 	***second team's town center location***
@@ -169,9 +168,9 @@ void WorldGeneration::PlaceTownCenter()
 		}
 	}
 
-	/*************************
-	***move away from edges***
-	**************************/
+	/**************************/
+	/***move away from edges***/
+	/**************************/
 	if(TC1_y_coord_topleft-10<0)
 		TC1_y_coord_topleft+=15;
 	else if(TC1_y_coord_topleft+10>world_info[mapsize_index]-1)
@@ -192,9 +191,9 @@ void WorldGeneration::PlaceTownCenter()
 	else if(TC2_x_coord_topleft+10>world_info[mapsize_index]-1)
 		TC2_x_coord_topleft-=15;
 
-	/**************************
-	***check closeness again***
-	***************************/
+	/***************************/
+	/***check closeness again***/
+	/***************************/
 
 	if(sqrt((x_dist * x_dist)+(y_dist * y_dist))<=50)
 	{
@@ -219,9 +218,9 @@ void WorldGeneration::PlaceTownCenter()
 		}
 	}
 
-	/*************************
-	***move away from edges***
-	**************************/
+	/**************************/
+	/***move away from edges***/
+	/**************************/
 
 	if(TC1_y_coord_topleft-10<0)
 		TC1_y_coord_topleft+=15;
@@ -243,9 +242,9 @@ void WorldGeneration::PlaceTownCenter()
 	else if(TC2_x_coord_topleft+10>world_info[mapsize_index]-1)
 		TC2_x_coord_topleft-=15;
 
-	/*********************
-	***clear TC1's area***
-	**********************/
+	/**********************/
+	/***clear TC1's area***/
+	/**********************/
 
 	for(int outerIndex=TC1_y_coord_topleft-7; outerIndex<TC1_y_coord_topleft+7; outerIndex++)
 	{
@@ -254,9 +253,9 @@ void WorldGeneration::PlaceTownCenter()
 			world_positions[outerIndex][innerIndex]=0;
 		}
 	}
-	/*********************
-	***clear TC2's area***
-	**********************/
+	/**********************/
+	/***clear TC2's area***/
+	/**********************/
 	for(int outerIndex=TC2_y_coord_topleft-7; outerIndex<TC2_y_coord_topleft+7; outerIndex++)
 	{
 		for(int innerIndex=TC2_x_coord_topleft-7; innerIndex<TC2_x_coord_topleft+7; innerIndex++)
@@ -265,9 +264,9 @@ void WorldGeneration::PlaceTownCenter()
 		}
 	}
 
-	/*************************
-	***set locations of TCs***
-	**************************/	
+	/**************************/
+	/***set locations of TCs***/
+	/**************************/	
 
 	world_positions[TC1_y_coord_topleft][TC1_x_coord_topleft]=65537;// team 1 
 	world_positions[TC2_y_coord_topleft][TC2_x_coord_topleft]=65538;// team 2
@@ -282,9 +281,9 @@ void WorldGeneration::PlaceTemple()
 	3=west
 	3 tiles north or south and 3 tiles east or west*/
 
-	/*****************
-	***find offsets***
-	*****************/
+	/******************/
+	/***find offsets***/
+	/******************/
 
 	int x_offset1;
 	int y_offset1;
@@ -361,9 +360,9 @@ void WorldGeneration::PlaceVillagersAndCows()
 			}
 		}
 	}
-	/*********************************************************/
+	/****************************************************/
 	/***placing cows around the town center and temple***/
-	/*********************************************************/
+	/****************************************************/
 	/***team 1***/
 
 	for(int outerIndex=TC1_y_coord_topleft-3; outerIndex<=TC1_y_coord_topleft+3; outerIndex++)
