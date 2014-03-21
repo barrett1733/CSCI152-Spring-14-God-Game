@@ -65,15 +65,15 @@ WorldGeneration::WorldGeneration()
 	time_t timer;
 	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
 
-	PlaceResource(25, 75, 1);//trees
-	PlaceResource(1, 5, 8);//iron
-	PlaceResource(30, 35, 6);//stone
+	PlaceResource(25, 75, ET_TREE);//trees
+	PlaceResource(1, 5, ET_IRON);//iron
+	PlaceResource(30, 35, ET_STONE);//stone
 	PlaceTownCenter();
 	PlaceTemple();
 	PlaceVillagersAndCows();
-	PlaceWildBeasts(0, 8, 0, 265);//deer
-	PlaceWildBeasts(20, 23, 15, 266);//wolf
-	PlaceWildBeasts(50, 51, 20, 267);//ogre
+	PlaceWildBeasts(0, 8, 0, ET_DEER);//deer
+	PlaceWildBeasts(20, 23, 15, ET_WOLF);//wolf
+	PlaceWildBeasts(50, 51, 20, ET_OGRE);//ogre
 }
 
 void WorldGeneration::PrintMap()
@@ -271,8 +271,8 @@ void WorldGeneration::PlaceTownCenter()
 	/***set locations of TCs***/
 	/**************************/	
 
-	world_positions[TC1_y_coord_topleft][TC1_x_coord_topleft]=65537;// team 1 
-	world_positions[TC2_y_coord_topleft][TC2_x_coord_topleft]=65538;// team 2
+	world_positions[TC1_y_coord_topleft][TC1_x_coord_topleft]=ET_TOWN_CENTER;// team 1 
+	world_positions[TC2_y_coord_topleft][TC2_x_coord_topleft]=ET_TOWN_CENTER_CC;// team 2
 }
 
 void WorldGeneration::PlaceTemple()
@@ -318,8 +318,8 @@ void WorldGeneration::PlaceTemple()
 		y_offset2=3;
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
-	world_positions[TC1_y_coord_topleft+y_offset1][TC1_x_coord_topleft+x_offset1]=65547;//team 1
-	world_positions[TC2_y_coord_topleft+y_offset2][TC2_x_coord_topleft+x_offset2]=65547;//team 2
+	world_positions[TC1_y_coord_topleft+y_offset1][TC1_x_coord_topleft+x_offset1]=ET_TEMPLE;//team 1
+	world_positions[TC2_y_coord_topleft+y_offset2][TC2_x_coord_topleft+x_offset2]=ET_TEMPLE;//team 2
 }
 
 void WorldGeneration::PlaceVillagersAndCows()

@@ -9,8 +9,9 @@ WorldGeneration will initialize a two dimentional vector and fill every spot wit
 
 Each index of the inner vector will contain an int. The location on the map will be an (x,y) coordinate system, 
 the x-coord will be the index of the inner vector and the y-coord the index of the outer vector, with 0 being the top
-(north) row and the higher number the bottom (south). The map will be a square with each outer vector holding a vector the 
-same size as the outer vector. Each different placeable item will have a differnt int specification.
+(north) row and the higher number the bottom (south). The map will be a square with each outer vector holding a vector 
+the same size as the outer vector. Each different placeable item will have a differnt int specification designated in the 
+entity enumeration.
 
 each faction will start with 15 villagers and 5 cows. deer, wolf and ogres will be placed randomly around the map. 
 
