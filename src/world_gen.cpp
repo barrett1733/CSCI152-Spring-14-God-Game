@@ -62,6 +62,9 @@ WorldGeneration::WorldGeneration()
 	***place all entities***
 	************************/
 
+	time_t timer;
+	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
+
 	PlaceResource(25, 75, 1);//trees
 	PlaceResource(1, 5, 8);//iron
 	PlaceResource(30, 35, 6);//stone
