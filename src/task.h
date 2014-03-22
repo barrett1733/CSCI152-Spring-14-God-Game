@@ -36,12 +36,12 @@ enum TaskType
 
 };
 
-enum TaskStatus { 
-	UNASSIGNED = 0x01,
-	IN_PROGRESS,
-	COMPLETED
-	//...
-};
+// enum TaskStatus { 
+// 	UNASSIGNED = 0x01,
+// 	IN_PROGRESS,
+// 	COMPLETED
+// 	//...
+// };
 
 class Task
 {
@@ -50,40 +50,58 @@ protected:
 	Entity * _target;
 	Entity * _assignee;
 	int _priority;
-	TaskStatus _status;
 	int _progress;
 
 public:
-	Task(TaskType type, Entity * target, Entity * villager, int priority, TaskStatus status, int progress);
+	Task(TaskType type, int priority, int progress);
 	void setType(TaskType type);
 	void setTarget(Entity * target);
 	void setAssignee(Entity * villager);
-	void setStatus(TaskStatus status);
-	void setProgress(int progress);
 	TaskType getType();
 	Entity * getTarget();
 	Entity * getAssignee();
-	TaskStatus getStatus();
-	int getProgress();
-	bool isCompleted();
-
+	bool virtual isCompleted() = 0;
 };
 
 class GatherTask : public Task 
 {
 private:
-	int amount;
+	int _amount;
+public:
+	Entity * virtual find() = 0;
+	bool isCompleted();
 };
 
+class GatherFoodTask : public GatherTask
+{
+	Entity * find();
+};
+
+class GatherWoodTask : public GatherTask
+{
+	Entity * find();
+};
+
+class GatherIronTask : public GatherTask
+{
+	Entity * find();
+};
+
+class GatherRockTask : public GatherTask
+{
+	Entity * find();
+};
 
 class BuildTask : public Task 
 {
-
+	//...
+	bool isCompleted();
 };
 
 class MilitaryTask : public Task 
 {
-
+	//...
+	bool isCompleted();
 };
 #endif
 
