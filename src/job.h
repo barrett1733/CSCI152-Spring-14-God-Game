@@ -35,53 +35,44 @@ enum JobType// maybe job type enum goes here
 
 };
 
-std::map<JobType, int> m = {
-	{JOB_BUILD_HOUSE, 5},
-	{JOB_BUILD_STONEWORKS, 5},
-	{JOB_BUILD_SMELTING, 5},
-	{JOB_BUILD_FARM, 5},
-	{JOB_BUILD_LUMBERMILL, 5},
-	{JOB_BUILD_STOREHOUSE, 5},
-	{JOB_BUILD_WEAPONSMITH, 5},
-	{JOB_BUILD_ARMORSMITH, 5},
-	{JOB_BUILD_WATCHTOWER, 5},
-	{JOB_BUILD_TOWNCENTER, 5}
-};
-
 class Job // base class
 {
 protected:
 	JobType _type;
 	int _priority;
 	std::vector<TaskReference> _taskList;
+	int _taskNum;
+	int _taskQuota;
 
 public:
-	Job(JobType type, int priority);
+	Job(JobType type, int priority, int taskNum, int taskQuota);
 	~Job();
 	void setType(JobType type);
 	void setPriority(int priority);
-	void virtual createTaskList() = 0;
 	JobType getType();
 	int getPriority();
-	std::vector<TaskReference> virtual getTaskList() = 0;
+	getTaskList();
 	bool isCompleted();
+	void createTaskList();
 
 };
 
 class GatherJob : public Job
 {
-public:
-	GatherJob(JobType type, int priority);
-	~GatherJob();
+protected:
 	void createTaskList();
+public:
+	GatherJob(JobType type, int priority, int taskNum, int taskQuota);
+	~GatherJob();
 	std::vector<TaskReference> getTaskList();
 };
 
 class BuildJob : public Job
 {
+protected:
 	Entity * _target;
 public:
-	BuildJob(JobType type, int priority, Entity * target);
+	BuildJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target);
 	~BuildJob();
 	void createTaskList();
 	std::vector<TaskReference> getTaskList();
@@ -89,9 +80,11 @@ public:
 
 class MilitaryJob : public Job
 {
+protected:
 	Entity * _target;
+	void createTaskList();
 public:
-	MilitaryJob(JobType type, int priority, Entity * target);
+	MilitaryJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target);
 	~MilitaryJob();
 	void createTaskList();
 	std::vector<TaskReference> getTaskList();
