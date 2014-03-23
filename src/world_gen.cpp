@@ -26,6 +26,10 @@ WorldGeneration::WorldGeneration()
 	TC1_y_coord_topleft;
 	TC2_x_coord_topleft;
 	TC2_y_coord_topleft;
+	entityCount=0;
+	current.x=0;
+	current.y=0;
+	cycled=false;
 
 	/*****************
 	***get map info***
@@ -55,7 +59,7 @@ WorldGeneration::WorldGeneration()
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
-			world_positions[outerIndex].push_back(0);
+			world_positions[outerIndex].push_back(ET_NONE);
 	}
 
 	/************************
@@ -69,7 +73,7 @@ WorldGeneration::WorldGeneration()
 	PlaceTownCenter();
 	PlaceTemple();
 	PlaceVillagers(ET_VILLAGER);
-	PlaceDomesticBeasts();
+	PlaceDomesticBeasts(ET_COW, WI_NUM_OF_COWS);
 	PlaceWildBeasts(0, 8, 0, ET_DEER);//deer
 	PlaceWildBeasts(20, 23, 15, ET_WOLF);//wolf
 	PlaceWildBeasts(50, 51, 20, ET_OGRE);//ogre
@@ -92,7 +96,7 @@ void WorldGeneration::PrintMap()
 	}
 }
 
-void WorldGeneration::PlaceResource(int min, int max, int type)
+void WorldGeneration::PlaceResource(int min, int max, EntityType type)
 {
 	int temp_random_variable;
 	int num_of_resource=0;
@@ -108,6 +112,7 @@ void WorldGeneration::PlaceResource(int min, int max, int type)
 				{
 					world_positions[outerIndex][innerIndex]=type;
 					num_of_resource++;
+					entityCount++;
 				}
 			}
 		}
@@ -245,7 +250,7 @@ void WorldGeneration::PlaceTownCenter()
 	{
 		for(int innerIndex=TC1_x_coord_topleft-7; innerIndex<TC1_x_coord_topleft+7; innerIndex++)
 		{
-			world_positions[outerIndex][innerIndex]=0;
+			world_positions[outerIndex][innerIndex]=ET_NONE;
 		}
 	}
 	/**********************/
@@ -255,7 +260,7 @@ void WorldGeneration::PlaceTownCenter()
 	{
 		for(int innerIndex=TC2_x_coord_topleft-7; innerIndex<TC2_x_coord_topleft+7; innerIndex++)
 		{
-			world_positions[outerIndex][innerIndex]=0;
+			world_positions[outerIndex][innerIndex]=ET_NONE;
 		}
 	}
 
@@ -264,7 +269,9 @@ void WorldGeneration::PlaceTownCenter()
 	/**************************/	
 
 	world_positions[TC1_y_coord_topleft][TC1_x_coord_topleft]=ET_TOWN_CENTER;// team 1 
+	entityCount++;
 	world_positions[TC2_y_coord_topleft][TC2_x_coord_topleft]=ET_TOWN_CENTER_CC;// team 2
+	entityCount++;
 }
 
 void WorldGeneration::PlaceTemple()
@@ -288,33 +295,35 @@ void WorldGeneration::PlaceTemple()
 	int x_offset1_dir=rand()%100;
 	if(x_offset1_dir>=0 && x_offset1_dir<50)
 		x_offset1=-3;
-	if(x_offset1_dir>=50 && x_offset1_dir<99)
+	if(x_offset1_dir>=50 && x_offset1_dir<100)
 		x_offset1=3;
 	
 	int y_offset1_dir=rand()%100;
 	if(y_offset1_dir>=0 && y_offset1_dir<50)
 		y_offset1=-3;
-	if(y_offset1_dir>=50 && y_offset1_dir<99)
+	if(y_offset1_dir>=50 && y_offset1_dir<100)
 		y_offset1=3;
 	
 	int x_offset2_dir=rand()%100;
 	if(x_offset2_dir>=0 && x_offset2_dir<50)
 		x_offset2=-3;
-	if(x_offset2_dir>=50 && x_offset2_dir<99)
+	if(x_offset2_dir>=50 && x_offset2_dir<100)
 		x_offset2=3;
 
 	int y_offset2_dir=rand()%100;
 	if(y_offset2_dir>=0 && y_offset2_dir<50)
 		y_offset2=-3;
-	if(y_offset2_dir>=50 && y_offset2_dir<99)
+	if(y_offset2_dir>=50 && y_offset2_dir<100)
 		y_offset2=3;
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 	world_positions[TC1_y_coord_topleft+y_offset1][TC1_x_coord_topleft+x_offset1]=ET_TEMPLE;//team 1
+	entityCount++;
 	world_positions[TC2_y_coord_topleft+y_offset2][TC2_x_coord_topleft+x_offset2]=ET_TEMPLE;//team 2
+	entityCount++;
 }
 
-void WorldGeneration::PlaceVillagers(int type)
+void WorldGeneration::PlaceVillagers(EntityType type)
 {
 	int team1_villager_count=0;
 	int team2_villager_count=0;
@@ -332,6 +341,7 @@ void WorldGeneration::PlaceVillagers(int type)
 			{
 				world_positions[outerIndex][innerIndex]=type;
 				team1_villager_count++;
+				entityCount++;
 			}
 		}
 	}
@@ -346,65 +356,47 @@ void WorldGeneration::PlaceVillagers(int type)
 			{
 				world_positions[outerIndex][innerIndex]=type;
 				team2_villager_count++;
+				entityCount++;
 			}
 		}
 	}
 	
 }
 
-void WorldGeneration::PlaceDomesticBeasts()
+void WorldGeneration::PlaceDomesticBeasts(EntityType type, int number)
 {
-	//int team1_type_count=0;
-	//int team2_type_count=0;
-	
-	int temp_type=ET_COW;
-	/****************************************************/
-	/***placing domestic beasts around the town center and temple***/
-	/****************************************************/
 	/***team 1***/
-
-	for(int counter=0; counter<world_info.size()-3;  counter++)
-	{
 		int team1_type_count=0;
 		for(int outerIndex=TC1_y_coord_topleft-3; outerIndex<=TC1_y_coord_topleft+3; outerIndex++)
 		{
 			for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
 			{
-				if(world_positions[outerIndex][innerIndex]==0 && team1_type_count < world_info[WI_NUM_OF_COWS+counter])
+				if(world_positions[outerIndex][innerIndex]==0 && team1_type_count < world_info[number])
 				{
-					world_positions[outerIndex][innerIndex]=temp_type;
+					world_positions[outerIndex][innerIndex]=type;
 					team1_type_count++;
+					entityCount++;
 				}
 			}
 		}
 	
-	temp_type++;
-	}
-
-	/***team 2***/
-	temp_type=ET_COW;
-	
-
-	for(int counter=0; counter<world_info.size()-3;  counter++)
-	{
+	/***team 2***/	
 		int team2_type_count=0;
 		for(int outerIndex=TC2_y_coord_topleft-3; outerIndex<=TC2_y_coord_topleft+3; outerIndex++)
 		{
 			for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
 			{
-				if(world_positions[outerIndex][innerIndex]==0 && team2_type_count < world_info[WI_NUM_OF_COWS+counter])
+				if(world_positions[outerIndex][innerIndex]==0 && team2_type_count < world_info[number])
 				{
-					world_positions[outerIndex][innerIndex]=temp_type;
+					world_positions[outerIndex][innerIndex]=type;
 					team2_type_count++;
+					entityCount++;
 				}
 			}
-		}
-	
-	temp_type++;
-	}
+		}	
 }
 
-void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, int type)
+void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, EntityType type)
 {
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
@@ -415,6 +407,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, int t
 			{
 				
 				world_positions[outerIndex][innerIndex]=type;
+				entityCount++;
 
 				double x1_dist=abs(innerIndex-TC1_x_coord_topleft);//removing if too close to TC
 				double y1_dist=abs(outerIndex-TC1_y_coord_topleft);
@@ -426,9 +419,108 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, int t
 
 				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=20.0 || chance_to_delete<=delete_chance)
 				{
-					world_positions[outerIndex][innerIndex]=0;
+					world_positions[outerIndex][innerIndex]=ET_NONE;
+					entityCount--;
 				}
 			}
 		}
+	}
+}
+
+Entity WorldGeneration::getNextEntity()
+{
+	Entity to_return(ET_NONE,0,current,0);
+	while(true)
+	{
+		if(world_positions[current.y][current.x]==0)
+		{
+			if(current.y==world_positions.size()-1 && current.x==world_positions.size()-1)
+				throw ("noMoreEntities");
+			else if(cycled==true)
+				throw ("noMoreEntities");
+			else
+				nextPosition();			
+		}
+		else if(world_positions[current.y][current.x]!=0)
+		{
+			if(cycled==true)
+				throw ("noMoreEntities");
+			else
+			{
+			to_return.setEntityType(world_positions[current.y][current.x]);
+
+			switch(world_positions[current.y][current.x])
+			{
+			case ET_VILLAGER:
+			case ET_COW:
+			case ET_DEER:
+			case ET_TREE:
+			case ET_IRON:
+			case ET_STONE:
+			case ET_WOLF:
+				to_return.setMaxHealth(100);
+				break;
+			case ET_OGRE:
+				to_return.setMaxHealth(250);
+				break;
+			default:
+				to_return.setMaxHealth(0);
+			}
+
+			to_return.setPosition(current);
+
+			if(world_positions[current.y][current.x]==ET_TREE ||
+				world_positions[current.y][current.x]==ET_STONE ||
+				world_positions[current.y][current.x]==ET_IRON ||
+				world_positions[current.y][current.x]==ET_DEER ||
+				world_positions[current.y][current.x]==ET_WOLF ||
+				world_positions[current.y][current.x]==ET_OGRE)
+			{
+				to_return.setFaction(0);
+			}
+			else
+			{
+				double x_dist=abs(TC1_x_coord_topleft-current.x);
+				double y_dist=abs(TC1_y_coord_topleft-current.y);
+				double length_to_tc1=sqrt((x_dist * x_dist)+(y_dist * y_dist));
+
+				x_dist=abs(TC2_x_coord_topleft-current.x);
+				y_dist=abs(TC2_y_coord_topleft-current.y);
+				double length_to_tc2=sqrt((x_dist * x_dist)+(y_dist * y_dist));
+				if(length_to_tc1<length_to_tc2)
+					to_return.setFaction(1);
+				else
+					to_return.setFaction(2);
+			}
+			nextPosition();
+			return to_return;
+		}
+		}
+	}
+
+}
+
+int WorldGeneration::getEntityCount()
+{
+	return entityCount;
+}
+
+void WorldGeneration::nextPosition()
+{
+	if(current.x==world_positions.size()-1 && current.y==world_positions.size()-1)
+	{
+		current.x=0;
+		current.y=0;
+		cycled=true;
+	}
+	else if(current.x==world_positions.size()-1)
+	{
+		current.x=0;
+		current.y++;
+	}
+	else
+	{
+		current.x++;
+		current.y++;
 	}
 }

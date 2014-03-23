@@ -10,8 +10,8 @@
 class Position
 {
 public:
-	int x;
-	int y;
+	double x;
+	double y;
 
 	double distance(Position & p)
 	{

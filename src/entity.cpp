@@ -51,3 +51,6 @@ void Entity::setName(std::string name) {
 void Entity::setPosition(Position position) {
 	this->position = position;
 }
+void Entity::setFaction(int faction) {
+	this->faction = faction;
+}

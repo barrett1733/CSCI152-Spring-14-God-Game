@@ -45,7 +45,7 @@ enum EntityType {
 	ET_CHICKEN,
 	ET_PIG,
 	ET_FISH,
-
+	endofdmestics,
 	// PASSIVE
 	ET_DEER,
 
@@ -109,7 +109,7 @@ public:
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
 	void setEntityType(EntityType);
-	void setFaction();
+	void setFaction(int);
 };
 
 class MobileEntity : public Entity

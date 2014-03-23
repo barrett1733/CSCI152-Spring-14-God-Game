@@ -5,18 +5,18 @@
 #include "entity.h"
 
 /*
-WorldGeneration etll initialize a two dimentional vector and fill every spot etth the int that signifies open space. 
+WorldGeneration will initialize a two dimentional vector and fill every spot with the int that signifies open space. 
 
-Each index of the inner vector etll contain an int. The location on the map etll be an (x,y) coordinate system, 
-the x-coord etll be the index of the inner vector and the y-coord the index of the outer vector, etth 0 being the top
-(north) row and the higher number the bottom (south). The map etll be a square etth each outer vector holding a vector 
-the same size as the outer vector. Each different placeable item etll have a differnt int specification designated in the 
+Each index of the inner vector will contain an int. The location on the map will be an (x,y) coordinate system, 
+the x-coord etll be the index of the inner vector and the y-coord the index of the outer vector, with 0 being the top
+(north) row and the higher number the bottom (south). The map will be a square with each outer vector holding a vector 
+the same size as the outer vector. Each different placeable item will have a differnt int specification designated in the 
 entity enumeration.
 
-each faction etll start etth 15 villagers and 5 cows. deer, wolf and ogres etll be placed randomly around the map. 
+each faction will start with 15 villagers and 5 cows. deer, wolf and ogres will be placed randomly around the map. 
 
-the town center and shrine etll be a buildings of larger dimension than 1x1, the locations they are placed etll 
-be the top-left corner of the building. 2 etll be placed, one for each faction.
+the town center and shrine will be a buildings of larger dimension than 1x1, the locations they are placed will 
+be the top-left corner of the building. 2 will be placed, one for each faction.
 
 As it stands now, in the text file for world info the order must be:
 	mapsize
@@ -40,26 +40,38 @@ enum WorldInfo
 	WI_FISH,
 };
 
+//struct entities
+//{
+//	int 
+//};
+
 class WorldGeneration
 {
 public:
 	WorldGeneration();
 	~WorldGeneration();
-	void PlaceResource(int min, int max, int type);
-	void PlaceWildBeasts(int min, int max, int delWIe_chance, int type);
+	void PlaceResource(int min, int max, EntityType type);
+	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
 	void PlaceTownCenter();
 	void PlaceTemple();
-	void PlaceVillagers(int type);
-	void PlaceDomesticBeasts();
+	void PlaceVillagers(EntityType type);
+	void PlaceDomesticBeasts(EntityType type, int number);
 	void PrintMap();
+	Entity getNextEntity();
+	int getEntityCount();
+	void nextPosition();
 
-//private:
-	std::vector< std::vector<int> > world_positions;
+
+	std::vector< std::vector<EntityType> > world_positions;
 	std::vector<int> world_info;
+private:
 	int TC1_x_coord_topleft;//the index of the x coordinate for team 1's town center
 	int TC1_y_coord_topleft;//the index of the y coordinate for team 1's town center
 	int TC2_x_coord_topleft;//the index of the x coordinate for team 2's town center
 	int TC2_y_coord_topleft;//the index of the y coordinate for team 2's town center
+	int entityCount;
+	Position current;
+	bool cycled;
 };
 
 #endif
