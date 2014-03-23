@@ -257,6 +257,8 @@ void WorldGeneration::PlaceTownCenter()
 	{
 		for(int innerIndex=TC1_x_coord_topleft-7; innerIndex<TC1_x_coord_topleft+7; innerIndex++)
 		{
+			// index can go out of bounds here.
+			// causes segfault
 			world_positions[outerIndex][innerIndex]=ET_NONE;
 		}
 	}
