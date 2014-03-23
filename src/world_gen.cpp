@@ -35,8 +35,8 @@ WorldGeneration::WorldGeneration()
 	***get map info***
 	*****************/
 
-	ifstream myReadFile;
-	void read_from_file();
+	ifstream myReadFile; // What is this for?
+	void read_from_file(); // What is this?
 	{
 		ifstream file("worldInfo.txt");
 		int n;
@@ -149,6 +149,9 @@ void WorldGeneration::PlaceTownCenter()
 			if(TC2_y_coord_topleft<0)
 				TC2_y_coord_topleft=abs(TC2_y_coord_topleft);
 		}
+		// The following block of code is the same as above.
+		// Refactor this.
+
 		else
 		{
 			TC1_y_coord_topleft=TC1_y_coord_topleft-10;
@@ -168,6 +171,9 @@ void WorldGeneration::PlaceTownCenter()
 	else if(TC1_y_coord_topleft+10>world_info[WI_MAP_SIZE]-1)
 		TC1_y_coord_topleft-=15;
 
+	// The following blocks of code are the same as above.
+	// Refactor this.
+
 	if(TC1_x_coord_topleft-10<0)
 		TC1_x_coord_topleft+=15;
 	else if(TC1_x_coord_topleft+10>world_info[WI_MAP_SIZE]-1)
@@ -182,6 +188,9 @@ void WorldGeneration::PlaceTownCenter()
 		TC2_x_coord_topleft+=15;
 	else if(TC2_x_coord_topleft+10>world_info[WI_MAP_SIZE]-1)
 		TC2_x_coord_topleft-=15;
+
+	// The following block of code is the same as above.
+	// Refactor this.
 
 	/***************************/
 	/***check closeness again***/
@@ -198,6 +207,10 @@ void WorldGeneration::PlaceTownCenter()
 			if(TC2_x_coord_topleft<0)
 				TC2_x_coord_topleft=abs(TC2_x_coord_topleft);
 		}
+
+		// The following block of code is the same as above.
+		// Refactor this.
+
 		else
 		{
 			TC1_x_coord_topleft-=10;
@@ -217,6 +230,9 @@ void WorldGeneration::PlaceTownCenter()
 		TC1_y_coord_topleft+=15;
 	else if(TC1_y_coord_topleft+10>world_info[WI_MAP_SIZE]-1)
 		TC1_y_coord_topleft-=15;
+
+	// The following blocks of code are the same as above.
+	// Refactor this.
 
 	if(TC1_x_coord_topleft-10<0)
 		TC1_x_coord_topleft+=15;
@@ -244,6 +260,10 @@ void WorldGeneration::PlaceTownCenter()
 			world_positions[outerIndex][innerIndex]=ET_NONE;
 		}
 	}
+
+	// The following block of code is the same as above.
+	// Refactor this.
+
 	/**********************/
 	/***clear TC2's area***/
 	/**********************/
@@ -288,6 +308,9 @@ void WorldGeneration::PlaceTemple()
 		x_offset1=-3;
 	if(x_offset1_dir>=50 && x_offset1_dir<100)
 		x_offset1=3;
+
+	// The following blocks of code are the same as above.
+	// Refactor this.
 
 	int y_offset1_dir=rand()%100;
 	if(y_offset1_dir>=0 && y_offset1_dir<50)
@@ -337,6 +360,9 @@ void WorldGeneration::PlaceVillagers(EntityType type)
 		}
 	}
 
+	// The following block of code is the same as above.
+	// Refactor this.
+
 	/***team 2***/
 
 	for(int outerIndex=TC2_y_coord_topleft-3; outerIndex<=TC2_y_coord_topleft+3; outerIndex++)
@@ -369,6 +395,9 @@ void WorldGeneration::PlaceDomesticBeasts(EntityType type, int number)
 			}
 		}
 	}
+
+	// The following block of code is the same as above.
+	// Refactor this.
 
 	/***team 2***/
 	int team2_type_count=0;
@@ -446,13 +475,13 @@ Entity WorldGeneration::getNextEntity()
 			case ET_IRON:
 			case ET_STONE:
 			case ET_WOLF:
-				to_return.setMaxHealth(100);
+				// to_return.setMaxHealth(100); // This is outside of world gen's scope.
 				break;
 			case ET_OGRE:
-				to_return.setMaxHealth(250);
+				// to_return.setMaxHealth(250); // This is outside of world gen's scope.
 				break;
 			default:
-				to_return.setMaxHealth(0);
+				// to_return.setMaxHealth(0); // This is outside of world gen's scope.
 			}
 
 			to_return.setPosition(current);
