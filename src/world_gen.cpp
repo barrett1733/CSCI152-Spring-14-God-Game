@@ -20,12 +20,12 @@ WorldGeneration::WorldGeneration()
 	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
 	//if it is used I will remove it from this location
 
-	world_info;
-	world_positions;
-	TC1_x_coord_topleft;
-	TC1_y_coord_topleft;
-	TC2_x_coord_topleft;
-	TC2_y_coord_topleft;
+	// world_info;
+	// world_positions;
+	// TC1_x_coord_topleft;
+	// TC1_y_coord_topleft;
+	// TC2_x_coord_topleft;
+	// TC2_y_coord_topleft;
 	entityCount=0;
 	current.x=0;
 	current.y=0;
@@ -48,10 +48,9 @@ WorldGeneration::WorldGeneration()
 //////////////////////////////////////////////////////
 
 	int mapEdgeLength=world_info[WI_MAP_SIZE];
-		
+
 	world_positions.resize(mapEdgeLength);
-	
-	
+
 	/**************************
 	***fill with empty space***
 	**************************/
@@ -66,7 +65,6 @@ WorldGeneration::WorldGeneration()
 	***place all entities***
 	************************/
 
-	
 	PlaceResource(25, 75, ET_TREE);//trees
 	PlaceResource(1, 5, ET_IRON);//iron
 	PlaceResource(30, 35, ET_STONE);//stone
@@ -100,20 +98,17 @@ void WorldGeneration::PlaceResource(int min, int max, EntityType type)
 {
 	int temp_random_variable;
 	int num_of_resource=0;
-	
+
 	for(int outerIndex=0; outerIndex<world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex=0; innerIndex<world_positions.size(); innerIndex++)
 		{
-			
+			temp_random_variable=rand() % 100;
+			if(temp_random_variable>min && temp_random_variable<max)
 			{
-				temp_random_variable=rand() % 100;
-				if(temp_random_variable>min && temp_random_variable<max)
-				{
-					world_positions[outerIndex][innerIndex]=type;
-					num_of_resource++;
-					entityCount++;
-				}
+				world_positions[outerIndex][innerIndex]=type;
+				num_of_resource++;
+				entityCount++;
 			}
 		}
 	}
@@ -122,27 +117,25 @@ void WorldGeneration::PlaceResource(int min, int max, EntityType type)
 
 void WorldGeneration::PlaceTownCenter()
 {
-	
-
 	/***************************************
 	***first team's town center location***
 	****************************************/
 
 	TC1_y_coord_topleft=rand() % world_info[WI_MAP_SIZE];	//y-coord
 	TC1_x_coord_topleft=rand() % world_info[WI_MAP_SIZE];	//x-coord
-	
+
 	/***************************************
 	***second team's town center location***
 	****************************************/
-	
+
 	TC2_y_coord_topleft=rand() % world_info[WI_MAP_SIZE];	//y-coord
 	TC2_x_coord_topleft=rand() % world_info[WI_MAP_SIZE];	//x-coord
-	
+
 	/*******************************
 	***check if TCs are too close***
 	*****   move if they are   *****
 	********************************/
-	
+
 	double x_dist=abs(TC1_x_coord_topleft-TC2_x_coord_topleft);
 	double y_dist=abs(TC1_y_coord_topleft-TC2_y_coord_topleft);
 	if(sqrt((x_dist * x_dist)+(y_dist * y_dist))<=50)
@@ -155,7 +148,6 @@ void WorldGeneration::PlaceTownCenter()
 				TC1_y_coord_topleft=TC1_y_coord_topleft-10;
 			if(TC2_y_coord_topleft<0)
 				TC2_y_coord_topleft=abs(TC2_y_coord_topleft);
-
 		}
 		else
 		{
@@ -205,7 +197,6 @@ void WorldGeneration::PlaceTownCenter()
 				TC1_x_coord_topleft-=10;
 			if(TC2_x_coord_topleft<0)
 				TC2_x_coord_topleft=abs(TC2_x_coord_topleft);
-
 		}
 		else
 		{
@@ -266,9 +257,9 @@ void WorldGeneration::PlaceTownCenter()
 
 	/**************************/
 	/***set locations of TCs***/
-	/**************************/	
+	/**************************/
 
-	world_positions[TC1_y_coord_topleft][TC1_x_coord_topleft]=ET_TOWN_CENTER;// team 1 
+	world_positions[TC1_y_coord_topleft][TC1_x_coord_topleft]=ET_TOWN_CENTER;// team 1
 	entityCount++;
 	world_positions[TC2_y_coord_topleft][TC2_x_coord_topleft]=ET_TOWN_CENTER_CC;// team 2
 	entityCount++;
@@ -297,13 +288,13 @@ void WorldGeneration::PlaceTemple()
 		x_offset1=-3;
 	if(x_offset1_dir>=50 && x_offset1_dir<100)
 		x_offset1=3;
-	
+
 	int y_offset1_dir=rand()%100;
 	if(y_offset1_dir>=0 && y_offset1_dir<50)
 		y_offset1=-3;
 	if(y_offset1_dir>=50 && y_offset1_dir<100)
 		y_offset1=3;
-	
+
 	int x_offset2_dir=rand()%100;
 	if(x_offset2_dir>=0 && x_offset2_dir<50)
 		x_offset2=-3;
@@ -327,7 +318,7 @@ void WorldGeneration::PlaceVillagers(EntityType type)
 {
 	int team1_villager_count=0;
 	int team2_villager_count=0;
-		
+
 	/*********************************************************/
 	/***placing villagers around the town center and shrine***/
 	/*********************************************************/
@@ -347,7 +338,7 @@ void WorldGeneration::PlaceVillagers(EntityType type)
 	}
 
 	/***team 2***/
-	
+
 	for(int outerIndex=TC2_y_coord_topleft-3; outerIndex<=TC2_y_coord_topleft+3; outerIndex++)
 	{
 		for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
@@ -360,40 +351,39 @@ void WorldGeneration::PlaceVillagers(EntityType type)
 			}
 		}
 	}
-	
 }
 
 void WorldGeneration::PlaceDomesticBeasts(EntityType type, int number)
 {
 	/***team 1***/
-		int team1_type_count=0;
-		for(int outerIndex=TC1_y_coord_topleft-3; outerIndex<=TC1_y_coord_topleft+3; outerIndex++)
+	int team1_type_count=0;
+	for(int outerIndex=TC1_y_coord_topleft-3; outerIndex<=TC1_y_coord_topleft+3; outerIndex++)
+	{
+		for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
 		{
-			for(int innerIndex=TC1_x_coord_topleft-5; innerIndex<TC1_x_coord_topleft+5; innerIndex++)
+			if(world_positions[outerIndex][innerIndex]==0 && team1_type_count < world_info[number])
 			{
-				if(world_positions[outerIndex][innerIndex]==0 && team1_type_count < world_info[number])
-				{
-					world_positions[outerIndex][innerIndex]=type;
-					team1_type_count++;
-					entityCount++;
-				}
+				world_positions[outerIndex][innerIndex]=type;
+				team1_type_count++;
+				entityCount++;
 			}
 		}
-	
-	/***team 2***/	
-		int team2_type_count=0;
-		for(int outerIndex=TC2_y_coord_topleft-3; outerIndex<=TC2_y_coord_topleft+3; outerIndex++)
+	}
+
+	/***team 2***/
+	int team2_type_count=0;
+	for(int outerIndex=TC2_y_coord_topleft-3; outerIndex<=TC2_y_coord_topleft+3; outerIndex++)
+	{
+		for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
 		{
-			for(int innerIndex=TC2_x_coord_topleft-5; innerIndex<TC2_x_coord_topleft+5; innerIndex++)
+			if(world_positions[outerIndex][innerIndex]==0 && team2_type_count < world_info[number])
 			{
-				if(world_positions[outerIndex][innerIndex]==0 && team2_type_count < world_info[number])
-				{
-					world_positions[outerIndex][innerIndex]=type;
-					team2_type_count++;
-					entityCount++;
-				}
+				world_positions[outerIndex][innerIndex]=type;
+				team2_type_count++;
+				entityCount++;
 			}
-		}	
+		}
+	}
 }
 
 void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, EntityType type)
@@ -405,7 +395,6 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 			int chance_for_entity=rand() % 100;
 			if(world_positions[outerIndex][innerIndex]==0 && chance_for_entity>=min && chance_for_entity<max)
 			{
-				
 				world_positions[outerIndex][innerIndex]=type;
 				entityCount++;
 
@@ -414,7 +403,6 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 				double x2_dist=abs(innerIndex-TC2_x_coord_topleft);
 				double y2_dist=abs(outerIndex-TC2_y_coord_topleft);
 
-				
 				int chance_to_delete=rand() % 100;
 
 				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist))<=20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist))<=20.0 || chance_to_delete<=delete_chance)
@@ -439,7 +427,7 @@ Entity WorldGeneration::getNextEntity()
 			else if(cycled==true)
 				throw ("noMoreEntities");
 			else
-				nextPosition();			
+				nextPosition();
 		}
 		else if(world_positions[current.y][current.x]!=0)
 		{
