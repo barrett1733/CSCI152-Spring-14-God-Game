@@ -6,7 +6,6 @@
 class VillagerAI : public ResourceManager
 {
 private:
-	int optionalOption;
 	void balanceJobs();
 	void createBuildings();
 	void needsDefending();
