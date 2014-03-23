@@ -482,6 +482,7 @@ Entity WorldGeneration::getNextEntity()
 				break;
 			default:
 				// to_return.setMaxHealth(0); // This is outside of world gen's scope.
+				break;
 			}
 
 			to_return.setPosition(current);
