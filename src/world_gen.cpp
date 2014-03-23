@@ -281,7 +281,7 @@ void WorldGeneration::PlaceTownCenter()
 
 	world_positions[TC1_y_coord_topleft][TC1_x_coord_topleft]=ET_TOWN_CENTER;// team 1
 	entityCount++;
-	world_positions[TC2_y_coord_topleft][TC2_x_coord_topleft]=ET_TOWN_CENTER_CC;// team 2
+	world_positions[TC2_y_coord_topleft][TC2_x_coord_topleft]=ET_TOWN_CENTER;// team 2
 	entityCount++;
 }
 
