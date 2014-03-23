@@ -3,7 +3,7 @@
 
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
-Entity::Entity(EntityType entityType, int health, Position position, int faction) :
+Entity::Entity(EntityType entityType, int health, Position position, FactionType faction) :
 	type(entityType),
 	position(position),
 	maxHealth(health),
@@ -51,6 +51,6 @@ void Entity::setName(std::string name) {
 void Entity::setPosition(Position position) {
 	this->position = position;
 }
-void Entity::setFaction(int faction) {
+void Entity::setFaction(FactionType faction) {
 	this->faction = faction;
 }

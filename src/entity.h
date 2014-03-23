@@ -91,10 +91,10 @@ private:
 	Position position;
 	int maxHealth;
 	int currentHealth;
-	int faction;
+	FactionType faction;
 	std::string name;
 public:
-	Entity(EntityType, int health, Position, int faction);
+	Entity(EntityType, int health, Position, FactionType faction);
 	Entity(EntityType, int health, int xPos, int yPos);
 
 	std::string getName();
@@ -108,7 +108,7 @@ public:
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
 	void setEntityType(EntityType);
-	void setFaction(int);
+	void setFaction(FactionType);
 };
 
 class MobileEntity : public Entity

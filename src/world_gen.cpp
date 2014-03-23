@@ -446,7 +446,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 Entity WorldGeneration::getNextEntity()
 {
-	Entity to_return(ET_NONE,0,current,0);
+	Entity to_return(ET_NONE,0,current,FT_NONE);
 	while(true)
 	{
 		if(world_positions[current.y][current.x]==0)
@@ -494,7 +494,7 @@ Entity WorldGeneration::getNextEntity()
 				world_positions[current.y][current.x]==ET_WOLF ||
 				world_positions[current.y][current.x]==ET_OGRE)
 			{
-				to_return.setFaction(0);
+				// to_return.setFaction(0); // Should be the default.
 			}
 			else
 			{
@@ -506,9 +506,9 @@ Entity WorldGeneration::getNextEntity()
 				y_dist=abs(TC2_y_coord_topleft-current.y);
 				double length_to_tc2=sqrt((x_dist * x_dist)+(y_dist * y_dist));
 				if(length_to_tc1<length_to_tc2)
-					to_return.setFaction(1);
+					to_return.setFaction(FT_PLAYER_1);
 				else
-					to_return.setFaction(2);
+					to_return.setFaction(FT_PLAYER_2);
 			}
 			nextPosition();
 			return to_return;
