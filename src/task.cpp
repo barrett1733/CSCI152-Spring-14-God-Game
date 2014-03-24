@@ -18,6 +18,11 @@
 		this->_assignee = villager;
 	}
 
+    int Task::getPriority()
+    {
+        return _priority;
+    }
+
 	TaskType Task::getType()
 	{
 		return this->_type;
@@ -38,63 +43,17 @@
 		return this->_progress;
 	}
 
-	bool GatherTask::isCompleted()
+	bool Task::isCompleted()
 	{
-		return this->_amount == this->_progress;
+		return this->_taskQuota == this->_progress;
 	}
 
 
-	GatherTask::GatherTask(TaskType type, int priority, int progress, int amount):
+	GatherTask::GatherTask(TaskType type,  int priority, int progress, int amount):
 	Task(type, priority, progress, amount) {};
 
-	// void GatherTask::updateProgress(int gathering)
-	// {
-	// 	this->_progress += gathering;
-	// }
-
-	// Entity * GatherFoodTask::find()
-	// {
-	// 	if(this->assignee)
-	// 	{
-	// 		std::cout<<"Find the nearest resource for food"<<std::endl;
-	// 		return null;
-	// 	}
-	// }
-
-	// Entity * GatherWoodTask::find()
-	// {
-	// 	if(this->assignee)
-	// 	{
-	// 		std::cout<<"Find the nearest resource for wood"<<std::endl;
-	// 		return null;
-	// 	}
-	// }
-
-	// Entity * GatherIronTask::find()
-	// {
-	// 	if(this->assignee)
-	// 	{
-	// 		std::cout<<"Find the nearest resource for iron"<<std::endl;
-	// 		return null;
-	// 	}
-	// }
-
-	// Entity * GatherRockTask::find()
-	// {
-	// 	if(this->assignee)
-	// 	{
-	// 		std::cout<<"Find the nearest resource for rock"<<std::endl;
-	// 		return null;
-	// 	}
-	// }
-
 	BuildTask::BuildTask(TaskType type, Entity * target, int priority, int hpBuilt, int hpAmount):
-	Task(type, priority, hpBuilt, hpAmount), _target(target){}
-
-	void GatherTask::updateProgress(int building)
-	{
-		this->_progress += building;
-	}
+Task(type, priority, hpBuilt, hpAmount){_target = target;}
 
 	MilitaryTask::MilitaryTask(TaskType type, Entity * target, int priority, int hpDamaged, int hpAmount):
-	Task(type, priority, hpDamaged, hpAmount), _target(target){}
+	Task(type, priority, hpDamaged, hpAmount){_target = target;}

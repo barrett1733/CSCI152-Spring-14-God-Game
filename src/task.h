@@ -51,57 +51,40 @@ protected:
 	Entity * _assignee;
 	int _priority;
 	int _progress;
+    int _taskQuota;
 
 public:
-	Task(TaskType type, int priority, int progress);
+	Task(TaskType type, int priority, int progress, int);
 	void setType(TaskType type);
 	void setTarget(Entity * target);
 	void setAssignee(Entity * villager);
+    void setPriority(int priority);
 	TaskType getType();
 	Entity * getTarget();
 	Entity * getAssignee();
-	bool virtual isCompleted() = 0;
+    int getProgress();
+    int getPriority();
+	bool isCompleted();
 };
 
 class GatherTask : public Task 
 {
-private:
-	int _amount;
 public:
-	Entity * virtual find() = 0;
-	bool isCompleted();
-};
-
-class GatherFoodTask : public GatherTask
-{
-	Entity * find();
-};
-
-class GatherWoodTask : public GatherTask
-{
-	Entity * find();
-};
-
-class GatherIronTask : public GatherTask
-{
-	Entity * find();
-};
-
-class GatherRockTask : public GatherTask
-{
-	Entity * find();
+    GatherTask(TaskType, int, int, int);
 };
 
 class BuildTask : public Task 
 {
 	//...
-	bool isCompleted();
+public:
+    BuildTask(TaskType, Entity *, int, int, int);
 };
 
 class MilitaryTask : public Task 
 {
 	//...
-	bool isCompleted();
+public:
+    MilitaryTask(TaskType, Entity *, int, int, int);
 };
 #endif
 
