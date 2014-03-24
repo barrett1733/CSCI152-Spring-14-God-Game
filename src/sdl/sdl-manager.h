@@ -70,16 +70,19 @@ public:
 	void renderImage(SDL_Texture * image, int xPos, int yPos);
 
 	// Widget functions
-	void addWidget(WidgetReference widget, int widgetLayer)
+	bool addWidget(WidgetReference widget, int widgetLayer)
 	{
 		widgetList[widgetLayer].push_back(widget);
 		widgetCount[widgetLayer] = widgetList[widgetLayer].size();
+		return true;
 	}
-	void addWidget(WidgetReference widget)
+	bool addWidget(WidgetReference widget)
 	{
 		return addWidget(widget, WL_INTERACTIVE);
 	}
 	void renderWidget(SdlWidget * widget);
+	bool removeWidget(WidgetReference widget, int layer);
+	bool removeWidget(WidgetReference widget);
 
 	// Button functions
 	ButtonReference createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
