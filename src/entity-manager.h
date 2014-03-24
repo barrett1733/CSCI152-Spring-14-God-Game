@@ -6,12 +6,24 @@
 
 #include "sdl/sdl-entity.h"
 #include "entity.h"
+/*
+Entity Data list, this is what I have.
+	storing in map
+	entityType	<->	health
+	
+	"nearly" constructed entity passed
+	eg. a full entity except for a health.
 
+*/
 struct EM_Record
 {
-	EM_Record(Entity* in, COLOR color){
+	EM_Record(Entity* in){
 		this->entity=in;
-		this->widget=new SdlEntity(color, 16);
+		
+		this->entity->setMaxHealth(100); // MAGIC
+		this->entity->setCurrentHealth(100); // these will be changed once the list is completed
+		
+		this->widget=new SdlEntity();
 		this->widget->enable();
 	}
 	Entity * entity;

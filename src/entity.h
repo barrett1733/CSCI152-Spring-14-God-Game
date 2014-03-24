@@ -106,6 +106,7 @@ private:
 public:
 	Entity(EntityType, int health, Position, FactionType);
 	Entity(EntityType, int health, int xPos, int yPos, FactionType);
+	Entity(EntityType, Position pos, FactionType fac);
 
 	std::string getName();
 	Position getPosition();
