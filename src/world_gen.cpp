@@ -122,10 +122,7 @@ void WorldGeneration::PlaceTownCenter()
 	***check if TCs are too close***
 	*****   move if they are   *****
 	********************************/
-
-	double x_dist=abs(TC1.x-TC2.x);
-	double y_dist=abs(TC1.y-TC2.y);
-	if(sqrt((x_dist * x_dist)+(y_dist * y_dist))<=50)
+	if(TC1.distance(TC2)<=50)
 	{
 		if(TC1.y>TC2.y)
 		{
@@ -138,7 +135,6 @@ void WorldGeneration::PlaceTownCenter()
 		}
 		// The following block of code is the same as above.
 		// Refactor this.
-
 		else
 		{
 			TC1.y-=10;
@@ -157,18 +153,13 @@ void WorldGeneration::PlaceTownCenter()
 	TC1.x=shiftFromEdge(TC1.x);
 	TC2.y=shiftFromEdge(TC2.y);
 	TC2.x=shiftFromEdge(TC2.x);
-
 	// The following block of code is the same as above.
 	// Refactor this.
-
-	x_dist=abs(TC1.x-TC2.x);
-	y_dist=abs(TC1.y-TC2.y);
-
 	/***************************/
 	/***check closeness again***/
 	/***************************/
 
-	if(sqrt((x_dist * x_dist)+(y_dist * y_dist))<=50)
+	if(TC1.distance(TC2)<=50)
 	{
 		if(TC1.x>TC2.x)
 		{
@@ -179,10 +170,8 @@ void WorldGeneration::PlaceTownCenter()
 			if(TC2.x<0)
 				TC2.x+=10;
 		}
-
 		// The following block of code is the same as above.
 		// Refactor this.
-
 		else
 		{
 			TC1.x-=10;
@@ -197,42 +186,15 @@ void WorldGeneration::PlaceTownCenter()
 	/**************************/
 	/***move away from edges***/
 	/**************************/
-
 	TC1.y=shiftFromEdge(TC1.y);
 	TC1.x=shiftFromEdge(TC1.x);
 	TC2.y=shiftFromEdge(TC2.y);
 	TC2.x=shiftFromEdge(TC2.x);
-
 	/**********************/
 	/***clear TC1's area***/
 	/**********************/
-
 	clearArea(TC1);
 	clearArea(TC2);
-	//for(int outerIndex=TC1.y-7; outerIndex<TC1.y+7; outerIndex++)
-	//{
-	//	for(int innerIndex=TC1.x-7; innerIndex<TC1.x+7; innerIndex++)
-	//	{
-	//		// index can go out of bounds here.
-	//		// causes segfault
-	//		world_positions[outerIndex][innerIndex]=ET_NONE;
-	//	}
-	//}
-
-	//// The following block of code is the same as above.
-	//// Refactor this.
-
-	///**********************/
-	///***clear TC2's area***/
-	///**********************/
-	//for(int outerIndex=TC2.y-7; outerIndex<TC2.y+7; outerIndex++)
-	//{
-	//	for(int innerIndex=TC2.x-7; innerIndex<TC2.x+7; innerIndex++)
-	//	{
-	//		world_positions[outerIndex][innerIndex]=ET_NONE;
-	//	}
-	//}
-
 	/**************************/
 	/***set locations of TCs***/
 	/**************************/
