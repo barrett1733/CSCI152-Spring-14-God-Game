@@ -6,27 +6,8 @@
 
 //#include "job-factory.h"
 #include "job.h"
-#include "task.h"
 
-static std::vector<JobType> jobTypeList = {
-	JOB_GATHER_FOOD,
-	JOB_GATHER_IRON,
-	JOB_GATHER_WOOD,
-	JOB_GATHER_STONE,
-	
-	JOB_BUILD_HOUSE,
-	JOB_BUILD_STONEWORKS,
-	JOB_BUILD_SMELTING,
-	JOB_BUILD_FARM,
-	JOB_BUILD_LUMBERMILL,
-	JOB_BUILD_STOREHOUSE,
-	JOB_BUILD_WEAPONSMITH,
-	JOB_BUILD_ARMORSMITH,
-	JOB_BUILD_WATCHTOWER,
-	JOB_BUILD_TOWNCENTER
-};
-
-std::map<JobType, int> m = {
+static std::map<JobType, int> m = {
 	{JOB_BUILD_HOUSE, 5},
 	{JOB_BUILD_STONEWORKS, 5},
 	{JOB_BUILD_SMELTING, 5},
@@ -41,10 +22,10 @@ std::map<JobType, int> m = {
 
 enum JobPriority
 {
-	JOBPRIORITY_LOW = 3;
-	JOBPRIORITY_MIDIUM = 7;
-	JOBPRIORITY_HIGH = 10;
-}
+	JOBPRIORITY_LOW = 3,
+	JOBPRIORITY_MIDIUM = 7,
+	JOBPRIORITY_HIGH = 10
+};
 
 class JobManager
 {
@@ -53,9 +34,15 @@ class JobManager
 public:
 	void registerJob(JobReference job);
 
-	void createJobList(JobType & jobType);
+	void createJobList(JobType jobType, int priority);
 
 	//void initJobList();
+    
+    std::vector<JobReference> getJobList();
+    
+    Entity * findTarget();
+
+	void cleanTaskList(JobReference job);
 
 	void cleanJobList();
 	
