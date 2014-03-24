@@ -21,7 +21,9 @@ enum FactionType {
 	FT_PLAYER_5,
 	FT_PLAYER_6,
 	FT_PLAYER_7,
-	FT_PLAYER_8
+	FT_PLAYER_8,
+
+	FT_COUNT
 };
 
 enum EntityType {
