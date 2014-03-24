@@ -1,5 +1,6 @@
 
 #include "sdl-widget.h"
+#include "sdl-manager.h"
 
 SdlWidget::SdlWidget() :
 	callback(0),
@@ -62,6 +63,8 @@ SdlWidget::~SdlWidget() {
 	boundingBox.h = 0;
 	setState(WS_OFF);
 	callback = 0;
+
+	sdl.removeWidget(this);
 }
 
 bool SdlWidget::isInside(int xMouse, int yMouse)
