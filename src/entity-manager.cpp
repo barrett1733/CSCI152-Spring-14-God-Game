@@ -3,14 +3,14 @@
 #include "sdl/sdl-manager.h"
 #include <iostream>
 
-void EntityManager::createEntity()
+void EntityManager::createEntity(Entity* entityIn)
 {
-	std::cout << "EntityManager::createEntity()" << std::endl;
-	WidgetReference testWidget = new SdlEntity(C_BLUE, 16);
-	testWidget->enable();
-	sdl.addWidget(testWidget);
-
-	widgetList.push_back(testWidget);
+	std::cout << "EntityManager::createEntity() called" << std::endl;
+	EM_Record *rec=new EM_Record(entityIn,C_Blue);
+	
+	entityList->push_back(rec->entity);
+	sdl.addWidget(rec->widget);
+	widgetList.push_back(rec->widget);
 }
 
 void EntityManager::update()

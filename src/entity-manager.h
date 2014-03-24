@@ -9,6 +9,11 @@
 
 struct EM_Record
 {
+	EM_Record(Entity* in, COLOR color){
+		this->entity=in;
+		this->widget=new SdlEntity(color, 16);
+		this->widget->enable();
+	}
 	Entity * entity;
 	WidgetReference widget;
 };
@@ -16,15 +21,15 @@ struct EM_Record
 class EntityManager
 {
 	std::vector<WidgetReference> widgetList;
-	std::vector<Entity*> entityList; // list of all current entities on map
+	std::vector<EM_Record*> entityList; // list of all current entities on map
 	// these lists are sub-catagories of the entitylist, should still be the same reference //
-	std::vector<Entity*> villagerList;
-	std::vector<Entity*> peacefulMobList;
-	std::vector<Entity*> enemyList;
-	std::vector<Entity*> buildingList;
+	std::vector<EM_Record*> villagerList;
+	std::vector<EM_Record*> peacefulMobList;
+	std::vector<EM_Record*> enemyList;
+	std::vector<EM_Record*> buildingList;
 	
 public:
-	void createEntity();
+	void createEntity(Entity*);
 	void deleteEntity(); // removes entity from all applicable lists
 	
 	void getEntityType(); 
