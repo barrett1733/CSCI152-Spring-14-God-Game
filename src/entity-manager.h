@@ -3,9 +3,14 @@
 #define ENTITY_MANAGER_H_
 
 #include <vector>
+#include <map>
 
 #include "sdl/sdl-entity.h"
 #include "entity.h"
+
+typedef std::map<EntityType, std::int> Entity_HealthMap;
+typedef std::pair<EntityType, std::int> Entity_HealthPair;
+
 /*
 Entity Data list, this is what I have.
 	storing in map
