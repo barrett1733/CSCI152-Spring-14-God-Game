@@ -158,7 +158,6 @@ void WorldGeneration::PlaceTownCenter()
 	/***************************/
 	/***check closeness again***/
 	/***************************/
-
 	if(TC1.distance(TC2)<=50)
 	{
 		if(TC1.x>TC2.x)
@@ -182,7 +181,6 @@ void WorldGeneration::PlaceTownCenter()
 				TC2.x-=10;
 		}
 	}
-
 	/**************************/
 	/***move away from edges***/
 	/**************************/
@@ -198,7 +196,6 @@ void WorldGeneration::PlaceTownCenter()
 	/**************************/
 	/***set locations of TCs***/
 	/**************************/
-
 	world_positions[TC1.y][TC1.x]=ET_TOWN_CENTER;// team 1
 	entityCount++;
 	world_positions[TC2.y][TC2.x]=ET_TOWN_CENTER;// team 2
