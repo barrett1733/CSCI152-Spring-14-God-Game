@@ -1,5 +1,7 @@
 #include "taskManager.h"
 
+TaskManager taskManager;
+
 void TaskManager::assign(Entity * villager, Entity * target)
 {
 	//pop from unassignedTaskList
@@ -7,35 +9,30 @@ void TaskManager::assign(Entity * villager, Entity * target)
 	//if a gatherTask, find the nearest resource for the villager
 	//if a buildTask, set target to job target
 	//if a militaryTask, set target to job target
-	TaskReference task = q.pop_back()
-	task.setStatus(InProgress);
+    std::set<TaskReference>::iterator i = unassignedTaskList.begin();
+    TaskReference task = *i;
+    unassignedTaskList.erase(i);
 	inProgressTaskList.push_back(task);
-	Entity * villager = availableVillager.pop_back();
-	Entity * target;
-	if(typeof(task)=="GatherTask")
+	if(strcmp(typeid(*task).name(),"GatherTask")==0)
 	{
-		task.setAssignee(villager);
-		if(task->getType()=="TASK_GATHER_FOOD")
-		{
-			std::cout<<"find the nearest resource for food"<<std::endl;
-		}else if (task->getType()=="TASK_GATHER_WOOD")
-		{
-			std::cout<<"find the nearest resource for wood"<<std::endl;
-		}else if (task->getType()=="TASK_GATHER_IRON")
-		{
-			std::cout<<"find the nearest resource for iron"<<std::endl;
-		}else if (task->getType()=="TASK_GATHER_STONE")
-		{
-			std::cout<<"find the nearest resource for stone"<<std::endl;
-		}
-		task.setTarget(target);
-	}else if(typeof(task)=="BuildTask")
+		task->setAssignee(villager);
+		//findTarget(villager);
+		//task.setTarget(target);
+	}else if(strcmp(typeid(*task).name(),"BuildTask")==0)
 	{
-		task.setAssignee(villager);
-	}else if(typeof(task)=="MilitaryTask")
+		task->setAssignee(villager);
+	}else if(strcmp(typeid(*task).name(),"MilitaryTask")==0)
 	{
-		task.setAssignee(villager);
+		task->setAssignee(villager);
 	}
+}
+
+Entity * TaskManager::getVillager()
+{
+//    if(!availableVillagers.empty())
+  //       *(availableVillagers.begin());
+	std::cout<<availableVillagers.size()<<std::endl;
+    return *(availableVillagers.begin());
 }
 
 void TaskManager::updateProgress()
@@ -46,6 +43,20 @@ void TaskManager::updateProgress()
 	}
 }
 
+void TaskManager::findTarget()
+{
+	// for(int i=0; i<entityList.size(); i++)
+	// {
+	// 	std::cout<<"Find the closest target"<<endl;
+	// }
+	std::cout<<"Find the closest target"<<std::endl;
+}
+
+void TaskManager::registerTask(TaskReference task)
+{
+	unassignedTaskList.insert(task);
+	std::cout<<"Unassigned task list size is: "<<unassignedTaskList.size()<<std::endl;
+}
 
 
 void TaskManager::cleanTaskList()
@@ -53,8 +64,11 @@ void TaskManager::cleanTaskList()
 	std::cout<<"Remove completed task from inProgressTaskList!"<<std::endl;
 	for (std::vector<TaskReference>::iterator it = inProgressTaskList.begin() ; it != inProgressTaskList.end(); ++it)
 	{
-		if(it.isCompleted())
-			inProgressTaskList.remove(it);
-		std::cout<<"Updating task progress"<<std::endl;			
+		if((*it)->isCompleted())
+			{
+				inProgressTaskList.erase(it);
+				availableVillagers.push_back((*it)->getAssignee());
+				delete *it;
+			}
 	}
 }

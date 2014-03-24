@@ -7,27 +7,38 @@
 
 #include "entity.h"
 #include "position.h"
-#include ""
+#include <vector>
+#include <iostream>
+#include "task.h"
+#include <queue>
+#include <set>
+//#include "worldGen.h"
 
 struct Comparator
 {
   bool operator()(const TaskReference task1, const TaskReference task2)
   {
-    return task1.getPriority()>task2.getPriority();
+    return task1->getPriority()>task2->getPriority();
   }
 };
 
-class TaskManager()
+class TaskManager
 {
 private:
-	std::priority_queue<TaskReference, unassignedTaskList, Comparator> q;
-	std::vector<TaskReference> unassignedTaskList;
-	std::vector<TaskReference> inProgressTaskList;
+    std::set<TaskReference, Comparator> unassignedTaskList;
+    std::vector<TaskReference> inProgressTaskList;
+    std::vector<Entity *> availableVillagers;
+
 public:
 	void assign(Entity * villager, Entity * target);
-	void updateStatus(TaskStatus status);
-	void updateProgress(int progress);
+	void updateProgress();
+	void registerTask(TaskReference task);
+    void updatePQ();
+    Entity * getVillager();
+    void findTarget();
 	void cleanTaskList();
 	Entity * find();
-}
+};
 #endif
+
+extern TaskManager taskManager;
