@@ -391,10 +391,11 @@ void WorldGeneration::nextPosition()
 int WorldGeneration::findOffset()
 {
 	int x = rand()%100;
-	if(x >= 0 && x < 50)
+	if(x < 50)
 		return -3;
-	if(x >= 50 && x < 100)
+	else
 		return 3;
+	
 }
 
 int WorldGeneration::shiftFromEdge(int coord)
@@ -403,6 +404,7 @@ int WorldGeneration::shiftFromEdge(int coord)
 		return coord += 14;
 	else if(coord+7 > world_info[WI_MAP_SIZE]-1)
 		return coord -= 14;
+	else return 0;
 }
 
 void WorldGeneration::clearArea(Position pos)
