@@ -20,12 +20,6 @@ WorldGeneration::WorldGeneration()
 	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
 	//if it is used I will remove it from this location
 
-	// world_info;
-	// world_positions;
-	// TC1_x_coord_topleft;
-	// TC1_y_coord_topleft;
-	// TC2_x_coord_topleft;
-	// TC2_y_coord_topleft;
 	entityCount=0;
 	current.x=0;
 	current.y=0;
@@ -35,15 +29,9 @@ WorldGeneration::WorldGeneration()
 	***get map info***
 	*****************/
 
-	ifstream myReadFile; // What is this for?
-	void read_from_file(); // What is this?
-	{
 		ifstream file("worldInfo.txt");
 		int n;
-		while( file >> n ) world_info.push_back(n) ;
-	}
-	for(int i=0; i<world_info.size(); i++)
-		std::cout<<world_info[i]<<endl;
+		while( file >> n ) world_info.push_back(n);
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 
@@ -468,24 +456,24 @@ Entity WorldGeneration::getNextEntity()
 			{
 			to_return.setEntityType(world_positions[current.y][current.x]);
 
-			switch(world_positions[current.y][current.x])
-			{
-			case ET_VILLAGER:
-			case ET_COW:
-			case ET_DEER:
-			case ET_TREE:
-			case ET_IRON:
-			case ET_STONE:
-			case ET_WOLF:
-				// to_return.setMaxHealth(100); // This is outside of world gen's scope.
-				break;
-			case ET_OGRE:
-				// to_return.setMaxHealth(250); // This is outside of world gen's scope.
-				break;
-			default:
-				// to_return.setMaxHealth(0); // This is outside of world gen's scope.
-				break;
-			}
+			//switch(world_positions[current.y][current.x])
+			//{
+			//case ET_VILLAGER:
+			//case ET_COW:
+			//case ET_DEER:
+			//case ET_TREE:
+			//case ET_IRON:
+			//case ET_STONE:
+			//case ET_WOLF:
+			//	// to_return.setMaxHealth(100); // This is outside of world gen's scope.
+			//	break;
+			//case ET_OGRE:
+			//	// to_return.setMaxHealth(250); // This is outside of world gen's scope.
+			//	break;
+			//default:
+			//	// to_return.setMaxHealth(0); // This is outside of world gen's scope.
+			//	break;
+			//}
 
 			to_return.setPosition(current);
 
