@@ -508,9 +508,9 @@ Entity WorldGeneration::getNextEntity()
 				y_dist=abs(TC2_y_coord_topleft-current.y);
 				double length_to_tc2=sqrt((x_dist * x_dist)+(y_dist * y_dist));
 				if(length_to_tc1<length_to_tc2)
-					to_return.setFaction(FT_PLAYER_1);
+					to_return.setFactionType(FT_PLAYER_1);
 				else
-					to_return.setFaction(FT_PLAYER_2);
+					to_return.setFactionType(FT_PLAYER_2);
 			}
 			nextPosition();
 			return to_return;

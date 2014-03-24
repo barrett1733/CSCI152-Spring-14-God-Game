@@ -10,10 +10,18 @@
 
 enum FactionType {
 	FT_NONE,
+	FT_STATIC,
+	FT_ANIMAL_DOMESTIC,
+	FT_ANIMAL_PASSIVE,
+	FT_ANIMAL_HOSTILE,
 	FT_PLAYER_1,
 	FT_PLAYER_2,
 	FT_PLAYER_3,
-	FT_PLAYER_4
+	FT_PLAYER_4,
+	FT_PLAYER_5,
+	FT_PLAYER_6,
+	FT_PLAYER_7,
+	FT_PLAYER_8
 };
 
 enum EntityType {
@@ -94,21 +102,21 @@ private:
 	FactionType faction;
 	std::string name;
 public:
-	Entity(EntityType, int health, Position, FactionType faction);
-	Entity(EntityType, int health, int xPos, int yPos);
+	Entity(EntityType, int health, Position, FactionType);
+	Entity(EntityType, int health, int xPos, int yPos, FactionType);
 
 	std::string getName();
 	Position getPosition();
 	int getMaxHealth();
 	int getCurrentHealth();
-	int getFaction();
+	FactionType getFactionType();
 	EntityType getEntityType();
 	void setName(std::string);
 	void setPosition(Position);
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
 	void setEntityType(EntityType);
-	void setFaction(FactionType);
+	void setFactionType(FactionType);
 };
 
 class MobileEntity : public Entity
@@ -118,12 +126,14 @@ private:
 	int strength;
 	int defense;
 public:
+	MobileEntity(EntityType, int health, Position, FactionType, int hunger, int strength, int defense);
+	MobileEntity(EntityType, int health, int xPos, int yPos, FactionType, int hunger, int strength, int defense);
 	int getHunger();
 	int getStrength();
 	int getDefense();
-	void setHunger();
-	void setStrength();
-	void setDefense();
+	void setHunger(int);
+	void setStrength(int);
+	void setDefense(int);
 };
 
 //extern Entity * EntityList;
