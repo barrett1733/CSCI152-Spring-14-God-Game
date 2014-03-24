@@ -404,7 +404,7 @@ int WorldGeneration::shiftFromEdge(int coord)
 		return coord += 14;
 	else if(coord+7 > world_info[WI_MAP_SIZE]-1)
 		return coord -= 14;
-	else return 0;
+	else return coord;
 }
 
 void WorldGeneration::clearArea(Position pos)
