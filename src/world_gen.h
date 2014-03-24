@@ -54,24 +54,30 @@ public:
 	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
 	void PlaceTownCenter();
 	void PlaceTemple();
-	void PlaceVillagers(EntityType type);
-	void PlaceDomesticBeasts(EntityType type, int number);
+	void PlaceVillagers(EntityType type, Position pos);
+	void PlaceDomesticBeasts(EntityType type, int number, Position pos);
 	void PrintMap();
 	Entity getNextEntity();
 	int getEntityCount();
 	void nextPosition();
+	int findOffset();
+	int shiftFromEdge(int);
+	void clearArea(Position);
 
 
 	std::vector< std::vector<EntityType> > world_positions;
 	std::vector<int> world_info;
 private:
-	int TC1_x_coord_topleft;//the index of the x coordinate for team 1's town center
-	int TC1_y_coord_topleft;//the index of the y coordinate for team 1's town center
-	int TC2_x_coord_topleft;//the index of the x coordinate for team 2's town center
-	int TC2_y_coord_topleft;//the index of the y coordinate for team 2's town center
+	//int TC1_x_coord_topleft;//the index of the x coordinate for team 1's town center
+	//int TC1_y_coord_topleft;//the index of the y coordinate for team 1's town center
+	//int TC2_x_coord_topleft;//the index of the x coordinate for team 2's town center
+	//int TC2_y_coord_topleft;//the index of the y coordinate for team 2's town center
 	int entityCount;
 	Position current;
+	Position TC1;
+	Position TC2;
 	bool cycled;
+	
 };
 
 #endif
