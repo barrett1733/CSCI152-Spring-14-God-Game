@@ -48,7 +48,7 @@ enum WorldInfo
 class WorldGeneration
 {
 public:
-	WorldGeneration();
+	WorldGeneration(int);
 	~WorldGeneration();
 	void PlaceResource(int min, int max, EntityType type);
 	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);

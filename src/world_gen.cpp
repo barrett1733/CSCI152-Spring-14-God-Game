@@ -11,10 +11,10 @@ using namespace std;
 
 WorldGeneration::~WorldGeneration(){}
 
-WorldGeneration::WorldGeneration()
+WorldGeneration::WorldGeneration(int seed)
 {
-	time_t timer;
-	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
+	//time_t timer;
+	srand(seed);//rand must be seeded before placement, if not here then in another module that needs it first
 	//if it is used I will remove it from this location
 
 	entityCount = 0;
