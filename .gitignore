@@ -91,3 +91,9 @@ lib
 *.dgml
 *.bsc
 *.sbr
+*.coverage
+*.ipch
+*.lib
+*.exp
+*.cache
+*.pch
