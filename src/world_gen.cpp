@@ -291,78 +291,73 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 Entity WorldGeneration::getNextEntity()
 {
+	//string z="noMoreEntities";
+	double length_to_tc1;
+	double length_to_tc2;
 	Entity to_return(ET_NONE,0,current,FT_NONE);
-	while(true)
+	do
 	{
-		if(world_positions[current.y][current.x]==0)
-		{
-			if(current.y == world_positions.size()-1 && current.x == world_positions.size()-1)
-				throw (1);
-			else if(cycled == true)
-				throw (1);
-			else
-				nextPosition();
-		}
-		else if(world_positions[current.y][current.x]!=0)
+		if(world_positions[current.y][current.x]==ET_NONE)
 		{
 			if(cycled == true)
+			{
 				throw (1);
-			else
-			{
-			to_return.setEntityType(world_positions[current.y][current.x]);
-
-			//switch(world_positions[current.y][current.x])
-			//{
-			//case ET_VILLAGER:
-			//case ET_COW:
-			//case ET_DEER:
-			//case ET_TREE:
-			//case ET_IRON:
-			//case ET_STONE:
-			//case ET_WOLF:
-			//	// to_return.setMaxHealth(100); // This is outside of world gen's scope.
-			//	break;
-			//case ET_OGRE:
-			//	// to_return.setMaxHealth(250); // This is outside of world gen's scope.
-			//	break;
-			//default:
-			//	// to_return.setMaxHealth(0); // This is outside of world gen's scope.
-			//	break;
-			//}
-
-			to_return.setPosition(current);
-
-			if( world_positions[current.y][current.x] == ET_TREE ||
-				world_positions[current.y][current.x] == ET_STONE||
-				world_positions[current.y][current.x] == ET_IRON  )
-				to_return.setFactionType(FT_STATIC);
-
-			else if(world_positions[current.y][current.x] == ET_DEER  )
-				to_return.setFactionType(FT_ANIMAL_PASSIVE);
-
-			else if(world_positions[current.y][current.x] == ET_WOLF ||
-					world_positions[current.y][current.x] == ET_OGRE)
-				to_return.setFactionType(FT_ANIMAL_HOSTILE); // Should be the default.
-			
-			else
-			{
-				/*double x_dist = abs(TC1.x-current.x);
-				double y_dist = abs(TC1.y-current.y);*/
-				double length_to_tc1 = TC1.distance(current);
-
-				/*x_dist = abs(TC2.x-current.x);
-				y_dist = abs(TC2.y-current.y);*/
-				double length_to_tc2 = TC2.distance(current);
-				if(length_to_tc1<length_to_tc2)
-					to_return.setFactionType(FT_PLAYER_1);
-				else
-					to_return.setFactionType(FT_PLAYER_2);
 			}
+			else
+			{
+				nextPosition();
+				//current_moves++;
+			}
+		}
+		else //if(world_positions[current.y][current.x]!=0)
+		{
+			if(cycled == true)
+			{
+				throw (1);
+			}
+			else
+			{
+			to_return.setEntityType(world_positions[current.y][current.x]);//set the entity's type
+			to_return.setPosition(current);//the the entity's position
+
+			switch(world_positions[current.y][current.x])
+			{
+				//resources
+				case ET_TREE:
+				case ET_STONE:
+				case ET_IRON:
+					to_return.setFactionType(FT_STATIC);
+					break;
+				//passive animals
+				case ET_DEER:
+					to_return.setFactionType(FT_ANIMAL_PASSIVE);
+					break;
+				//hostile animals
+				case ET_WOLF:
+				case ET_OGRE:
+					to_return.setFactionType(FT_ANIMAL_HOSTILE);
+					break;
+				//domestic animals
+				case ET_COW:
+					to_return.setFactionType(FT_ANIMAL_DOMESTIC);
+					break;
+				//everything whose faction is not determined by what it is
+				default:
+					length_to_tc1 = TC1.distance(current);
+					length_to_tc2 = TC2.distance(current);
+					if(length_to_tc1<length_to_tc2)
+					to_return.setFactionType(FT_PLAYER_1);
+					else
+					to_return.setFactionType(FT_PLAYER_2);
+					break;				
+			}
+
 			nextPosition();
+			//current_moves++;
 			return to_return;
+			}
 		}
-		}
-	}
+	}while(true);
 
 }
 
