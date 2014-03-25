@@ -297,16 +297,16 @@ Entity WorldGeneration::getNextEntity()
 		if(world_positions[current.y][current.x]==0)
 		{
 			if(current.y == world_positions.size()-1 && current.x == world_positions.size()-1)
-				throw ("noMoreEntities");
+				throw (1);
 			else if(cycled == true)
-				throw ("noMoreEntities");
+				throw (1);
 			else
 				nextPosition();
 		}
 		else if(world_positions[current.y][current.x]!=0)
 		{
 			if(cycled == true)
-				throw ("noMoreEntities");
+				throw (1);
 			else
 			{
 			to_return.setEntityType(world_positions[current.y][current.x]);
