@@ -18,7 +18,8 @@ static int dir_map[n][m];
 
 //to store paths for instant access later
 
-static vector<string>* pathList;
+static vector<string> pathList;
+static vector<string>* path_map[n][m];
 
 
 const int dir = 8;
@@ -164,14 +165,17 @@ string pathFind(const int& xStart, const int& yStart, const int& xFinish, const 
 
 void find_all_paths(){
 
+	int current = 0;
+
 	for (int y = 0; y < m; y++){
 	
 		for (int x = 0; x < n; x++){
 		
-			pathList[x].push_back(pathFind(map[x][y],map[));
-
-		
+			pathList[x].push_back ( pathFind( map[x][y], map[x][y] ) );
 		}
+
+		new path_map[current][y] -> pathList;
+		current++;
 	
 	}
 
