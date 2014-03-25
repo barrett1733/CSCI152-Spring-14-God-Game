@@ -158,36 +158,36 @@ void WorldGeneration::PlaceTownCenter()
 	/***************************/
 	/***check closeness again***/
 	/***************************/
-	if(TC1.distance(TC2) <= 50)
-	{
-		if(TC1.x > TC2.x)
-		{
-			TC1.x += 10;
-			TC2.x -= 10;
-			if(TC1.x > world_info[WI_MAP_SIZE])
-				TC1.x -= 10;
-			if(TC2.x < 0)
-				TC2.x += 10;
-		}
-		// The following block of code is the same as above.
-		// Refactor this.
-		else
-		{
-			TC1.x -= 10;
-			TC2.x += 10;
-			if(TC1.x < 0)
-				TC1.x += 10;
-			if(TC2.x > world_info[WI_MAP_SIZE])
-				TC2.x -= 10;
-		}
-	}
-	/**************************/
-	/***move away from edges***/
-	/**************************/
-	TC1.y = shiftFromEdge(TC1.y);
-	TC1.x = shiftFromEdge(TC1.x);
-	TC2.y = shiftFromEdge(TC2.y);
-	TC2.x = shiftFromEdge(TC2.x);
+	//if(TC1.distance(TC2) <= 50)
+	//{
+	//	if(TC1.x > TC2.x)
+	//	{
+	//		TC1.x += 10;
+	//		TC2.x -= 10;
+	//		if(TC1.x > world_info[WI_MAP_SIZE])
+	//			TC1.x -= 10;
+	//		if(TC2.x < 0)
+	//			TC2.x += 10;
+	//	}
+	//	// The following block of code is the same as above.
+	//	// Refactor this.
+	//	else
+	//	{
+	//		TC1.x -= 10;
+	//		TC2.x += 10;
+	//		if(TC1.x < 0)
+	//			TC1.x += 10;
+	//		if(TC2.x > world_info[WI_MAP_SIZE])
+	//			TC2.x -= 10;
+	//	}
+	//}
+	///**************************/
+	///***move away from edges***/
+	///**************************/
+	//TC1.y = shiftFromEdge(TC1.y);
+	//TC1.x = shiftFromEdge(TC1.x);
+	//TC2.y = shiftFromEdge(TC2.y);
+	//TC2.x = shiftFromEdge(TC2.x);
 	/**********************/
 	/***clear TCs' area***/
 	/**********************/
@@ -334,22 +334,25 @@ Entity WorldGeneration::getNextEntity()
 
 			if( world_positions[current.y][current.x] == ET_TREE ||
 				world_positions[current.y][current.x] == ET_STONE||
-				world_positions[current.y][current.x] == ET_IRON ||
-				world_positions[current.y][current.x] == ET_DEER ||
-				world_positions[current.y][current.x] == ET_WOLF ||
-				world_positions[current.y][current.x] == ET_OGRE)
-			{
-				// to_return.setFaction(0); // Should be the default.
-			}
+				world_positions[current.y][current.x] == ET_IRON  )
+				to_return.setFactionType(FT_STATIC);
+
+			else if(world_positions[current.y][current.x] == ET_DEER  )
+				to_return.setFactionType(FT_ANIMAL_PASSIVE);
+
+			else if(world_positions[current.y][current.x] == ET_WOLF ||
+					world_positions[current.y][current.x] == ET_OGRE)
+				to_return.setFactionType(FT_ANIMAL_HOSTILE); // Should be the default.
+			
 			else
 			{
-				double x_dist = abs(TC1.x-current.x);
-				double y_dist = abs(TC1.y-current.y);
-				double length_to_tc1 = sqrt((x_dist * x_dist)+(y_dist * y_dist));
+				/*double x_dist = abs(TC1.x-current.x);
+				double y_dist = abs(TC1.y-current.y);*/
+				double length_to_tc1 = TC1.distance(current);
 
-				x_dist = abs(TC2.x-current.x);
-				y_dist = abs(TC2.y-current.y);
-				double length_to_tc2 = sqrt((x_dist * x_dist)+(y_dist * y_dist));
+				/*x_dist = abs(TC2.x-current.x);
+				y_dist = abs(TC2.y-current.y);*/
+				double length_to_tc2 = TC2.distance(current);
 				if(length_to_tc1<length_to_tc2)
 					to_return.setFactionType(FT_PLAYER_1);
 				else
@@ -384,7 +387,7 @@ void WorldGeneration::nextPosition()
 	else
 	{
 		current.x++;
-		current.y++;
+		//current.y++;
 	}
 }
 
