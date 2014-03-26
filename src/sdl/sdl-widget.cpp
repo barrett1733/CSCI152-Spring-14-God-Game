@@ -16,6 +16,7 @@ SdlWidget::SdlWidget() :
 	boundingBox.y = 0;
 	boundingBox.w = 0;
 	boundingBox.h = 0;
+	sdl.addWidget(this);
 }
 
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
@@ -32,6 +33,7 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	boundingBox.y = rect.y;
 	boundingBox.w = rect.w;
 	boundingBox.h = rect.h;
+	sdl.addWidget(this);
 }
 
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, SdlWidget*)) :
@@ -48,6 +50,7 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 	boundingBox.y = rect.y;
 	boundingBox.w = rect.w;
 	boundingBox.h = rect.h;
+	sdl.addWidget(this);
 }
 
 SdlWidget::~SdlWidget() {
