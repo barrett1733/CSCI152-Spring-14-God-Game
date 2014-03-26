@@ -106,7 +106,7 @@ void WorldGeneration::PlaceTownCenter()
 {
 	int TC_placer_count = 0;
 	bool keep_going = true;
-	
+
 	while(keep_going)
 	{
 		TC_placer_count++;
@@ -125,7 +125,7 @@ void WorldGeneration::PlaceTownCenter()
 	TC1.y = shiftFromEdge(TC1.y);
 	TC1.x = shiftFromEdge(TC1.x);
 	TC2.y = shiftFromEdge(TC2.y);
-	TC2.x = shiftFromEdge(TC2.x);	
+	TC2.x = shiftFromEdge(TC2.x);
 	/**********************/
 	/***clear TCs' area***/
 	/**********************/
@@ -161,7 +161,7 @@ void WorldGeneration::PlaceTemple()
 
 void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 {
-	int team_villager_count = 0;	
+	int team_villager_count = 0;
 
 	/*********************************************************/
 	/***placing villagers around the town center and shrine***/
@@ -287,7 +287,7 @@ Entity WorldGeneration::getNextEntity()
 					to_return.setFactionType(FT_PLAYER_1);
 					else
 					to_return.setFactionType(FT_PLAYER_2);
-					break;				
+					break;
 			}
 
 			nextPosition();
@@ -331,7 +331,7 @@ int WorldGeneration::findOffset()
 		return -3;
 	else
 		return 3;
-	
+
 }
 
 int WorldGeneration::shiftFromEdge(int coord)
@@ -355,7 +355,7 @@ void WorldGeneration::clearArea(Position pos)
 			{
 				if(world_positions[outerIndex][innerIndex] != ET_NONE)
 				entityCount--;
-				world_positions[outerIndex][innerIndex] = ET_NONE;				
+				world_positions[outerIndex][innerIndex] = ET_NONE;
 			}
 		}
 	}
