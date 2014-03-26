@@ -4,6 +4,14 @@
 
 #include "sdl-utility.h"
 
+enum {
+	WL_BACKGROUND,
+	WL_NON_INTERACTIVE,
+	WL_INTERACTIVE,
+
+	WL_COUNT
+};
+
 enum WidgetState {
 	WS_OFF,
 	WS_HOVER,

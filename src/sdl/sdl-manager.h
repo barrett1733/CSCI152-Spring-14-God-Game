@@ -18,14 +18,6 @@
 const int FRAME_RATE = 30;
 const unsigned int TICK_INTERVAL = 1000/FRAME_RATE;
 
-enum {
-	WL_BACKGROUND,
-	WL_NON_INTERACTIVE,
-	WL_INTERACTIVE,
-
-	WL_COUNT
-};
-
 class SdlManager
 {
 	SDL_Window * window;
