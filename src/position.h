@@ -15,7 +15,9 @@ public:
 
 	double distance(Position & p)
 	{
-		return sqrt(x * p.x + y * p.y);
+		int a=abs(x-p.x);
+		int b=abs(y-p.y);
+		return sqrt(a * a + b * b);
 	}
 
 	double direction(Position & p)
