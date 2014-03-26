@@ -15,8 +15,8 @@ public:
 
 	double distance(Position & p)
 	{
-		int a=abs(x-p.x);
-		int b=abs(y-p.y);
+		int a = x - p.x;
+		int b = y - p.y;
 		return sqrt(a * a + b * b);
 	}
 
