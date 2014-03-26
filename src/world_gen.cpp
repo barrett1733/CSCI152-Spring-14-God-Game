@@ -104,46 +104,19 @@ void WorldGeneration::PlaceResource(int min, int max, EntityType type)
 
 void WorldGeneration::PlaceTownCenter()
 {
-	/***************************************
-	***first team's town center location***
-	****************************************/
-
-	TC1.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
-	TC1.x = rand() % world_info[WI_MAP_SIZE];	//x-coord
-
-	/***************************************
-	***second team's town center location***
-	****************************************/
-
-	TC2.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
-	TC2.x = rand() % world_info[WI_MAP_SIZE];	//x-coord
-
-	/*******************************
-	***check if TCs are too close***
-	*****   move if they are   *****
-	********************************/
-	if(TC1.distance(TC2) <= 50)
+	int TC_placer_count = 0;
+	bool keep_going = true;
+	
+	while(keep_going)
 	{
-		if(TC1.y > TC2.y)
-		{
-			TC1.y += 10;
-			TC2.y -= 10;
-			if(TC1.y > world_info[WI_MAP_SIZE])
-				TC1.y -= 10;
-			if(TC2.y < 0)
-				TC2.y += 10;
-		}
-		// The following block of code is the same as above.
-		// Refactor this.
-		else
-		{
-			TC1.y -= 10;
-			TC2.y += 10;
-			if(TC1.y < 0)
-				TC1.y += 10;
-			if(TC2.y > world_info[WI_MAP_SIZE])
-				TC2.y -= 10;
-		}
+		TC_placer_count++;
+		TC1.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
+		TC1.x = rand() % world_info[WI_MAP_SIZE];	//x-coord
+		TC2.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
+		TC2.x = rand() % world_info[WI_MAP_SIZE];
+
+		if(TC1.distance(TC2) > 75)
+			keep_going=false;
 	}
 
 	/**************************/
