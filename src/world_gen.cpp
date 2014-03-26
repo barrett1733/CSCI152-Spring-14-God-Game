@@ -152,42 +152,7 @@ void WorldGeneration::PlaceTownCenter()
 	TC1.y = shiftFromEdge(TC1.y);
 	TC1.x = shiftFromEdge(TC1.x);
 	TC2.y = shiftFromEdge(TC2.y);
-	TC2.x = shiftFromEdge(TC2.x);
-	// The following block of code is the same as above.
-	// Refactor this.
-	/***************************/
-	/***check closeness again***/
-	/***************************/
-	//if(TC1.distance(TC2) <= 50)
-	//{
-	//	if(TC1.x > TC2.x)
-	//	{
-	//		TC1.x += 10;
-	//		TC2.x -= 10;
-	//		if(TC1.x > world_info[WI_MAP_SIZE])
-	//			TC1.x -= 10;
-	//		if(TC2.x < 0)
-	//			TC2.x += 10;
-	//	}
-	//	// The following block of code is the same as above.
-	//	// Refactor this.
-	//	else
-	//	{
-	//		TC1.x -= 10;
-	//		TC2.x += 10;
-	//		if(TC1.x < 0)
-	//			TC1.x += 10;
-	//		if(TC2.x > world_info[WI_MAP_SIZE])
-	//			TC2.x -= 10;
-	//	}
-	//}
-	///**************************/
-	///***move away from edges***/
-	///**************************/
-	//TC1.y = shiftFromEdge(TC1.y);
-	//TC1.x = shiftFromEdge(TC1.x);
-	//TC2.y = shiftFromEdge(TC2.y);
-	//TC2.x = shiftFromEdge(TC2.x);
+	TC2.x = shiftFromEdge(TC2.x);	
 	/**********************/
 	/***clear TCs' area***/
 	/**********************/
@@ -233,7 +198,7 @@ void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 	{
 		for(int innerIndex = pos.x-5; innerIndex < pos.x+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex] == 0 && team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
+			if(world_positions[outerIndex][innerIndex] == ET_NONE && team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				team_villager_count++;
@@ -250,7 +215,7 @@ void WorldGeneration::PlaceDomesticBeasts(EntityType type, int number, Position 
 	{
 		for(int innerIndex = pos.x-5; innerIndex < pos.x+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex] == 0 && team_type_count < world_info[number])
+			if(world_positions[outerIndex][innerIndex] == ET_NONE && team_type_count < world_info[number])
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				team_type_count++;
@@ -267,7 +232,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
 		{
 			int chance_for_entity = rand() % 100;
-			if(world_positions[outerIndex][innerIndex] == 0 && chance_for_entity >= min && chance_for_entity<max)
+			if(world_positions[outerIndex][innerIndex] == ET_NONE && chance_for_entity >= min && chance_for_entity<max)
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
@@ -279,7 +244,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 				int chance_to_delete = rand() % 100;
 
-				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist)) <= 20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist)) <= 20.0 || chance_to_delete <= delete_chance)
+				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist)) <= 30.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist)) <= 30.0 || chance_to_delete <= delete_chance)
 				{
 					world_positions[outerIndex][innerIndex] = ET_NONE;
 					entityCount--;
@@ -389,7 +354,7 @@ void WorldGeneration::nextPosition()
 int WorldGeneration::findOffset()
 {
 	int x = rand()%100;
-	if(x < 50)
+	if(x > 50)
 		return -3;
 	else
 		return 3;
