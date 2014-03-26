@@ -115,7 +115,7 @@ void WorldGeneration::PlaceTownCenter()
 		TC2.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
 		TC2.x = rand() % world_info[WI_MAP_SIZE];
 
-		if(TC1.distance(TC2) > 75)
+		if(TC1.distance(TC2) > world_info[WI_MAP_SIZE]/2)
 			keep_going=false;
 	}
 
