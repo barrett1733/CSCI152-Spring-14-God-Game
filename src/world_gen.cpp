@@ -411,7 +411,14 @@ void WorldGeneration::clearArea(Position pos)
 	{
 		for(int innerIndex=pos.x-7; innerIndex < pos.x+7; innerIndex++)
 		{
-			world_positions[outerIndex][innerIndex] = ET_NONE;
+			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
+				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
+			else
+			{
+				if(world_positions[outerIndex][innerIndex] != ET_NONE)
+				entityCount--;
+				world_positions[outerIndex][innerIndex] = ET_NONE;				
+			}
 		}
 	}
 }
