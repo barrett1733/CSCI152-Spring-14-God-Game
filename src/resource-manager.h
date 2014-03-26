@@ -45,9 +45,9 @@ public:
 	ResourceManager(ResourcePool&);
 	~ResourceManager();
 	void registerResourcePool(ResourcePool&);
-	bool requestResource(ResourceType,int,FactionType);
-	void sendResource(ResourceType,int,FactionType);
-	int getResourceAmount(ResourceType,FactionType);
+	bool requestResource(ResourceType,int,Faction);
+	void sendResource(ResourceType,int,Faction);
+	int getResourceAmount(ResourceType,Faction);
 };
 
 

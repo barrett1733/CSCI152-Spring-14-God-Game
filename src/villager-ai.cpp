@@ -1,6 +1,6 @@
 #include "villager-ai.h"
 
-VillagerAI::VillagerAI(FactionType faction):myFaction(faction)
+VillagerAI::VillagerAI(Faction faction):myFaction(faction)
 { }
 
 void VillagerAI::run()

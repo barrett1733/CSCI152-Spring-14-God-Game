@@ -264,29 +264,29 @@ Entity WorldGeneration::getNextEntity()
 				case ET_TREE:
 				case ET_STONE:
 				case ET_IRON:
-					to_return.setFactionType(FT_STATIC);
+					to_return.setFaction(FT_STATIC);
 					break;
 				//passive animals
 				case ET_DEER:
-					to_return.setFactionType(FT_ANIMAL_PASSIVE);
+					to_return.setFaction(FT_ANIMAL_PASSIVE);
 					break;
 				//hostile animals
 				case ET_WOLF:
 				case ET_OGRE:
-					to_return.setFactionType(FT_ANIMAL_HOSTILE);
+					to_return.setFaction(FT_ANIMAL_HOSTILE);
 					break;
 				//domestic animals
 				case ET_COW:
-					to_return.setFactionType(FT_ANIMAL_DOMESTIC);
+					to_return.setFaction(FT_ANIMAL_DOMESTIC);
 					break;
 				//everything whose faction is not determined by what it is
 				default:
 					length_to_tc1 = TC1.distance(current);
 					length_to_tc2 = TC2.distance(current);
 					if(length_to_tc1<length_to_tc2)
-					to_return.setFactionType(FT_PLAYER_1);
+					to_return.setFaction(FT_PLAYER_1);
 					else
-					to_return.setFactionType(FT_PLAYER_2);
+					to_return.setFaction(FT_PLAYER_2);
 					break;
 			}
 

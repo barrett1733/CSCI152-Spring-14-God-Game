@@ -6,12 +6,12 @@
 class VillagerAI : public ResourceManager
 {
 private:
-	FactionType myFaction;
+	Faction myFaction;
 	void balanceJobs();
 	void createBuildings();
 	void needsDefending();
 public:
-	VillagerAI(FactionType);
+	VillagerAI(Faction);
 	void run();
 };
 
