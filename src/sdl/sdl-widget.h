@@ -25,6 +25,8 @@ protected:
 	SDL_Rect clipping;
 	SDL_Rect boundingBox;
 
+	void setClipping(const SDL_Rect&);
+	void setBoundingBox(const SDL_Rect&);
 	virtual void setState(WidgetState);
 	void updateState(SDL_Event & event);
 
@@ -35,6 +37,7 @@ public:
 	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event, SdlWidget*));
 
 	virtual ~SdlWidget();
+
 
 	SDL_Surface * getSurface();
 	virtual const SDL_Rect * getClipping();

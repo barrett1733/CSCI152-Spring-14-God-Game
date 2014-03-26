@@ -8,14 +8,8 @@ SdlWidget::SdlWidget() :
 	texture(0),
 	state(WS_DISABLED)
 {
-	clipping.x = 0;
-	clipping.y = 0;
-	clipping.w = 0;
-	clipping.h = 0;
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = 0;
-	boundingBox.h = 0;
+	setClipping(SDL_Rect{0,0,0,0});
+	setBoundingBox(SDL_Rect{0,0,0,0});
 	sdl.addWidget(this);
 }
 
@@ -25,14 +19,8 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	texture(0),
 	state(WS_OFF)
 {
-	clipping.x = 0;
-	clipping.y = 0;
-	clipping.w = rect.w;
-	clipping.h = rect.h;
-	boundingBox.x = rect.x;
-	boundingBox.y = rect.y;
-	boundingBox.w = rect.w;
-	boundingBox.h = rect.h;
+	setClipping(SDL_Rect{0,0,rect.w,rect.h});
+	setBoundingBox(rect);
 	sdl.addWidget(this);
 }
 
@@ -42,32 +30,38 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 	texture(0),
 	state(WS_OFF)
 {
-	clipping.x = 0;
-	clipping.y = 0;
-	clipping.w = rect.w;
-	clipping.h = rect.h;
-	boundingBox.x = rect.x;
-	boundingBox.y = rect.y;
-	boundingBox.w = rect.w;
-	boundingBox.h = rect.h;
+	setClipping(SDL_Rect{0,0,rect.w,rect.h});
+	setBoundingBox(rect);
 	sdl.addWidget(this);
 }
 
 SdlWidget::~SdlWidget() {
 
 	if(surface) SDL_FreeSurface(surface);
-	clipping.x = 0;
-	clipping.y = 0;
-	clipping.w = 0;
-	clipping.h = 0;
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = 0;
-	boundingBox.h = 0;
+
+	setClipping(SDL_Rect{0,0,0,0});
+	setBoundingBox(SDL_Rect{0,0,0,0});
 	setState(WS_OFF);
+
 	callback = 0;
 
 	sdl.removeWidget(this);
+}
+
+void SdlWidget::setClipping(const SDL_Rect & rect)
+{
+	clipping.x = rect.x;
+	clipping.y = rect.y;
+	clipping.w = rect.w;
+	clipping.h = rect.h;
+}
+
+void SdlWidget::setBoundingBox(const SDL_Rect & rect)
+{
+	boundingBox.x = rect.x;
+	boundingBox.y = rect.y;
+	boundingBox.w = rect.w;
+	boundingBox.h = rect.h;
 }
 
 bool SdlWidget::isInside(int xMouse, int yMouse)
