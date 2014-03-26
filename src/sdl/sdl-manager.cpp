@@ -279,15 +279,6 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetRefe
 	return button;
 }
 
-void SdlManager::destroyButton(ButtonReference & buttonRef)
-{
-	int widgetCount = widgetList[WL_INTERACTIVE].size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-		if(widgetList[WL_INTERACTIVE][widgetIndex] == buttonRef)
-			widgetList[WL_INTERACTIVE].erase(widgetList[WL_INTERACTIVE].begin()+widgetIndex);
-	delete buttonRef;
-}
-
 ////////
 
 SliderReference SdlManager::createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos)
