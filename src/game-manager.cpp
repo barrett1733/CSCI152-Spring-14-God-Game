@@ -159,13 +159,12 @@ bool GameManager::setProperty(std::string property, std::string value)
 
 		else if(value == "map-view")
 		{
-			widget = new SdlMapView(rect.x, rect.y, rect.w, rect.h);
 			layer = WL_BACKGROUND;
+			widget = new SdlMapView(rect.x, rect.y, rect.w, rect.h);
 		}
 
 		else return false;
 
-		sdl.addWidget(widget, layer);
 		widgetList.push_back(new GM_Widget(widget, buttonLabel));
 		buttonConfig = 0;
 	}
