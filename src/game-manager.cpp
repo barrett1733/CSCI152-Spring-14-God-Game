@@ -8,6 +8,12 @@ GameMode GameManager::mode_ = GM_ERROR;
 
 void doNothing(SDL_Event & event, WidgetReference widget) {}
 
+void selfDestruct(SDL_Event & event, WidgetReference widget)
+{
+	std::cout << "Widget, \"ASPLODE!\"" << std::endl;
+	delete widget;
+}
+
 GameManager::GameManager()
 {
 	if(self)
@@ -32,6 +38,9 @@ GameManager::GameManager()
 	buttonConfig = 0;
 
 	load("res/main-menu.cfg");
+
+	SDL_Rect rect = {580,20,200,40};
+	new SdlButton("Self-Destructing Button", rect, selfDestruct);
 
 	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
