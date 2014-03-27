@@ -49,6 +49,13 @@ $(OBJ_DIR)/sdl.a: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
 	ar cr $@ sdl*.o
 	rm -f sdl*.o
 
+
+
+sdl.a: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
+	$(CXX) $(CFLAGS) $^
+	ar cr $(OBJ_DIR)/$@ sdl*.o
+	rm -f sdl*.o
+
 astar:
 	$(CXX) $(CFLAGS) -c test.cpp -o test.o
 	$(CXX) $(CFLAGS) -c a-star.cpp -o a-star.o
