@@ -165,9 +165,6 @@ bool GameManager::setProperty(std::string property, std::string value)
 		else if(value == "triangle-slider")
 			widget = new SdlTriangleSlider(rect, callbackMap[callbackName]);
 
-		else if(value == "map-view")
-			widget = new SdlMapView(rect.x, rect.y, rect.w, rect.h);
-
 		else return false;
 
 		widgetList.push_back(new GM_Widget(widget, buttonLabel));

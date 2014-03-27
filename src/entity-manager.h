@@ -6,8 +6,12 @@
 #include <map>
 
 #include "sdl/sdl-entity.h"
+#include "sdl/sdl-map-view.h"
 #include "entity.h"
 #include "config.h"
+
+typedef std::map<EntityType, int> Entity_HealthMap;
+typedef std::pair<EntityType, int> Entity_HealthPair;
 
 /*
 Entity Data list, this is what I have.
@@ -19,6 +23,8 @@ Entity Data list, this is what I have.
 */
 struct EM_Record
 {
+	EM_Record() {}
+	EM_Record(Entity* in){
 	EM_Record(Entity* in, int health){
 		this->entity=in;
 
@@ -36,6 +42,9 @@ class EntityManager : public Config
 {
 	std::vector<WidgetReference> widgetList;
 	std::vector<EM_Record*> entityList; // list of all current entities on map
+	std::vector<EM_Record*> recordList;
+	std::map<Faction, std::vector<EM_Record*> > factionMap;
+
 	// these lists are sub-catagories of the entitylist, should still be the same reference //
 	std::vector<EM_Record*> villagerList;
 	std::vector<EM_Record*> peacefulMobList;
@@ -45,8 +54,15 @@ class EntityManager : public Config
 	// data to pair up Entity Type and Health
 	std::map<EntityType, int> Entity_HealthMap;
 
+
+	SdlMapView mapView;
+	bool visible;
+
 public:
-	void createEntity(Entity*);
+	EntityManager();
+
+	void createEntity(const EntityReference);
+	void createEntity(const Entity&);
 	void deleteEntity(); // removes entity from all applicable lists
 
 	void getEntityType();
