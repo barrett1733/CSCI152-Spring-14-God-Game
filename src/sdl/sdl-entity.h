@@ -5,14 +5,17 @@
 #include <iostream>
 
 #include "sdl-widget.h"
+#include "../entity.h"
 
 class SdlEntity : public SdlWidget
 {
 public:
-	SdlEntity(COLOR color, int size);
 	SdlEntity();
+	SdlEntity(const Entity&);
+	SdlEntity(EntityType, Position);
+	SdlEntity(Color color, int size);
 };
 
-typedef SdlEntity * EntityReference;
+typedef SdlEntity * SdlEntityReference;
 
 #endif

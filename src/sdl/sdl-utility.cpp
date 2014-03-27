@@ -66,7 +66,7 @@ ImageReference SdlUtility::createTextSurface(const char * text)
 	return surface;
 }
 
-Uint32 SdlUtility::getColor(ImageReference image, COLOR color)
+Uint32 SdlUtility::getColor(ImageReference image, Color color)
 {
 	switch(color)
 	{
@@ -90,7 +90,7 @@ void SdlUtility::set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
     *(Uint32 *)target_pixel = pixel;
 }
 
-ImageReference SdlUtility::createCircle(COLOR color, int size)
+ImageReference SdlUtility::createCircle(Color color, int size)
 {
 	ImageReference image = createSurface(size+1,size+1);
 
@@ -168,7 +168,7 @@ ImageReference SdlUtility::createCircle(COLOR color, int size)
 	return image;
 }
 
-ImageReference SdlUtility::createTriangle(COLOR color, int width, int height)
+ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 {
 	ImageReference image = createSurface(width, height);;
 

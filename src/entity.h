@@ -104,6 +104,7 @@ private:
 	Faction faction;
 	std::string name;
 public:
+	Entity(const Entity&);
 	Entity(EntityType, int health, Position, Faction);
 	Entity(EntityType, int health, int xPos, int yPos, Faction);
 	Entity(EntityType, Position pos, Faction fac);
@@ -112,7 +113,7 @@ public:
 	Position getPosition();
 	int getMaxHealth();
 	int getCurrentHealth();
-	Faction getFaction();
+	Faction getFaction() const;
 	EntityType getEntityType();
 	void setName(std::string);
 	void setPosition(Position);
@@ -139,6 +140,6 @@ public:
 	void setDefense(int);
 };
 
-//extern Entity * EntityList;
+typedef Entity * EntityReference;
 
 #endif

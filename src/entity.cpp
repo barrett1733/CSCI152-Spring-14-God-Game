@@ -3,6 +3,14 @@
 
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
+Entity::Entity(const Entity & entity) :
+	type(entity.type),
+	position(entity.position),
+	maxHealth(entity.maxHealth),
+	currentHealth(entity.currentHealth),
+	faction(entity.faction)
+{ }
+
 Entity::Entity(EntityType entityType, int health, Position position, Faction faction) :
 	type(entityType),
 	position(position),
@@ -36,7 +44,9 @@ int Entity::getCurrentHealth() {
 Position Entity::getPosition() {
 	return this->position;
 }
-Faction Entity::getFaction() {
+
+Faction Entity::getFaction() const
+{
 	return this->faction;
 }
 
@@ -61,14 +71,14 @@ void Entity::setFaction(Faction faction) {
 
 MobileEntity::MobileEntity(EntityType entityType, int health, Position position, Faction faction, int hunger, int strength, int defense):
 	Entity(entityType, health, position, faction),
-	hunger(hunger), 
-	strength(strength), 
+	hunger(hunger),
+	strength(strength),
 	defense(defense)
 { }
 MobileEntity::MobileEntity(EntityType entityType, int health, int xPos, int yPos, Faction faction, int hunger, int strength, int defense):
 	Entity(entityType, health, xPos, yPos, faction),
-	hunger(hunger), 
-	strength(strength), 
+	hunger(hunger),
+	strength(strength),
 	defense(defense)
 { }
 
