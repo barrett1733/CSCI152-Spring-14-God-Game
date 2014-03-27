@@ -23,17 +23,6 @@ Entity Data list, this is what I have.
 */
 struct EM_Record
 {
-	EM_Record() {}
-	EM_Record(Entity* in){
-	EM_Record(Entity* in, int health){
-		this->entity=in;
-
-		this->entity->setMaxHealth(health); // MAGIC
-		this->entity->setCurrentHealth(1); // these will be changed once the list is completed
-
-		this->widget=new SdlEntity(); // SDL will eventually need more info.
-		this->widget->enable();
-	}
 	Entity * entity;
 	WidgetReference widget;
 };
@@ -41,7 +30,6 @@ struct EM_Record
 class EntityManager : public Config
 {
 	std::vector<WidgetReference> widgetList;
-	std::vector<EM_Record*> entityList; // list of all current entities on map
 	std::vector<EM_Record*> recordList;
 	std::map<Faction, std::vector<EM_Record*> > factionMap;
 
