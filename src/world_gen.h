@@ -50,6 +50,12 @@ class WorldGeneration
 public:
 	WorldGeneration(int);
 	~WorldGeneration();
+
+	int getWorldSize()
+	{
+		return world_info[WI_MAP_SIZE];
+	}
+
 	void PlaceResource(int min, int max, EntityType type);
 	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
 	void PlaceTownCenter();
