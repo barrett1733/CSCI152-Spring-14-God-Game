@@ -6,16 +6,47 @@
 void EntityManager::createEntity(Entity* entityIn)
 {
 	std::cout << "EntityManager::createEntity() called" << std::endl;
-	EM_Record *rec=new EM_Record(entityIn,0,0);
+	EM_Record *rec=new EM_Record( entityIn , Entity_HealthMap[ entityIn->getEntityType() ] );
 
 	entityList.push_back(rec);
+
+
+
 	sdl.addWidget(rec->widget);
 	widgetList.push_back(rec->widget);
 }
 
 void EntityManager::deleteEntity(){}
 
-void EntityManager::getEntityType(){}
+/*void EntityManager::getEntityType(Entity* entityIn){
+    ET_VILLAGER
+	ET_ELDER_VILLAGER
+	ET_CHILD_VILLAGER
+
+	// DOMESTIC ANIMALS
+	ET_COW
+	ET_SHEEP
+	ET_HORSE
+	ET_CHICKEN
+	ET_PIG
+	ET_FISH
+	ET_DEER
+
+	// HOSTILE
+	ET_WOLF,
+	ET_OGRE,
+
+	ET_BOAR,
+	ET_FOX,
+	ET_VAMPIRE,
+	ET_WEREWOLF,
+	ET_HARPY,
+	ET_SNOW_TROLL,
+	ET_SIREN,
+	ET_CTHULHU,
+	ET_UNICORN,
+	ET_CYCLOPS,
+}*/
 
 void EntityManager::update()
 {
