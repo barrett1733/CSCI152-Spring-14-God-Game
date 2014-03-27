@@ -9,6 +9,7 @@ class SdlMapView : public SdlWidget
 	ImageReference createBackground(SDL_Rect & rect);
 
 public:
+	SdlMapView();
 	SdlMapView(int xPos, int yPos, int width, int height);
 	~SdlMapView();
 };
