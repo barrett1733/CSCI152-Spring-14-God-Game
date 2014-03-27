@@ -1,3 +1,5 @@
+#include "entity.h"
+
 #ifndef RESOURCE_MANAGER_H_
 #define RESOURCE_MANAGER_H_
 
@@ -19,16 +21,18 @@ enum ResourceType
 };
 struct ResourcePool
 {
-	int resourcePool[RT_COUNT];
+	int resourcePool[FT_COUNT][RT_COUNT];
 	ResourcePool()
 	{
-		for(int i = 0; i < RT_COUNT; i++)
-			resourcePool[i] = 0;
+		for(int i = 0; i < FT_COUNT; i++)
+			for(int j = 0; j < RT_COUNT; j++)
+				resourcePool[i][j] = 0;
 	}
 	~ResourcePool()
 	{
-		for(int i = 0; i < RT_COUNT; i++)
-			resourcePool[i] = 0;
+		for(int i = 0; i < FT_COUNT; i++)
+			for(int j = 0; j < RT_COUNT; j++)
+				resourcePool[i][j] = 0;
 	}
 };
 
@@ -41,9 +45,9 @@ public:
 	ResourceManager(ResourcePool&);
 	~ResourceManager();
 	void registerResourcePool(ResourcePool&);
-	bool requestResource(ResourceType,int);
-	void sendResource(ResourceType,int);
-	int getResourceAmount(ResourceType);
+	bool requestResource(ResourceType,int,Faction);
+	void sendResource(ResourceType,int,Faction);
+	int getResourceAmount(ResourceType,Faction);
 };
 
 

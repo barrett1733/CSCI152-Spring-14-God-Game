@@ -8,7 +8,7 @@
 #include "position.h"
 #include <string>
 
-enum FactionType {
+enum Faction {
 	FT_NONE,
 	FT_STATIC,
 	FT_ANIMAL_DOMESTIC,
@@ -101,25 +101,25 @@ private:
 	Position position;
 	int maxHealth;
 	int currentHealth;
-	FactionType faction;
+	Faction faction;
 	std::string name;
 public:
-	Entity(EntityType, int health, Position, FactionType);
-	Entity(EntityType, int health, int xPos, int yPos, FactionType);
-	Entity(EntityType, Position pos, FactionType fac);
+	Entity(EntityType, int health, Position, Faction);
+	Entity(EntityType, int health, int xPos, int yPos, Faction);
+	Entity(EntityType, Position pos, Faction fac);
 
 	std::string getName();
 	Position getPosition();
 	int getMaxHealth();
 	int getCurrentHealth();
-	FactionType getFactionType();
+	Faction getFaction();
 	EntityType getEntityType();
 	void setName(std::string);
 	void setPosition(Position);
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
 	void setEntityType(EntityType);
-	void setFactionType(FactionType);
+	void setFaction(Faction);
 };
 
 class MobileEntity : public Entity
@@ -129,8 +129,8 @@ private:
 	int strength;
 	int defense;
 public:
-	MobileEntity(EntityType, int health, Position, FactionType, int hunger, int strength, int defense);
-	MobileEntity(EntityType, int health, int xPos, int yPos, FactionType, int hunger, int strength, int defense);
+	MobileEntity(EntityType, int health, Position, Faction, int hunger, int strength, int defense);
+	MobileEntity(EntityType, int health, int xPos, int yPos, Faction, int hunger, int strength, int defense);
 	int getHunger();
 	int getStrength();
 	int getDefense();

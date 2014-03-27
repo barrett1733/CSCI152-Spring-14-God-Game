@@ -11,10 +11,10 @@ using namespace std;
 
 WorldGeneration::~WorldGeneration(){}
 
-WorldGeneration::WorldGeneration()
+WorldGeneration::WorldGeneration(int seed)
 {
-	time_t timer;
-	srand(time(&timer));//rand must be seeded before placement, if not here then in another module that needs it first
+	//time_t timer;
+	srand(seed);//rand must be seeded before placement, if not here then in another module that needs it first
 	//if it is used I will remove it from this location
 
 	entityCount = 0;
@@ -104,46 +104,19 @@ void WorldGeneration::PlaceResource(int min, int max, EntityType type)
 
 void WorldGeneration::PlaceTownCenter()
 {
-	/***************************************
-	***first team's town center location***
-	****************************************/
+	int TC_placer_count = 0;
+	bool keep_going = true;
 
-	TC1.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
-	TC1.x = rand() % world_info[WI_MAP_SIZE];	//x-coord
-
-	/***************************************
-	***second team's town center location***
-	****************************************/
-
-	TC2.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
-	TC2.x = rand() % world_info[WI_MAP_SIZE];	//x-coord
-
-	/*******************************
-	***check if TCs are too close***
-	*****   move if they are   *****
-	********************************/
-	if(TC1.distance(TC2) <= 50)
+	while(keep_going)
 	{
-		if(TC1.y > TC2.y)
-		{
-			TC1.y += 10;
-			TC2.y -= 10;
-			if(TC1.y > world_info[WI_MAP_SIZE])
-				TC1.y -= 10;
-			if(TC2.y < 0)
-				TC2.y += 10;
-		}
-		// The following block of code is the same as above.
-		// Refactor this.
-		else
-		{
-			TC1.y -= 10;
-			TC2.y += 10;
-			if(TC1.y < 0)
-				TC1.y += 10;
-			if(TC2.y > world_info[WI_MAP_SIZE])
-				TC2.y -= 10;
-		}
+		TC_placer_count++;
+		TC1.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
+		TC1.x = rand() % world_info[WI_MAP_SIZE];	//x-coord
+		TC2.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
+		TC2.x = rand() % world_info[WI_MAP_SIZE];
+
+		if(TC1.distance(TC2) > world_info[WI_MAP_SIZE]/2)
+			keep_going=false;
 	}
 
 	/**************************/
@@ -153,41 +126,6 @@ void WorldGeneration::PlaceTownCenter()
 	TC1.x = shiftFromEdge(TC1.x);
 	TC2.y = shiftFromEdge(TC2.y);
 	TC2.x = shiftFromEdge(TC2.x);
-	// The following block of code is the same as above.
-	// Refactor this.
-	/***************************/
-	/***check closeness again***/
-	/***************************/
-	//if(TC1.distance(TC2) <= 50)
-	//{
-	//	if(TC1.x > TC2.x)
-	//	{
-	//		TC1.x += 10;
-	//		TC2.x -= 10;
-	//		if(TC1.x > world_info[WI_MAP_SIZE])
-	//			TC1.x -= 10;
-	//		if(TC2.x < 0)
-	//			TC2.x += 10;
-	//	}
-	//	// The following block of code is the same as above.
-	//	// Refactor this.
-	//	else
-	//	{
-	//		TC1.x -= 10;
-	//		TC2.x += 10;
-	//		if(TC1.x < 0)
-	//			TC1.x += 10;
-	//		if(TC2.x > world_info[WI_MAP_SIZE])
-	//			TC2.x -= 10;
-	//	}
-	//}
-	///**************************/
-	///***move away from edges***/
-	///**************************/
-	//TC1.y = shiftFromEdge(TC1.y);
-	//TC1.x = shiftFromEdge(TC1.x);
-	//TC2.y = shiftFromEdge(TC2.y);
-	//TC2.x = shiftFromEdge(TC2.x);
 	/**********************/
 	/***clear TCs' area***/
 	/**********************/
@@ -223,7 +161,7 @@ void WorldGeneration::PlaceTemple()
 
 void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 {
-	int team_villager_count = 0;	
+	int team_villager_count = 0;
 
 	/*********************************************************/
 	/***placing villagers around the town center and shrine***/
@@ -233,7 +171,7 @@ void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 	{
 		for(int innerIndex = pos.x-5; innerIndex < pos.x+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex] == 0 && team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
+			if(world_positions[outerIndex][innerIndex] == ET_NONE && team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				team_villager_count++;
@@ -250,7 +188,7 @@ void WorldGeneration::PlaceDomesticBeasts(EntityType type, int number, Position 
 	{
 		for(int innerIndex = pos.x-5; innerIndex < pos.x+5; innerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex] == 0 && team_type_count < world_info[number])
+			if(world_positions[outerIndex][innerIndex] == ET_NONE && team_type_count < world_info[number])
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				team_type_count++;
@@ -267,7 +205,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
 		{
 			int chance_for_entity = rand() % 100;
-			if(world_positions[outerIndex][innerIndex] == 0 && chance_for_entity >= min && chance_for_entity<max)
+			if(world_positions[outerIndex][innerIndex] == ET_NONE && chance_for_entity >= min && chance_for_entity<max)
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
@@ -279,7 +217,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 				int chance_to_delete = rand() % 100;
 
-				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist)) <= 20.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist)) <= 20.0 || chance_to_delete <= delete_chance)
+				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist)) <= 30.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist)) <= 30.0 || chance_to_delete <= delete_chance)
 				{
 					world_positions[outerIndex][innerIndex] = ET_NONE;
 					entityCount--;
@@ -291,78 +229,73 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 Entity WorldGeneration::getNextEntity()
 {
+	//string z="noMoreEntities";
+	double length_to_tc1;
+	double length_to_tc2;
 	Entity to_return(ET_NONE,0,current,FT_NONE);
-	while(true)
+	do
 	{
-		if(world_positions[current.y][current.x]==0)
-		{
-			if(current.y == world_positions.size()-1 && current.x == world_positions.size()-1)
-				throw ("noMoreEntities");
-			else if(cycled == true)
-				throw ("noMoreEntities");
-			else
-				nextPosition();
-		}
-		else if(world_positions[current.y][current.x]!=0)
+		if(world_positions[current.y][current.x]==ET_NONE)
 		{
 			if(cycled == true)
-				throw ("noMoreEntities");
-			else
 			{
-			to_return.setEntityType(world_positions[current.y][current.x]);
-
-			//switch(world_positions[current.y][current.x])
-			//{
-			//case ET_VILLAGER:
-			//case ET_COW:
-			//case ET_DEER:
-			//case ET_TREE:
-			//case ET_IRON:
-			//case ET_STONE:
-			//case ET_WOLF:
-			//	// to_return.setMaxHealth(100); // This is outside of world gen's scope.
-			//	break;
-			//case ET_OGRE:
-			//	// to_return.setMaxHealth(250); // This is outside of world gen's scope.
-			//	break;
-			//default:
-			//	// to_return.setMaxHealth(0); // This is outside of world gen's scope.
-			//	break;
-			//}
-
-			to_return.setPosition(current);
-
-			if( world_positions[current.y][current.x] == ET_TREE ||
-				world_positions[current.y][current.x] == ET_STONE||
-				world_positions[current.y][current.x] == ET_IRON  )
-				to_return.setFactionType(FT_STATIC);
-
-			else if(world_positions[current.y][current.x] == ET_DEER  )
-				to_return.setFactionType(FT_ANIMAL_PASSIVE);
-
-			else if(world_positions[current.y][current.x] == ET_WOLF ||
-					world_positions[current.y][current.x] == ET_OGRE)
-				to_return.setFactionType(FT_ANIMAL_HOSTILE); // Should be the default.
-			
-			else
-			{
-				/*double x_dist = abs(TC1.x-current.x);
-				double y_dist = abs(TC1.y-current.y);*/
-				double length_to_tc1 = TC1.distance(current);
-
-				/*x_dist = abs(TC2.x-current.x);
-				y_dist = abs(TC2.y-current.y);*/
-				double length_to_tc2 = TC2.distance(current);
-				if(length_to_tc1<length_to_tc2)
-					to_return.setFactionType(FT_PLAYER_1);
-				else
-					to_return.setFactionType(FT_PLAYER_2);
+				throw (1);
 			}
+			else
+			{
+				nextPosition();
+				//current_moves++;
+			}
+		}
+		else //if(world_positions[current.y][current.x]!=0)
+		{
+			if(cycled == true)
+			{
+				throw (1);
+			}
+			else
+			{
+			to_return.setEntityType(world_positions[current.y][current.x]);//set the entity's type
+			to_return.setPosition(current);//the the entity's position
+
+			switch(world_positions[current.y][current.x])
+			{
+				//resources
+				case ET_TREE:
+				case ET_STONE:
+				case ET_IRON:
+					to_return.setFaction(FT_STATIC);
+					break;
+				//passive animals
+				case ET_DEER:
+					to_return.setFaction(FT_ANIMAL_PASSIVE);
+					break;
+				//hostile animals
+				case ET_WOLF:
+				case ET_OGRE:
+					to_return.setFaction(FT_ANIMAL_HOSTILE);
+					break;
+				//domestic animals
+				case ET_COW:
+					to_return.setFaction(FT_ANIMAL_DOMESTIC);
+					break;
+				//everything whose faction is not determined by what it is
+				default:
+					length_to_tc1 = TC1.distance(current);
+					length_to_tc2 = TC2.distance(current);
+					if(length_to_tc1<length_to_tc2)
+					to_return.setFaction(FT_PLAYER_1);
+					else
+					to_return.setFaction(FT_PLAYER_2);
+					break;
+			}
+
 			nextPosition();
+			//current_moves++;
 			return to_return;
+			}
 		}
-		}
-	}
+	}while(true);
 
 }
 
@@ -394,11 +327,11 @@ void WorldGeneration::nextPosition()
 int WorldGeneration::findOffset()
 {
 	int x = rand()%100;
-	if(x < 50)
+	if(x > 50)
 		return -3;
 	else
 		return 3;
-	
+
 }
 
 int WorldGeneration::shiftFromEdge(int coord)
@@ -416,7 +349,14 @@ void WorldGeneration::clearArea(Position pos)
 	{
 		for(int innerIndex=pos.x-7; innerIndex < pos.x+7; innerIndex++)
 		{
-			world_positions[outerIndex][innerIndex] = ET_NONE;
+			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
+				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
+			else
+			{
+				if(world_positions[outerIndex][innerIndex] != ET_NONE)
+				entityCount--;
+				world_positions[outerIndex][innerIndex] = ET_NONE;
+			}
 		}
 	}
 }

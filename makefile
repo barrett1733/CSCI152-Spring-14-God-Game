@@ -6,11 +6,12 @@ LFLAGS = $(SDL)
 SRC_DIR = src
 SDL_DIR = sdl
 OBJ_DIR = obj
+RES_DIR = res
 BIN_DIR = bin
 SOURCES = main.cpp config.cpp
 SDL_SOURCES = sdl-manager.cpp sdl-utility.cpp sdl-widget.cpp sdl-text-display.cpp sdl-button.cpp sdl-slider.cpp sdl-triangle-slider.cpp sdl-entity.cpp sdl-map-view.cpp
 MGR_SOURCES = game-manager.cpp resource-manager.cpp entity-manager.cpp
-OBJECTS = main.o config.o village-ai.o managers.a sdl.a world-gen.o entity.o
+OBJECTS = main.o config.o village-ai.o managers.a sdl.a world_gen.o entity.o
 EXECUTABLE = a.out
 
 define compile
@@ -25,6 +26,8 @@ endef
 #VPATH = $(SRC_DIR):$(OBJ_DIR)
 
 all: $(EXECUTABLE)
+	@mkdir -p $(BIN_DIR)/$(RES_DIR)
+	cp $(SRC_DIR)/$(RES_DIR)/* $(BIN_DIR)/$(RES_DIR)
 	@echo "\033[33mDone\033[m"
 
 $(EXECUTABLE): $(addprefix $(OBJ_DIR)/, $(OBJECTS))
@@ -45,6 +48,22 @@ $(OBJ_DIR)/sdl.a: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
 	$(CXX) $(CFLAGS) $^
 	ar cr $@ sdl*.o
 	rm -f sdl*.o
+
+
+
+
+sdl: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
+	$(CXX) $(CFLAGS) $^
+	ar cr $(OBJ_DIR)/$@.a sdl*.o
+	rm -f sdl*.o
+
+
+managers: $(addprefix $(SRC_DIR)/, $(MGR_SOURCES))
+	$(CXX) $(CFLAGS) $^
+	ar cr $(OBJ_DIR)/$@.a *manager.o
+	rm -f *manager.o
+
+
 
 astar:
 	$(CXX) $(CFLAGS) -c test.cpp -o test.o

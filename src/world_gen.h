@@ -5,17 +5,17 @@
 #include "entity.h"
 
 /*
-WorldGeneration will initialize a two dimentional vector and fill every spot with the int that signifies open space. 
+WorldGeneration will initialize a two dimentional vector and fill every spot with the int that signifies open space.
 
-Each index of the inner vector will contain an int. The location on the map will be an (x,y) coordinate system, 
+Each index of the inner vector will contain an int. The location on the map will be an (x,y) coordinate system,
 the x-coord etll be the index of the inner vector and the y-coord the index of the outer vector, with 0 being the top
-(north) row and the higher number the bottom (south). The map will be a square with each outer vector holding a vector 
-the same size as the outer vector. Each different placeable item will have a differnt int specification designated in the 
+(north) row and the higher number the bottom (south). The map will be a square with each outer vector holding a vector
+the same size as the outer vector. Each different placeable item will have a differnt int specification designated in the
 entity enumeration.
 
-each faction will start with 15 villagers and 5 cows. deer, wolf and ogres will be placed randomly around the map. 
+each faction will start with 15 villagers and 5 cows. deer, wolf and ogres will be placed randomly around the map.
 
-the town center and shrine will be a buildings of larger dimension than 1x1, the locations they are placed will 
+the town center and shrine will be a buildings of larger dimension than 1x1, the locations they are placed will
 be the top-left corner of the building. 2 will be placed, one for each faction.
 
 As it stands now, in the text file for world info the order must be:
@@ -26,7 +26,7 @@ As it stands now, in the text file for world info the order must be:
 when more domestic animals are added they must be placed at the end of the list in the order they are enumerated
 */
 
-enum WorldInfo 
+enum WorldInfo
 {
 	WI_MAP_SIZE = 0x00,
 	WI_DIFFICULTY,
@@ -42,13 +42,13 @@ enum WorldInfo
 
 //struct entities
 //{
-//	int 
+//	int
 //};
 
 class WorldGeneration
 {
 public:
-	WorldGeneration();
+	WorldGeneration(int);
 	~WorldGeneration();
 	void PlaceResource(int min, int max, EntityType type);
 	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
@@ -77,7 +77,7 @@ private:
 	Position TC1;
 	Position TC2;
 	bool cycled;
-	
+
 };
 
 #endif

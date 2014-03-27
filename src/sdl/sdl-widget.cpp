@@ -1,67 +1,92 @@
 
 #include "sdl-widget.h"
+#include "sdl-manager.h"
+
+const WidgetLayer defaultLayer = WL_INTERACTIVE;
+const SDL_Rect emptyRect = sdlUtility.createRect(0,0,0,0);
 
 SdlWidget::SdlWidget() :
 	callback(0),
 	surface(0),
 	texture(0),
-	state(WS_DISABLED)
+	state(WS_DISABLED),
+	layer(defaultLayer)
 {
-	clipping.x = 0;
-	clipping.y = 0;
-	clipping.w = 0;
-	clipping.h = 0;
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = 0;
-	boundingBox.h = 0;
+	setClipping(emptyRect);
+	setBoundingBox(emptyRect);
+	sdl.addWidget(this, layer);
+}
+
+SdlWidget::SdlWidget(WidgetLayer layer) :
+	callback(0),
+	surface(0),
+	texture(0),
+	state(WS_DISABLED),
+	layer(layer)
+{
+	setClipping(emptyRect);
+	setBoundingBox(emptyRect);
+	sdl.addWidget(this, layer);
 }
 
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	callback(0),
 	surface(surface_arg),
 	texture(0),
-	state(WS_OFF)
+	state(WS_OFF),
+	layer(defaultLayer)
 {
-	clipping.x = 0;
-	clipping.y = 0;
+	setClipping(emptyRect);
+	setBoundingBox(rect);
+	sdl.addWidget(this, layer);
+
 	clipping.w = rect.w;
 	clipping.h = rect.h;
-	boundingBox.x = rect.x;
-	boundingBox.y = rect.y;
-	boundingBox.w = rect.w;
-	boundingBox.h = rect.h;
 }
 
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, SdlWidget*)) :
 	callback(callback_arg),
 	surface(surface_arg),
 	texture(0),
-	state(WS_OFF)
+	state(WS_OFF),
+	layer(defaultLayer)
 {
-	clipping.x = 0;
-	clipping.y = 0;
+	setClipping(emptyRect);
+	setBoundingBox(rect);
+	sdl.addWidget(this, layer);
+
 	clipping.w = rect.w;
 	clipping.h = rect.h;
-	boundingBox.x = rect.x;
-	boundingBox.y = rect.y;
-	boundingBox.w = rect.w;
-	boundingBox.h = rect.h;
 }
 
 SdlWidget::~SdlWidget() {
 
 	if(surface) SDL_FreeSurface(surface);
-	clipping.x = 0;
-	clipping.y = 0;
-	clipping.w = 0;
-	clipping.h = 0;
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = 0;
-	boundingBox.h = 0;
+	if(texture) SDL_DestroyTexture(texture);
+
+	setClipping(emptyRect);
+	setBoundingBox(emptyRect);
 	setState(WS_OFF);
+
 	callback = 0;
+
+	sdl.removeWidget(this);
+}
+
+void SdlWidget::setClipping(const SDL_Rect & rect)
+{
+	clipping.x = rect.x;
+	clipping.y = rect.y;
+	clipping.w = rect.w;
+	clipping.h = rect.h;
+}
+
+void SdlWidget::setBoundingBox(const SDL_Rect & rect)
+{
+	boundingBox.x = rect.x;
+	boundingBox.y = rect.y;
+	boundingBox.w = rect.w;
+	boundingBox.h = rect.h;
 }
 
 bool SdlWidget::isInside(int xMouse, int yMouse)

@@ -156,6 +156,28 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 ////////
 
+bool SdlManager::removeWidget(WidgetReference widget, int layer)
+{
+	int widgetCount = widgetList[layer].size();
+	for(int widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+		if(widgetList[layer][widgetIndex] == widget)
+		{
+			widgetList[layer].erase(widgetList[layer].begin()+widgetIndex);
+			return true;
+		}
+	return false;
+}
+
+bool SdlManager::removeWidget(WidgetReference widget)
+{
+	for(int layer = 0; layer < WL_COUNT; layer++)
+		if(removeWidget(widget, layer))
+			return true;
+	return false;
+}
+
+////////
+
 SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event&), int type)
 {
 	return subscribeToEvent(callback, type, SDLK_UNKNOWN);
@@ -255,15 +277,6 @@ ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetRefe
 	SdlButton * button = new SdlButton(text, rect, callback);
 	addWidget(button, WL_INTERACTIVE);
 	return button;
-}
-
-void SdlManager::destroyButton(ButtonReference & buttonRef)
-{
-	int widgetCount = widgetList[WL_INTERACTIVE].size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-		if(widgetList[WL_INTERACTIVE][widgetIndex] == buttonRef)
-			widgetList[WL_INTERACTIVE].erase(widgetList[WL_INTERACTIVE].begin()+widgetIndex);
-	delete buttonRef;
 }
 
 ////////

@@ -3,7 +3,7 @@
 
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
-Entity::Entity(EntityType entityType, int health, Position position, FactionType faction) :
+Entity::Entity(EntityType entityType, int health, Position position, Faction faction) :
 	type(entityType),
 	position(position),
 	maxHealth(health),
@@ -11,7 +11,7 @@ Entity::Entity(EntityType entityType, int health, Position position, FactionType
 	faction(faction)
 { }
 
-Entity::Entity(EntityType entityType, int health, int xPos, int yPos, FactionType faction) :
+Entity::Entity(EntityType entityType, int health, int xPos, int yPos, Faction faction) :
 	type(entityType),
 	maxHealth(health),
 	currentHealth(health),
@@ -36,7 +36,7 @@ int Entity::getCurrentHealth() {
 Position Entity::getPosition() {
 	return this->position;
 }
-FactionType Entity::getFactionType() {
+Faction Entity::getFaction() {
 	return this->faction;
 }
 
@@ -55,17 +55,17 @@ void Entity::setName(std::string name) {
 void Entity::setPosition(Position position) {
 	this->position = position;
 }
-void Entity::setFactionType(FactionType faction) {
+void Entity::setFaction(Faction faction) {
 	this->faction = faction;
 }
 
-MobileEntity::MobileEntity(EntityType entityType, int health, Position position, FactionType faction, int hunger, int strength, int defense):
+MobileEntity::MobileEntity(EntityType entityType, int health, Position position, Faction faction, int hunger, int strength, int defense):
 	Entity(entityType, health, position, faction),
 	hunger(hunger), 
 	strength(strength), 
 	defense(defense)
 { }
-MobileEntity::MobileEntity(EntityType entityType, int health, int xPos, int yPos, FactionType faction, int hunger, int strength, int defense):
+MobileEntity::MobileEntity(EntityType entityType, int health, int xPos, int yPos, Faction faction, int hunger, int strength, int defense):
 	Entity(entityType, health, xPos, yPos, faction),
 	hunger(hunger), 
 	strength(strength), 
