@@ -155,7 +155,6 @@ bool GameManager::setProperty(std::string property, std::string value)
 		}
 
 		WidgetReference widget;
-		int layer = WL_INTERACTIVE;
 
 		if(value == "button")
 			widget = new SdlButton(buttonLabel.c_str(), rect, callbackMap[callbackName]);
@@ -167,10 +166,7 @@ bool GameManager::setProperty(std::string property, std::string value)
 			widget = new SdlTriangleSlider(rect, callbackMap[callbackName]);
 
 		else if(value == "map-view")
-		{
-			layer = WL_BACKGROUND;
 			widget = new SdlMapView(rect.x, rect.y, rect.w, rect.h);
-		}
 
 		else return false;
 
