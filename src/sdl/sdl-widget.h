@@ -4,7 +4,7 @@
 
 #include "sdl-utility.h"
 
-enum {
+enum WidgetLayer {
 	WL_BACKGROUND,
 	WL_NON_INTERACTIVE,
 	WL_INTERACTIVE,
@@ -33,6 +33,8 @@ protected:
 	SDL_Rect clipping;
 	SDL_Rect boundingBox;
 
+	WidgetLayer layer;
+
 	void setClipping(const SDL_Rect&);
 	void setBoundingBox(const SDL_Rect&);
 	virtual void setState(WidgetState);
@@ -41,6 +43,7 @@ protected:
 	virtual bool isInside(int xMouse, int yMouse);
 public:
 	SdlWidget();
+	SdlWidget(WidgetLayer);
 	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect);
 	SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event, SdlWidget*));
 

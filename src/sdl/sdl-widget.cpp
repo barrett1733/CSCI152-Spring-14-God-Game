@@ -2,28 +2,43 @@
 #include "sdl-widget.h"
 #include "sdl-manager.h"
 
+const WidgetLayer defaultLayer = WL_INTERACTIVE;
 const SDL_Rect emptyRect = sdlUtility.createRect(0,0,0,0);
 
 SdlWidget::SdlWidget() :
 	callback(0),
 	surface(0),
 	texture(0),
-	state(WS_DISABLED)
+	state(WS_DISABLED),
+	layer(defaultLayer)
 {
-	sdl.addWidget(this);
 	setClipping(emptyRect);
 	setBoundingBox(emptyRect);
+	sdl.addWidget(this, layer);
+}
+
+SdlWidget::SdlWidget(WidgetLayer layer) :
+	callback(0),
+	surface(0),
+	texture(0),
+	state(WS_DISABLED),
+	layer(layer)
+{
+	setClipping(emptyRect);
+	setBoundingBox(emptyRect);
+	sdl.addWidget(this, layer);
 }
 
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	callback(0),
 	surface(surface_arg),
 	texture(0),
-	state(WS_OFF)
+	state(WS_OFF),
+	layer(defaultLayer)
 {
 	setClipping(emptyRect);
 	setBoundingBox(rect);
-	sdl.addWidget(this);
+	sdl.addWidget(this, layer);
 
 	clipping.w = rect.w;
 	clipping.h = rect.h;
@@ -33,11 +48,12 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 	callback(callback_arg),
 	surface(surface_arg),
 	texture(0),
-	state(WS_OFF)
+	state(WS_OFF),
+	layer(defaultLayer)
 {
 	setClipping(emptyRect);
 	setBoundingBox(rect);
-	sdl.addWidget(this);
+	sdl.addWidget(this, layer);
 
 	clipping.w = rect.w;
 	clipping.h = rect.h;
