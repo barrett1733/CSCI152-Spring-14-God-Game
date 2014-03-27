@@ -13,7 +13,7 @@ enum GameMode {
 	GM_MENU    = 0x01,
 	GM_PLAYING = 0x02,
 	GM_PAUSING = 0x04,
-	GM_QUITING = 0x08,
+	GM_QUITTING = 0x08,
 };
 
 enum {

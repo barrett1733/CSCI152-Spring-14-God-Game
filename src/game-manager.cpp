@@ -97,19 +97,19 @@ void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
 void GameManager::showCredits(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Show Credits (NOT IMPLEMENTED - QUITING)" << std:: endl;
-	mode_ = GM_QUITING;
+	mode_ = GM_QUITTING;
 }
 
 void GameManager::quitGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Quit Game (from button)" << std::endl;
-	mode_ = GM_QUITING;
+	mode_ = GM_QUITTING;
 }
 
 void GameManager::quitGame(SDL_Event & event)
 {
 	std::cout << "Quit Game" << std::endl;
-	mode_ = GM_QUITING;
+	mode_ = GM_QUITTING;
 }
 
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
