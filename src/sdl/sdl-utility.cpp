@@ -10,16 +10,18 @@ SdlUtility sdlUtility;
 SdlUtility::SdlUtility()
 {
 	// Initialize Fonts
-	std::cerr << "TTF_Init()" << std::endl;
+	std::cerr << "SdlUtility::SdlUtility() - TTF_Init()" << std::endl;
 	if( TTF_Init() == -1 )
 	{
 		std::cerr << TTF_GetError() << std::endl;
 		throw "TTF_Init()";
 	}
 
+	std::cerr << "SdlUtility::SdlUtility() - TTF_OpenFont()" << std::endl;
 	font = TTF_OpenFont( "res/arial.ttf", 16 );
 	if(!font)
 		std::cerr << TTF_GetError() << std::endl;
+	std::cerr << "SdlUtility::SdlUtility() finished." << std::endl;
 }
 
 SdlUtility::~SdlUtility()

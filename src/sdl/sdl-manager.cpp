@@ -10,7 +10,7 @@ SdlManager::SdlManager() :
 	renderer(0),
 	next_time(0)
 {
-	std::cout << "SDL_Init()" << std::endl;
+	std::cout << "SdlManager::SdlManager() - SDL_Init()" << std::endl;
 
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -24,7 +24,7 @@ SdlManager::SdlManager() :
 	SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	// Initialize PNG loading
-	std::cout << "IMG_Init()" << std::endl;
+	std::cout << "SdlManager::SdlManager() - IMG_Init()" << std::endl;
 	int imgFlags = IMG_INIT_PNG;
 	if( ! ( IMG_Init( imgFlags ) & imgFlags ) )
 	{
@@ -32,7 +32,7 @@ SdlManager::SdlManager() :
 		throw "IMG_Init()";
 	}
 
-	std::cout << "Initializing Frame Counter" << std::endl;
+	std::cout << "SdlManager::SdlManager() - Initializing Frame Counter" << std::endl;
 	timer = time(0);
 	frameCount = 0;
 
@@ -41,7 +41,7 @@ SdlManager::SdlManager() :
 
 SdlManager::~SdlManager()
 {
-	std::cout << "sdl.destructor()" << std::endl;
+	std::cout << "SdlManager::~SdlManager()" << std::endl;
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
@@ -129,7 +129,7 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 {
 	if(window) throw "Window exists.";
 
-	std::cout << "sdl.launchWindow() starting" << std::endl;
+	std::cout << "SdlManager::launchWindow() - starting" << std::endl;
 
 	next_time = 0;
 
@@ -151,7 +151,7 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 	fpsCounter->setText("00 FPS");
 	addWidget(fpsCounter, WL_NON_INTERACTIVE);
 
-	std::cout << "sdl.launchWindow() finished" << std::endl;
+	std::cout << "SdlManager::launchWindow() - Finished" << std::endl;
 }
 
 ////////
