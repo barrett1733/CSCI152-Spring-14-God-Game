@@ -51,10 +51,19 @@ $(OBJ_DIR)/sdl.a: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
 
 
 
-sdl.a: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
+
+sdl: $(addprefix $(SRC_DIR)/$(SDL_DIR)/, $(SDL_SOURCES))
 	$(CXX) $(CFLAGS) $^
-	ar cr $(OBJ_DIR)/$@ sdl*.o
+	ar cr $(OBJ_DIR)/$@.a sdl*.o
 	rm -f sdl*.o
+
+
+managers: $(addprefix $(SRC_DIR)/, $(MGR_SOURCES))
+	$(CXX) $(CFLAGS) $^
+	ar cr $(OBJ_DIR)/$@.a *manager.o
+	rm -f *manager.o
+
+
 
 astar:
 	$(CXX) $(CFLAGS) -c test.cpp -o test.o
