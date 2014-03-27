@@ -2,15 +2,17 @@
 #include "sdl-widget.h"
 #include "sdl-manager.h"
 
+const SDL_Rect emptyRect = sdlUtility.createRect(0,0,0,0);
+
 SdlWidget::SdlWidget() :
 	callback(0),
 	surface(0),
 	texture(0),
 	state(WS_DISABLED)
 {
-	setClipping(SDL_Rect{0,0,0,0});
-	setBoundingBox(SDL_Rect{0,0,0,0});
 	sdl.addWidget(this);
+	setClipping(emptyRect);
+	setBoundingBox(emptyRect);
 }
 
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
@@ -19,9 +21,12 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	texture(0),
 	state(WS_OFF)
 {
-	setClipping(SDL_Rect{0,0,rect.w,rect.h});
+	setClipping(emptyRect);
 	setBoundingBox(rect);
 	sdl.addWidget(this);
+
+	clipping.w = rect.w;
+	clipping.h = rect.h;
 }
 
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, SdlWidget*)) :
@@ -30,17 +35,21 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 	texture(0),
 	state(WS_OFF)
 {
-	setClipping(SDL_Rect{0,0,rect.w,rect.h});
+	setClipping(emptyRect);
 	setBoundingBox(rect);
 	sdl.addWidget(this);
+
+	clipping.w = rect.w;
+	clipping.h = rect.h;
 }
 
 SdlWidget::~SdlWidget() {
 
 	if(surface) SDL_FreeSurface(surface);
+	if(texture) SDL_DestroyTexture(texture);
 
-	setClipping(SDL_Rect{0,0,0,0});
-	setBoundingBox(SDL_Rect{0,0,0,0});
+	setClipping(emptyRect);
+	setBoundingBox(emptyRect);
 	setState(WS_OFF);
 
 	callback = 0;
