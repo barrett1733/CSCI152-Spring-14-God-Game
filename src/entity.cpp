@@ -29,19 +29,34 @@ Entity::Entity(EntityType entityType, int health, int xPos, int yPos, Faction fa
 	position.y = yPos;
 }
 
-EntityType Entity::getEntityType() {
-	return this->type;
+Entity& Entity::operator= (const Entity& entity)
+{
+	name = entity.name;
+	type = entity.type;
+	faction = entity.faction;
+	position = entity.position;
+	currentHealth = entity.currentHealth;
+	maxHealth = entity.maxHealth;
+
+	return *this;
 }
-std::string Entity::getName() {
+
+std::string Entity::getName() const
+{
 	return this->name;
 }
-int Entity::getMaxHealth() {
-	return this->maxHealth;
+
+EntityType Entity::getEntityType() const
+{
+	return this->type;
 }
-int Entity::getCurrentHealth() {
-	return this->currentHealth;
+EntityType Entity::getType() const
+{
+	return this->type;
 }
-Position Entity::getPosition() {
+
+Position Entity::getPosition() const
+{
 	return this->position;
 }
 
@@ -50,6 +65,12 @@ Faction Entity::getFaction() const
 	return this->faction;
 }
 
+int Entity::getMaxHealth() {
+	return this->maxHealth;
+}
+int Entity::getCurrentHealth() {
+	return this->currentHealth;
+}
 void Entity::setEntityType(EntityType type) {
 	this->type = type;
 }
