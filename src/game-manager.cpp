@@ -68,8 +68,8 @@ void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 
 	mode_ = GM_PLAYING;
 
-	int widgetCount = self->widgetList.size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
+	unsigned long widgetCount = self->widgetList.size();
+	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
 	{
 		if(self->widgetList[widgetIndex]->mode & mode_)
 			self->widgetList[widgetIndex]->widget->show();
@@ -84,7 +84,7 @@ void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
 
 	mode_ = GM_PAUSING;
 
-	int widgetCount = self->widgetList.size();
+	unsigned long widgetCount = self->widgetList.size();
 	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
 	{
 		if(self->widgetList[widgetIndex]->mode & mode_)
