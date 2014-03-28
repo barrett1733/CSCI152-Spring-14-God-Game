@@ -42,7 +42,7 @@ SDL_Rect SdlUtility::createRect(int x, int y, int w, int h)
 ImageReference SdlUtility::createSurface(int width, int height)
 {
 	SDL_Surface * result;
-	unsigned long rmask, gmask, bmask, amask;
+	unsigned int rmask, gmask, bmask, amask;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	rmask = 0xff000000;

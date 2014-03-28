@@ -24,14 +24,14 @@ class SdlManager
 	SDL_Renderer * renderer;
 
 	TextDisplayReference fpsCounter;
-	int timer;
+	long timer;
 	int frameCount;
 
 	std::vector<SdlEventSubscriber*> subscriberList;
 	std::vector<SdlWidget*> widgetList[WL_COUNT];
-	int widgetCount[WL_COUNT];
+	unsigned long widgetCount[WL_COUNT];
 
-	unsigned long next_time;
+	unsigned int next_time;
 
 	void wait();
 

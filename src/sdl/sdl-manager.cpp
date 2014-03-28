@@ -56,15 +56,15 @@ void SdlManager::update()
 {
 	SDL_Event event;
 
-	int subscriberCount = subscriberList.size();
+	unsigned long subscriberCount = subscriberList.size();
 
 	//Handle events on queue
 	while(SDL_PollEvent(&event) != 0)
 	{
-		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
+		for(unsigned long subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
 			subscriberList[subscriberIndex]->handleEvent(event);
 
-		for(int widgetIndex = 0; widgetIndex < widgetCount[WL_INTERACTIVE]; ++widgetIndex)
+		for(unsigned long widgetIndex = 0; widgetIndex < widgetCount[WL_INTERACTIVE]; ++widgetIndex)
 			widgetList[WL_INTERACTIVE][widgetIndex]->handleEvent(event);
 	} // end event handler loop
 
@@ -112,8 +112,8 @@ void SdlManager::renderWidget(SdlWidget * widget)
 
 void SdlManager::wait()
 {
-	unsigned long now = SDL_GetTicks();
-	unsigned long time_left = 0;
+	unsigned int now = SDL_GetTicks();
+	unsigned int time_left = 0;
 	if(next_time > now)
 		time_left = next_time - now;
 	if(time_left > TICK_INTERVAL) time_left = TICK_INTERVAL;
@@ -158,8 +158,8 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 bool SdlManager::removeWidget(WidgetReference widget, int layer)
 {
-	int widgetCount = widgetList[layer].size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+	unsigned long widgetCount = widgetList[layer].size();
+	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
 		if(widgetList[layer][widgetIndex] == widget)
 		{
 			widgetList[layer].erase(widgetList[layer].begin()+widgetIndex);
