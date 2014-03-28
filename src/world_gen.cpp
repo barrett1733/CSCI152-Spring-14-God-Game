@@ -251,7 +251,7 @@ Entity WorldGeneration::getNextEntity()
 		{
 			if(cycled == true)
 			{
-				throw (1);
+				return to_return;//throw (1);
 			}
 			else
 			{
