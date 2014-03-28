@@ -11,18 +11,6 @@ EntityManager::EntityManager(int worldSize) :
 	SdlEntity::mapRect = mapView.getBoundingBox();
 	SdlEntity::worldSize = worldSize;
 }
-void EntityManager::createEntity(Entity* entityIn)
-{
-	std::cout << "EntityManager::createEntity() called" << std::endl;
-	EM_Record *rec=new EM_Record( entityIn , Entity_HealthMap[ entityIn->getEntityType() ] );
-
-	entityList.push_back(rec);
-
-
-
-	sdl.addWidget(rec->widget);
-	widgetList.push_back(rec->widget);
-}
 
 void EntityManager::deleteEntity(){}
 
