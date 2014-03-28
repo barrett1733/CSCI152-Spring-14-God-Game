@@ -9,11 +9,18 @@
 
 class SdlEntity : public SdlWidget
 {
+
+	int size;
+	const Entity * entity;
+
 public:
-	SdlEntity();
 	SdlEntity(const Entity&);
-	SdlEntity(EntityType, Position);
-	SdlEntity(Color color, int size);
+
+	void update();
+	void updatePosition();
+
+	const static SDL_Rect * mapRect;
+	static int worldSize;
 };
 
 typedef SdlEntity * SdlEntityReference;
