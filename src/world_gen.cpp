@@ -26,7 +26,7 @@ WorldGeneration::WorldGeneration(int seed)
 	***get map info***
 	*****************/
 
-		ifstream file("worldInfo.txt");
+		ifstream file("res/worldInfo.txt");
 		int n;
 		while( file >> n ) world_info.push_back(n);
 //////////////////////////////////////////////////////
