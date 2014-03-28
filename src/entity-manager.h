@@ -24,11 +24,13 @@ Entity Data list, this is what I have.
 struct EM_Record
 {
 	Entity * entity;
-	WidgetReference widget;
+	SdlEntityReference widget;
 };
 
 class EntityManager : public Config
 {
+	bool visible;
+
 	std::vector<WidgetReference> widgetList;
 	std::vector<EM_Record*> recordList;
 	std::map<Faction, std::vector<EM_Record*> > factionMap;
@@ -44,10 +46,10 @@ class EntityManager : public Config
 
 
 	SdlMapView mapView;
-	bool visible;
+	int worldSize;
 
 public:
-	EntityManager();
+	EntityManager(int worldSize);
 
 	void createEntity(const EntityReference);
 	void createEntity(const Entity&);

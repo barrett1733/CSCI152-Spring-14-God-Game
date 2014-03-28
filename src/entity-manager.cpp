@@ -1,12 +1,15 @@
 
 #include "entity-manager.h"
-#include "sdl/sdl-manager.h"
 #include <iostream>
 
-EntityManager::EntityManager() :
+
+EntityManager::EntityManager(int worldSize) :
 	visible(false)
 {
 	mapView.hide();
+	widgetList.push_back(&mapView);
+	SdlEntity::mapRect = mapView.getBoundingBox();
+	SdlEntity::worldSize = worldSize;
 }
 void EntityManager::createEntity(Entity* entityIn)
 {
@@ -62,9 +65,10 @@ void EntityManager::createEntity(const Entity & entity)
 
 	EM_Record *record = new EM_Record();
 	record->entity = new Entity(entity);
-	record->widget = new SdlEntity(entity);
+	record->widget = new SdlEntity(*record->entity);
 
 	recordList.push_back(record);
+	widgetList.push_back(record->widget);
 	factionMap[faction].push_back(record);
 }
 
@@ -78,6 +82,10 @@ void EntityManager::update()
 {
 	if(!visible) show();
 
+	unsigned long count = recordList.size();
+	for(unsigned long index = 0; index < count; index ++)
+		recordList[index]->widget->update();
+
 	// ...
 }
 
@@ -86,12 +94,11 @@ void EntityManager::show()
 	if(visible) return;
 	std::cout << "EntityManager::show()" << std::endl;
 	visible = true;
-
-	mapView.show();
-
-	int count = widgetList.size();
+	unsigned long count = widgetList.size();
 	for(int index = 0; index < count; index ++)
+	{
 		widgetList[index]->show();
+	}
 }
 
 void EntityManager::hide()
@@ -99,7 +106,7 @@ void EntityManager::hide()
 	if(!visible) return;
 	std::cout << "EntityManager::hide()" << std::endl;
 	visible = false;
-	int count = widgetList.size();
+	unsigned long count = widgetList.size();
 	for(int index = 0; index < count; index ++)
 		widgetList[index]->hide();
 
