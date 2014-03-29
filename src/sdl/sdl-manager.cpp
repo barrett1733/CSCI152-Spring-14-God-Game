@@ -147,7 +147,7 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 	std::cout << "SDL_SetRenderDrawColor()" << std::endl;
 	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
-	fpsCounter = new SdlTextDisplay(740, 580, 60, 20);
+	fpsCounter = new SdlTextDisplay(2, 2, 60, 20);
 	fpsCounter->setText("00 FPS");
 	addWidget(fpsCounter, WL_NON_INTERACTIVE);
 
