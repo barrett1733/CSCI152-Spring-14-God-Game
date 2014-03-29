@@ -3,6 +3,14 @@
 
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
+Entity::Entity(const Entity & entity) :
+	type(entity.type),
+	position(entity.position),
+	maxHealth(entity.maxHealth),
+	currentHealth(entity.currentHealth),
+	faction(entity.faction)
+{ }
+
 Entity::Entity(EntityType entityType, int health, Position position, Faction faction) :
 	type(entityType),
 	position(position),
@@ -21,25 +29,48 @@ Entity::Entity(EntityType entityType, int health, int xPos, int yPos, Faction fa
 	position.y = yPos;
 }
 
-EntityType Entity::getEntityType() {
-	return this->type;
+Entity& Entity::operator= (const Entity& entity)
+{
+	name = entity.name;
+	type = entity.type;
+	faction = entity.faction;
+	position = entity.position;
+	currentHealth = entity.currentHealth;
+	maxHealth = entity.maxHealth;
+
+	return *this;
 }
-std::string Entity::getName() {
+
+std::string Entity::getName() const
+{
 	return this->name;
 }
+
+EntityType Entity::getEntityType() const
+{
+	return this->type;
+}
+EntityType Entity::getType() const
+{
+	return this->type;
+}
+
+Position Entity::getPosition() const
+{
+	return this->position;
+}
+
+Faction Entity::getFaction() const
+{
+	return this->faction;
+}
+
 int Entity::getMaxHealth() {
 	return this->maxHealth;
 }
 int Entity::getCurrentHealth() {
 	return this->currentHealth;
 }
-Position Entity::getPosition() {
-	return this->position;
-}
-Faction Entity::getFaction() {
-	return this->faction;
-}
-
 void Entity::setEntityType(EntityType type) {
 	this->type = type;
 }
@@ -61,14 +92,14 @@ void Entity::setFaction(Faction faction) {
 
 MobileEntity::MobileEntity(EntityType entityType, int health, Position position, Faction faction, int hunger, int strength, int defense):
 	Entity(entityType, health, position, faction),
-	hunger(hunger), 
-	strength(strength), 
+	hunger(hunger),
+	strength(strength),
 	defense(defense)
 { }
 MobileEntity::MobileEntity(EntityType entityType, int health, int xPos, int yPos, Faction faction, int hunger, int strength, int defense):
 	Entity(entityType, health, xPos, yPos, faction),
-	hunger(hunger), 
-	strength(strength), 
+	hunger(hunger),
+	strength(strength),
 	defense(defense)
 { }
 

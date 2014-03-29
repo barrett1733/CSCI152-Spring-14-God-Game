@@ -209,5 +209,4 @@ void SdlTriangleSlider::renderTriangleSliderSurface()
 	clip = sdlUtility.createRect(xPos,yPos,16,16);
 	SDL_BlitSurface(handle, NULL, surface, &clip);
 
-	texture = 0;
 }

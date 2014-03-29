@@ -1,8 +1,15 @@
 
 #include "sdl-map-view.h"
 
+SdlMapView::SdlMapView() :
+	SdlWidget(WL_BACKGROUND)
+{
+	clipping = sdlUtility.createRect(200, 0, 600, 600);
+	boundingBox = sdlUtility.createRect(200, 0, 600, 600);
+	surface = createBackground(clipping);
+}
 SdlMapView::SdlMapView(int xPos, int yPos, int width, int height) :
-	SdlWidget()
+	SdlWidget(WL_BACKGROUND)
 {
 	clipping = sdlUtility.createRect(xPos, yPos, width, height);
 	boundingBox = sdlUtility.createRect(xPos, yPos, width, height);

@@ -68,8 +68,8 @@ void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 
 	mode_ = GM_PLAYING;
 
-	int widgetCount = self->widgetList.size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
+	unsigned long widgetCount = self->widgetList.size();
+	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
 	{
 		if(self->widgetList[widgetIndex]->mode & mode_)
 			self->widgetList[widgetIndex]->widget->show();
@@ -84,7 +84,7 @@ void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
 
 	mode_ = GM_PAUSING;
 
-	int widgetCount = self->widgetList.size();
+	unsigned long widgetCount = self->widgetList.size();
 	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
 	{
 		if(self->widgetList[widgetIndex]->mode & mode_)
@@ -115,7 +115,8 @@ void GameManager::quitGame(SDL_Event & event)
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
 	double value = ((SliderReference) widget) -> getValue();
-	std::cout << "Slider Update: " << value << std::endl;
+	// Commented out for MAX fps
+	//std::cout << "Slider Update: " << value << std::endl;
 }
 
 void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
@@ -123,7 +124,8 @@ void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widg
 	double valueA = ((TriangleSliderReference) widget)-> getValueA();
 	double valueB = ((TriangleSliderReference) widget)-> getValueB();
 	double valueC = ((TriangleSliderReference) widget)-> getValueC();
-	std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
+	// Commented out for MAX fps
+	//std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
 }
 
 // From Config
@@ -164,9 +166,6 @@ bool GameManager::setProperty(std::string property, std::string value)
 
 		else if(value == "triangle-slider")
 			widget = new SdlTriangleSlider(rect, callbackMap[callbackName]);
-
-		else if(value == "map-view")
-			widget = new SdlMapView(rect.x, rect.y, rect.w, rect.h);
 
 		else return false;
 

@@ -89,5 +89,4 @@ void SdlButton::setText(const char * text)
 	}
 	SDL_FreeSurface(textSurface);
 
-	texture = 0;
 }

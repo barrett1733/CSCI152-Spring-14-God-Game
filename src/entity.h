@@ -104,22 +104,37 @@ private:
 	Faction faction;
 	std::string name;
 public:
+	Entity(const Entity&);
 	Entity(EntityType, int health, Position, Faction);
 	Entity(EntityType, int health, int xPos, int yPos, Faction);
 	Entity(EntityType, Position pos, Faction fac);
 
-	std::string getName();
-	Position getPosition();
+	Entity& operator= (const Entity&);
+
+	std::string getName() const;
+	EntityType getEntityType() const;
+	EntityType getType() const;
+	Faction getFaction() const;
+	Position getPosition() const;
 	int getMaxHealth();
 	int getCurrentHealth();
-	Faction getFaction();
-	EntityType getEntityType();
+
 	void setName(std::string);
 	void setPosition(Position);
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
 	void setEntityType(EntityType);
 	void setFaction(Faction);
+
+	friend std::ostream& operator<< (std::ostream & os, const Entity & entity)
+	{
+		os << entity.name << " ";
+		os << entity.type << " ";
+		os << entity.faction << " ";
+		os << entity.position << " ";
+		os << entity.currentHealth << "/" << entity.maxHealth;
+		return os;
+	}
 };
 
 class MobileEntity : public Entity
@@ -137,8 +152,9 @@ public:
 	void setHunger(int);
 	void setStrength(int);
 	void setDefense(int);
+
 };
 
-//extern Entity * EntityList;
+typedef Entity * EntityReference;
 
 #endif

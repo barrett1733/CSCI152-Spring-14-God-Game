@@ -8,7 +8,7 @@
 
 typedef SDL_Surface * ImageReference;
 
-enum COLOR {
+enum Color {
 	C_WHITE,
 	C_GRAY,
 	C_BLACK,
@@ -34,12 +34,12 @@ public:
 
 	SDL_Rect createRect(int x, int y, int w, int h);
 
-	Uint32 getColor(ImageReference image, COLOR color);
+	Uint32 getColor(ImageReference image, Color color);
 
 	ImageReference createSurface(int width, int height);
 	ImageReference createTextSurface(const char * text);
-	ImageReference createCircle(COLOR, int size);
-	ImageReference createTriangle(COLOR, int width, int height);
+	ImageReference createCircle(Color, int size);
+	ImageReference createTriangle(Color, int width, int height);
 };
 
 #endif

@@ -26,7 +26,7 @@ WorldGeneration::WorldGeneration(int seed)
 	***get map info***
 	*****************/
 
-		ifstream file("worldInfo.txt");
+		ifstream file("res/worldInfo.txt");
 		int n;
 		while( file >> n ) world_info.push_back(n);
 //////////////////////////////////////////////////////
@@ -239,7 +239,7 @@ Entity WorldGeneration::getNextEntity()
 		{
 			if(cycled == true)
 			{
-				throw (1);
+				return to_return;//throw (1);
 			}
 			else
 			{
@@ -251,7 +251,7 @@ Entity WorldGeneration::getNextEntity()
 		{
 			if(cycled == true)
 			{
-				throw (1);
+				return to_return;//throw (1);
 			}
 			else
 			{

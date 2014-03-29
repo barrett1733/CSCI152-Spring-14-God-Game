@@ -3,14 +3,18 @@
 #include <iostream>
 #include <sstream>
 
+int SdlManager::FRAME_RATE = 30;
+unsigned int SdlManager::TICK_INTERVAL = 1000/SdlManager::FRAME_RATE;
+
 SdlManager sdl;
 
 SdlManager::SdlManager() :
 	window(0),
 	renderer(0),
+	renderTexture(0),
 	next_time(0)
 {
-	std::cout << "SDL_Init()" << std::endl;
+	std::cout << "SdlManager::SdlManager() - SDL_Init()" << std::endl;
 
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -24,7 +28,7 @@ SdlManager::SdlManager() :
 	SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	// Initialize PNG loading
-	std::cout << "IMG_Init()" << std::endl;
+	std::cout << "SdlManager::SdlManager() - IMG_Init()" << std::endl;
 	int imgFlags = IMG_INIT_PNG;
 	if( ! ( IMG_Init( imgFlags ) & imgFlags ) )
 	{
@@ -32,23 +36,43 @@ SdlManager::SdlManager() :
 		throw "IMG_Init()";
 	}
 
-	std::cout << "Initializing Frame Counter" << std::endl;
+	std::cout << "SdlManager::SdlManager() - Initializing Frame Counter" << std::endl;
 	timer = time(0);
 	frameCount = 0;
+
+	std::cout << "SdlManager::SdlManager() - Loading config" << std::endl;
+	load("res/sdl.cfg");
 
 	std::cout << "Ready." << std::endl;
 }
 
 SdlManager::~SdlManager()
 {
-	std::cout << "sdl.destructor()" << std::endl;
+	std::cout << "SdlManager::~SdlManager()" << std::endl;
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
+	if(renderTexture) SDL_DestroyTexture(renderTexture);
 
 	IMG_Quit();
 	SDL_Quit();
 }
+
+////////
+//  CONFIG
+////////
+
+bool SdlManager::setProperty(std::string property, int value)
+{
+	if(property == "frame_rate")
+	{
+		FRAME_RATE = value;
+		TICK_INTERVAL = 1000/FRAME_RATE;
+		return true;
+	}
+	return false;
+}
+
 
 ////////
 
@@ -56,15 +80,15 @@ void SdlManager::update()
 {
 	SDL_Event event;
 
-	int subscriberCount = subscriberList.size();
+	unsigned long subscriberCount = subscriberList.size();
 
 	//Handle events on queue
 	while(SDL_PollEvent(&event) != 0)
 	{
-		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
+		for(unsigned long subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
 			subscriberList[subscriberIndex]->handleEvent(event);
 
-		for(int widgetIndex = 0; widgetIndex < widgetCount[WL_INTERACTIVE]; ++widgetIndex)
+		for(unsigned long widgetIndex = 0; widgetIndex < widgetCount[WL_INTERACTIVE]; ++widgetIndex)
 			widgetList[WL_INTERACTIVE][widgetIndex]->handleEvent(event);
 	} // end event handler loop
 
@@ -73,12 +97,19 @@ void SdlManager::update()
 	SDL_RenderClear( renderer );
 	SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
 
-	// Render everything
+	// Creates background
+	SDL_Surface * background = SDL_GetWindowSurface(window);
+	SDL_FillRect(background, NULL, SDL_MapRGB(background->format, 255, 255, 255));
+	SDL_UpdateTexture(renderTexture, NULL, background->pixels, background->pitch);
+	SDL_FreeSurface(background);
+
+	// Render everything to renderTexture
 	for(int layerIndex = 0; layerIndex < WL_COUNT; layerIndex ++)
 		for(int widgetIndex = 0; widgetIndex < widgetCount[layerIndex]; ++widgetIndex)
 			renderWidget(widgetList[layerIndex][widgetIndex]);
 
-	// Update screen
+	// Copy render texture and update screen
+	SDL_RenderCopy(renderer, renderTexture, NULL, NULL);
 	SDL_RenderPresent( renderer );
 
 	// Update frame rate display
@@ -100,7 +131,9 @@ void SdlManager::update()
 
 void SdlManager::renderWidget(SdlWidget * widget)
 {
-	return widget->render(renderer);
+	return widget->render(renderTexture);
+	// This will need to be changed
+	/*
 	SDL_Surface * surface = widget->getSurface();
 	if(!surface) return;
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -108,12 +141,13 @@ void SdlManager::renderWidget(SdlWidget * widget)
 	if(rect->w == 0 || rect->h == 0) return;
 	SDL_RenderCopy(renderer, texture, widget->getClipping(), rect);
 	SDL_DestroyTexture(texture);
+	*/
 }
 
 void SdlManager::wait()
 {
-	unsigned long now = SDL_GetTicks();
-	unsigned long time_left = 0;
+	unsigned int now = SDL_GetTicks();
+	unsigned int time_left = 0;
 	if(next_time > now)
 		time_left = next_time - now;
 	if(time_left > TICK_INTERVAL) time_left = TICK_INTERVAL;
@@ -129,7 +163,7 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 {
 	if(window) throw "Window exists.";
 
-	std::cout << "sdl.launchWindow() starting" << std::endl;
+	std::cout << "SdlManager::launchWindow() - starting" << std::endl;
 
 	next_time = 0;
 
@@ -143,23 +177,28 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED ) ) )
 		throw "SDL_CreateRenderer";
 
+	// Create texture for renderer
+	std::cout << "SDL_CreateTexture()" << std::endl;
+	if (!(renderTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, width, height)))
+		throw "SDL_CreateTexture";
+
 	// Initialize renderer color
 	std::cout << "SDL_SetRenderDrawColor()" << std::endl;
 	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
-	fpsCounter = new SdlTextDisplay(740, 580, 60, 20);
+	fpsCounter = new SdlTextDisplay(2, 2, 60, 20);
 	fpsCounter->setText("00 FPS");
 	addWidget(fpsCounter, WL_NON_INTERACTIVE);
 
-	std::cout << "sdl.launchWindow() finished" << std::endl;
+	std::cout << "SdlManager::launchWindow() - Finished" << std::endl;
 }
 
 ////////
 
 bool SdlManager::removeWidget(WidgetReference widget, int layer)
 {
-	int widgetCount = widgetList[layer].size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+	unsigned long widgetCount = widgetList[layer].size();
+	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
 		if(widgetList[layer][widgetIndex] == widget)
 		{
 			widgetList[layer].erase(widgetList[layer].begin()+widgetIndex);

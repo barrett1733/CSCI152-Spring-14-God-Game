@@ -8,7 +8,6 @@ const SDL_Rect emptyRect = sdlUtility.createRect(0,0,0,0);
 SdlWidget::SdlWidget() :
 	callback(0),
 	surface(0),
-	texture(0),
 	state(WS_DISABLED),
 	layer(defaultLayer)
 {
@@ -20,7 +19,6 @@ SdlWidget::SdlWidget() :
 SdlWidget::SdlWidget(WidgetLayer layer) :
 	callback(0),
 	surface(0),
-	texture(0),
 	state(WS_DISABLED),
 	layer(layer)
 {
@@ -32,7 +30,6 @@ SdlWidget::SdlWidget(WidgetLayer layer) :
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 	callback(0),
 	surface(surface_arg),
-	texture(0),
 	state(WS_OFF),
 	layer(defaultLayer)
 {
@@ -47,7 +44,6 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect) :
 SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, SdlWidget*)) :
 	callback(callback_arg),
 	surface(surface_arg),
-	texture(0),
 	state(WS_OFF),
 	layer(defaultLayer)
 {
@@ -62,7 +58,6 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 SdlWidget::~SdlWidget() {
 
 	if(surface) SDL_FreeSurface(surface);
-	if(texture) SDL_DestroyTexture(texture);
 
 	setClipping(emptyRect);
 	setBoundingBox(emptyRect);
@@ -129,17 +124,13 @@ const SDL_Rect * SdlWidget::getBoundingBox()
 	return & boundingBox;
 }
 
-void SdlWidget::render(SDL_Renderer * renderer)
+void SdlWidget::render(SDL_Texture * renderTexture)
 {
 	if(state == WS_HIDDEN) return;
 	if(!surface) return;
 	if(boundingBox.w == 0 || boundingBox.h == 0) return;
 
-	if(!texture)
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-	if(texture)
-		SDL_RenderCopy(renderer, texture, &clipping, &boundingBox);
+	SDL_UpdateTexture(renderTexture, &boundingBox, surface->pixels, surface->pitch);
 }
 
 void SdlWidget::updateState(SDL_Event & event)
@@ -188,8 +179,8 @@ void SdlWidget::handleEvent(SDL_Event & event)
 
 void SdlWidget::setState(WidgetState state)
 {
+
 	this->state = state;
-	texture = 0;
 }
 
 WidgetState SdlWidget::getState()
