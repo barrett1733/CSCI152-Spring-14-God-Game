@@ -14,12 +14,14 @@
 #include "sdl-slider.h"
 #include "sdl-text-display.h"
 #include "sdl-event-subscriber.h"
+#include "../config.h"
 
-const int FRAME_RATE = 30;
-const unsigned int TICK_INTERVAL = 1000/FRAME_RATE;
 
-class SdlManager
+class SdlManager : public Config
 {
+	static int FRAME_RATE;
+	static unsigned int TICK_INTERVAL;
+
 	SDL_Window * window;
 	SDL_Renderer * renderer;
 
@@ -39,6 +41,9 @@ class SdlManager
 	{
 		std::cout << "Callback!" << std::endl;
 	}
+
+	//  From Config
+	bool setProperty(std::string property, int value);
 
 public:
 

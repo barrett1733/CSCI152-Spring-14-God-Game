@@ -3,6 +3,9 @@
 #include <iostream>
 #include <sstream>
 
+int SdlManager::FRAME_RATE = 30;
+unsigned int SdlManager::TICK_INTERVAL = 1000/SdlManager::FRAME_RATE;
+
 SdlManager sdl;
 
 SdlManager::SdlManager() :
@@ -36,6 +39,9 @@ SdlManager::SdlManager() :
 	timer = time(0);
 	frameCount = 0;
 
+	std::cout << "SdlManager::SdlManager() - Loading config" << std::endl;
+	load("res/sdl.cfg");
+
 	std::cout << "Ready." << std::endl;
 }
 
@@ -49,6 +55,22 @@ SdlManager::~SdlManager()
 	IMG_Quit();
 	SDL_Quit();
 }
+
+////////
+//  CONFIG
+////////
+
+bool SdlManager::setProperty(std::string property, int value)
+{
+	if(property == "frame_rate")
+	{
+		FRAME_RATE = value;
+		TICK_INTERVAL = 1000/FRAME_RATE;
+		return true;
+	}
+	return false;
+}
+
 
 ////////
 
