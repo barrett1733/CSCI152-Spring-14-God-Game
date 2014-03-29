@@ -47,7 +47,6 @@ void EntityManager::deleteEntity(){}
 void EntityManager::createEntity(const Entity & entity)
 {
 	//return createEntity(*entity);
-	std::cout << "EntityManager::createEntity(const Entity&)" << std::endl;
 
 	Faction faction = entity.getFaction();
 
@@ -62,7 +61,6 @@ void EntityManager::createEntity(const Entity & entity)
 
 void EntityManager::createEntity(const EntityReference entity)
 {
-	std::cout << "EntityManager::createEntity(const EntityReference)" << std::endl;
 	return createEntity(*entity);
 }
 

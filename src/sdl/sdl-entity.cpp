@@ -10,7 +10,6 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	SdlWidget(WL_NON_INTERACTIVE),
 	entity(&entity)
 {
-	std::cout << "SdlEntity::SdlEntity(const Entity&)" << std::endl;
 
 	size = mapRect->w / worldSize;
 
