@@ -25,7 +25,7 @@ SdlTextDisplay::SdlTextDisplay(int xPos, int yPos, int width, int height) :
 	color.r = 0;
 	color.g = 0;
 	color.b = 0;
-	color.a = 255;
+	color.a = 0;
 
 	buildSurface();
 }
@@ -44,18 +44,16 @@ void SdlTextDisplay::setText(std::string text_arg)
 void SdlTextDisplay::buildSurface()
 {
 	// Clear the existing surface.
-	SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, 0, 0, 0, 0));
+	SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, 255, 255, 255, 0));
 
 	if(text.length())
 	{
 		// Create a new text surface.
-		SDL_Surface * textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+		SDL_Surface * textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
 
 		// Blit the text surface onto the background and free the text surface
 		SDL_BlitSurface(textSurface, NULL, surface, NULL);
 		SDL_FreeSurface(textSurface);
 	}
 
-	if(texture) SDL_DestroyTexture(texture);
-	texture = 0;
 }

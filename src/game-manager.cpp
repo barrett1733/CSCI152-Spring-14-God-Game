@@ -115,7 +115,8 @@ void GameManager::quitGame(SDL_Event & event)
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
 	double value = ((SliderReference) widget) -> getValue();
-	std::cout << "Slider Update: " << value << std::endl;
+	// Commented out for MAX fps
+	//std::cout << "Slider Update: " << value << std::endl;
 }
 
 void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
@@ -123,7 +124,8 @@ void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widg
 	double valueA = ((TriangleSliderReference) widget)-> getValueA();
 	double valueB = ((TriangleSliderReference) widget)-> getValueB();
 	double valueC = ((TriangleSliderReference) widget)-> getValueC();
-	std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
+	// Commented out for MAX fps
+	//std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
 }
 
 // From Config
