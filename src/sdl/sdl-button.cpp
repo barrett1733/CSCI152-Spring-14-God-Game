@@ -89,5 +89,6 @@ void SdlButton::setText(const char * text)
 	}
 	SDL_FreeSurface(textSurface);
 
+	if(texture) SDL_DestroyTexture(texture);
 	texture = 0;
 }

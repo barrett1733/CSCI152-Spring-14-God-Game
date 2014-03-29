@@ -188,11 +188,8 @@ void SdlWidget::handleEvent(SDL_Event & event)
 
 void SdlWidget::setState(WidgetState state)
 {
-	if(state == this->state) return;
 
 	this->state = state;
-	if(texture) SDL_DestroyTexture(texture);
-	texture = 0;
 }
 
 WidgetState SdlWidget::getState()
