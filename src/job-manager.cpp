@@ -26,15 +26,25 @@ std::vector<JobReference> JobManager:: getJobList()
 }
 
 
-void JobManager::createJobList(JobType jobType, int priority)
+void JobManager::createJobList(JobType jobType, int priority, int amount)
 {			
 	JobReference job;
-	int taskNum = 10, taskGoal = 10;
+	int taskNum, taskGoal;
 
 	if(jobType == JOB_GATHER_FOOD or JOB_GATHER_STONE or JOB_GATHER_WOOD
 		or JOB_GATHER_IRON)
+	{
+		if(priority == 3)//Job start create 5 gather jobs with large amount
+		{
+			taskNum = 5;
+			taskGoal = 99999999;
+		}else
+		{
+			taskGoal = 20;
+			taskNum = amount/taskGoal + 1;
+		}
 		job = new GatherJob(jobType, priority, taskNum, taskGoal);
-	
+	}
 
 	else if(jobType ==  JOB_GATHER_FOOD
 			or JOB_BUILD_HOUSE
@@ -42,20 +52,23 @@ void JobManager::createJobList(JobType jobType, int priority)
 			or JOB_BUILD_SMELTING
 			or JOB_BUILD_FARM
 			or JOB_BUILD_LUMBERMILL
-			or JOB_BUILD_STOREHOUSE
 			or JOB_BUILD_WEAPONSMITH
 			or JOB_BUILD_ARMORSMITH
 			or JOB_BUILD_WATCHTOWER
 			or JOB_BUILD_TOWNCENTER
+			or JOB_BUILD_TEMPLE
 		)
+	{
+		taskNum = m[jobType];
 		job = new BuildJob(jobType, priority, taskNum, taskGoal,findTarget());
-
+	}
 
 	else if(jobType == JOB_ATTACK
 			or JOB_DEFEND
 			or JOB_PATROL
 			or JOB_TAME_1
 			or JOB_PARLEY)
+		taskNum = 10;//Total villager number * triangle value on military
 		job = new MilitaryJob(jobType, priority, taskNum, taskGoal, findTarget());
 		
 		registerJob(job);
