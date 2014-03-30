@@ -38,23 +38,28 @@
 	}
 
 	GatherJob::GatherJob(JobType type, int priority, int taskNum, int taskQuota):
-	Job(type, priority, taskNum, taskQuota) {};
+	Job(type, priority, taskNum, taskQuota) {
+        this->createTaskList();
+    };
 
 	void GatherJob::createTaskList()
 	{
 		for(int i=0; i<_taskNum; i++)
 		{
-			TaskReference task = new GatherTask(mp[_type], _taskQuota, _priority, _taskQuota);
+			TaskReference task = new GatherTask(mp[_type], _priority, 0, _taskQuota);
 			_taskList.push_back(task);
 			taskManager.registerTask(task);
 		}
 	}
 
 	BuildJob::BuildJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target):
-	Job(type, priority, taskNum, taskQuota), _target(target) {};
+	Job(type, priority, taskNum, taskQuota), _target(target) {
+        this->createTaskList();
+    };
 
 	void BuildJob::createTaskList()
 	{
+        std::cout<<_taskNum<<std::endl;
 		for(int i=0; i<_taskNum; i++)
 		{
 			TaskReference task = new BuildTask(mp[_type], _target, _priority, 0, _taskQuota);
@@ -64,7 +69,9 @@
 	}
 
 	MilitaryJob::MilitaryJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target):
-	Job(type, priority, taskNum, taskQuota), _target(target) {};
+	Job(type, priority, taskNum, taskQuota), _target(target) {
+        this->createTaskList();
+    };
 
 	void MilitaryJob::createTaskList()
 	{

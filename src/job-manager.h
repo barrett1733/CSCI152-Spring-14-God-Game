@@ -20,7 +20,7 @@ static std::map<JobType, int> mapBuildTaskNum = {
 	{JOB_BUILD_TEMPLE, 10}
 };
 
-std::map<JobType, string> mapTaskPriority = {
+static std::map<JobType, std::string> mapTaskPriority = {
 	{JOB_BUILD_HOUSE, "Build"},
 	{JOB_BUILD_FARM, "Build"},
 	{JOB_BUILD_SMELTING, "Build"},
@@ -30,8 +30,7 @@ std::map<JobType, string> mapTaskPriority = {
 	{JOB_BUILD_ARMORSMITH, "Military"},
 	{JOB_BUILD_WATCHTOWER, "Military"},
 	{JOB_BUILD_TOWNCENTER, "Build"},
-	{JOB_BUILD_TEMPLE, "Build"},
-	
+	{JOB_BUILD_TEMPLE, "Build"}
 };
 
 enum JobPriority
@@ -48,7 +47,7 @@ class JobManager
 public:
 	void registerJob(JobReference job);
 
-	void createJobList(JobType jobType, int priority);
+	void createJobList(JobType, int, int);
 
 	//void initJobList();
     

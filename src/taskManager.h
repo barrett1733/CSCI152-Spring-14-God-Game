@@ -5,39 +5,61 @@
 #ifndef TASK_MANAGER_H_
 #define TASK_MANAGER_H_
 
-#include "entity.h"
-#include "position.h"
 #include <vector>
 #include <iostream>
 #include "task.h"
 #include <queue>
 #include <set>
+#include <map>
+#include <assert.h>
 //#include "worldGen.h"
+extern std::vector<Entity *> foodEntities;
+extern std::vector<Entity *> ironEntities;
+extern std::vector<Entity *> stoneEntities;
+extern std::vector<Entity *> woodEntities;
+
+static std::map<TaskType, std::vector<Entity *>> mapTaskResource = {
+    {TASK_GATHER_FOOD, foodEntities},
+    {TASK_GATHER_IRON, ironEntities},
+    {TASK_GATHER_STONE, stoneEntities},
+    {TASK_GATHER_WOOD, woodEntities}
+};
 
 struct Comparator
 {
   bool operator()(const TaskReference task1, const TaskReference task2)
   {
-    return task1->getPriority()>task2->getPriority();
+    return task1->getPriority() < task2->getPriority();
   }
 };
+
+typedef std::vector<Entity *> EntityVec;
+typedef EntityVec ::iterator EntityIter;
+
+typedef std::vector<TaskReference> TaskVec;
+typedef TaskVec::iterator TaskIter;
+
+typedef std::priority_queue<TaskReference, TaskVec, Comparator> TaskQueue;
 
 class TaskManager
 {
 private:
-    std::set<TaskReference, Comparator> unassignedTaskList;
-    std::vector<TaskReference> inProgressTaskList;
-    std::vector<Entity *> availableVillagers;
+    TaskQueue unassignedTaskQueue;
+    TaskVec inProgressTaskList;
+    EntityVec availableVillagers;
 
 public:
-	void assign(Entity * villager, Entity * target);
+	void assign();
 	void updateProgress();
 	void registerTask(TaskReference task);
-    void updatePQ();
+    void registerVillager(Entity * villager);
     Entity * getVillager();
-    void findTarget();
-	void cleanTaskList();
-	Entity * find();
+    TaskQueue getUnassignedTaskList();
+    Entity * findTarget(Entity *, TaskType);
+    EntityVec getavailableVillagers();
+    TaskVec getInProgressTaskList();
+    TaskQueue getUnassignedTaskQueue();
+    void cleanTaskList();
 };
 #endif
 
