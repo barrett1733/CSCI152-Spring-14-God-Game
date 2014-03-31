@@ -60,11 +60,13 @@ public:
 	void setTarget(Entity * target);
 	void setAssignee(Entity * villager);
     void setPriority(int priority);
+    void setProgress(int progress);
 	TaskType getType();
 	Entity * getTarget();
 	Entity * getAssignee();
     int getProgress();
     int getPriority();
+    int getQuota();
 	bool isCompleted();
 };
 

@@ -6,6 +6,7 @@
 
 //#include "job-factory.h"
 #include "job.h"
+#include "world_gen.h"
 
 static std::map<JobType, int> mapBuildTaskNum = {
 	{JOB_BUILD_HOUSE, 1},
@@ -33,6 +34,8 @@ static std::map<JobType, std::string> mapTaskPriority = {
 	{JOB_BUILD_TEMPLE, "Build"}
 };
 
+typedef std::vector<JobReference> JobVec;
+typedef JobVec::iterator JobIter;
 enum JobPriority
 {
 	JOBPRIORITY_LOW = 3,
@@ -42,18 +45,27 @@ enum JobPriority
 
 class JobManager
 {
-	std::vector<JobReference> jobList;
-
+    Faction faction;
+	JobVec jobList;
+    TaskManager * taskManager;
+    
 public:
+    JobManager(Faction ft) : faction(ft), taskManager(new TaskManager(ft)) {};
+    ~JobManager(){delete taskManager;}
+    
 	void registerJob(JobReference job);
 
 	void createJobList(JobType, int, int);
 
 	//void initJobList();
     
-    std::vector<JobReference> getJobList();
+    JobVec getJobList();
     
-    Entity * findTarget();
+    Faction getFaction();
+    
+    TaskManager * getTaskManager();
+    
+    Entity * findJobTarget(JobType);
 
 	void cleanTaskList(JobReference job);
 

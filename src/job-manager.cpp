@@ -1,7 +1,7 @@
 
 #include "job-manager.h"
 
-JobManager jobManager;
+JobManager jobManager(FT_PLAYER_1);
 
 void JobManager::registerJob(JobReference job)
 {
@@ -10,12 +10,16 @@ void JobManager::registerJob(JobReference job)
 
 void JobManager::cleanJobList()
 {
-	for(int i=0; i<jobList.size(); i++)
+	for(JobIter iter = this->jobList.begin(); iter != this->jobList.end();)
 	{
-		if (jobList[i]->isCompleted() == true)
+        (*iter)->cleanTaskList();
+		if ((*iter)->isCompleted() == true)
 		{
-			this->jobList.erase(jobList.begin()+i);
-		}
+            delete(*iter);
+			this->jobList.erase(iter);
+		}else{
+            ++iter;
+        }
 	}
 }
 
@@ -48,8 +52,7 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 		job = new GatherJob(jobType, priority, taskNum, taskGoal);
 	}
 
-	else if(jobType ==  JOB_GATHER_FOOD
-			or jobType == JOB_BUILD_HOUSE
+	else if(jobType == JOB_BUILD_HOUSE
 			or jobType == JOB_BUILD_STONEWORKS
 			or jobType == JOB_BUILD_SMELTING
 			or jobType == JOB_BUILD_FARM
@@ -62,8 +65,8 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 		)
 	{
 		taskNum = mapBuildTaskNum[jobType];
-        std::cout<<"test"<<std::endl;
-		job = new BuildJob(jobType, priority, taskNum, taskGoal,findTarget());
+        taskGoal = amount / taskNum;
+		job = new BuildJob(jobType, priority, taskNum, taskGoal,findJobTarget(jobType));
 	}
 
 	else if(jobType == JOB_ATTACK
@@ -73,27 +76,55 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 			or jobType == JOB_PARLEY)
     {
         taskNum = 10;//Total villager number * triangle value on military
-		job = new MilitaryJob(jobType, priority, taskNum, taskGoal, findTarget());
+		job = new MilitaryJob(jobType, priority, taskNum, taskGoal, findJobTarget(jobType));
     }
-		registerJob(job);
+    
+    TaskVec taskList = job->getTaskList();
+    
+    registerJob(job);
+    for(TaskIter it = taskList.begin(); it != taskList.end(); it++)
+    {
+        taskManager->registerTask(*it);
+    }
 }
 
-Entity * JobManager::findTarget()
+TaskManager * JobManager::getTaskManager()
 {
-    Entity * ety= new Entity(ET_HOUSE, 100, *new Position());
+    return this->taskManager;
+}
+
+Faction JobManager::getFaction()
+{
+    return this->faction;
+}
+
+Entity * JobManager::findJobTarget(JobType jobType)
+{
+    if(jobType == JOB_BUILD_HOUSE
+       or jobType == JOB_BUILD_STONEWORKS
+       or jobType == JOB_BUILD_SMELTING
+       or jobType == JOB_BUILD_FARM
+       or jobType == JOB_BUILD_LUMBERMILL
+       or jobType == JOB_BUILD_WEAPONSMITH
+       or jobType == JOB_BUILD_ARMORSMITH
+       or jobType == JOB_BUILD_WATCHTOWER
+       or jobType == JOB_BUILD_TOWNCENTER
+       or jobType == JOB_BUILD_TEMPLE)
+    {
+       //Find the available area near Town Center
+        
+        //Mark this area occupied
+        
+    }else if(jobType == JOB_ATTACK
+             or jobType == JOB_DEFEND
+             or jobType == JOB_PATROL
+             or jobType == JOB_TAME_1
+             or jobType == JOB_PARLEY)
+    {
+        //TBD
+    }
+    
+    Entity * ety= new Entity(ET_HOUSE, 100, *new Position(), FT_NONE);
+    ety->setCurrentHealth(0);
     return ety;
-}
-
-void JobManager::cleanTaskList(JobReference job)
-{
-	std::vector<TaskReference> t = job->getTaskList();
-	for(int i=0; i<t.size(); i++)
-	{
-		if (t[i]->isCompleted())
-		{
-			delete t[i];
-			t.erase(t.begin()+i);
-		}
-	}
-	std::cout<<"Task list size is: "<<t.size()<<std::endl;
 }

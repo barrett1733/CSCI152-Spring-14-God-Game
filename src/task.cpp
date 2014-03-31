@@ -18,6 +18,11 @@
 		this->_assignee = villager;
 	}
 
+    void Task::setProgress(int progress)
+    {
+        this->_progress = progress;
+    }
+
     int Task::getPriority()
     {
         return _priority;
@@ -42,6 +47,11 @@
 	{
 		return this->_progress;
 	}
+
+    int Task::getQuota()
+    {
+        return this->_taskQuota;
+    }
 
 	bool Task::isCompleted()
 	{

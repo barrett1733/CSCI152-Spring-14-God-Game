@@ -4,8 +4,6 @@
 	Job::Job(JobType type, int priority, int taskNum, int taskQuota):
 	_type(type), _priority(priority), _taskNum(taskNum), _taskQuota(taskQuota)
 	{}
-
-	Job::~Job(){};
 	
 	void Job::setType(JobType type)
 	{
@@ -37,6 +35,24 @@
 		return this->_taskList;
 	}
 
+
+    void Job::cleanTaskList()
+    {
+        for(TaskIter iter = _taskList.begin(); iter != _taskList.end(); )
+        {
+            if ((*iter)->isCompleted() == true)
+            {
+                delete(*iter);
+                _taskList.erase(iter);
+            }else
+            {
+                ++iter;
+            }
+        }
+    //	std::cout<<"Task list size is: "<<t.size()<<std::endl;
+    }
+
+
 	GatherJob::GatherJob(JobType type, int priority, int taskNum, int taskQuota):
 	Job(type, priority, taskNum, taskQuota) {
         this->createTaskList();
@@ -48,7 +64,6 @@
 		{
 			TaskReference task = new GatherTask(mp[_type], _priority, 0, _taskQuota);
 			_taskList.push_back(task);
-			taskManager.registerTask(task);
 		}
 	}
 
@@ -64,7 +79,6 @@
 		{
 			TaskReference task = new BuildTask(mp[_type], _target, _priority, 0, _taskQuota);
 			_taskList.push_back(task);
-			taskManager.registerTask(task);
 		}
 	}
 
@@ -79,10 +93,8 @@
 		{
 			TaskReference task = new MilitaryTask(mp[_type], _target, _priority, 0, _taskQuota);
 			_taskList.push_back(task);
-			taskManager.registerTask(task);
 		}
 	}
-
 
 	// int main(){
  //        Position p;
