@@ -28,7 +28,6 @@ std::vector<JobReference> JobManager:: getJobList()
     return this->jobList;
 }
 
-
 void JobManager::createJobList(JobType jobType, int priority, int amount)
 {			
 	JobReference job;

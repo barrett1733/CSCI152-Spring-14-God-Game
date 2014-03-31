@@ -164,7 +164,10 @@ Entity * TaskManager::getNearestResource(Entity * villager, EntityVec ev)
     {
         Position p = (*it)->getPosition();
         if(min > (villager->getPosition().distance(p)))
+        {
+            min = villager->getPosition().distance(p);
             nearestTarget = *it;
+        }
     }
     return nearestTarget;
 }
