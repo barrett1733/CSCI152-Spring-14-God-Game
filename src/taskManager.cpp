@@ -12,47 +12,50 @@ void TaskManager::assign()
 	//if a gatherTask, find the nearest resource for the villager
 	//if a buildTask, set target to job target
 	//if a militaryTask, set target to job target
-    TaskReference task = unassignedTaskQueue.top();
-    TaskType taskType = task->getType();
+    while (!availableVillagers.empty()) {
+        TaskReference task = unassignedTaskQueue.top();
+        TaskType taskType = task->getType();
+        
+        unassignedTaskQueue.pop();
+        inProgressTaskList.push_back(task);
+        Entity * villager = getVillager();
+        availableVillagers.pop_back();
+        
+        if(taskType == TASK_GATHER_FOOD
+           or taskType == TASK_GATHER_IRON
+           or taskType == TASK_GATHER_WOOD
+           or taskType == TASK_GATHER_STONE)
+        {
+            
+            task->setAssignee(villager);
+            task->setTarget(this->findResource(villager, taskType));
+            
+        }else if(taskType == TASK_BUILD_HOUSE
+                 or taskType == TASK_BUILD_STONEWORKS
+                 or taskType == TASK_BUILD_SMELTING
+                 or taskType == TASK_BUILD_FARM
+                 or taskType == TASK_BUILD_LUMBERMILL
+                 or taskType == TASK_BUILD_STOREHOUSE
+                 or taskType == TASK_BUILD_WEAPONSMITH
+                 or taskType == TASK_BUILD_ARMORSMITH
+                 or taskType == TASK_BUILD_WATCHTOWER
+                 or taskType == TASK_BUILD_TOWNCENTER)
+        {
+            
+            task->setAssignee(villager);
+            
+        }else if(taskType == TASK_ATTACK
+                 or taskType == TASK_DEFEND
+                 or taskType == TASK_PATROL
+                 or taskType == TASK_TAME_1
+                 or taskType == TASK_PARLEY)
+        {
+            
+            task->setAssignee(villager);
+            
+        }
+    }
     
-    unassignedTaskQueue.pop();
-	inProgressTaskList.push_back(task);
-    Entity * villager = getVillager();
-    availableVillagers.pop_back();
-    
-	if(taskType == TASK_GATHER_FOOD
-		or taskType == TASK_GATHER_IRON
-		or taskType == TASK_GATHER_WOOD
-		or taskType == TASK_GATHER_STONE)
-	{
-		
-        task->setAssignee(villager);
-		task->setTarget(this->findResource(villager, taskType));
-        
-	}else if(taskType == TASK_BUILD_HOUSE
-		or taskType == TASK_BUILD_STONEWORKS
-		or taskType == TASK_BUILD_SMELTING
-		or taskType == TASK_BUILD_FARM
-		or taskType == TASK_BUILD_LUMBERMILL
-		or taskType == TASK_BUILD_STOREHOUSE
-		or taskType == TASK_BUILD_WEAPONSMITH
-		or taskType == TASK_BUILD_ARMORSMITH
-		or taskType == TASK_BUILD_WATCHTOWER
-		or taskType == TASK_BUILD_TOWNCENTER)
-	{
-        
-		task->setAssignee(villager);
-        
-	}else if(taskType == TASK_ATTACK
-		or taskType == TASK_DEFEND
-		or taskType == TASK_PATROL
-		or taskType == TASK_TAME_1
-		or taskType == TASK_PARLEY)
-	{
-        
-		task->setAssignee(villager);
-        
-	}
 }
 
 TaskQueue TaskManager::getUnassignedTaskList() {

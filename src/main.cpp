@@ -147,10 +147,10 @@ int main(int argc, char **argv)
     //Assign Task
     assert(taskManager->getavailableVillagers().size() == 5);
     taskManager->assign();
-    taskManager->assign();
-    taskManager->assign();
-    taskManager->assign();
-    taskManager->assign();
+//    taskManager->assign();
+//    taskManager->assign();
+//    taskManager->assign();
+//    taskManager->assign();
     assert(taskManager->getavailableVillagers().size() == 0);
     
     //Get Task Target
