@@ -51,6 +51,8 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	clipping.y = 0;
 	clipping.w = size;
 	clipping.h = size;
+	boundingBox.w = size;
+	boundingBox.h = size;
 
 	updatePosition();
 
@@ -61,8 +63,6 @@ void SdlEntity::updatePosition()
 {
 	boundingBox.x = mapRect->x + entity->getPosition().x * size;
 	boundingBox.y = mapRect->y + entity->getPosition().y * size;
-	boundingBox.w = size;
-	boundingBox.h = size;
 }
 
 void SdlEntity::update()
