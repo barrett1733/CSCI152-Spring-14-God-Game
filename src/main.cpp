@@ -44,6 +44,5 @@ int main(int argc, char **argv)
 
 		sdl.update(); //  this should be the last call, because it will consume the rest of the frame's time.
 	}
-
 	return 0;
 }
