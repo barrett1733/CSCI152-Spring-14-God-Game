@@ -44,7 +44,6 @@ void Config::load(std::string file)
 	else while (!fin.eof())
 	{
 		typeString = "";
-		accepted = false;
 
 		fin >> property;
 		fin >> typeString;
