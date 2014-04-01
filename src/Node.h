@@ -25,7 +25,7 @@ public:
 	int getLevel() const { return level; }
 	int getPriority() const { return priority; }
 
-	void updatePriority(const int& xDest, const int& yDest){
+	void confirmPriority(const int& xDest, const int& yDest){
 
 		priority = level + estimate(xDest, yDest) * 10;
 
@@ -45,17 +45,9 @@ public:
 		xd = xDest - xPos;
 		yd = yDest - yPos;
 
-		//Euclidean 
-		//d = static_cast<int>(sqrt(xd*xd + yd*yd));
-
-		//Manhatttan distance
-		d = abs(xd) + abs(yd);
-
-		//Chebyshev distance
-		//d = max(abs(xd), abs(yd));
-
+	    d = abs(xd) + abs(yd);
+        
 		return d;
-
 	}
 
 

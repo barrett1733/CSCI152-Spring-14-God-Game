@@ -188,7 +188,7 @@ int main()
 	// create empty map
 	for (int y = 0; y<m; y++)
 	{
-		for (int x = 0; x<n; x++) map[x][y] = 0;
+		for (int x = 0; x < n; x++) map[x][y] = 0;
 	}
 
 	// fillout the map matrix with a '+' pattern
