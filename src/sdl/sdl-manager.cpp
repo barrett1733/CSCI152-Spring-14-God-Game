@@ -4,7 +4,7 @@
 #include <sstream>
 
 int SdlManager::FRAME_RATE = 30;
-unsigned int SdlManager::TICK_INTERVAL = 1000/SdlManager::FRAME_RATE;
+unsigned int SdlManager::frameDuration = 1000/SdlManager::FRAME_RATE;
 
 SdlManager sdl;
 
@@ -67,7 +67,7 @@ bool SdlManager::setProperty(std::string property, int value)
 	if(property == "frame_rate")
 	{
 		FRAME_RATE = value;
-		TICK_INTERVAL = 1000/FRAME_RATE;
+		frameDuration = 1000/FRAME_RATE;
 		return true;
 	}
 	return false;
@@ -149,17 +149,20 @@ void SdlManager::renderWidget(SdlWidget * widget)
 	*/
 }
 
-void SdlManager::wait()
+unsigned int SdlManager::getRemainingFrameTime()
 {
 	unsigned int now = SDL_GetTicks();
 	unsigned int time_left = 0;
 	if(next_time > now)
 		time_left = next_time - now;
-	if(time_left > TICK_INTERVAL) time_left = TICK_INTERVAL;
+	return time_left;
+}
+
+void SdlManager::wait()
+{
+	unsigned int time_left = getRemainingFrameTime();
+	next_time = SDL_GetTicks() + frameDuration;
 	SDL_Delay(time_left);
-	if(now > next_time)
-		next_time = now;
-	next_time += TICK_INTERVAL;
 }
 
 ////////

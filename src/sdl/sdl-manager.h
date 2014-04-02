@@ -20,7 +20,7 @@
 class SdlManager : public Config
 {
 	static int FRAME_RATE;
-	static unsigned int TICK_INTERVAL;
+	static unsigned int frameDuration;
 
 	SDL_Window * window;
 	SDL_Renderer * renderer;
@@ -53,6 +53,7 @@ public:
 
 	void launchWindow(const char * title, int width, int height);
 	void update();
+	unsigned int getRemainingFrameTime();
 
 	// Event functions
 	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event&), int type);
