@@ -17,7 +17,18 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	switch(entity.getFaction())
 	{
 		case FT_STATIC:
-			color = C_GRAY;
+			switch(entity.getType())
+			{
+			case ET_TREE:
+				color = C_GREEN;
+				break;
+			case ET_STONE:
+				color = C_GRAY;
+				break;
+			case ET_IRON:
+				color = C_BLACK;
+				break;
+			}
 			break;
 
 		case FT_ANIMAL_DOMESTIC:
