@@ -42,7 +42,6 @@ GameManager::GameManager()
 	SDL_Rect rect = {580,20,200,40};
 	new SdlButton("Self-Destructing Button", rect, selfDestruct);
 
-	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
 }
@@ -114,16 +113,16 @@ void GameManager::quitGame(SDL_Event & event)
 
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	double value = ((SliderReference) widget) -> getValue();
+	// double value = ((SliderReference) widget) -> getValue();
 	// Commented out for MAX fps
 	//std::cout << "Slider Update: " << value << std::endl;
 }
 
 void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	double valueA = ((TriangleSliderReference) widget)-> getValueA();
-	double valueB = ((TriangleSliderReference) widget)-> getValueB();
-	double valueC = ((TriangleSliderReference) widget)-> getValueC();
+	// double valueA = ((TriangleSliderReference) widget)-> getValueA();
+	// double valueB = ((TriangleSliderReference) widget)-> getValueB();
+	// double valueC = ((TriangleSliderReference) widget)-> getValueC();
 	// Commented out for MAX fps
 	//std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
 }

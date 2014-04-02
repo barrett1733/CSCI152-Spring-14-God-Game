@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 	EntityManager entityManager(worldSize);
 
 	std::cout << "Starting Game Loop" << std::endl;
+	sdl.launchWindow("Window Title!", 800, 600);
 	while(game.mode() == GM_MENU)
 		sdl.update();
 
