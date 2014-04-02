@@ -8,7 +8,7 @@ EntityManager::EntityManager(int worldSize) :
 {
 	mapView.hide();
 	widgetList.push_back(&mapView);
-	SdlEntity::mapRect = mapView.getBoundingBox();
+	SdlEntity::mapView = &mapView;
 	SdlEntity::worldSize = worldSize;
 }
 
@@ -80,11 +80,10 @@ void EntityManager::show()
 	if(visible) return;
 	std::cout << "EntityManager::show()" << std::endl;
 	visible = true;
-	unsigned long count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-	{
-		widgetList[index]->show();
-	}
+	mapView.show();
+	// unsigned long count = widgetList.size();
+	// for(int index = 0; index < count; index ++)
+	// 	widgetList[index]->show();
 }
 
 void EntityManager::hide()
