@@ -4,7 +4,6 @@
 #include "sdl-entity.h"
 
 SdlMapView * SdlEntity::mapView = 0;
-const SDL_Rect * SdlEntity::mapRect = 0;
 int SdlEntity::worldSize = 0;
 
 SdlEntity::SdlEntity(const Entity & entity) :
@@ -12,7 +11,7 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	entity(&entity)
 {
 
-	size = mapRect->w / worldSize;
+	size = mapView->getBoundingBox()->w / worldSize;
 
 	Color color;
 	switch(entity.getFaction())
@@ -62,10 +61,12 @@ SdlEntity::SdlEntity(const Entity & entity) :
 
 void SdlEntity::updatePosition()
 {
-	// TODO: blit clear onto map
-	boundingBox.x = mapRect->x + entity->getPosition().x * size;
-	boundingBox.y = mapRect->y + entity->getPosition().y * size;
-	// TODO: blit new position onto map.
+	mapView->clear(boundingBox);
+
+	boundingBox.x = entity->getPosition().x * size;
+	boundingBox.y = entity->getPosition().y * size;
+
+	mapView->draw(surface, boundingBox);
 }
 
 void SdlEntity::update()

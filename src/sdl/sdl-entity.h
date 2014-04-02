@@ -10,7 +10,6 @@
 
 class SdlEntity : public SdlWidget
 {
-	static SdlMapView * mapView;
 
 	int size;
 	const Entity * entity;
@@ -21,8 +20,8 @@ public:
 	void update();
 	void updatePosition();
 
-	const static SDL_Rect * mapRect;
 	static int worldSize;
+	static SdlMapView * mapView;
 };
 
 typedef SdlEntity * SdlEntityReference;
