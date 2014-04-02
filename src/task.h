@@ -16,7 +16,7 @@ enum TaskType
 	TASK_GATHER_IRON,
 	TASK_GATHER_WOOD,
 	TASK_GATHER_STONE,
-	
+
 	TASK_BUILD_HOUSE = 0x100,
 	TASK_BUILD_STONEWORKS,
 	TASK_BUILD_SMELTING,
@@ -27,7 +27,7 @@ enum TaskType
 	TASK_BUILD_ARMORSMITH,
 	TASK_BUILD_WATCHTOWER,
 	TASK_BUILD_TOWNCENTER,
-    TASK_BUILD_TEMPLE,
+	TASK_BUILD_TEMPLE,
 
 	TASK_ATTACK = 0x10000,
 	TASK_DEFEND,
@@ -37,7 +37,7 @@ enum TaskType
 
 };
 
-// enum TaskStatus { 
+// enum TaskStatus {
 // 	UNASSIGNED = 0x01,
 // 	IN_PROGRESS,
 // 	COMPLETED
@@ -52,42 +52,42 @@ protected:
 	Entity * _assignee;
 	int _priority;
 	int _progress;
-    int _taskQuota;
+	int _taskQuota;
 
 public:
 	Task(TaskType type, int priority, int progress, int);
 	void setType(TaskType type);
 	void setTarget(Entity * target);
 	void setAssignee(Entity * villager);
-    void setPriority(int priority);
-    void setProgress(int progress);
+	void setPriority(int priority);
+	void setProgress(int progress);
 	TaskType getType();
 	Entity * getTarget();
 	Entity * getAssignee();
-    int getProgress();
-    int getPriority();
-    int getQuota();
+	int getProgress();
+	int getPriority();
+	int getQuota();
 	bool isCompleted();
 };
 
-class GatherTask : public Task 
+class GatherTask : public Task
 {
 public:
-    GatherTask(TaskType, int, int, int);
+	GatherTask(TaskType, int, int, int);
 };
 
-class BuildTask : public Task 
+class BuildTask : public Task
 {
 	//...
 public:
-    BuildTask(TaskType, Entity *, int, int, int);
+	BuildTask(TaskType, Entity *, int, int, int);
 };
 
-class MilitaryTask : public Task 
+class MilitaryTask : public Task
 {
 	//...
 public:
-    MilitaryTask(TaskType, Entity *, int, int, int);
+	MilitaryTask(TaskType, Entity *, int, int, int);
 };
 #endif
 

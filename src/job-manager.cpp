@@ -12,20 +12,20 @@ void JobManager::cleanJobList()
 {
 	for(JobIter iter = this->jobList.begin(); iter != this->jobList.end();)
 	{
-        (*iter)->cleanTaskList();
+		(*iter)->cleanTaskList();
 		if ((*iter)->isCompleted() == true)
 		{
-            delete(*iter);
+			delete(*iter);
 			this->jobList.erase(iter);
 		}else{
-            ++iter;
-        }
+			++iter;
+		}
 	}
 }
 
 std::vector<JobReference> JobManager:: getJobList()
 {
-    return this->jobList;
+	return this->jobList;
 }
 
 void JobManager::createJobList(JobType jobType, int priority, int amount)
@@ -34,9 +34,9 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 	int taskNum, taskGoal = 0;
 
 	if(jobType == JOB_GATHER_FOOD or
-       jobType == JOB_GATHER_STONE or
-       jobType == JOB_GATHER_WOOD or
-       jobType == JOB_GATHER_IRON)
+	   jobType == JOB_GATHER_STONE or
+	   jobType == JOB_GATHER_WOOD or
+	   jobType == JOB_GATHER_IRON)
 	{
 		if(priority == 3)//Job start create 5 gather jobs with large amount
 		{
@@ -64,7 +64,7 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 		)
 	{
 		taskNum = mapBuildTaskNum[jobType];
-        taskGoal = amount / taskNum;
+		taskGoal = amount / taskNum;
 		job = new BuildJob(jobType, priority, taskNum, taskGoal,findJobTarget(jobType));
 	}
 
@@ -73,59 +73,59 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 			or jobType == JOB_PATROL
 			or jobType == JOB_TAME_1
 			or jobType == JOB_PARLEY)
-    {
-        taskNum = 10;//Total villager number * triangle value on military
+	{
+		taskNum = 10;//Total villager number * triangle value on military
 		job = new MilitaryJob(jobType, priority, taskNum, taskGoal, findJobTarget(jobType));
-    }
-    else
-    	return; // 'job' is invalid if control reaches this point (currently, it can't, but with extension it could).
+	}
+	else
+		return; // 'job' is invalid if control reaches this point (currently, it can't, but with extension it could).
 
-    TaskVec taskList = job->getTaskList();
+	TaskVec taskList = job->getTaskList();
 
-    registerJob(job);
-    for(TaskIter it = taskList.begin(); it != taskList.end(); it++)
-    {
-        taskManager->registerTask(*it);
-    }
+	registerJob(job);
+	for(TaskIter it = taskList.begin(); it != taskList.end(); it++)
+	{
+		taskManager->registerTask(*it);
+	}
 }
 
 TaskManager * JobManager::getTaskManager()
 {
-    return this->taskManager;
+	return this->taskManager;
 }
 
 Faction JobManager::getFaction()
 {
-    return this->faction;
+	return this->faction;
 }
 
 Entity * JobManager::findJobTarget(JobType jobType)
 {
-    if(jobType == JOB_BUILD_HOUSE
-       or jobType == JOB_BUILD_STONEWORKS
-       or jobType == JOB_BUILD_SMELTING
-       or jobType == JOB_BUILD_FARM
-       or jobType == JOB_BUILD_LUMBERMILL
-       or jobType == JOB_BUILD_WEAPONSMITH
-       or jobType == JOB_BUILD_ARMORSMITH
-       or jobType == JOB_BUILD_WATCHTOWER
-       or jobType == JOB_BUILD_TOWNCENTER
-       or jobType == JOB_BUILD_TEMPLE)
-    {
-       //Find the available area near Town Center
+	if(jobType == JOB_BUILD_HOUSE
+	   or jobType == JOB_BUILD_STONEWORKS
+	   or jobType == JOB_BUILD_SMELTING
+	   or jobType == JOB_BUILD_FARM
+	   or jobType == JOB_BUILD_LUMBERMILL
+	   or jobType == JOB_BUILD_WEAPONSMITH
+	   or jobType == JOB_BUILD_ARMORSMITH
+	   or jobType == JOB_BUILD_WATCHTOWER
+	   or jobType == JOB_BUILD_TOWNCENTER
+	   or jobType == JOB_BUILD_TEMPLE)
+	{
+	   //Find the available area near Town Center
 
-        //Mark this area occupied
+		//Mark this area occupied
 
-    }else if(jobType == JOB_ATTACK
-             or jobType == JOB_DEFEND
-             or jobType == JOB_PATROL
-             or jobType == JOB_TAME_1
-             or jobType == JOB_PARLEY)
-    {
-        //TBD
-    }
+	}else if(jobType == JOB_ATTACK
+			 or jobType == JOB_DEFEND
+			 or jobType == JOB_PATROL
+			 or jobType == JOB_TAME_1
+			 or jobType == JOB_PARLEY)
+	{
+		//TBD
+	}
 
-    Entity * ety= new Entity(ET_HOUSE, 100, *new Position(), FT_NONE);
-    ety->setCurrentHealth(0);
-    return ety;
+	Entity * ety= new Entity(ET_HOUSE, 100, *new Position(), FT_NONE);
+	ety->setCurrentHealth(0);
+	return ety;
 }

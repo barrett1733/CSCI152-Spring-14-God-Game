@@ -63,7 +63,7 @@ protected:
 
 public:
 	Job(JobType type, int priority, int taskNum, int taskQuota);
-    virtual ~Job() {};
+	virtual ~Job() {};
 	void setType(JobType type);
 	void setPriority(int priority);
 	JobType getType();
@@ -71,15 +71,15 @@ public:
 	bool isCompleted();
 	virtual void createTaskList() = 0;
 	std::vector<TaskReference> getTaskList();
-    void cleanTaskList();
+	void cleanTaskList();
 };
 
 class GatherJob : public Job
 {
 public:
 	GatherJob(JobType type, int priority, int taskNum, int taskQuota);
-    virtual ~GatherJob() {};
-    void createTaskList();
+	virtual ~GatherJob() {};
+	void createTaskList();
 	//std::vector<TaskReference> getTaskList();
 };
 
@@ -89,7 +89,7 @@ protected:
 	Entity * _target;
 public:
 	BuildJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target);
-    virtual ~BuildJob() {};
+	virtual ~BuildJob() {};
 	void createTaskList();
 	//std::vector<TaskReference> getTaskList();
 };

@@ -29,10 +29,10 @@ typedef TaskVec::iterator TaskIter;
 
 struct Comparator
 {
-    bool operator()(const TaskReference task1, const TaskReference task2)
-    {
-        return task1->getPriority() < task2->getPriority();
-    }
+	bool operator()(const TaskReference task1, const TaskReference task2)
+	{
+		return task1->getPriority() < task2->getPriority();
+	}
 };
 
 typedef std::priority_queue<TaskReference, TaskVec, Comparator> TaskQueue;
@@ -48,34 +48,34 @@ typedef std::map<TaskType, ResourceType> TaskResourceTypeMap;
 //};
 
 static TaskResourceTypeMap mapTaskResourceType = {
-    {TASK_GATHER_FOOD, RS_FOOD},
-    {TASK_GATHER_IRON, RS_IRON},
-    {TASK_GATHER_STONE, RS_STONE},
-    {TASK_GATHER_WOOD, RS_WOOD}
+	{TASK_GATHER_FOOD, RS_FOOD},
+	{TASK_GATHER_IRON, RS_IRON},
+	{TASK_GATHER_STONE, RS_STONE},
+	{TASK_GATHER_WOOD, RS_WOOD}
 };
 
 class TaskManager
 {
 private:
-    TaskQueue unassignedTaskQueue;
-    TaskVec inProgressTaskList;
-    EntityVec availableVillagers;
-    Faction taskFaction;
+	TaskQueue unassignedTaskQueue;
+	TaskVec inProgressTaskList;
+	EntityVec availableVillagers;
+	Faction taskFaction;
 
 public:
-    TaskManager(Faction ft) : taskFaction(ft) {};
+	TaskManager(Faction ft) : taskFaction(ft) {};
 	void assign();
 	void updateProgress();
 	void registerTask(TaskReference task);
-    void registerVillager(Entity * villager);
-    Entity * getVillager();
-    TaskQueue getUnassignedTaskList();
-    Entity * getNearestResource(Entity * villager, EntityVec ev);
-    Entity * findResource(Entity *, TaskType);
-    EntityVec getavailableVillagers();
-    TaskVec getInProgressTaskList();
-    TaskQueue getUnassignedTaskQueue();
-    void cleanTaskList();
+	void registerVillager(Entity * villager);
+	Entity * getVillager();
+	TaskQueue getUnassignedTaskList();
+	Entity * getNearestResource(Entity * villager, EntityVec ev);
+	Entity * findResource(Entity *, TaskType);
+	EntityVec getavailableVillagers();
+	TaskVec getInProgressTaskList();
+	TaskQueue getUnassignedTaskQueue();
+	void cleanTaskList();
 };
 #endif
 

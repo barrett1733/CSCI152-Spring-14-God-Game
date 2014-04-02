@@ -45,13 +45,13 @@ enum JobPriority
 
 class JobManager
 {
-    Faction faction;
+	Faction faction;
 	JobVec jobList;
-    TaskManager * taskManager;
+	TaskManager * taskManager;
 
 public:
-    JobManager(Faction ft) : faction(ft), taskManager(new TaskManager(ft)) {};
-    ~JobManager(){delete taskManager;}
+	JobManager(Faction ft) : faction(ft), taskManager(new TaskManager(ft)) {};
+	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
 
@@ -59,13 +59,13 @@ public:
 
 	//void initJobList();
 
-    JobVec getJobList();
+	JobVec getJobList();
 
-    Faction getFaction();
+	Faction getFaction();
 
-    TaskManager * getTaskManager();
+	TaskManager * getTaskManager();
 
-    Entity * findJobTarget(JobType);
+	Entity * findJobTarget(JobType);
 
 	void cleanTaskList(JobReference job);
 
