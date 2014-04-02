@@ -4,7 +4,7 @@
 SdlMapView::SdlMapView() :
 	SdlWidget(WL_BACKGROUND)
 {
-	clipping = sdlUtility.createRect(200, 0, 600, 600);
+	clipping = sdlUtility.createRect(0, 0, 600, 600);
 	boundingBox = sdlUtility.createRect(200, 0, 600, 600);
 	surface = createBackground(clipping);
 }
