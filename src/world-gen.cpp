@@ -343,18 +343,39 @@ int WorldGeneration::shiftFromEdge(int coord)
 	else return coord;
 }
 
+//void WorldGeneration::clearArea(Position pos)
+//{
+//	for(int outerIndex=pos.y-7; outerIndex < pos.y+7; outerIndex++)
+//	{
+//		for(int innerIndex=pos.x-7; innerIndex < pos.x+7; innerIndex++)
+//		{
+//			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
+//				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
+//			else
+//			{
+//				if(world_positions[outerIndex][innerIndex] != ET_NONE)
+//				entityCount--;
+//				world_positions[outerIndex][innerIndex] = ET_NONE;
+//			}
+//		}
+//	}
+//}
+
 void WorldGeneration::clearArea(Position pos)
 {
-	for(int outerIndex=pos.y-7; outerIndex < pos.y+7; outerIndex++)
+	Position here;
+	for(int outerIndex = pos.y-9; outerIndex < pos.y+9; outerIndex++)
 	{
-		for(int innerIndex=pos.x-7; innerIndex < pos.x+7; innerIndex++)
+		here.y=outerIndex;
+		for(int innerIndex = pos.x-9; innerIndex < pos.x+9; innerIndex++)
 		{
+			here.x=innerIndex;
 			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
 				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
-			else
+			else if(here.distance(pos) < 8)
 			{
 				if(world_positions[outerIndex][innerIndex] != ET_NONE)
-				entityCount--;
+					entityCount--;
 				world_positions[outerIndex][innerIndex] = ET_NONE;
 			}
 		}
