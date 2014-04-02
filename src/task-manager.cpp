@@ -102,8 +102,11 @@ void TaskManager::updateProgress()
                or taskType == TASK_GATHER_WOOD
                or taskType == TASK_GATHER_STONE)
             {
-
-                resourceManager.sendResource(mapTaskResourceType[taskType], 1, taskFaction);
+                // Doesn't compile; resourceManager isn't declared.
+                // Not sure where it belongs though.
+                // We'll have to think about this.
+                // - CH, 2014.04.01
+                //resourceManager.sendResource(mapTaskResourceType[taskType], 1, taskFaction);
                 target->setCurrentHealth(--targetHealth);
 
             }else if(taskType == TASK_BUILD_HOUSE
