@@ -3,6 +3,7 @@
 
 #include "sdl-entity.h"
 
+SdlMapView * SdlEntity::mapView = 0;
 const SDL_Rect * SdlEntity::mapRect = 0;
 int SdlEntity::worldSize = 0;
 
@@ -61,8 +62,10 @@ SdlEntity::SdlEntity(const Entity & entity) :
 
 void SdlEntity::updatePosition()
 {
+	// TODO: blit clear onto map
 	boundingBox.x = mapRect->x + entity->getPosition().x * size;
 	boundingBox.y = mapRect->y + entity->getPosition().y * size;
+	// TODO: blit new position onto map.
 }
 
 void SdlEntity::update()

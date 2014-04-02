@@ -6,9 +6,11 @@
 
 #include "sdl-widget.h"
 #include "../entity.h"
+#include "sdl-map-view.h"
 
 class SdlEntity : public SdlWidget
 {
+	static SdlMapView * mapView;
 
 	int size;
 	const Entity * entity;
