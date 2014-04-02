@@ -59,6 +59,12 @@ ImageReference SdlUtility::createSurface(int width, int height)
 	result = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
 	return result;
 }
+ImageReference SdlUtility::createSurface(int width, int height, Color color)
+{
+	SDL_Surface * result = createSurface(width, height);
+	SDL_FillRect(result, NULL, sdlUtility.getColor(result, C_BEIGE));
+	return result;
+}
 
 ImageReference SdlUtility::createTextSurface(const char * text)
 {

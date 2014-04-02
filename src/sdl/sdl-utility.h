@@ -37,6 +37,7 @@ public:
 	Uint32 getColor(ImageReference image, Color color);
 
 	ImageReference createSurface(int width, int height);
+	ImageReference createSurface(int width, int height, Color);
 	ImageReference createTextSurface(const char * text);
 	ImageReference createCircle(Color, int size);
 	ImageReference createTriangle(Color, int width, int height);
