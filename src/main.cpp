@@ -3,7 +3,7 @@
 #include <sstream>
 #include "game-manager.h"
 #include "entity-manager.h"
-#include "world_gen.h"
+#include "world-gen.h"
 
 int main(int argc, char **argv)
 {
