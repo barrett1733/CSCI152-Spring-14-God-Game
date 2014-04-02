@@ -5,7 +5,7 @@
 #include <map>
 #include <stdlib.h>
 #include <iostream>
-#include "taskManager.h"
+#include "task-manager.h"
 
 enum JobType// maybe job type enum goes here
 {
@@ -39,7 +39,7 @@ static std::map<JobType, TaskType> mp = {
 	{JOB_GATHER_IRON, TASK_GATHER_IRON},
 	{JOB_GATHER_WOOD, TASK_GATHER_WOOD},
 	{JOB_GATHER_STONE, TASK_GATHER_STONE},
-	
+
 	{JOB_BUILD_HOUSE, TASK_BUILD_HOUSE},
 	{JOB_BUILD_STONEWORKS, TASK_BUILD_STONEWORKS},
 	{JOB_BUILD_SMELTING, TASK_BUILD_SMELTING},

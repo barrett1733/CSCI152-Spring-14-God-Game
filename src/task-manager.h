@@ -14,7 +14,7 @@
 #include <assert.h>
 #include "resource-manager.h"
 #include <memory>
-#include "world_gen.h"
+#include "world-gen.h"
 //#include "worldGen.h"
 extern std::vector<Entity *> foodEntities;
 extern std::vector<Entity *> ironEntities;

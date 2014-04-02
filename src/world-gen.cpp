@@ -5,7 +5,7 @@
 #include <ctime>
 #include <cmath>
 #include <string>
-#include "world_gen.h"
+#include "world-gen.h"
 
 using namespace std;
 

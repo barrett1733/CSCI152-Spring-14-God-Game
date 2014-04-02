@@ -1,4 +1,4 @@
-#include "taskManager.h"
+#include "task-manager.h"
 
 std::vector<Entity *> foodEntities;
 std::vector<Entity *> ironEntities;
@@ -15,21 +15,21 @@ void TaskManager::assign()
     while (!availableVillagers.empty()) {
         TaskReference task = unassignedTaskQueue.top();
         TaskType taskType = task->getType();
-        
+
         unassignedTaskQueue.pop();
         inProgressTaskList.push_back(task);
         Entity * villager = getVillager();
         availableVillagers.pop_back();
-        
+
         if(taskType == TASK_GATHER_FOOD
            or taskType == TASK_GATHER_IRON
            or taskType == TASK_GATHER_WOOD
            or taskType == TASK_GATHER_STONE)
         {
-            
+
             task->setAssignee(villager);
             task->setTarget(this->findResource(villager, taskType));
-            
+
         }else if(taskType == TASK_BUILD_HOUSE
                  or taskType == TASK_BUILD_STONEWORKS
                  or taskType == TASK_BUILD_SMELTING
@@ -41,21 +41,21 @@ void TaskManager::assign()
                  or taskType == TASK_BUILD_WATCHTOWER
                  or taskType == TASK_BUILD_TOWNCENTER)
         {
-            
+
             task->setAssignee(villager);
-            
+
         }else if(taskType == TASK_ATTACK
                  or taskType == TASK_DEFEND
                  or taskType == TASK_PATROL
                  or taskType == TASK_TAME_1
                  or taskType == TASK_PARLEY)
         {
-            
+
             task->setAssignee(villager);
-            
+
         }
     }
-    
+
 }
 
 TaskQueue TaskManager::getUnassignedTaskList() {
@@ -92,20 +92,20 @@ void TaskManager::updateProgress()
         Entity * target = task->getTarget();
         int targetHealth = target->getCurrentHealth();
         Position p = target->getPosition();
-        
+
         if (task->getAssignee()->getPosition().distance(p) == 0)
         {
             task->setProgress(++taskProgress);
-            
+
             if(taskType == TASK_GATHER_FOOD
                or taskType == TASK_GATHER_IRON
                or taskType == TASK_GATHER_WOOD
                or taskType == TASK_GATHER_STONE)
             {
-                
+
                 resourceManager.sendResource(mapTaskResourceType[taskType], 1, taskFaction);
                 target->setCurrentHealth(--targetHealth);
-                
+
             }else if(taskType == TASK_BUILD_HOUSE
                      or taskType == TASK_BUILD_STONEWORKS
                      or taskType == TASK_BUILD_SMELTING
@@ -117,21 +117,21 @@ void TaskManager::updateProgress()
                      or taskType == TASK_BUILD_WATCHTOWER
                      or taskType == TASK_BUILD_TOWNCENTER)
             {
-                
+
                 target->setCurrentHealth(++targetHealth);
-                
+
             }else if(taskType == TASK_ATTACK
                      or taskType == TASK_DEFEND
                      or taskType == TASK_PATROL
                      or taskType == TASK_TAME_1
                      or taskType == TASK_PARLEY)
             {
-                
+
                 //...
-                
+
             }
         }
-        
+
 		//std::cout<<"Updating task progress"<<std::endl;
 	}
 }

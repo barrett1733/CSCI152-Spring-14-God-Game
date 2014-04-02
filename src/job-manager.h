@@ -6,7 +6,7 @@
 
 //#include "job-factory.h"
 #include "job.h"
-#include "world_gen.h"
+#include "world-gen.h"
 
 static std::map<JobType, int> mapBuildTaskNum = {
 	{JOB_BUILD_HOUSE, 1},
@@ -48,29 +48,29 @@ class JobManager
     Faction faction;
 	JobVec jobList;
     TaskManager * taskManager;
-    
+
 public:
     JobManager(Faction ft) : faction(ft), taskManager(new TaskManager(ft)) {};
     ~JobManager(){delete taskManager;}
-    
+
 	void registerJob(JobReference job);
 
 	void createJobList(JobType, int, int);
 
 	//void initJobList();
-    
+
     JobVec getJobList();
-    
+
     Faction getFaction();
-    
+
     TaskManager * getTaskManager();
-    
+
     Entity * findJobTarget(JobType);
 
 	void cleanTaskList(JobReference job);
 
 	void cleanJobList();
-	
+
 };
 
 #endif
