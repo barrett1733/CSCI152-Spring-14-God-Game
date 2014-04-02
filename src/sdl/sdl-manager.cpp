@@ -11,7 +11,7 @@ SdlManager sdl;
 SdlManager::SdlManager() :
 	window(0),
 	renderer(0),
-	renderTexture(0),
+	texture(0),
 	next_time(0)
 {
 	std::cout << "SdlManager::SdlManager() - SDL_Init()" << std::endl;
@@ -52,7 +52,7 @@ SdlManager::~SdlManager()
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
-	if(renderTexture) SDL_DestroyTexture(renderTexture);
+	if(texture) SDL_DestroyTexture(texture);
 
 	IMG_Quit();
 	SDL_Quit();
@@ -97,11 +97,16 @@ void SdlManager::update()
 	SDL_RenderClear( renderer );
 	SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
 
-	// Creates background
-	SDL_Surface * background = SDL_GetWindowSurface(window);
-	SDL_FillRect(background, NULL, SDL_MapRGB(background->format, 255, 255, 255));
-	SDL_UpdateTexture(renderTexture, NULL, background->pixels, background->pitch);
-	SDL_FreeSurface(background);
+//	// Creates background
+//	SDL_Surface * background = SDL_GetWindowSurface(window);
+//	if(!background)
+//		std::cerr << SDL_GetError() << std::endl;
+//	else
+//	{
+//		SDL_FillRect(background, NULL, SDL_MapRGB(background->format, 255, 255, 255));
+//		SDL_UpdateTexture(texture, NULL, background->pixels, background->pitch);
+//		SDL_FreeSurface(background);
+//	}
 
 	// Render everything to renderTexture
 	for(int layerIndex = 0; layerIndex < WL_COUNT; layerIndex ++)
@@ -109,7 +114,7 @@ void SdlManager::update()
 			renderWidget(widgetList[layerIndex][widgetIndex]);
 
 	// Copy render texture and update screen
-	SDL_RenderCopy(renderer, renderTexture, NULL, NULL);
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	SDL_RenderPresent( renderer );
 
 	// Update frame rate display
@@ -131,7 +136,7 @@ void SdlManager::update()
 
 void SdlManager::renderWidget(SdlWidget * widget)
 {
-	return widget->render(renderTexture);
+	return widget->render(texture);
 	// This will need to be changed
 	/*
 	SDL_Surface * surface = widget->getSurface();
@@ -179,7 +184,7 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 	// Create texture for renderer
 	std::cout << "SDL_CreateTexture()" << std::endl;
-	if (!(renderTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, width, height)))
+	if (!(texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, width, height)))
 		throw "SDL_CreateTexture";
 
 	// Initialize renderer color

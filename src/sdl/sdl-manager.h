@@ -24,7 +24,7 @@ class SdlManager : public Config
 
 	SDL_Window * window;
 	SDL_Renderer * renderer;
-	SDL_Texture * renderTexture;
+	SDL_Texture * texture;
 
 	TextDisplayReference fpsCounter;
 	long timer;
