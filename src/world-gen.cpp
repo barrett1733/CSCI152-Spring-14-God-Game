@@ -162,20 +162,28 @@ void WorldGeneration::PlaceTemple()
 void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 {
 	int team_villager_count = 0;
+	Position here;
 
 	/*********************************************************/
 	/***placing villagers around the town center and shrine***/
 	/*********************************************************/
-
-	for(int outerIndex = pos.y-3; outerIndex <= pos.y+3; outerIndex++)
+	while(team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
 	{
-		for(int innerIndex = pos.x-5; innerIndex < pos.x+5; innerIndex++)
+		for(int outerIndex = pos.y-4; outerIndex <= pos.y+4; outerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex] == ET_NONE && team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
+			here.y = outerIndex;
+			for(int innerIndex = pos.x-6; innerIndex < pos.x+6; innerIndex++)
 			{
-				world_positions[outerIndex][innerIndex] = type;
-				team_villager_count++;
-				entityCount++;
+				here.x = innerIndex;
+				int chance_for_villager = rand() % 100;
+				if(world_positions[outerIndex][innerIndex] == ET_NONE && team_villager_count < world_info[WI_NUM_OF_VILLAGERS] && chance_for_villager < 20 && here.distance(pos) > 3)
+				{
+					world_positions[outerIndex][innerIndex] = type;
+					team_villager_count++;
+					entityCount++;
+				}
+				else if(team_villager_count == world_info[WI_NUM_OF_VILLAGERS])
+					break;
 			}
 		}
 	}
@@ -184,15 +192,24 @@ void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 void WorldGeneration::PlaceDomesticBeasts(EntityType type, int number, Position pos)
 {
 	int team_type_count = 0;
-	for(int outerIndex = pos.y-3; outerIndex <= pos.y+3; outerIndex++)
+	Position here;
+	while(team_type_count < world_info[number])
 	{
-		for(int innerIndex = pos.x-5; innerIndex < pos.x+5; innerIndex++)
+		for(int outerIndex = pos.y-4; outerIndex <= pos.y+4; outerIndex++)
 		{
-			if(world_positions[outerIndex][innerIndex] == ET_NONE && team_type_count < world_info[number])
+			here.y = outerIndex;
+			for(int innerIndex = pos.x-6; innerIndex < pos.x+6; innerIndex++)
 			{
-				world_positions[outerIndex][innerIndex] = type;
-				team_type_count++;
-				entityCount++;
+				here.x = innerIndex;
+				int chance_for_beast = rand() % 100;
+				if(world_positions[outerIndex][innerIndex] == ET_NONE && team_type_count < world_info[number] && chance_for_beast < 20 && here.distance(pos) > 5)
+				{
+					world_positions[outerIndex][innerIndex] = type;
+					team_type_count++;
+					entityCount++;
+				}
+				else if(team_type_count == world_info[number])
+					break;
 			}
 		}
 	}
