@@ -142,13 +142,13 @@ void SdlWidget::render(SDL_Renderer * renderer)
 		SDL_RenderCopy(renderer, texture, &clipping, &boundingBox);
 }
 
-void SdlWidget::render(SDL_Texture * renderTexture)
+void SdlWidget::render(SDL_Texture * windowTexture)
 {
 	if(state == WS_HIDDEN) return;
 	if(!surface) return;
 	if(boundingBox.w == 0 || boundingBox.h == 0) return;
 
-	SDL_UpdateTexture(renderTexture, &boundingBox, surface->pixels, surface->pitch);
+	SDL_UpdateTexture(windowTexture, &boundingBox, surface->pixels, surface->pitch);
 }
 
 void SdlWidget::updateState(SDL_Event & event)
