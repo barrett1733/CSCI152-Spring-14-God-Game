@@ -97,24 +97,12 @@ void SdlManager::update()
 	SDL_RenderClear( renderer );
 	SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
 
-//	// Creates background
-//	SDL_Surface * background = SDL_GetWindowSurface(window);
-//	if(!background)
-//		std::cerr << SDL_GetError() << std::endl;
-//	else
-//	{
-//		SDL_FillRect(background, NULL, SDL_MapRGB(background->format, 255, 255, 255));
-//		SDL_UpdateTexture(texture, NULL, background->pixels, background->pitch);
-//		SDL_FreeSurface(background);
-//	}
-
 	// Render everything to renderTexture
 	for(int layerIndex = 0; layerIndex < WL_COUNT; layerIndex ++)
 		for(int widgetIndex = 0; widgetIndex < widgetCount[layerIndex]; ++widgetIndex)
 			renderWidget(widgetList[layerIndex][widgetIndex]);
 
 	// Copy render texture and update screen
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	SDL_RenderPresent( renderer );
 
 	// Update frame rate display
@@ -136,17 +124,7 @@ void SdlManager::update()
 
 void SdlManager::renderWidget(SdlWidget * widget)
 {
-	return widget->render(texture);
-	// This will need to be changed
-	/*
-	SDL_Surface * surface = widget->getSurface();
-	if(!surface) return;
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
-	const SDL_Rect * rect = widget->getBoundingBox();
-	if(rect->w == 0 || rect->h == 0) return;
-	SDL_RenderCopy(renderer, texture, widget->getClipping(), rect);
-	SDL_DestroyTexture(texture);
-	*/
+	return widget->render(renderer);
 }
 
 unsigned int SdlManager::getRemainingFrameTime()
@@ -182,7 +160,7 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 	// Create renderer for window
 	std::cout << "SDL_CreateRenderer()" << std::endl;
-	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED ) ) )
+	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE ) ) )
 		throw "SDL_CreateRenderer";
 
 	// Create texture for renderer
