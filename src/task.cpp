@@ -1,7 +1,11 @@
 #include "task.h"
 
-Task::Task(TaskType type, int priority, int progress, int taskQuota):
-_type(type), _priority(priority), _progress(progress), _taskQuota(taskQuota){}
+Task::Task(TaskType type, int priority, int progress, int taskQuota) :
+	_type(type),
+	_priority(priority),
+	_progress(progress),
+	_taskQuota(taskQuota)
+{ }
 
 void Task::setType(TaskType type)
 {
@@ -60,10 +64,17 @@ bool Task::isCompleted()
 
 
 GatherTask::GatherTask(TaskType type,  int priority, int progress, int amount):
-Task(type, priority, progress, amount) {};
+	Task(type, priority, progress, amount)
+{ }
 
 BuildTask::BuildTask(TaskType type, Entity * target, int priority, int hpBuilt, int hpAmount):
-Task(type, priority, hpBuilt, hpAmount){_target = target;}
+	Task(type, priority, hpBuilt, hpAmount)
+{
+	_target = target;
+}
 
 MilitaryTask::MilitaryTask(TaskType type, Entity * target, int priority, int hpDamaged, int hpAmount):
-Task(type, priority, hpDamaged, hpAmount){_target = target;}
+	Task(type, priority, hpDamaged, hpAmount)
+{
+	_target = target;
+}

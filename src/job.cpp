@@ -1,9 +1,12 @@
 
 #include "job.h"
 
-Job::Job(JobType type, int priority, int taskNum, int taskQuota):
-_type(type), _priority(priority), _taskNum(taskNum), _taskQuota(taskQuota)
-{}
+Job::Job(JobType type, int priority, int taskNum, int taskQuota) :
+	_type(type),
+	_priority(priority),
+	_taskNum(taskNum),
+	_taskQuota(taskQuota)
+{ }
 
 void Job::setType(JobType type)
 {
@@ -44,7 +47,8 @@ void Job::cleanTaskList()
 		{
 			delete(*iter);
 			_taskList.erase(iter);
-		}else
+		}
+		else
 		{
 			++iter;
 		}
@@ -54,7 +58,8 @@ void Job::cleanTaskList()
 
 
 GatherJob::GatherJob(JobType type, int priority, int taskNum, int taskQuota):
-Job(type, priority, taskNum, taskQuota) {
+	Job(type, priority, taskNum, taskQuota)
+{
 	this->createTaskList();
 };
 
@@ -68,7 +73,9 @@ void GatherJob::createTaskList()
 }
 
 BuildJob::BuildJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target):
-Job(type, priority, taskNum, taskQuota), _target(target) {
+	Job(type, priority, taskNum, taskQuota),
+	_target(target)
+{
 	this->createTaskList();
 };
 
@@ -83,7 +90,9 @@ void BuildJob::createTaskList()
 }
 
 MilitaryJob::MilitaryJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target):
-Job(type, priority, taskNum, taskQuota), _target(target) {
+	Job(type, priority, taskNum, taskQuota),
+	_target(target)
+{
 	this->createTaskList();
 };
 

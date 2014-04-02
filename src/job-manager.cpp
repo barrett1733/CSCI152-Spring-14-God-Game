@@ -17,7 +17,9 @@ void JobManager::cleanJobList()
 		{
 			delete(*iter);
 			this->jobList.erase(iter);
-		}else{
+		}
+		else
+		{
 			++iter;
 		}
 	}
@@ -42,7 +44,8 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 		{
 			taskNum = 5;
 			taskGoal = 99999999;
-		}else
+		}
+		else
 		{
 			taskGoal = 20;
 
@@ -52,15 +55,15 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 	}
 
 	else if(jobType == JOB_BUILD_HOUSE
-			or jobType == JOB_BUILD_STONEWORKS
-			or jobType == JOB_BUILD_SMELTING
-			or jobType == JOB_BUILD_FARM
-			or jobType == JOB_BUILD_LUMBERMILL
-			or jobType == JOB_BUILD_WEAPONSMITH
-			or jobType == JOB_BUILD_ARMORSMITH
-			or jobType == JOB_BUILD_WATCHTOWER
-			or jobType == JOB_BUILD_TOWNCENTER
-			or jobType == JOB_BUILD_TEMPLE
+		or jobType == JOB_BUILD_STONEWORKS
+		or jobType == JOB_BUILD_SMELTING
+		or jobType == JOB_BUILD_FARM
+		or jobType == JOB_BUILD_LUMBERMILL
+		or jobType == JOB_BUILD_WEAPONSMITH
+		or jobType == JOB_BUILD_ARMORSMITH
+		or jobType == JOB_BUILD_WATCHTOWER
+		or jobType == JOB_BUILD_TOWNCENTER
+		or jobType == JOB_BUILD_TEMPLE
 		)
 	{
 		taskNum = mapBuildTaskNum[jobType];
@@ -69,10 +72,10 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 	}
 
 	else if(jobType == JOB_ATTACK
-			or jobType == JOB_DEFEND
-			or jobType == JOB_PATROL
-			or jobType == JOB_TAME_1
-			or jobType == JOB_PARLEY)
+		or jobType == JOB_DEFEND
+		or jobType == JOB_PATROL
+		or jobType == JOB_TAME_1
+		or jobType == JOB_PARLEY)
 	{
 		taskNum = 10;//Total villager number * triangle value on military
 		job = new MilitaryJob(jobType, priority, taskNum, taskGoal, findJobTarget(jobType));
@@ -116,11 +119,12 @@ Entity * JobManager::findJobTarget(JobType jobType)
 
 		//Mark this area occupied
 
-	}else if(jobType == JOB_ATTACK
-			 or jobType == JOB_DEFEND
-			 or jobType == JOB_PATROL
-			 or jobType == JOB_TAME_1
-			 or jobType == JOB_PARLEY)
+	}
+	else if(jobType == JOB_ATTACK
+		or jobType == JOB_DEFEND
+		or jobType == JOB_PATROL
+		or jobType == JOB_TAME_1
+		or jobType == JOB_PARLEY)
 	{
 		//TBD
 	}

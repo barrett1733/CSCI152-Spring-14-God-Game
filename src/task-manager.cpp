@@ -30,25 +30,27 @@ void TaskManager::assign()
 			task->setAssignee(villager);
 			task->setTarget(this->findResource(villager, taskType));
 
-		}else if(taskType == TASK_BUILD_HOUSE
-				 or taskType == TASK_BUILD_STONEWORKS
-				 or taskType == TASK_BUILD_SMELTING
-				 or taskType == TASK_BUILD_FARM
-				 or taskType == TASK_BUILD_LUMBERMILL
-				 or taskType == TASK_BUILD_STOREHOUSE
-				 or taskType == TASK_BUILD_WEAPONSMITH
-				 or taskType == TASK_BUILD_ARMORSMITH
-				 or taskType == TASK_BUILD_WATCHTOWER
-				 or taskType == TASK_BUILD_TOWNCENTER)
+		}
+		else if(taskType == TASK_BUILD_HOUSE
+			or taskType == TASK_BUILD_STONEWORKS
+			or taskType == TASK_BUILD_SMELTING
+			or taskType == TASK_BUILD_FARM
+			or taskType == TASK_BUILD_LUMBERMILL
+			or taskType == TASK_BUILD_STOREHOUSE
+			or taskType == TASK_BUILD_WEAPONSMITH
+			or taskType == TASK_BUILD_ARMORSMITH
+			or taskType == TASK_BUILD_WATCHTOWER
+			or taskType == TASK_BUILD_TOWNCENTER)
 		{
 
 			task->setAssignee(villager);
 
-		}else if(taskType == TASK_ATTACK
-				 or taskType == TASK_DEFEND
-				 or taskType == TASK_PATROL
-				 or taskType == TASK_TAME_1
-				 or taskType == TASK_PARLEY)
+		}
+		else if(taskType == TASK_ATTACK
+			or taskType == TASK_DEFEND
+			or taskType == TASK_PATROL
+			or taskType == TASK_TAME_1
+			or taskType == TASK_PARLEY)
 		{
 
 			task->setAssignee(villager);
@@ -58,7 +60,8 @@ void TaskManager::assign()
 
 }
 
-TaskQueue TaskManager::getUnassignedTaskList() {
+TaskQueue TaskManager::getUnassignedTaskList()
+{
 	return unassignedTaskQueue;
 }
 
@@ -109,25 +112,27 @@ void TaskManager::updateProgress()
 				//resourceManager.sendResource(mapTaskResourceType[taskType], 1, taskFaction);
 				target->setCurrentHealth(--targetHealth);
 
-			}else if(taskType == TASK_BUILD_HOUSE
-					 or taskType == TASK_BUILD_STONEWORKS
-					 or taskType == TASK_BUILD_SMELTING
-					 or taskType == TASK_BUILD_FARM
-					 or taskType == TASK_BUILD_LUMBERMILL
-					 or taskType == TASK_BUILD_STOREHOUSE
-					 or taskType == TASK_BUILD_WEAPONSMITH
-					 or taskType == TASK_BUILD_ARMORSMITH
-					 or taskType == TASK_BUILD_WATCHTOWER
-					 or taskType == TASK_BUILD_TOWNCENTER)
+			}
+			else if(taskType == TASK_BUILD_HOUSE
+				or taskType == TASK_BUILD_STONEWORKS
+				or taskType == TASK_BUILD_SMELTING
+				or taskType == TASK_BUILD_FARM
+				or taskType == TASK_BUILD_LUMBERMILL
+				or taskType == TASK_BUILD_STOREHOUSE
+				or taskType == TASK_BUILD_WEAPONSMITH
+				or taskType == TASK_BUILD_ARMORSMITH
+				or taskType == TASK_BUILD_WATCHTOWER
+				or taskType == TASK_BUILD_TOWNCENTER)
 			{
 
 				target->setCurrentHealth(++targetHealth);
 
-			}else if(taskType == TASK_ATTACK
-					 or taskType == TASK_DEFEND
-					 or taskType == TASK_PATROL
-					 or taskType == TASK_TAME_1
-					 or taskType == TASK_PARLEY)
+			}
+			else if(taskType == TASK_ATTACK
+				or taskType == TASK_DEFEND
+				or taskType == TASK_PATROL
+				or taskType == TASK_TAME_1
+				or taskType == TASK_PARLEY)
 			{
 
 				//...
@@ -149,13 +154,16 @@ Entity * TaskManager::findResource(Entity * villager, TaskType taskType)
 	if (taskType == TASK_GATHER_FOOD)
 	{
 		return getNearestResource(villager, foodEntities);
-	}else if (taskType == TASK_GATHER_IRON)
+	}
+	else if (taskType == TASK_GATHER_IRON)
 	{
 		return getNearestResource(villager, ironEntities);
-	}else if (taskType == TASK_GATHER_STONE)
+	}
+	else if (taskType == TASK_GATHER_STONE)
 	{
 		return getNearestResource(villager, stoneEntities);
-	}else if (taskType == TASK_GATHER_WOOD)
+	}
+	else if (taskType == TASK_GATHER_WOOD)
 	{
 		return getNearestResource(villager, woodEntities);
 	}
@@ -186,14 +194,15 @@ void TaskManager::registerTask(TaskReference task)
 
 void TaskManager::cleanTaskList()
 {
-		for (TaskIter iter = inProgressTaskList.begin(); iter != inProgressTaskList.end(); ) {
-			if ((*iter)->isCompleted())
-			{
-				//delete(*iter);
-				iter = inProgressTaskList.erase(iter);
-				availableVillagers.push_back((*iter)->getAssignee());
-			}
-			else
-				++iter;
+	for (TaskIter iter = inProgressTaskList.begin(); iter != inProgressTaskList.end(); )
+	{
+		if ((*iter)->isCompleted())
+		{
+			//delete(*iter);
+			iter = inProgressTaskList.erase(iter);
+			availableVillagers.push_back((*iter)->getAssignee());
 		}
+		else
+			++iter;
+	}
 }
