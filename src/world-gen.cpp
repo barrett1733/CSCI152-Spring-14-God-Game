@@ -234,10 +234,10 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
 
-				double x1_dist = abs(innerIndex-TC1.x);//removing if too close to TC
-				double y1_dist = abs(outerIndex-TC1.y);
-				double x2_dist = abs(innerIndex-TC2.x);
-				double y2_dist = abs(outerIndex-TC2.y);
+				double x1_dist = abs(innerIndex-TC1.getX());//removing if too close to TC
+				double y1_dist = abs(outerIndex-TC1.getY());
+				double x2_dist = abs(innerIndex-TC2.getX());
+				double y2_dist = abs(outerIndex-TC2.getY());
 
 				int chance_to_delete = rand() % 100;
 
@@ -330,21 +330,18 @@ int WorldGeneration::getEntityCount()
 
 void WorldGeneration::nextPosition()
 {
-	if(current.x == world_positions.size()-1 && current.y == world_positions.size()-1)
+	int prev_x = current.getX();
+	int prev_y = current.getY();
+	current.move(PD_RIGHT);
+	if(current.getX() == prev_x)
 	{
-		current.x = 0;
-		current.y = 0;
-		cycled = true;
-	}
-	else if(current.x == world_positions.size()-1)
-	{
-		current.x = 0;
-		current.y++;
-	}
-	else
-	{
-		current.x++;
-		//current.y++;
+		current.set(0,prev_y);
+		current.move(PD_DOWN);
+		if(current.getY() == prev_y)
+		{
+			current.set(0,0);
+			cycled = true;
+		}
 	}
 }
 
