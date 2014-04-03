@@ -28,6 +28,10 @@ SdlEntity::SdlEntity(const Entity & entity) :
 			case ET_IRON:
 				color = C_BLACK;
 				break;
+
+			default:
+				color = C_GRAY;
+				break;
 			}
 			break;
 
