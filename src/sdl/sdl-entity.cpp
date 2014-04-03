@@ -78,8 +78,8 @@ void SdlEntity::updatePosition()
 {
 	mapView->clear(boundingBox);
 
-	boundingBox.x = entity->getPosition().x * size;
-	boundingBox.y = entity->getPosition().y * size;
+	boundingBox.x = entity->getPosition().getX() * size;
+	boundingBox.y = entity->getPosition().getY() * size;
 
 	mapView->draw(surface, boundingBox);
 }
