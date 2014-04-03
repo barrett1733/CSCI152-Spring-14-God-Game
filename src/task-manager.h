@@ -60,10 +60,8 @@ private:
 	TaskQueue unassignedTaskQueue;
 	TaskVec inProgressTaskList;
 	EntityVec availableVillagers;
-	Faction taskFaction;
 
 public:
-	TaskManager(Faction ft) : taskFaction(ft) {};
 	void assign();
 	void updateProgress();
 	void registerTask(TaskReference task);

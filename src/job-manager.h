@@ -45,12 +45,11 @@ enum JobPriority
 
 class JobManager
 {
-	Faction faction;
 	JobVec jobList;
 	TaskManager * taskManager;
 
 public:
-	JobManager(Faction ft) : faction(ft), taskManager(new TaskManager(ft)) {};
+	JobManager() : taskManager(new TaskManager()) {};
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
@@ -74,5 +73,3 @@ public:
 };
 
 #endif
-
-extern JobManager jobManager;

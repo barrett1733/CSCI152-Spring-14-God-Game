@@ -1,8 +1,6 @@
 
 #include "job-manager.h"
 
-JobManager jobManager(FT_PLAYER_1);
-
 void JobManager::registerJob(JobReference job)
 {
 	jobList.push_back(job);
@@ -95,11 +93,6 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 TaskManager * JobManager::getTaskManager()
 {
 	return this->taskManager;
-}
-
-Faction JobManager::getFaction()
-{
-	return this->faction;
 }
 
 Entity * JobManager::findJobTarget(JobType jobType)
