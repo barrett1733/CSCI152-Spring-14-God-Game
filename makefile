@@ -12,7 +12,7 @@ BIN_DIR = bin
 SOURCES = main.cpp config.cpp
 SDL_SOURCES = sdl-manager.cpp sdl-utility.cpp sdl-widget.cpp sdl-text-display.cpp sdl-button.cpp sdl-slider.cpp sdl-triangle-slider.cpp sdl-entity.cpp sdl-map-view.cpp
 MGR_SOURCES = game-manager.cpp resource-manager.cpp entity-manager.cpp village-manager.cpp job-manager.cpp task-manager.cpp
-OBJECTS = main.o config.o village.o managers.a sdl.a world-gen.o entity.o job.o task.o
+OBJECTS = main.o config.o village.o managers.a sdl.a position.o world-gen.o entity.o job.o task.o
 EXECUTABLE = a.out
 
 define compile
