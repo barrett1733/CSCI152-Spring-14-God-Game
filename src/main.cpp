@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 	}
 
 	std::cout << "Continuing Game Loop" << std::endl;
-	int timer = time(0);
+	long timer = time(0);
 	while(( gameMode = game.mode() ) != GM_QUITTING)
 	{
 		if(gameMode == GM_PLAYING)

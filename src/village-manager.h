@@ -12,7 +12,7 @@ class VillageManager
 public:
 	VillageManager();
 
-	int addVillage(Faction);
+	long addVillage(Faction);
 
 	void update();
 };
