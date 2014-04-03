@@ -70,7 +70,7 @@ ImageReference SdlUtility::createTextSurface(const char * text)
 {
 	SDL_Color textColor = {0,0,0};
 	if(!font) std::cerr << "No font!" << std::endl;
-	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
+	SDL_Surface * surface = TTF_RenderText_Blended(font, text, textColor);
 	return surface;
 }
 
