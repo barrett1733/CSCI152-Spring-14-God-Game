@@ -11,15 +11,14 @@ using namespace std;
 
 WorldGeneration::~WorldGeneration(){}
 
-WorldGeneration::WorldGeneration(int seed)
+WorldGeneration::WorldGeneration(int seed) :
+	current(0,0)
 {
 	//time_t timer;
 	srand(seed);//rand must be seeded before placement, if not here then in another module that needs it first
 	//if it is used I will remove it from this location
 
 	entityCount = 0;
-	current.x = 0;
-	current.y = 0;
 	cycled = false;
 
 	/*****************
@@ -137,9 +136,9 @@ void WorldGeneration::PlaceTownCenter()
 	/**************************/
 	/***set locations of TCs***/
 	/**************************/
-	world_positions[TC1.y][TC1.x] = ET_TOWN_CENTER;// team 1
+	world_positions[TC1.getY()][TC1.getX()] = ET_TOWN_CENTER;// team 1
 	entityCount++;
-	world_positions[TC2.y][TC2.x] = ET_TOWN_CENTER;// team 2
+	world_positions[TC2.getY()][TC2.getX()] = ET_TOWN_CENTER;// team 2
 	entityCount++;
 }
 
@@ -156,9 +155,9 @@ void WorldGeneration::PlaceTemple()
 	/**********************************/
 	/***use offsets to place temples***/
 	/**********************************/
-	world_positions[TC1.y+y_offset1][TC1.x+x_offset1] = ET_TEMPLE;//team 1
+	world_positions[ TC1.getY() + y_offset1 ][ TC1.getX() + x_offset1 ] = ET_TEMPLE;//team 1
 	entityCount++;
-	world_positions[TC2.y+y_offset2][TC2.x+x_offset2] = ET_TEMPLE;//team 2
+	world_positions[ TC2.getY() + y_offset2 ][ TC2.getX() + x_offset2 ] = ET_TEMPLE;//team 2
 	entityCount++;
 }
 
@@ -255,7 +254,7 @@ Entity WorldGeneration::getNextEntity()
 	Entity to_return(ET_NONE,0,current,FT_NONE);
 	do
 	{
-		if(world_positions[current.y][current.x]==ET_NONE)
+		if(world_positions[current.getY()][current.getX()]==ET_NONE)
 		{
 			if(cycled == true)
 			{
@@ -275,10 +274,10 @@ Entity WorldGeneration::getNextEntity()
 			}
 			else
 			{
-			to_return.setEntityType(world_positions[current.y][current.x]);//set the entity's type
+			to_return.setEntityType(world_positions[current.getY()][current.getX()]);//set the entity's type
 			to_return.setPosition(current);//the the entity's position
 
-			switch(world_positions[current.y][current.x])
+			switch(world_positions[current.getY()][current.getX()])
 			{
 				//resources
 				case ET_TREE:
