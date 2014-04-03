@@ -35,6 +35,7 @@ WorldGeneration::WorldGeneration(int seed)
 	int mapEdgeLength = world_info[WI_MAP_SIZE];
 
 	world_positions.resize(mapEdgeLength);
+	Position::max_x = Position::max_y = mapEdgeLength - 1;
 
 	/**************************
 	***fill with empty space***
@@ -110,10 +111,14 @@ void WorldGeneration::PlaceTownCenter()
 	while(keep_going)
 	{
 		TC_placer_count++;
-		TC1.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
-		TC1.x = rand() % world_info[WI_MAP_SIZE];	//x-coord
-		TC2.y = rand() % world_info[WI_MAP_SIZE];	//y-coord
-		TC2.x = rand() % world_info[WI_MAP_SIZE];
+		TC1.set(
+			rand() % world_info[WI_MAP_SIZE],	//x-coord
+			rand() % world_info[WI_MAP_SIZE]	//y-coord
+		);
+		TC2.set(
+			rand() % world_info[WI_MAP_SIZE],
+			rand() % world_info[WI_MAP_SIZE]	//y-coord
+		);
 
 		if(TC1.distance(TC2) > world_info[WI_MAP_SIZE]/2)
 			keep_going=false;
@@ -122,10 +127,8 @@ void WorldGeneration::PlaceTownCenter()
 	/**************************/
 	/***move away from edges***/
 	/**************************/
-	TC1.y = shiftFromEdge(TC1.y);
-	TC1.x = shiftFromEdge(TC1.x);
-	TC2.y = shiftFromEdge(TC2.y);
-	TC2.x = shiftFromEdge(TC2.x);
+	shiftFromEdge(TC1);
+	shiftFromEdge(TC2);
 	/**********************/
 	/***clear TCs' area***/
 	/**********************/
@@ -358,6 +361,15 @@ int WorldGeneration::shiftFromEdge(int coord)
 	else if(coord+9 > world_info[WI_MAP_SIZE]-1)
 		return coord -= 18;
 	else return coord;
+}
+
+
+void WorldGeneration::shiftFromEdge(Position & position)
+{
+	position.set(
+		shiftFromEdge(position.getX()),
+		shiftFromEdge(position.getY())
+	);
 }
 
 //void WorldGeneration::clearArea(Position pos)

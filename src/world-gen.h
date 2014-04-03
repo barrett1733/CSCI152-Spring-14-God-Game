@@ -68,6 +68,7 @@ public:
 	void nextPosition();
 	int findOffset();
 	int shiftFromEdge(int);
+	void shiftFromEdge(Position&);
 	void clearArea(Position);
 
 
