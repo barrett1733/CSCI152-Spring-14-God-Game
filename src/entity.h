@@ -98,11 +98,14 @@ class Entity
 {
 private:
 	EntityType type;
-	Position position;
 	int maxHealth;
 	int currentHealth;
 	Faction faction;
 	std::string name;
+
+protected:
+	Position position;
+
 public:
 	Entity(const Entity&);
 	Entity(EntityType, int health, Position, Faction);
@@ -125,6 +128,8 @@ public:
 	void setCurrentHealth(int);
 	void setEntityType(EntityType);
 	void setFaction(Faction);
+
+	virtual void update() {}
 
 	friend std::ostream& operator<< (std::ostream & os, const Entity & entity)
 	{
@@ -153,6 +158,7 @@ public:
 	void setStrength(int);
 	void setDefense(int);
 
+	void update();
 };
 
 typedef Entity * EntityReference;

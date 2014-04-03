@@ -5,29 +5,27 @@
 
 Entity::Entity(const Entity & entity) :
 	type(entity.type),
-	position(entity.position),
 	maxHealth(entity.maxHealth),
 	currentHealth(entity.currentHealth),
-	faction(entity.faction)
+	faction(entity.faction),
+	position(entity.position)
 { }
 
 Entity::Entity(EntityType entityType, int health, Position position, Faction faction) :
 	type(entityType),
-	position(position),
 	maxHealth(health),
 	currentHealth(health),
-	faction(faction)
+	faction(faction),
+	position(position)
 { }
 
 Entity::Entity(EntityType entityType, int health, int xPos, int yPos, Faction faction) :
 	type(entityType),
 	maxHealth(health),
 	currentHealth(health),
-	faction(faction)
-{
-	position.x = xPos;
-	position.y = yPos;
-}
+	faction(faction),
+	position(xPos, yPos)
+{ }
 
 Entity& Entity::operator= (const Entity& entity)
 {
@@ -90,6 +88,7 @@ void Entity::setFaction(Faction faction) {
 	this->faction = faction;
 }
 
+
 MobileEntity::MobileEntity(EntityType entityType, int health, Position position, Faction faction, int hunger, int strength, int defense):
 	Entity(entityType, health, position, faction),
 	hunger(hunger),
@@ -121,4 +120,27 @@ void MobileEntity::setStrength(int strength) {
 }
 void MobileEntity::setDefense(int defense) {
 	this->defense = defense;
+}
+
+void MobileEntity::update()
+{
+	int r = rand();
+	switch(r % 4)
+	{
+		case 0:
+			position.move(PD_UP);
+			break;
+
+		case 1:
+			position.move(PD_RIGHT);
+			break;
+
+		case 2:
+			position.move(PD_DOWN);
+			break;
+
+		case 3:
+			position.move(PD_LEFT);
+			break;
+	}
 }
