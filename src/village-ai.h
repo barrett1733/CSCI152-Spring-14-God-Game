@@ -1,9 +1,9 @@
 #include "resource-manager.h"
 
-#ifndef VILLAGER_AI_H_
-#define VILLAGER_AI_H_
+#ifndef VILLAGE_H_
+#define VILLAGE_H_
 
-class VillagerAI : public ResourceManager
+class Village : public ResourceManager
 {
 private:
 	Faction myFaction;
@@ -11,7 +11,7 @@ private:
 	void createBuildings();
 	void needsDefending();
 public:
-	VillagerAI(Faction);
+	Village(Faction);
 	void run();
 };
 

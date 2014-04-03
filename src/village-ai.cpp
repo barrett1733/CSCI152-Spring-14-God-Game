@@ -1,16 +1,16 @@
 #include "village-ai.h"
 
-VillagerAI::VillagerAI(Faction faction):myFaction(faction)
+Village::Village(Faction faction):myFaction(faction)
 { }
 
-void VillagerAI::run()
+void Village::run()
 {
 	balanceJobs();
 	createBuildings();
 	needsDefending();
 }
 
-void VillagerAI::balanceJobs()
+void Village::balanceJobs()
 {
 	int total = 0;
 	int average = 0;
@@ -29,12 +29,12 @@ void VillagerAI::balanceJobs()
 	//	check position attacked - another class?
 }
 
-void VillagerAI::createBuildings()
+void Village::createBuildings()
 {
 
 }
 
-void VillagerAI::needsDefending()
+void Village::needsDefending()
 {
 
 }
