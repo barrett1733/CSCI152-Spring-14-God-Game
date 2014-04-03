@@ -1,7 +1,31 @@
 #include "village.h"
 
-Village::Village(Faction faction):myFaction(faction)
+Village::Village(Faction faction) :
+	faction(faction)
 { }
+
+bool Village::hasGodLogic()
+{
+	return false;
+}
+
+void Village::runGodLogic()
+{
+	// TODO: Village::runGodLogic();
+	// Determine military action
+	// Determine miracles
+	// Determine Triangle balance.
+	// jobManager.setBalance(militaryBalance, buildBalance, gatherBalance);
+}
+
+void Village::runVillageLogic()
+{
+	// TODO: Village::runVillageLogic();
+	// Check size of job queue vs population
+	// Check next script instruction
+	// Issue jobs
+	// jobManager.issueJob(...);
+}
 
 void Village::run()
 {
@@ -12,15 +36,15 @@ void Village::run()
 
 void Village::balanceJobs()
 {
-	int total = 0;
-	int average = 0;
-	for(int i = 0; i < RT_COUNT; i++)
-		total += getResourceAmount(ResourceType(i),myFaction);
-	average = total/RT_COUNT;
+	// int total = 0;
+	// int average = 0;
+	// for(int i = 0; i < RT_COUNT; i++)
+	// 	total += getResourceAmount(ResourceType(i), faction);
+	// average = total/RT_COUNT;
 
-	for(int i = 0; i < RT_COUNT; i++)
-		if(getResourceAmount(ResourceType(i),myFaction) < average)
-			;//createGatherJob(ResourceType(i));
+	// for(int i = 0; i < RT_COUNT; i++)
+	// 	if(getResourceAmount(ResourceType(i), faction) < average)
+	// 		;//createGatherJob(ResourceType(i));
 
 	//gather
 	//create
