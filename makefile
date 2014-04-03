@@ -36,7 +36,7 @@ $(EXECUTABLE): $(addprefix $(OBJ_DIR)/, $(OBJECTS))
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(compile)
 
-$(OBJ_DIR)/village-ai.o: $(SRC_DIR)/villager-ai.cpp
+$(OBJ_DIR)/village-ai.o: $(SRC_DIR)/village-ai.cpp
 	$(compile)
 
 $(OBJ_DIR)/managers.a: $(addprefix $(SRC_DIR)/, $(MGR_SOURCES))

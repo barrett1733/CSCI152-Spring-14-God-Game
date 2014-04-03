@@ -1,4 +1,4 @@
-#include "villager-ai.h"
+#include "village-ai.h"
 
 VillagerAI::VillagerAI(Faction faction):myFaction(faction)
 { }
