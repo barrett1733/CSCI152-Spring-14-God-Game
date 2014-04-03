@@ -166,17 +166,19 @@ void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 	int team_villager_count = 0;
 	Position here;
 
+	int pos_x = pos.getX();
+	int pos_y = pos.getY();
+
 	/*********************************************************/
 	/***placing villagers around the town center and shrine***/
 	/*********************************************************/
 	while(team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
 	{
-		for(int outerIndex = pos.y-4; outerIndex <= pos.y+4; outerIndex++)
+		for(int outerIndex = pos_y - 4; outerIndex <= pos_y + 4; outerIndex++)
 		{
-			here.y = outerIndex;
-			for(int innerIndex = pos.x-6; innerIndex < pos.x+6; innerIndex++)
+			for(int innerIndex = pos_x - 6; innerIndex < pos_x + 6; innerIndex++)
 			{
-				here.x = innerIndex;
+				here.set(innerIndex, outerIndex);
 				int chance_for_villager = rand() % 100;
 				if(world_positions[outerIndex][innerIndex] == ET_NONE && team_villager_count < world_info[WI_NUM_OF_VILLAGERS] && chance_for_villager < 20 && here.distance(pos) > 3)
 				{
@@ -195,14 +197,17 @@ void WorldGeneration::PlaceDomesticBeasts(EntityType type, int num_of_beasts, Po
 {
 	int team_type_count = 0;
 	Position here;
+
+	int pos_x = pos.getX();
+	int pos_y = pos.getY();
+
 	while(team_type_count < world_info[num_of_beasts])
 	{
-		for(int outerIndex = pos.y-4; outerIndex <= pos.y+4; outerIndex++)
+		for(int outerIndex = pos_y - 4; outerIndex <= pos_y + 4; outerIndex++)
 		{
-			here.y = outerIndex;
-			for(int innerIndex = pos.x-6; innerIndex < pos.x+6; innerIndex++)
+			for(int innerIndex = pos_x - 6; innerIndex < pos_x + 6; innerIndex++)
 			{
-				here.x = innerIndex;
+				here.set(innerIndex, outerIndex);
 				int chance_for_beast = rand() % 100;
 				if(world_positions[outerIndex][innerIndex] == ET_NONE && team_type_count < world_info[num_of_beasts] && chance_for_beast < 20 && here.distance(pos) > 5)
 				{
@@ -392,12 +397,14 @@ void WorldGeneration::shiftFromEdge(Position & position)
 void WorldGeneration::clearArea(Position pos)
 {
 	Position here;
-	for(int outerIndex = pos.y-9; outerIndex < pos.y+9; outerIndex++)
+	int pos_x = pos.getX();
+	int pos_y = pos.getY();
+
+	for(int outerIndex = pos_y-9; outerIndex < pos_y+9; outerIndex++)
 	{
-		here.y=outerIndex;
-		for(int innerIndex = pos.x-9; innerIndex < pos.x+9; innerIndex++)
+		for(int innerIndex = pos_x-9; innerIndex < pos_x+9; innerIndex++)
 		{
-			here.x=innerIndex;
+			here.set(innerIndex, outerIndex);
 			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
 				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
 			else if(here.distance(pos) < 8)
