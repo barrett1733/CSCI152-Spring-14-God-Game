@@ -91,10 +91,7 @@ void EntityManager::hide()
 	if(!visible) return;
 	std::cout << "EntityManager::hide()" << std::endl;
 	visible = false;
-	unsigned long count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-		widgetList[index]->hide();
-
+	mapView.hide();
 }
 
 // from config.
