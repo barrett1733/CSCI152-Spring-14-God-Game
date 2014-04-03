@@ -1,4 +1,4 @@
-#include "village-ai.h"
+#include "village.h"
 
 Village::Village(Faction faction):myFaction(faction)
 { }
