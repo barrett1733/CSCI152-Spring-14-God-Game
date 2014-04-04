@@ -1,33 +1,101 @@
 
 #include "entity-manager.h"
-#include "sdl/sdl-manager.h"
 #include <iostream>
 
-void EntityManager::createEntity()
-{
-	std::cout << "EntityManager::createEntity()" << std::endl;
-	WidgetReference testWidget = new SdlEntity(C_BLUE, 16);
-	testWidget->enable();
-	sdl.addWidget(testWidget);
 
-	widgetList.push_back(testWidget);
+EntityManager::EntityManager(int worldSize) :
+	visible(false)
+{
+	mapView.hide();
+	widgetList.push_back(&mapView);
+	SdlEntity::mapView = &mapView;
+	SdlEntity::worldSize = worldSize;
+}
+
+void EntityManager::deleteEntity(){}
+
+/*void EntityManager::getEntityType(Entity* entityIn){
+    ET_VILLAGER
+	ET_ELDER_VILLAGER
+	ET_CHILD_VILLAGER
+
+	// DOMESTIC ANIMALS
+	ET_COW
+	ET_SHEEP
+	ET_HORSE
+	ET_CHICKEN
+	ET_PIG
+	ET_FISH
+	ET_DEER
+
+	// HOSTILE
+	ET_WOLF,
+	ET_OGRE,
+
+	ET_BOAR,
+	ET_FOX,
+	ET_VAMPIRE,
+	ET_WEREWOLF,
+	ET_HARPY,
+	ET_SNOW_TROLL,
+	ET_SIREN,
+	ET_CTHULHU,
+	ET_UNICORN,
+	ET_CYCLOPS,
+}*/
+
+void EntityManager::createEntity(const Entity & entity)
+{
+	//return createEntity(*entity);
+
+	Faction faction = entity.getFaction();
+
+	EM_Record *record = new EM_Record();
+	record->entity = new Entity(entity);
+	record->widget = new SdlEntity(*record->entity);
+
+	recordList.push_back(record);
+	widgetList.push_back(record->widget);
+	factionMap[faction].push_back(record);
+}
+
+void EntityManager::createEntity(const EntityReference entity)
+{
+	return createEntity(*entity);
 }
 
 void EntityManager::update()
 {
+	if(!visible) show();
+
+	unsigned long count = recordList.size();
+	for(unsigned long index = 0; index < count; index ++)
+		recordList[index]->widget->update();
+
+	// ...
 }
 
 void EntityManager::show()
 {
-	int count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-		widgetList[index]->show();
+	if(visible) return;
+	std::cout << "EntityManager::show()" << std::endl;
+	visible = true;
+	mapView.show();
+	// unsigned long count = widgetList.size();
+	// for(int index = 0; index < count; index ++)
+	// 	widgetList[index]->show();
 }
 
 void EntityManager::hide()
 {
-	int count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-		widgetList[index]->hide();
-
+	if(!visible) return;
+	std::cout << "EntityManager::hide()" << std::endl;
+	visible = false;
+	mapView.hide();
 }
+
+// from config.
+bool EntityManager::setProperty(std::string property, std::string value){return true;}
+bool EntityManager::setProperty(std::string property, int value){return true;}
+bool EntityManager::setProperty(std::string property, int value1, int value2){return true;}
+

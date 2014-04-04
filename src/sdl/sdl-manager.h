@@ -14,32 +14,27 @@
 #include "sdl-slider.h"
 #include "sdl-text-display.h"
 #include "sdl-event-subscriber.h"
+#include "../config.h"
 
-const int FRAME_RATE = 60;
-const unsigned int TICK_INTERVAL = 1000/FRAME_RATE;
 
-enum {
-	WL_BACKGROUND,
-	WL_NON_INTERACTIVE,
-	WL_INTERACTIVE,
-
-	WL_COUNT
-};
-
-class SdlManager
+class SdlManager : public Config
 {
+	static int FRAME_RATE;
+	static unsigned int frameDuration;
+
 	SDL_Window * window;
 	SDL_Renderer * renderer;
+	SDL_Texture * texture;
 
 	TextDisplayReference fpsCounter;
-	int timer;
+	long timer;
 	int frameCount;
 
 	std::vector<SdlEventSubscriber*> subscriberList;
 	std::vector<SdlWidget*> widgetList[WL_COUNT];
-	int widgetCount[WL_COUNT];
+	unsigned long widgetCount[WL_COUNT];
 
-	unsigned long next_time;
+	unsigned int next_time;
 
 	void wait();
 
@@ -48,6 +43,9 @@ class SdlManager
 		std::cout << "Callback!" << std::endl;
 	}
 
+	//  From Config
+	bool setProperty(std::string property, int value);
+
 public:
 
 	SdlManager();
@@ -55,6 +53,7 @@ public:
 
 	void launchWindow(const char * title, int width, int height);
 	void update();
+	unsigned int getRemainingFrameTime();
 
 	// Event functions
 	SubscriptionReference subscribeToEvent(void (*callback)(SDL_Event&), int type);
@@ -70,21 +69,23 @@ public:
 	void renderImage(SDL_Texture * image, int xPos, int yPos);
 
 	// Widget functions
-	void addWidget(WidgetReference widget, int widgetLayer)
+	bool addWidget(WidgetReference widget, int widgetLayer)
 	{
 		widgetList[widgetLayer].push_back(widget);
 		widgetCount[widgetLayer] = widgetList[widgetLayer].size();
+		return true;
 	}
-	void addWidget(WidgetReference widget)
+	bool addWidget(WidgetReference widget)
 	{
 		return addWidget(widget, WL_INTERACTIVE);
 	}
 	void renderWidget(SdlWidget * widget);
+	bool removeWidget(WidgetReference widget, int layer);
+	bool removeWidget(WidgetReference widget);
 
 	// Button functions
 	ButtonReference createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * label, int xPos, int yPos, int width, int height);
 	ButtonReference createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * label, int xPos, int yPos);
-	void destroyButton(ButtonReference&);
 
 	// Slider functions
 	SliderReference createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos, int width, int height);

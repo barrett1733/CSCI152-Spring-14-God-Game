@@ -30,9 +30,9 @@ void Config::load(std::string file)
 	std::string typeString;
 	ConfigType  type;
 	std::string valueString;
-	int         valueNumber;
+	int         valueNumber = 0;
 	int         valueNumber2;
-	double      valueDecimal;
+	double      valueDecimal = 0.0;
 
 	bool accepted;
 
@@ -44,7 +44,6 @@ void Config::load(std::string file)
 	else while (!fin.eof())
 	{
 		typeString = "";
-		accepted = false;
 
 		fin >> property;
 		fin >> typeString;

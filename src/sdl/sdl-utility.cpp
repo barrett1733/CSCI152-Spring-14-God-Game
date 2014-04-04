@@ -10,16 +10,18 @@ SdlUtility sdlUtility;
 SdlUtility::SdlUtility()
 {
 	// Initialize Fonts
-	std::cerr << "TTF_Init()" << std::endl;
+	std::cerr << "SdlUtility::SdlUtility() - TTF_Init()" << std::endl;
 	if( TTF_Init() == -1 )
 	{
 		std::cerr << TTF_GetError() << std::endl;
 		throw "TTF_Init()";
 	}
 
+	std::cerr << "SdlUtility::SdlUtility() - TTF_OpenFont()" << std::endl;
 	font = TTF_OpenFont( "res/arial.ttf", 16 );
 	if(!font)
 		std::cerr << TTF_GetError() << std::endl;
+	std::cerr << "SdlUtility::SdlUtility() finished." << std::endl;
 }
 
 SdlUtility::~SdlUtility()
@@ -40,7 +42,7 @@ SDL_Rect SdlUtility::createRect(int x, int y, int w, int h)
 ImageReference SdlUtility::createSurface(int width, int height)
 {
 	SDL_Surface * result;
-	unsigned long rmask, gmask, bmask, amask;
+	unsigned int rmask, gmask, bmask, amask;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	rmask = 0xff000000;
@@ -57,16 +59,22 @@ ImageReference SdlUtility::createSurface(int width, int height)
 	result = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
 	return result;
 }
+ImageReference SdlUtility::createSurface(int width, int height, Color color)
+{
+	SDL_Surface * result = createSurface(width, height);
+	SDL_FillRect(result, NULL, sdlUtility.getColor(result, C_BEIGE));
+	return result;
+}
 
 ImageReference SdlUtility::createTextSurface(const char * text)
 {
 	SDL_Color textColor = {0,0,0};
 	if(!font) std::cerr << "No font!" << std::endl;
-	SDL_Surface * surface = TTF_RenderText_Solid( font, text, textColor);
+	SDL_Surface * surface = TTF_RenderText_Blended(font, text, textColor);
 	return surface;
 }
 
-Uint32 SdlUtility::getColor(ImageReference image, COLOR color)
+Uint32 SdlUtility::getColor(ImageReference image, Color color)
 {
 	switch(color)
 	{
@@ -90,7 +98,7 @@ void SdlUtility::set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
     *(Uint32 *)target_pixel = pixel;
 }
 
-ImageReference SdlUtility::createCircle(COLOR color, int size)
+ImageReference SdlUtility::createCircle(Color color, int size)
 {
 	ImageReference image = createSurface(size+1,size+1);
 
@@ -168,7 +176,7 @@ ImageReference SdlUtility::createCircle(COLOR color, int size)
 	return image;
 }
 
-ImageReference SdlUtility::createTriangle(COLOR color, int width, int height)
+ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 {
 	ImageReference image = createSurface(width, height);;
 
