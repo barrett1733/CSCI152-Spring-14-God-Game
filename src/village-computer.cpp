@@ -1,16 +1,11 @@
-#include "player-computer.h"
+#include "village-computer.h"
 
 
-PlayerComputer::PlayerComputer()
+VillageComputer::VillageComputer()
 {
 }
 
-
-PlayerComputer::~PlayerComputer()
-{
-}
-
-void PlayerComputer::run()
+void VillageComputer::run()
 {
 	// TODO: PlayerComputer::run();
 	// Determine military action

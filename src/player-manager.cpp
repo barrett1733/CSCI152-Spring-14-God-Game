@@ -17,11 +17,8 @@ void PlayerManager::update()
 	long villageCount = playerList.size();
 	for(long villageIndex = 0; villageIndex < villageCount; villageIndex ++)
 	{
-		VillageReference village = playerList[villageIndex];
+		PlayerReference player = playerList[villageIndex];
 
-		if( village->hasGodLogic() )
-			village->runGodLogic();
-
-		village->runVillageLogic();
+		player->run();
 	}
 }

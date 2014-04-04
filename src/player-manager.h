@@ -1,7 +1,7 @@
-#pragma once
-
 #include <vector>
-#include "village.h"
+#include "village-computer.h"
+#include "entity.h"
+#pragma once
 
 class PlayerManager
 {
