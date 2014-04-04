@@ -3,13 +3,14 @@
 #include <sstream>
 #include "game-manager.h"
 #include "entity-manager.h"
-#include "village-manager.h"
+#include "player-manager.h"
 #include "world-gen.h"
+#include "time.h"
 
 int main(int argc, char **argv)
 {
 	GameManager game;
-	VillageManager villageManager;
+	PlayerManager playerManager;
 	GameMode gameMode = GM_ERROR;
 
 	WorldGeneration world(0);
@@ -27,8 +28,8 @@ int main(int argc, char **argv)
 		std::cout << "Setting up new game." << std::endl;
 		// do world gen, set up new game, etc.
 
-		villageManager.addVillage(FT_PLAYER_1);
-		villageManager.addVillage(FT_PLAYER_2);
+		playerManager.addPlayer(FT_PLAYER_1);
+		playerManager.addPlayer(FT_PLAYER_2);
 
 		Entity entity = world.getNextEntity();
 		while(entity.getType() != ET_NONE)
@@ -47,7 +48,7 @@ int main(int argc, char **argv)
 			if(timer < time(0))
 			{
 				timer = time(0);
-				villageManager.update();
+				playerManager.update();
 			}
 
 			entityManager.update();
