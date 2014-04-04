@@ -4,8 +4,7 @@
 class VillageComputer : public Village
 {
 public:
-	VillageComputer();
-	~VillageComputer();
+	VillageComputer(Faction);
 	void run();
 };
 

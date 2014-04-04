@@ -1,7 +1,7 @@
 #include "village-computer.h"
 
 
-VillageComputer::VillageComputer()
+VillageComputer::VillageComputer(Faction faction) : Village(faction)
 {
 }
 

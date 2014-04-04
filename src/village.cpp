@@ -1,12 +1,7 @@
 #include "village.h"
 
 
-Village::Village()
-{
-}
-
-
-Village::~Village()
+Village::Village(Faction faction) : Creature(faction)
 {
 }
 

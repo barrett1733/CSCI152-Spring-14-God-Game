@@ -14,11 +14,6 @@ long PlayerManager::addPlayer(Faction faction)
 
 void PlayerManager::update()
 {
-	long villageCount = playerList.size();
-	for(long villageIndex = 0; villageIndex < villageCount; villageIndex ++)
-	{
-		PlayerReference player = playerList[villageIndex];
-
-		player->run();
-	}
+	for (auto iter = playerList.begin(); iter != playerList.end(); ++iter)
+		(*iter)->run();
 }

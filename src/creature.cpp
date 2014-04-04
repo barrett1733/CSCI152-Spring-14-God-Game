@@ -1,15 +1,21 @@
 #include "creature.h"
 
 
-Creature::Creature(void)
+Creature::Creature(Faction faction) : faction(faction)
+{ }
+
+void Creature::decideRun()
 {
+
 }
 
-
-Creature::~Creature(void)
+void Creature::decideWalk()
 {
+
 }
 
 void Creature::run()
 {
+	decideRun();
+	decideWalk();
 }

@@ -10,8 +10,7 @@ private:
 	void needsDefending();
 
 public:
-	Village();
-	~Village();
+	Village(Faction);
 	void run();
 };
 

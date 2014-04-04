@@ -1,16 +1,19 @@
 #include "job-manager.h"
 #pragma once
 
-typedef Creature * PlayerReference;
-
 class Creature
 {
 private:
 	JobManager jobManager;
+	void decideRun();
+	void decideWalk();
+
+protected:
+	Faction faction;
 
 public:
-	Creature(void);
-	~Creature(void);
+	Creature(Faction);
 	void run();
 };
 
+typedef Creature * PlayerReference;
