@@ -6,11 +6,15 @@
 class PlayerManager
 {
 	std::vector<PlayerReference> playerList;
+	Difficulty playerDifficulty;
 
 public:
-	PlayerManager();
+	PlayerManager(Difficulty);
 
-	long addPlayer(Faction);
+	long addCreaturePlayer(Faction);
+	long addHumanPlayer(Faction);
+	long addComputerPlayer(Faction);
 
 	void update();
+	long getPlayerListSize() { return playerList.size() };
 };
