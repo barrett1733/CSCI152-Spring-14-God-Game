@@ -14,11 +14,6 @@ class PlayerHuman : public Player
 public:
 	PlayerHuman(Faction);
 	void run();
-
-	bool hasGodLogic();
-	void runGodLogic();
-	void runVillageLogic();
-
 };
 
 #endif

@@ -12,6 +12,7 @@ private:
 public:
 	Player(Faction);
 	Faction getFaction() { return faction; }
+	virtual void update();
 };
 
 typedef Player * PlayerReference;

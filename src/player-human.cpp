@@ -1,15 +1,15 @@
-#include "village.h"
+#include "player-human.h"
 
-Village::Village(Faction faction) :
-	faction(faction)
+PlayerHuman::PlayerHuman(Faction faction) :
+	Player(faction)
 { }
 
-bool Village::hasGodLogic()
+bool PlayerHuman::hasGodLogic()
 {
 	return false;
 }
 
-void Village::runGodLogic()
+void PlayerHuman::runGodLogic()
 {
 	// TODO: Village::runGodLogic();
 	// Determine military action
