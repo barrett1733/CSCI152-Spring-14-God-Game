@@ -1,14 +1,16 @@
 
 #include "player-manager.h"
 
-PlayerManager::PlayerManager(Difficulty diff) : playerDifficulty(diff)
+PlayerManager::PlayerManager()
 {
-
+	playerDifficulty = NORMAL;
 }
+PlayerManager::PlayerManager(Difficulty diff) : playerDifficulty(diff)
+{ }
 
-long PlayerManager::addCreaturePlayer(Faction faction)
+long PlayerManager::addCreaturePlayer()
 {
-	playerList.push_back(new Creature(faction));
+	playerList.push_back(new Creature());
 	return playerList.size();
 }
 long PlayerManager::addHumanPlayer(Faction faction)
@@ -26,4 +28,9 @@ void PlayerManager::update()
 {
 	for (auto iter = playerList.begin(); iter != playerList.end(); ++iter)
 		(*iter)->run();
+}
+
+void PlayerManager::setDifficulty(Difficulty diff)
+{
+	playerDifficulty = diff;
 }

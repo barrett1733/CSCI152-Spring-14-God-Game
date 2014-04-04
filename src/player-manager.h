@@ -9,12 +9,14 @@ class PlayerManager
 	Difficulty playerDifficulty;
 
 public:
+	PlayerManager();
 	PlayerManager(Difficulty);
 
-	long addCreaturePlayer(Faction);
+	long addCreaturePlayer();
 	long addHumanPlayer(Faction);
 	long addComputerPlayer(Faction);
 
+	void setDifficulty(Difficulty);
 	void update();
-	long getPlayerListSize() { return playerList.size() };
+	long getPlayerListSize() { return playerList.size(); };
 };

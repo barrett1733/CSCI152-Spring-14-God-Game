@@ -12,6 +12,7 @@ protected:
 	Faction faction;
 
 public:
+	Creature();
 	Creature(Faction);
 	void run();
 };

@@ -1,6 +1,8 @@
 #include "creature.h"
 
 
+Creature::Creature()
+{ }
 Creature::Creature(Faction faction) : faction(faction)
 { }
 
