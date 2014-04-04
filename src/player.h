@@ -1,5 +1,4 @@
-#include "resource-manager.h"
-#include "job-manager.h"
+#include "entity.h"
 
 #pragma once
 
@@ -7,7 +6,6 @@ class Player
 {
 private:
 	Faction faction;
-	JobManager jobManager;
 
 public:
 	Player(Faction);

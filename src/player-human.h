@@ -5,11 +5,6 @@
 
 class PlayerHuman : public Player
 {
-	ResourceManager resourceManager;
-
-	void balanceJobs();
-	void createBuildings();
-	void needsDefending();
 
 public:
 	PlayerHuman(Faction);
