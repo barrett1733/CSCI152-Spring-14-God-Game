@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <ctime>
 #include "game-manager.h"
 #include "entity-manager.h"
 #include "village-manager.h"
