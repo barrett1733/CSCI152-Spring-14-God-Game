@@ -75,10 +75,6 @@ public:
 	std::vector< std::vector<EntityType> > world_positions;
 	std::vector<int> world_info;
 private:
-	//int TC1_x_coord_topleft;//the index of the x coordinate for team 1's town center
-	//int TC1_y_coord_topleft;//the index of the y coordinate for team 1's town center
-	//int TC2_x_coord_topleft;//the index of the x coordinate for team 2's town center
-	//int TC2_y_coord_topleft;//the index of the y coordinate for team 2's town center
 	int entityCount;
 	Position current;
 	Position TC1;
