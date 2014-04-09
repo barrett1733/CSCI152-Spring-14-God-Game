@@ -59,9 +59,9 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 	JobReference job;
 	int taskNum, taskGoal = 0;
 
-	if(jobType == JOB_GATHER_FOOD or
-	   jobType == JOB_GATHER_STONE or
-	   jobType == JOB_GATHER_WOOD or
+	if(jobType == JOB_GATHER_FOOD ||
+	   jobType == JOB_GATHER_STONE ||
+	   jobType == JOB_GATHER_WOOD ||
 	   jobType == JOB_GATHER_IRON)
 	{
 		if(priority == 3)//Job start create 5 gather jobs with large amount
@@ -79,15 +79,15 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 	}
 
 	else if(jobType == JOB_BUILD_HOUSE
-		or jobType == JOB_BUILD_STONEWORKS
-		or jobType == JOB_BUILD_SMELTING
-		or jobType == JOB_BUILD_FARM
-		or jobType == JOB_BUILD_LUMBERMILL
-		or jobType == JOB_BUILD_WEAPONSMITH
-		or jobType == JOB_BUILD_ARMORSMITH
-		or jobType == JOB_BUILD_WATCHTOWER
-		or jobType == JOB_BUILD_TOWNCENTER
-		or jobType == JOB_BUILD_TEMPLE
+		|| jobType == JOB_BUILD_STONEWORKS
+		|| jobType == JOB_BUILD_SMELTING
+		|| jobType == JOB_BUILD_FARM
+		|| jobType == JOB_BUILD_LUMBERMILL
+		|| jobType == JOB_BUILD_WEAPONSMITH
+		|| jobType == JOB_BUILD_ARMORSMITH
+		|| jobType == JOB_BUILD_WATCHTOWER
+		|| jobType == JOB_BUILD_TOWNCENTER
+		|| jobType == JOB_BUILD_TEMPLE
 		)
 	{
 		taskNum = mapBuildTaskNum[jobType];
@@ -96,10 +96,10 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 	}
 
 	else if(jobType == JOB_ATTACK
-		or jobType == JOB_DEFEND
-		or jobType == JOB_PATROL
-		or jobType == JOB_TAME_1
-		or jobType == JOB_PARLEY)
+		|| jobType == JOB_DEFEND
+		|| jobType == JOB_PATROL
+		|| jobType == JOB_TAME_1
+		|| jobType == JOB_PARLEY)
 	{
 		taskNum = 10;//Total villager number * triangle value on military
 		job = new MilitaryJob(jobType, priority, taskNum, taskGoal, findJobTarget(jobType));
@@ -124,15 +124,15 @@ TaskManager * JobManager::getTaskManager()
 Entity * JobManager::findJobTarget(JobType jobType)
 {
 	if(jobType == JOB_BUILD_HOUSE
-	   or jobType == JOB_BUILD_STONEWORKS
-	   or jobType == JOB_BUILD_SMELTING
-	   or jobType == JOB_BUILD_FARM
-	   or jobType == JOB_BUILD_LUMBERMILL
-	   or jobType == JOB_BUILD_WEAPONSMITH
-	   or jobType == JOB_BUILD_ARMORSMITH
-	   or jobType == JOB_BUILD_WATCHTOWER
-	   or jobType == JOB_BUILD_TOWNCENTER
-	   or jobType == JOB_BUILD_TEMPLE)
+	   || jobType == JOB_BUILD_STONEWORKS
+	   || jobType == JOB_BUILD_SMELTING
+	   || jobType == JOB_BUILD_FARM
+	   || jobType == JOB_BUILD_LUMBERMILL
+	   || jobType == JOB_BUILD_WEAPONSMITH
+	   || jobType == JOB_BUILD_ARMORSMITH
+	   || jobType == JOB_BUILD_WATCHTOWER
+	   || jobType == JOB_BUILD_TOWNCENTER
+	   || jobType == JOB_BUILD_TEMPLE)
 	{
 	   //Find the available area near Town Center
 
@@ -140,10 +140,10 @@ Entity * JobManager::findJobTarget(JobType jobType)
 
 	}
 	else if(jobType == JOB_ATTACK
-		or jobType == JOB_DEFEND
-		or jobType == JOB_PATROL
-		or jobType == JOB_TAME_1
-		or jobType == JOB_PARLEY)
+		|| jobType == JOB_DEFEND
+		|| jobType == JOB_PATROL
+		|| jobType == JOB_TAME_1
+		|| jobType == JOB_PARLEY)
 	{
 		//TBD
 	}
