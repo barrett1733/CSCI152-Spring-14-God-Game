@@ -53,6 +53,10 @@ WorldGeneration::WorldGeneration(int seed) :
 	PlaceResource(25, 75, ET_TREE);//trees
 	PlaceResource(1, 5, ET_IRON);//iron
 	PlaceResource(30, 35, ET_STONE);//stone
+	createPath(rand());
+	createPath(rand());
+	createPath(rand());
+	createPath(rand());
 	PlaceTownCenter();
 	PlaceTemple();
 	PlaceVillagers(ET_VILLAGER, TC1);
@@ -148,10 +152,10 @@ void WorldGeneration::PlaceTemple()
 	/***find offsets***/
 	/******************/
 
-	int x_offset1 = findOffset();
-	int y_offset1 = findOffset();
-	int x_offset2 = findOffset();
-	int y_offset2 = findOffset();
+	int x_offset1 = findOffset(3);
+	int y_offset1 = findOffset(3);
+	int x_offset2 = findOffset(3);
+	int y_offset2 = findOffset(3);
 	/**********************************/
 	/***use offsets to place temples***/
 	/**********************************/
@@ -345,13 +349,13 @@ void WorldGeneration::nextPosition()
 	}
 }
 
-int WorldGeneration::findOffset()
+int WorldGeneration::findOffset(int dis)
 {
 	int x = rand()%100;
 	if(x > 50)
-		return -3;
+		return 0-dis;
 	else
-		return 3;
+		return dis;
 
 }
 
@@ -412,4 +416,76 @@ void WorldGeneration::clearArea(Position pos)
 			}
 		}
 	}
+}
+
+void WorldGeneration::createPath(int seed)
+{
+	Position path_end;
+	Position path_start;
+	int loc = seed % 2;
+
+	path_start = findPathStart(loc);
+	path_end.set(path_start.getX() + 1, path_start.getY() + 1);
+	world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
+
+	//cout << "path starts at (" << path_start.getX() << ", " << path_start.getY() << ")" << endl;
+	//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+
+	while (path_end.getX() + 1 <= world_info[WI_MAP_SIZE] - 1 && path_end.getY() + 1 <= world_info[WI_MAP_SIZE] - 1)
+	{
+		int x_offset = findOffset(1);
+		int y_offset = findOffset(1);
+
+		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2)
+		{
+			int x = rand() % 2;
+			if (x == 0 && loc == 0) loc = 1;
+			if (x == 0 && loc == 1) loc = 0;
+			if (x == 1 && loc == 0) loc = 1;
+			if (x == 1 && loc == 1) loc = 0;
+		}
+		
+		if (loc == 0)//even: starts on x-axis
+		{
+			path_end.set(path_end.getX()+x_offset, path_end.getY() + 1);
+			//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+			world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
+			if (x_offset < 1 && path_end.getY() < world_info[WI_MAP_SIZE]-1)
+				world_positions[path_end.getY() + 1][path_end.getX()] = ET_NONE;
+			else
+				world_positions[path_end.getY() - 1][path_end.getX()] = ET_NONE;
+		}
+		else//odd: starts on y-axis
+		{
+			path_end.set(path_end.getX() + 1, path_end.getY()+y_offset);
+			world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
+			if (y_offset < 1 && path_end.getX() < world_info[WI_MAP_SIZE]-1)
+				world_positions[path_end.getY()][path_end.getX() + 1] = ET_NONE;
+			else
+				world_positions[path_end.getY()][path_end.getX() - 1] = ET_NONE;
+		}
+
+	}
+	//cout << "path ends at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+}
+
+Position WorldGeneration::findPathStart(int loc)
+{
+	bool keep_going = true;
+	Position path_start;
+
+	while (keep_going)
+	{
+		int spot = rand() % world_info[WI_MAP_SIZE];
+		if (spot > 10 && spot < world_info[WI_MAP_SIZE] - 10)
+		{
+			if (loc == 0)//even: starts on x-axis
+				path_start.set(spot, 0);
+			else//odd: starts on y-axis
+				path_start.set(0, spot);
+			keep_going = false;
+			world_positions[path_start.y][path_start.x] = ET_NONE;
+		}
+	}
+	return path_start;
 }

@@ -66,10 +66,12 @@ public:
 	Entity getNextEntity();
 	int getEntityCount();
 	void nextPosition();
-	int findOffset();
+	int findOffset(int);
 	int shiftFromEdge(int);
 	void shiftFromEdge(Position&);
 	void clearArea(Position);
+	void createPath(int);
+	Position findPathStart(int);
 
 
 	std::vector< std::vector<EntityType> > world_positions;
