@@ -43,20 +43,17 @@ WorldGeneration::WorldGeneration(int seed) :
 	for(int outerIndex = 0; outerIndex < world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
-			world_positions[outerIndex].push_back(ET_TREE);
+			world_positions[outerIndex].push_back(ET_NONE);
 	}
 
 	/************************
 	***place all entities***
 	************************/
 
-	PlaceResource(25, 75, ET_TREE);//trees
+	PlaceResource(15, 85, ET_TREE);//trees
 	PlaceResource(1, 5, ET_IRON);//iron
 	PlaceResource(30, 35, ET_STONE);//stone
-	createPath(rand());
-	createPath(rand());
-	createPath(rand());
-	createPath(rand());
+	placePaths(world_info[WI_NUM_OF_PATHS]);
 	PlaceTownCenter();
 	PlaceTemple();
 	PlaceVillagers(ET_VILLAGER, TC1);
@@ -436,7 +433,10 @@ void WorldGeneration::createPath(int seed)
 		int x_offset = findOffset(1);
 		int y_offset = findOffset(1);
 
-		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2)
+		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2
+			|| path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
+			|| path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
+			
 			loc = pathChange(loc);
 		
 		if (loc == 0)//even: starts on x-axis
@@ -491,4 +491,13 @@ int WorldGeneration::pathChange(int loc)
 	if (x == 0 && loc == 1) return 0;
 	if (x == 1 && loc == 0) return 1;
 	if (x == 1 && loc == 1) return 0;
+}
+
+void WorldGeneration::placePaths(int num)
+{
+	cout << "number of paths to place: " << num << endl;
+	for (int i = 0; i <= num; i++)
+	{
+		createPath(rand());
+	}
 }

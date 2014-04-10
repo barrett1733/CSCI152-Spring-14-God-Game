@@ -31,6 +31,7 @@ enum WorldInfo
 	WI_MAP_SIZE = 0x00,
 	WI_DIFFICULTY,
 	WI_NUM_OF_VILLAGERS,
+	WI_NUM_OF_PATHS,
 	//domestic animals
 	WI_NUM_OF_COWS,
 	WI_SHEEP,
@@ -73,6 +74,7 @@ public:
 	void createPath(int);
 	Position findPathStart(int);
 	int pathChange(int);
+	void placePaths(int);
 
 
 	std::vector< std::vector<EntityType> > world_positions;
