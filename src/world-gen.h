@@ -72,6 +72,7 @@ public:
 	void clearArea(Position);
 	void createPath(int);
 	Position findPathStart(int);
+	int pathChange(int);
 
 
 	std::vector< std::vector<EntityType> > world_positions;

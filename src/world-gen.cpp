@@ -43,7 +43,7 @@ WorldGeneration::WorldGeneration(int seed) :
 	for(int outerIndex = 0; outerIndex < world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
-			world_positions[outerIndex].push_back(ET_NONE);
+			world_positions[outerIndex].push_back(ET_TREE);
 	}
 
 	/************************
@@ -437,13 +437,7 @@ void WorldGeneration::createPath(int seed)
 		int y_offset = findOffset(1);
 
 		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2)
-		{
-			int x = rand() % 2;
-			if (x == 0 && loc == 0) loc = 1;
-			if (x == 0 && loc == 1) loc = 0;
-			if (x == 1 && loc == 0) loc = 1;
-			if (x == 1 && loc == 1) loc = 0;
-		}
+			loc = pathChange(loc);
 		
 		if (loc == 0)//even: starts on x-axis
 		{
@@ -488,4 +482,13 @@ Position WorldGeneration::findPathStart(int loc)
 		}
 	}
 	return path_start;
+}
+
+int WorldGeneration::pathChange(int loc)
+{
+	int x = rand() % 2;
+	if (x == 0 && loc == 0) return 1;
+	if (x == 0 && loc == 1) return 0;
+	if (x == 1 && loc == 0) return 1;
+	if (x == 1 && loc == 1) return 0;
 }
