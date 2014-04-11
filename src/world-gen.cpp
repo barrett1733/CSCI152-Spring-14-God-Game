@@ -53,8 +53,10 @@ WorldGeneration::WorldGeneration(int seed) :
 	PlaceResource(15, 85, ET_TREE);//trees
 	PlaceResource(1, 5, ET_IRON);//iron
 	PlaceResource(30, 35, ET_STONE);//stone
-	placePaths(world_info[WI_NUM_OF_PATHS]);
+	placePaths();
 	PlaceTownCenter();
+	//createPaths2(TC1);
+	//createPaths2(TC2);
 	PlaceTemple();
 	PlaceVillagers(ET_VILLAGER, TC1);
 	PlaceVillagers(ET_VILLAGER, TC2);
@@ -235,14 +237,12 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
 
-				double x1_dist = abs(innerIndex-TC1.getX());//removing if too close to TC
-				double y1_dist = abs(outerIndex-TC1.getY());
-				double x2_dist = abs(innerIndex-TC2.getX());
-				double y2_dist = abs(outerIndex-TC2.getY());
-
+				Position here;
+				here.set(innerIndex, outerIndex);
+				
 				int chance_to_delete = rand() % 100;
 
-				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist)) <= 30.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist)) <= 30.0 || chance_to_delete <= delete_chance)
+				if(TC1.distance(here) <= 30.0 || TC2.distance(here) <= 30.0 || chance_to_delete <= delete_chance)
 				{
 					world_positions[outerIndex][innerIndex] = ET_NONE;
 					entityCount--;
@@ -434,8 +434,8 @@ void WorldGeneration::createPath(int seed)
 		int y_offset = findOffset(1);
 
 		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2
-			|| path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
-			|| path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
+		 || path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
+		 || path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
 			
 			loc = pathChange(loc);
 		
@@ -493,11 +493,67 @@ int WorldGeneration::pathChange(int loc)
 	if (x == 1 && loc == 1) return 0;
 }
 
-void WorldGeneration::placePaths(int num)
+void WorldGeneration::placePaths()
 {
-	cout << "number of paths to place: " << num << endl;
-	for (int i = 0; i <= num; i++)
+	for (int i = 0; i <= world_info[WI_MAP_SIZE] / 10 ; i++)
 	{
 		createPath(rand());
 	}
+}
+
+void WorldGeneration::createPaths2(Position team)
+{
+	for (int x = 0; x < 8; x++)
+	{
+		Direction move;
+		Direction move2;
+		if (x == 0) { move = PD_UP;		move2 = PD_UP; }
+		if (x == 1) { move = PD_UP;		move2 = PD_LEFT; }
+		if (x == 2) { move = PD_LEFT;	move2 = PD_LEFT; }
+		if (x == 3) { move = PD_DOWN;	move2 = PD_LEFT; }
+		if (x == 4) { move = PD_DOWN;	move2 = PD_DOWN; }
+		if (x == 5) { move = PD_DOWN;	move2 = PD_RIGHT; }
+		if (x == 6) { move = PD_RIGHT;	move2 = PD_RIGHT; }
+		if (x == 7) { move = PD_UP;		move2 = PD_RIGHT; }
+
+		Position path = team;
+		int path_depth = 0;
+
+		while (path.getX() + 1 <= world_info[WI_MAP_SIZE] - 1 && path.getY() + 1 <= world_info[WI_MAP_SIZE] - 1
+			&& path.getX() - 1 >= 1 && path.getY() - 1 >= 1)
+		{
+			int x_offset = findOffset(1);
+			int y_offset = findOffset(1);
+			
+			if (move == move2)
+			{
+				path.move(move);
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				path.set(path.getX() + x_offset, path.getY());
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				path.set(path.getX(), path.getY() + y_offset);
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+			}
+			else
+			{
+				path.move(move);
+				int rands = rand() % 2;
+				if (rand == 0) path.set(path.getX(), path.getY() + y_offset);
+				else path.set(path.getX() + x_offset, path.getY());
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				//world_positions[path.getY()][path.getX()] = ET_NONE;
+				//world_positions[path.getY()][path.getX()] = ET_NONE;
+				path.move(move2);
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				//world_positions[path.getY()][path.getX()] = ET_NONE;
+			}
+			path_depth++;
+			int rands2 = rand() % 18;
+			if (path_depth > world_info[WI_MAP_SIZE] / 2)
+			{
+				if (rands2 == 0) break;
+			}
+		}
+	}
+
 }
