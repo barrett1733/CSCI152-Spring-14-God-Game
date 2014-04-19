@@ -198,6 +198,9 @@ void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 
 void WorldGeneration::PlaceDomesticBeasts(EntityType type, int num_of_beasts, Position pos)
 {
+	// This function looks almost identical to PlaceVillagers().
+	// Can they be abstracted?
+	// -CH
 	int team_type_count = 0;
 	Position here;
 
@@ -486,6 +489,7 @@ Position WorldGeneration::findPathStart(int loc)
 
 int WorldGeneration::pathChange(int loc)
 {
+	// This function can be optimized away to just "loc = 1 - loc;" in place of the function call. -CH
 	int x = rand() % 2;
 	if (x == 0 && loc == 0) return 1;
 	if (x == 0 && loc == 1) return 0;
@@ -507,6 +511,7 @@ void WorldGeneration::createPaths2(Position team)
 	{
 		Direction move;
 		Direction move2;
+		// Could be a switch statement, or use math? -CH
 		if (x == 0) { move = PD_UP;		move2 = PD_UP; }
 		if (x == 1) { move = PD_UP;		move2 = PD_LEFT; }
 		if (x == 2) { move = PD_LEFT;	move2 = PD_LEFT; }
