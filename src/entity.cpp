@@ -1,5 +1,6 @@
 
 #include "entity.h"
+#include "task.h"
 
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
@@ -131,25 +132,52 @@ void MobileEntity::setDefense(int defense) {
 	this->defense = defense;
 }
 
+bool MobileEntity::hasTask()
+{
+	return target ? true : false;
+}
+
+void MobileEntity::setTask(TaskReference task)
+{
+	i(task)
+	{
+		task->setAssignee(this);
+		target = task->getTarget();
+	}
+	else
+	{
+		// worship or wander?
+	}
+}
+
 void MobileEntity::update()
 {
-	int r = rand();
-	switch(r % 4)
+	if(target)
 	{
-		case 0:
-			position.move(D_UP);
-			break;
+		Direction direction = D_NONE;
+		// get next move
+		position.move(direction);
+	}
+	else
+	{
+		int r = rand();
+		switch(r % 4)
+		{
+			case 0:
+				position.move(D_UP);
+				break;
 
-		case 1:
-			position.move(D_RIGHT);
-			break;
+			case 1:
+				position.move(D_RIGHT);
+				break;
 
-		case 2:
-			position.move(D_DOWN);
-			break;
+			case 2:
+				position.move(D_DOWN);
+				break;
 
-		case 3:
-			position.move(D_LEFT);
-			break;
+			case 3:
+				position.move(D_LEFT);
+				break;
+		}
 	}
 }

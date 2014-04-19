@@ -8,6 +8,9 @@
 #include "position.h"
 #include <string>
 
+class Task; // forward declaration of Task class.
+typedef Task * TaskReference;
+
 enum Faction {
 	F_NONE,
 	F_STATIC, // TODO: Rename F_RESOURCE. -CH
@@ -162,6 +165,8 @@ private:
 	int hunger;
 	int strength;
 	int defense;
+
+	Entity * target;
 public:
 	MobileEntity(const Entity&);
 	int getHunger();
@@ -172,8 +177,12 @@ public:
 	void setDefense(int);
 
 	void update();
+
+	bool hasTask();
+	void setTask(TaskReference);
 };
 
-typedef Entity * EntityReference;
-
 #endif
+
+typedef Entity * EntityReference;
+typedef MobileEntity * MobileEntityReference;
