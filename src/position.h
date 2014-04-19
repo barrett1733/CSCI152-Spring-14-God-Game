@@ -18,6 +18,8 @@ enum Direction
 
 class Position
 {
+	int x;
+	int y;
 
 	void checkSanity();
 
@@ -26,8 +28,6 @@ public:
 	Position(int x, int y);
 	Position(const Position &);
 
-	int x;
-	int y;
 	Position& operator= (const Position &);
 
 	double distance(const Position &);
