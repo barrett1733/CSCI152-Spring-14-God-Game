@@ -4,6 +4,20 @@ Village::Village(Faction faction) :
 	faction(faction)
 { }
 
+void Village::importEntity(EntityReference entity)
+{
+	Faction faction = entity->getFaction();
+	EntityGroup group = entity->getGroup();
+	if(faction == this->faction)
+	{
+		if(group == EG_VILLAGER)
+			villagerList.push_back(entity);
+
+		else if(group == EG_DOMESTIC)
+			domesticList.push_back(entity);
+	}
+}
+
 bool Village::hasGodLogic()
 {
 	return false;
@@ -18,13 +32,15 @@ void Village::runGodLogic()
 	// jobManager.setBalance(militaryBalance, buildBalance, gatherBalance);
 }
 
-void Village::runVillageLogic()
+void Village::update()
 {
 	// TODO: Village::runVillageLogic();
 	// Check size of job queue vs population
 	// Check next script instruction
 	// Issue jobs
 	// jobManager.issueJob(...);
+
+	// TODO: Clean out dead entities.
 }
 
 void Village::run()

@@ -1,3 +1,6 @@
+
+#include <vector>
+
 #include "resource-manager.h"
 #include "job-manager.h"
 
@@ -10,6 +13,10 @@ class Village
 	ResourceManager resourceManager;
 	JobManager jobManager;
 
+	std::vector<EntityReference> villagerList; // list of employable villagers
+	std::vector<EntityReference> domesticList; // list of domestic things (cows)
+	// Should resources be 'discovered' instead of all known immediately?
+
 	void balanceJobs();
 	void createBuildings();
 	void needsDefending();
@@ -18,9 +25,11 @@ public:
 	Village(Faction);
 	void run();
 
+	void importEntity(EntityReference);
+
 	bool hasGodLogic();
 	void runGodLogic();
-	void runVillageLogic();
+	void update();
 
 	Faction getFaction() { return faction; }
 };
