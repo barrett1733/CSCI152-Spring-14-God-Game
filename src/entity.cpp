@@ -137,19 +137,19 @@ void MobileEntity::update()
 	switch(r % 4)
 	{
 		case 0:
-			position.move(PD_UP);
+			position.move(D_UP);
 			break;
 
 		case 1:
-			position.move(PD_RIGHT);
+			position.move(D_RIGHT);
 			break;
 
 		case 2:
-			position.move(PD_DOWN);
+			position.move(D_DOWN);
 			break;
 
 		case 3:
-			position.move(PD_LEFT);
+			position.move(D_LEFT);
 			break;
 	}
 }

@@ -347,11 +347,11 @@ void WorldGeneration::nextPosition()
 {
 	int prev_x = current.getX();
 	int prev_y = current.getY();
-	current.move(PD_RIGHT);
+	current.move(D_RIGHT);
 	if(current.getX() == prev_x)
 	{
 		current.set(0,prev_y);
-		current.move(PD_DOWN);
+		current.move(D_DOWN);
 		if(current.getY() == prev_y)
 		{
 			current.set(0,0);
@@ -525,14 +525,14 @@ void WorldGeneration::createPaths2(Position team)
 		switch(x)
 		{
 			default:
-			case 0: move = PD_UP;    move2 = PD_UP;    break;
-			case 1: move = PD_UP;    move2 = PD_LEFT;  break;
-			case 2: move = PD_LEFT;  move2 = PD_LEFT;  break;
-			case 3: move = PD_DOWN;  move2 = PD_LEFT;  break;
-			case 4: move = PD_DOWN;  move2 = PD_DOWN;  break;
-			case 5: move = PD_DOWN;  move2 = PD_RIGHT; break;
-			case 6: move = PD_RIGHT; move2 = PD_RIGHT; break;
-			case 7: move = PD_UP;    move2 = PD_RIGHT; break;
+			case 0: move = D_UP;    move2 = D_UP;    break;
+			case 1: move = D_UP;    move2 = D_LEFT;  break;
+			case 2: move = D_LEFT;  move2 = D_LEFT;  break;
+			case 3: move = D_DOWN;  move2 = D_LEFT;  break;
+			case 4: move = D_DOWN;  move2 = D_DOWN;  break;
+			case 5: move = D_DOWN;  move2 = D_RIGHT; break;
+			case 6: move = D_RIGHT; move2 = D_RIGHT; break;
+			case 7: move = D_UP;    move2 = D_RIGHT; break;
 		}
 
 		Position path = team;
