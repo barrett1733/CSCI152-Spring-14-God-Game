@@ -239,7 +239,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 				Position here;
 				here.set(innerIndex, outerIndex);
-				
+
 				int chance_to_delete = rand() % 100;
 
 				if(TC1.distance(here) <= 30.0 || TC2.distance(here) <= 30.0 || chance_to_delete <= delete_chance)
@@ -436,9 +436,9 @@ void WorldGeneration::createPath(int seed)
 		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2
 		 || path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
 		 || path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
-			
+
 			loc = pathChange(loc);
-		
+
 		if (loc == 0)//even: starts on x-axis
 		{
 			path_end.set(path_end.getX()+x_offset, path_end.getY() + 1);
@@ -478,7 +478,7 @@ Position WorldGeneration::findPathStart(int loc)
 			else//odd: starts on y-axis
 				path_start.set(0, spot);
 			keep_going = false;
-			world_positions[path_start.y][path_start.x] = ET_NONE;
+			world_positions[path_start.getY()][path_start.getX()] = ET_NONE;
 		}
 	}
 	return path_start;
@@ -524,7 +524,7 @@ void WorldGeneration::createPaths2(Position team)
 		{
 			int x_offset = findOffset(1);
 			int y_offset = findOffset(1);
-			
+
 			if (move == move2)
 			{
 				path.move(move);
@@ -538,7 +538,7 @@ void WorldGeneration::createPaths2(Position team)
 			{
 				path.move(move);
 				int rands = rand() % 2;
-				if (rand == 0) path.set(path.getX(), path.getY() + y_offset);
+				if (rands == 0) path.set(path.getX(), path.getY() + y_offset);
 				else path.set(path.getX() + x_offset, path.getY());
 				world_positions[path.getY()][path.getX()] = ET_NONE;
 				//world_positions[path.getY()][path.getX()] = ET_NONE;
@@ -555,5 +555,4 @@ void WorldGeneration::createPaths2(Position team)
 			}
 		}
 	}
-
 }
