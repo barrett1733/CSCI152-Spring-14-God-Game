@@ -9,21 +9,21 @@
 #include <string>
 
 enum Faction {
-	FT_NONE,
-	FT_STATIC, // TODO: Rename FT_RESOURCE. -CH
-	FT_ANIMAL_DOMESTIC, // Should not exist. Domistics belong to a village faction. -CH
-	FT_ANIMAL_PASSIVE,
-	FT_ANIMAL_HOSTILE,
-	FT_PLAYER_1,
-	FT_PLAYER_2,
-	FT_PLAYER_3,
-	FT_PLAYER_4,
-	FT_PLAYER_5,
-	FT_PLAYER_6,
-	FT_PLAYER_7,
-	FT_PLAYER_8,
+	F_NONE,
+	F_STATIC, // TODO: Rename F_RESOURCE. -CH
+	F_ANIMAL_DOMESTIC, // Should not exist. Domistics belong to a village faction. -CH
+	F_ANIMAL_PASSIVE,
+	F_ANIMAL_HOSTILE,
+	F_PLAYER_1,
+	F_PLAYER_2,
+	F_PLAYER_3,
+	F_PLAYER_4,
+	F_PLAYER_5,
+	F_PLAYER_6,
+	F_PLAYER_7,
+	F_PLAYER_8,
 
-	FT_COUNT
+	F_COUNT
 };
 
 enum EntityGroup {

@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 		std::cout << "Setting up new game." << std::endl;
 		// do world gen, set up new game, etc.
 
-		villageManager.addVillage(FT_PLAYER_1);
-		villageManager.addVillage(FT_PLAYER_2);
+		villageManager.addVillage(F_PLAYER_1);
+		villageManager.addVillage(F_PLAYER_2);
 
 		Entity entity = world.getNextEntity();
 		while(entity.getType() != ET_NONE)

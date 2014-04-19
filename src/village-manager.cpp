@@ -18,7 +18,7 @@ void VillageManager::importEntity(EntityReference entity)
 	for(long villageIndex = 0; villageIndex < villageCount; villageIndex ++)
 		villageList[villageIndex]->importEntity(entity);
 
-	if(entity->getGroup() == EG_RESOURCE || entity->getFaction() == FT_STATIC)
+	if(entity->getGroup() == EG_RESOURCE || entity->getFaction() == F_STATIC)
 		resourceList.push_back(entity);
 }
 

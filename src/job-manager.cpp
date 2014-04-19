@@ -176,8 +176,8 @@ Entity * JobManager::findJobTarget(JobType jobType)
         //return the target;
 
 	}
-    
-	Entity * ety= new Entity(ET_HOUSE, 100, *new Position(), FT_NONE);
+
+	Entity * ety= new Entity(ET_HOUSE, 100, *new Position(), F_NONE);
 	ety->setCurrentHealth(0);
 	return ety;
 }

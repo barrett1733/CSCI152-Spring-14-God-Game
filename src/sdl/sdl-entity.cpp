@@ -15,7 +15,7 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	Color color;
 	switch(entity.getFaction())
 	{
-		case FT_STATIC:
+		case F_STATIC:
 			switch(entity.getType())
 			{
 			case ET_TREE:
@@ -34,23 +34,23 @@ SdlEntity::SdlEntity(const Entity & entity) :
 			}
 			break;
 
-		case FT_ANIMAL_DOMESTIC:
+		case F_ANIMAL_DOMESTIC:
 			color = C_CYAN;
 			break;
 
-		case FT_ANIMAL_PASSIVE:
+		case F_ANIMAL_PASSIVE:
 			color = C_YELLOW;
 			break;
 
-		case FT_ANIMAL_HOSTILE:
+		case F_ANIMAL_HOSTILE:
 			color = C_MAGENTA;
 			break;
 
-		case FT_PLAYER_1:
+		case F_PLAYER_1:
 			color = C_BLUE;
 			break;
 
-		case FT_PLAYER_2:
+		case F_PLAYER_2:
 			color = C_RED;
 			break;
 

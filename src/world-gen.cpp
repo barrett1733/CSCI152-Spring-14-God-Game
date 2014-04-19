@@ -260,7 +260,7 @@ Entity WorldGeneration::getNextEntity()
 	//string z="noMoreEntities";
 	double length_to_tc1;
 	double length_to_tc2;
-	Entity to_return(ET_NONE,0,current,FT_NONE);
+	Entity to_return(ET_NONE,0,current,F_NONE);
 	do
 	{
 		if(world_positions[current.getY()][current.getX()]==ET_NONE)
@@ -292,23 +292,23 @@ Entity WorldGeneration::getNextEntity()
 				case ET_TREE:
 				case ET_STONE:
 				case ET_IRON:
-					to_return.setFaction(FT_STATIC);
+					to_return.setFaction(F_STATIC);
 					to_return.setGroup(EG_RESOURCE);
 					break;
 				//passive animals
 				case ET_DEER:
-					to_return.setFaction(FT_ANIMAL_PASSIVE);
+					to_return.setFaction(F_ANIMAL_PASSIVE);
 					to_return.setGroup(EG_PASSIVE);
 					break;
 				//hostile animals
 				case ET_WOLF:
 				case ET_OGRE:
-					to_return.setFaction(FT_ANIMAL_HOSTILE);
+					to_return.setFaction(F_ANIMAL_HOSTILE);
 					to_return.setGroup(EG_HOSTILE);
 					break;
 				//domestic animals
 				case ET_COW:
-					to_return.setFaction(FT_ANIMAL_DOMESTIC);
+					to_return.setFaction(F_ANIMAL_DOMESTIC);
 					to_return.setGroup(EG_DOMESTIC);
 					break;
 				//everything whose faction is not determined by what it is
@@ -316,9 +316,9 @@ Entity WorldGeneration::getNextEntity()
 					length_to_tc1 = TC1.distance(current);
 					length_to_tc2 = TC2.distance(current);
 					if(length_to_tc1<length_to_tc2)
-						to_return.setFaction(FT_PLAYER_1);
+						to_return.setFaction(F_PLAYER_1);
 					else
-						to_return.setFaction(FT_PLAYER_2);
+						to_return.setFaction(F_PLAYER_2);
 
 					if(world_positions[current.getY()][current.getX()] == ET_VILLAGER)
 						to_return.setGroup(EG_VILLAGER);
@@ -506,6 +506,7 @@ int WorldGeneration::pathChange(int loc)
 	if (x == 0 && loc == 1) return 0;
 	if (x == 1 && loc == 0) return 1;
 	if (x == 1 && loc == 1) return 0;
+	return 0;
 }
 
 void WorldGeneration::placePaths()
