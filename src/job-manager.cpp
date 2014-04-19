@@ -107,8 +107,43 @@ void JobManager::createJobList(JobType jobType, int priority, int amount)
 	else
 		return; // 'job' is invalid if control reaches this point (currently, it can't, but with extension it could).
 
+    /*
+     * Register job and tasks
+     */
+    
 	TaskVec taskList = job->getTaskList();
 
+	registerJob(job);
+	for(TaskIter it = taskList.begin(); it != taskList.end(); it++)
+	{
+		taskManager->registerTask(*it);
+	}
+}
+
+//For Attack task, the target has to be designated in Villager AI
+void JobManager::createJobList(JobType jobType, int priority, int amount, Entity * target)
+{
+	JobReference job;
+	int taskNum, taskGoal = 0;
+    
+	if(jobType == JOB_ATTACK
+            || jobType == JOB_DEFEND
+            || jobType == JOB_PATROL
+            || jobType == JOB_TAME_1
+            || jobType == JOB_PARLEY)
+	{
+		taskNum = 10;//Total villager number * triangle value on military
+		job = new MilitaryJob(jobType, priority, taskNum, taskGoal, target);
+	}
+	else
+		return; // 'job' is invalid if control reaches this point (currently, it can't, but with extension it could).
+    
+    /*
+     * Register job and tasks
+     */
+    
+	TaskVec taskList = job->getTaskList();
+    
 	registerJob(job);
 	for(TaskIter it = taskList.begin(); it != taskList.end(); it++)
 	{
@@ -135,19 +170,13 @@ Entity * JobManager::findJobTarget(JobType jobType)
 	   || jobType == JOB_BUILD_TEMPLE)
 	{
 	   //Find the available area near Town Center
-
+        //Get towncenter
+        //Get next entity whose type is ET_NONE;
 		//Mark this area occupied
+        //return the target;
 
 	}
-	else if(jobType == JOB_ATTACK
-		|| jobType == JOB_DEFEND
-		|| jobType == JOB_PATROL
-		|| jobType == JOB_TAME_1
-		|| jobType == JOB_PARLEY)
-	{
-		//TBD
-	}
-
+    
 	Entity * ety= new Entity(ET_HOUSE, 100, *new Position(), FT_NONE);
 	ety->setCurrentHealth(0);
 	return ety;

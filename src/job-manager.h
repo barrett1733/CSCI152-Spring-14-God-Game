@@ -33,6 +33,7 @@ public:
 	void registerJob(JobReference job);
 
 	void createJobList(JobType, int, int);
+    void createJobList(JobType, int, int, Entity *);
 
 	//void initJobList();
 
