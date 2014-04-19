@@ -1,5 +1,7 @@
 #include "village.h"
 
+typedef MobileEntityReference VillagerReference;
+
 Village::Village(Faction faction) :
 	faction(faction)
 { }
@@ -11,10 +13,10 @@ void Village::importEntity(EntityReference entity)
 	if(faction == this->faction)
 	{
 		if(group == EG_VILLAGER)
-			villagerList.push_back(entity);
+			villagerList.push_back((MobileEntityReference)entity);
 
 		else if(group == EG_DOMESTIC)
-			domesticList.push_back(entity);
+			domesticList.push_back((MobileEntityReference)entity);
 	}
 }
 
