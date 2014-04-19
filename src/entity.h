@@ -10,8 +10,8 @@
 
 enum Faction {
 	FT_NONE,
-	FT_STATIC,
-	FT_ANIMAL_DOMESTIC,
+	FT_STATIC, // TODO: Rename FT_RESOURCE. -CH
+	FT_ANIMAL_DOMESTIC, // Should not exist. Domistics belong to a village faction. -CH
 	FT_ANIMAL_PASSIVE,
 	FT_ANIMAL_HOSTILE,
 	FT_PLAYER_1,
@@ -24,6 +24,16 @@ enum Faction {
 	FT_PLAYER_8,
 
 	FT_COUNT
+};
+
+enum EntityGroup {
+	EG_NONE,
+	EG_RESOURCE,
+	EG_BUILDING,
+	EG_VILLAGER,
+	EG_DOMESTIC,
+	EG_PASSIVE,
+	EG_HOSTILE,
 };
 
 enum EntityType {
@@ -97,11 +107,12 @@ enum EntityType {
 class Entity
 {
 private:
+	std::string name;
+	EntityGroup group;
 	EntityType type;
+	Faction faction;
 	int maxHealth;
 	int currentHealth;
-	Faction faction;
-	std::string name;
 
 protected:
 	Position position;
@@ -111,10 +122,14 @@ public:
 	Entity(EntityType, int health, Position, Faction);
 	Entity(EntityType, int health, int xPos, int yPos, Faction);
 	Entity(EntityType, Position pos, Faction fac);
+	Entity(EntityGroup, EntityType, int health, Position, Faction);
+	Entity(EntityGroup, EntityType, int health, int xPos, int yPos, Faction);
+	Entity(EntityGroup, EntityType, Position pos, Faction fac);
 
 	Entity& operator= (const Entity&);
 
 	std::string getName() const;
+	EntityGroup getGroup() const;
 	EntityType getEntityType() const;
 	EntityType getType() const;
 	Faction getFaction() const;

@@ -4,32 +4,52 @@
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
 Entity::Entity(const Entity & entity) :
+	group(entity.group),
 	type(entity.type),
+	faction(entity.faction),
 	maxHealth(entity.maxHealth),
 	currentHealth(entity.currentHealth),
-	faction(entity.faction),
 	position(entity.position)
 { }
 
-Entity::Entity(EntityType entityType, int health, Position position, Faction faction) :
-	type(entityType),
+Entity::Entity(EntityType type, int health, Position position, Faction faction) :
+	type(type),
+	faction(faction),
 	maxHealth(health),
 	currentHealth(health),
-	faction(faction),
 	position(position)
 { }
 
-Entity::Entity(EntityType entityType, int health, int xPos, int yPos, Faction faction) :
-	type(entityType),
+Entity::Entity(EntityType type, int health, int xPos, int yPos, Faction faction) :
+	type(type),
+	faction(faction),
 	maxHealth(health),
 	currentHealth(health),
+	position(xPos, yPos)
+{ }
+
+Entity::Entity(EntityGroup group, EntityType type, int health, Position position, Faction faction) :
+	group(group),
+	type(type),
 	faction(faction),
+	maxHealth(health),
+	currentHealth(health),
+	position(position)
+{ }
+
+Entity::Entity(EntityGroup group, EntityType type, int health, int xPos, int yPos, Faction faction) :
+	group(group),
+	type(type),
+	faction(faction),
+	maxHealth(health),
+	currentHealth(health),
 	position(xPos, yPos)
 { }
 
 Entity& Entity::operator= (const Entity& entity)
 {
 	name = entity.name;
+	group = entity.group;
 	type = entity.type;
 	faction = entity.faction;
 	position = entity.position;
@@ -44,10 +64,16 @@ std::string Entity::getName() const
 	return this->name;
 }
 
+EntityGroup Entity::getGroup() const
+{
+	return this->group;
+}
+
 EntityType Entity::getEntityType() const
 {
 	return this->type;
 }
+
 EntityType Entity::getType() const
 {
 	return this->type;
