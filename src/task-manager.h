@@ -15,6 +15,7 @@
 #include "resource-manager.h"
 #include <memory>
 #include "world-gen.h"
+#include <float.h>
 //#include "worldGen.h"
 extern std::vector<Entity *> foodEntities;
 extern std::vector<Entity *> ironEntities;

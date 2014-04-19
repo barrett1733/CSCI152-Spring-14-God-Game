@@ -29,6 +29,7 @@ void TaskManager::assign()
 
 			task->setAssignee(villager);
 			task->setTarget(this->findResource(villager, taskType));
+            
 
 		}
 		else if(taskType == TASK_BUILD_HOUSE
@@ -136,6 +137,7 @@ void TaskManager::updateProgress()
 			{
 
 				//...
+                target->setCurrentHealth(--targetHealth);
 
 			}
 		}
@@ -183,6 +185,7 @@ Entity * TaskManager::getNearestResource(Entity * villager, EntityVec ev)
 			nearestTarget = *it;
 		}
 	}
+    ev.erase(std::find(ev.begin(), ev.end(), nearestTarget));
 	return nearestTarget;
 }
 
@@ -201,6 +204,30 @@ void TaskManager::cleanTaskList()
 			//delete(*iter);
 			iter = inProgressTaskList.erase(iter);
 			availableVillagers.push_back((*iter)->getAssignee());
+            
+            //Make the resource available again if it is not empty
+            if((*iter)->getTarget()->getCurrentHealth() > 0)
+            {
+                switch((*iter)->getType())
+                {
+                    case TASK_GATHER_FOOD:
+                        foodEntities.push_back((*iter)->getTarget());
+                        break;
+                    case TASK_GATHER_IRON:
+                        ironEntities.push_back((*iter)->getTarget());
+                        break;
+                    case TASK_GATHER_STONE:
+                        stoneEntities.push_back((*iter)->getTarget());
+                        break;
+                    case TASK_GATHER_WOOD:
+                        woodEntities.push_back((*iter)->getTarget());
+                        break;
+                    default:
+                        break;
+                }
+                
+            }
+            
 		}
 		else
 			++iter;
