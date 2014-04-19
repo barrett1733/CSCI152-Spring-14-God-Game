@@ -1,7 +1,7 @@
 
 #include "sdl-map-view.h"
 
-ImageReference SdlMapView::clearSurface = sdlUtility.createSurface(2, 2, C_BEIGE);
+ImageReference SdlMapView::clearSurface = sdlUtility.createSurface(20, 20, C_BEIGE);
 
 SdlMapView::SdlMapView() :
 	SdlWidget(WL_BACKGROUND)
