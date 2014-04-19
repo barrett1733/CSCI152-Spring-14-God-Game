@@ -23,6 +23,8 @@ int main(int argc, char **argv)
 	while(game.mode() == GM_MENU)
 		sdl.update();
 
+	EntityRecord * record;
+
 	if(game.mode() == GM_PLAYING)
 	{
 		std::cout << "Setting up new game." << std::endl;
@@ -34,13 +36,18 @@ int main(int argc, char **argv)
 		Entity entity = world.getNextEntity();
 		while(entity.getType() != ET_NONE)
 		{
-			entityManager.createEntity(&entity);
+			record = entityManager.createRecord(&entity);
+			villageManager.importEntity(record->entity);
+
+			// Get next entity for next loop iteration.
 			entity = world.getNextEntity();
 		}
+
+		entityManager.update();
 	}
 
 	std::cout << "Continuing Game Loop" << std::endl;
-	long timer = time(0);
+	long timer = time(0) + 1;
 	while(( gameMode = game.mode() ) != GM_QUITTING)
 	{
 		if(gameMode == GM_PLAYING)
@@ -49,9 +56,10 @@ int main(int argc, char **argv)
 			{
 				timer = time(0);
 				villageManager.update();
+				//entityManager.sightCheck();
+				entityManager.update();
 			}
 
-			entityManager.update();
 		}
 
 		else if(gameMode == GM_PAUSING)
