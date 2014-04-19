@@ -21,7 +21,7 @@ Entity Data list, this is what I have.
 	"nearly" constructed entity passed
 	eg. a full entity except for a health.
 */
-struct EM_Record
+struct EntityRecord
 {
 	Entity * entity;
 	SdlEntityReference widget;
@@ -32,14 +32,14 @@ class EntityManager : public Config
 	bool visible;
 
 	std::vector<WidgetReference> widgetList;
-	std::vector<EM_Record*> recordList;
-	std::map<Faction, std::vector<EM_Record*> > factionMap;
+	std::vector<EntityRecord*> recordList;
 
+	std::map<Faction, std::vector<EntityRecord*> > factionMap;
 	// these lists are sub-catagories of the entitylist, should still be the same reference //
-	std::vector<EM_Record*> villagerList;
-	std::vector<EM_Record*> peacefulMobList;
-	std::vector<EM_Record*> enemyList;
-	std::vector<EM_Record*> buildingList;
+	std::vector<EntityRecord*> villagerList;
+	std::vector<EntityRecord*> peacefulMobList;
+	std::vector<EntityRecord*> enemyList;
+	std::vector<EntityRecord*> buildingList;
 
 	// data to pair up Entity Type and Health
 	std::map<EntityType, int> Entity_HealthMap;

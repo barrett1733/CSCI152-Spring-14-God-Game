@@ -50,7 +50,7 @@ void EntityManager::createEntity(const Entity & entity)
 
 	Faction faction = entity.getFaction();
 
-	EM_Record *record = new EM_Record();
+	EntityRecord *record = new EntityRecord();
 	record->entity = new Entity(entity);
 	record->widget = new SdlEntity(*record->entity);
 
