@@ -522,15 +522,18 @@ void WorldGeneration::createPaths2(Position team)
 	{
 		Direction move;
 		Direction move2;
-		// Could be a switch statement, or use math? -CH
-		if (x == 0) { move = PD_UP;		move2 = PD_UP; }
-		if (x == 1) { move = PD_UP;		move2 = PD_LEFT; }
-		if (x == 2) { move = PD_LEFT;	move2 = PD_LEFT; }
-		if (x == 3) { move = PD_DOWN;	move2 = PD_LEFT; }
-		if (x == 4) { move = PD_DOWN;	move2 = PD_DOWN; }
-		if (x == 5) { move = PD_DOWN;	move2 = PD_RIGHT; }
-		if (x == 6) { move = PD_RIGHT;	move2 = PD_RIGHT; }
-		if (x == 7) { move = PD_UP;		move2 = PD_RIGHT; }
+		switch(x)
+		{
+			default:
+			case 0: move = PD_UP;    move2 = PD_UP;    break;
+			case 1: move = PD_UP;    move2 = PD_LEFT;  break;
+			case 2: move = PD_LEFT;  move2 = PD_LEFT;  break;
+			case 3: move = PD_DOWN;  move2 = PD_LEFT;  break;
+			case 4: move = PD_DOWN;  move2 = PD_DOWN;  break;
+			case 5: move = PD_DOWN;  move2 = PD_RIGHT; break;
+			case 6: move = PD_RIGHT; move2 = PD_RIGHT; break;
+			case 7: move = PD_UP;    move2 = PD_RIGHT; break;
+		}
 
 		Position path = team;
 		int path_depth = 0;
