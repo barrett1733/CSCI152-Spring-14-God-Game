@@ -41,8 +41,6 @@ GameManager::GameManager()
 	load("res/main-menu.cfg");
 	load("res/sidebar.cfg");
 
-	SDL_Rect rect = {580,20,200,40};
-	new SdlButton("Self-Destructing Button", rect, selfDestruct);
 
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
