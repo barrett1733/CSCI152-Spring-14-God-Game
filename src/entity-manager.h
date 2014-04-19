@@ -25,6 +25,12 @@ struct EntityRecord
 {
 	Entity * entity;
 	SdlEntityReference widget;
+
+	void update()
+	{
+		if(entity) entity->update();
+		if(widget) widget->update();
+	}
 };
 
 class EntityManager : public Config
@@ -51,8 +57,8 @@ class EntityManager : public Config
 public:
 	EntityManager(int worldSize);
 
-	void createEntity(const EntityReference);
-	void createEntity(const Entity&);
+	EntityRecord * createRecord(const EntityReference);
+	EntityRecord * createRecord(const Entity&);
 	void deleteEntity(); // removes entity from all applicable lists
 
 	void getEntityType();

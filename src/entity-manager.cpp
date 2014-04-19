@@ -44,24 +44,28 @@ void EntityManager::deleteEntity(){}
 	ET_CYCLOPS,
 }*/
 
-void EntityManager::createEntity(const Entity & entity)
+EntityRecord * EntityManager::createRecord(const Entity & entity)
 {
 	//return createEntity(*entity);
 
 	Faction faction = entity.getFaction();
+	EntityType type = entity.getType();
 
 	EntityRecord *record = new EntityRecord();
-	record->entity = new Entity(entity);
+	record->entity = (faction == FT_STATIC) ? new Entity(entity) : new MobileEntity(entity);
 	record->widget = new SdlEntity(*record->entity);
 
 	recordList.push_back(record);
 	widgetList.push_back(record->widget);
+
 	factionMap[faction].push_back(record);
+
+	return record;
 }
 
-void EntityManager::createEntity(const EntityReference entity)
+EntityRecord * EntityManager::createRecord(const EntityReference entity)
 {
-	return createEntity(*entity);
+	return createRecord(*entity);
 }
 
 void EntityManager::update()
@@ -70,7 +74,7 @@ void EntityManager::update()
 
 	unsigned long count = recordList.size();
 	for(unsigned long index = 0; index < count; index ++)
-		recordList[index]->widget->update();
+		recordList[index]->update();
 
 	// ...
 }
