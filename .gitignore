@@ -97,3 +97,4 @@ lib
 *.exp
 *.cache
 *.pch
+bin
