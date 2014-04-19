@@ -72,23 +72,35 @@ int Entity::getMaxHealth() {
 int Entity::getCurrentHealth() {
 	return this->currentHealth;
 }
-void Entity::setEntityType(EntityType type) {
-	this->type = type;
-}
-void Entity::setMaxHealth(int maxHealth) {
-	this->maxHealth = maxHealth;
-}
-void Entity::setCurrentHealth(int currentHealth) {
-	this->currentHealth = currentHealth;
-}
-void Entity::setName(std::string name) {
+
+
+void Entity::setName(std::string name)
+{
 	this->name = name;
 }
-void Entity::setPosition(Position position) {
-	this->position = position;
+void Entity::setGroup(EntityGroup group)
+{
+	this->group = group;
 }
-void Entity::setFaction(Faction faction) {
+void Entity::setEntityType(EntityType type)
+{
+	this->type = type;
+}
+void Entity::setFaction(Faction faction)
+{
 	this->faction = faction;
+}
+void Entity::setMaxHealth(int maxHealth)
+{
+	this->maxHealth = maxHealth;
+}
+void Entity::setCurrentHealth(int currentHealth)
+{
+	this->currentHealth = currentHealth;
+}
+void Entity::setPosition(Position position)
+{
+	this->position = position;
 }
 
 ////////

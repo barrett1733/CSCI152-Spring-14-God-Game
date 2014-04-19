@@ -49,10 +49,10 @@ EntityRecord * EntityManager::createRecord(const Entity & entity)
 	//return createEntity(*entity);
 
 	Faction faction = entity.getFaction();
-	EntityType type = entity.getType();
+	EntityGroup group = entity.getGroup();
 
 	EntityRecord *record = new EntityRecord();
-	record->entity = (faction == FT_STATIC) ? new Entity(entity) : new MobileEntity(entity);
+	record->entity = (group < EG_MOBILE) ? new Entity(entity) : new MobileEntity(entity);
 	record->widget = new SdlEntity(*record->entity);
 
 	recordList.push_back(record);

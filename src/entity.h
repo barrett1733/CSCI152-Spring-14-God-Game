@@ -30,6 +30,9 @@ enum EntityGroup {
 	EG_NONE,
 	EG_RESOURCE,
 	EG_BUILDING,
+
+	EG_MOBILE, // if entity.group < EG_MOBILE, then entity isn't mobile
+
 	EG_VILLAGER,
 	EG_DOMESTIC,
 	EG_PASSIVE,
@@ -133,11 +136,12 @@ public:
 	int getCurrentHealth();
 
 	void setName(std::string);
-	void setPosition(Position);
-	void setMaxHealth(int);
-	void setCurrentHealth(int);
+	void setGroup(EntityGroup);
 	void setEntityType(EntityType);
 	void setFaction(Faction);
+	void setMaxHealth(int);
+	void setCurrentHealth(int);
+	void setPosition(Position);
 
 	virtual void update() {}
 
