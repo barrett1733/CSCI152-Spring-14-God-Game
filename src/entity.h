@@ -120,11 +120,6 @@ protected:
 public:
 	Entity(const Entity&);
 	Entity(EntityType, int health, Position, Faction);
-	Entity(EntityType, int health, int xPos, int yPos, Faction);
-	Entity(EntityType, Position pos, Faction fac);
-	Entity(EntityGroup, EntityType, int health, Position, Faction);
-	Entity(EntityGroup, EntityType, int health, int xPos, int yPos, Faction);
-	Entity(EntityGroup, EntityType, Position pos, Faction fac);
 
 	Entity& operator= (const Entity&);
 
@@ -164,8 +159,7 @@ private:
 	int strength;
 	int defense;
 public:
-	MobileEntity(EntityType, int health, Position, Faction, int hunger, int strength, int defense);
-	MobileEntity(EntityType, int health, int xPos, int yPos, Faction, int hunger, int strength, int defense);
+	MobileEntity(const Entity&);
 	int getHunger();
 	int getStrength();
 	int getDefense();

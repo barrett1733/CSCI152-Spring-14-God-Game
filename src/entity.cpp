@@ -20,31 +20,8 @@ Entity::Entity(EntityType type, int health, Position position, Faction faction) 
 	position(position)
 { }
 
-Entity::Entity(EntityType type, int health, int xPos, int yPos, Faction faction) :
-	type(type),
-	faction(faction),
-	maxHealth(health),
-	currentHealth(health),
-	position(xPos, yPos)
-{ }
 
-Entity::Entity(EntityGroup group, EntityType type, int health, Position position, Faction faction) :
-	group(group),
-	type(type),
-	faction(faction),
-	maxHealth(health),
-	currentHealth(health),
-	position(position)
-{ }
 
-Entity::Entity(EntityGroup group, EntityType type, int health, int xPos, int yPos, Faction faction) :
-	group(group),
-	type(type),
-	faction(faction),
-	maxHealth(health),
-	currentHealth(health),
-	position(xPos, yPos)
-{ }
 
 Entity& Entity::operator= (const Entity& entity)
 {
@@ -114,19 +91,13 @@ void Entity::setFaction(Faction faction) {
 	this->faction = faction;
 }
 
+////////
+//  MOBILE ENTITY
+////////
 
-MobileEntity::MobileEntity(EntityType entityType, int health, Position position, Faction faction, int hunger, int strength, int defense):
-	Entity(entityType, health, position, faction),
-	hunger(hunger),
-	strength(strength),
-	defense(defense)
-{ }
-MobileEntity::MobileEntity(EntityType entityType, int health, int xPos, int yPos, Faction faction, int hunger, int strength, int defense):
-	Entity(entityType, health, xPos, yPos, faction),
-	hunger(hunger),
-	strength(strength),
-	defense(defense)
-{ }
+MobileEntity::MobileEntity(const Entity & entity) :
+	Entity(entity)
+{}
 
 int MobileEntity::getHunger() {
 	return this->hunger;
