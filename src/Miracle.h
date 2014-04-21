@@ -18,17 +18,22 @@
 typedef std::map<EntityType, std::int> MiracleMap;
 
 //miracle manager. go between for player and map
-class MiracleManager:Config{
+class MiracleManager:config{ // config not in this branch yet.
 	// data
 	MiracleMap miracleList;
-	ResourceManager *resources;
 	
-	// methods
-	MiracleManager(std::string fileName,ResourceManager *); // constructor
-	int getCost(EntityType);
-	EntityType getET_Name(std::string); // finds ET_Name based on string name?
-	bool castMiracle(EntityType, Callback input); // casts/creates entity Miracle defined by string, at mouse location on call back?
+	ResourceManager *resources; // don't have either of these.
+	EntityManager *entities;
+	
+	//// Methods
+	// set up
+	MiracleManager(std::string fileName,ResourceManager *,EntityManager*); // constructor
 	void setResourceManager(ResourceManager *); // sets resource manager to take from
+	void setEntityManager(EntityManager*); // ditto on entity manager to send to
+	
+	bool castMiracle(Entity*); // adds Entity to EntityManager if resource manager has enough faith
+	
+	// Inherited methods from config
 	void populateEntityMap(std::string);
 }
 
