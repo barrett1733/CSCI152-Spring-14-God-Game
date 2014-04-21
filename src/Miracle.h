@@ -12,48 +12,39 @@
  *
  */
  #include <map>
+ #include <string>
  #include "entity.h"
  #include "entity.cpp"
+ #include "entity-manager.cpp"
+ #include "config.cpp"
+ 
  
 typedef std::map<EntityType, std::int> MiracleMap;
 
 //miracle manager. go between for player and map
-class MiracleManager:config{ // config not in this branch yet.
+class MiracleManager:config{
 	// data
+private:
 	MiracleMap miracleList;
 	
-	ResourceManager *resources; // don't have either of these.
+	ResourceManager *resources;
 	EntityManager *entities;
 	
 	//// Methods
 	// set up
-	MiracleManager(std::string fileName,ResourceManager *,EntityManager*); // constructor
-	void setResourceManager(ResourceManager *); // sets resource manager to take from
-	void setEntityManager(EntityManager*); // ditto on entity manager to send to
+	MiracleManager(std::string file){load(file);} // constructor
 	
-	bool castMiracle(Entity*); // adds Entity to EntityManager if resource manager has enough faith
+	int getCost(EntityType e){return miracleList[e];}
+	Entity* castMiracle(EntityType, Position); // adds Entity to EntityManager if resource manager has enough faith
 	
 	// Inherited methods from config
-	void populateEntityMap(std::string);
+	// void load(string file); 
+	bool setProperty(std::string property, int value);
 }
 
-MiracleManager::MiracleManager(std::string fileName,ResourceManager* rm){
-	// constructor
-	populateEntitiyMap(fileName);
-	setResourceManager(rm);
+////  Config Method
+bool MiracleManager::setProperty(std::string property, int value){
+	miracleList[property]=value;
 }
-int MiracleManager::getCost(EntityType miracle){
-	return miracleList[miracle];
-}
-bool MiracleManager::castMiracle(EntityType miracle, Callback input){
-	// casts/creates entity Miracle defined by string, at mouse location on call back?
-	if(resources->requestResource(miracle,getCost(miracle))){
-		// call the callback function?
-	}
-	
-}
-void MiracleManager::setResourceManager(ResourceManager *rm){
-	// sets resource manager to take from
-	this->resources=rm;
-}
-void MiracleManager::populateEntityMap(std::string fileName){}//fills MiracleMap with data from config file
+
+
