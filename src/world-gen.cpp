@@ -55,8 +55,7 @@ WorldGeneration::WorldGeneration(int seed) :
 	PlaceResource(30, 35, ET_STONE);//stone
 	placePaths();
 	PlaceTownCenter();
-	//createPaths2(TC1);
-	//createPaths2(TC2);
+	
 	PlaceTemple();
 	PlaceVillagers(ET_VILLAGER, TC1);
 	PlaceVillagers(ET_VILLAGER, TC2);
@@ -125,6 +124,9 @@ void WorldGeneration::PlaceTownCenter()
 		if(TC1.distance(TC2) > world_info[WI_MAP_SIZE]/2)
 			keep_going=false;
 	}
+
+	//createPaths2(TC1);
+	//createPaths2(TC2);
 
 	/**************************/
 	/***move away from edges***/
