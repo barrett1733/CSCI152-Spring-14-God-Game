@@ -50,10 +50,12 @@ WorldGeneration::WorldGeneration(int seed) :
 	***place all entities***
 	************************/
 
-	PlaceResource(25, 75, ET_TREE);//trees
+	PlaceResource(15, 85, ET_TREE);//trees
 	PlaceResource(1, 5, ET_IRON);//iron
 	PlaceResource(30, 35, ET_STONE);//stone
+	placePaths();
 	PlaceTownCenter();
+	
 	PlaceTemple();
 	PlaceVillagers(ET_VILLAGER, TC1);
 	PlaceVillagers(ET_VILLAGER, TC2);
@@ -123,6 +125,9 @@ void WorldGeneration::PlaceTownCenter()
 			keep_going=false;
 	}
 
+	//createPaths2(TC1);
+	//createPaths2(TC2);
+
 	/**************************/
 	/***move away from edges***/
 	/**************************/
@@ -148,10 +153,10 @@ void WorldGeneration::PlaceTemple()
 	/***find offsets***/
 	/******************/
 
-	int x_offset1 = findOffset();
-	int y_offset1 = findOffset();
-	int x_offset2 = findOffset();
-	int y_offset2 = findOffset();
+	int x_offset1 = findOffset(3);
+	int y_offset1 = findOffset(3);
+	int x_offset2 = findOffset(3);
+	int y_offset2 = findOffset(3);
 	/**********************************/
 	/***use offsets to place temples***/
 	/**********************************/
@@ -195,6 +200,9 @@ void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
 
 void WorldGeneration::PlaceDomesticBeasts(EntityType type, int num_of_beasts, Position pos)
 {
+	// This function looks almost identical to PlaceVillagers().
+	// Can they be abstracted?
+	// -CH
 	int team_type_count = 0;
 	Position here;
 
@@ -234,14 +242,12 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
 
-				double x1_dist = abs(innerIndex-TC1.getX());//removing if too close to TC
-				double y1_dist = abs(outerIndex-TC1.getY());
-				double x2_dist = abs(innerIndex-TC2.getX());
-				double y2_dist = abs(outerIndex-TC2.getY());
+				Position here;
+				here.set(innerIndex, outerIndex);
 
 				int chance_to_delete = rand() % 100;
 
-				if(sqrt((x1_dist * x1_dist)+(y1_dist * y1_dist)) <= 30.0 || sqrt((x2_dist * x2_dist)+(y2_dist * y2_dist)) <= 30.0 || chance_to_delete <= delete_chance)
+				if(TC1.distance(here) <= 30.0 || TC2.distance(here) <= 30.0 || chance_to_delete <= delete_chance)
 				{
 					world_positions[outerIndex][innerIndex] = ET_NONE;
 					entityCount--;
@@ -256,7 +262,7 @@ Entity WorldGeneration::getNextEntity()
 	//string z="noMoreEntities";
 	double length_to_tc1;
 	double length_to_tc2;
-	Entity to_return(ET_NONE,0,current,FT_NONE);
+	Entity to_return(ET_NONE,0,current,F_NONE);
 	do
 	{
 		if(world_positions[current.getY()][current.getX()]==ET_NONE)
@@ -288,29 +294,40 @@ Entity WorldGeneration::getNextEntity()
 				case ET_TREE:
 				case ET_STONE:
 				case ET_IRON:
-					to_return.setFaction(FT_STATIC);
+					to_return.setFaction(F_STATIC);
+					to_return.setGroup(EG_RESOURCE);
 					break;
 				//passive animals
 				case ET_DEER:
-					to_return.setFaction(FT_ANIMAL_PASSIVE);
+					to_return.setFaction(F_ANIMAL_PASSIVE);
+					to_return.setGroup(EG_PASSIVE);
 					break;
 				//hostile animals
 				case ET_WOLF:
 				case ET_OGRE:
-					to_return.setFaction(FT_ANIMAL_HOSTILE);
+					to_return.setFaction(F_ANIMAL_HOSTILE);
+					to_return.setGroup(EG_HOSTILE);
 					break;
 				//domestic animals
 				case ET_COW:
-					to_return.setFaction(FT_ANIMAL_DOMESTIC);
+					to_return.setFaction(F_ANIMAL_DOMESTIC);
+					to_return.setGroup(EG_DOMESTIC);
 					break;
 				//everything whose faction is not determined by what it is
 				default:
 					length_to_tc1 = TC1.distance(current);
 					length_to_tc2 = TC2.distance(current);
 					if(length_to_tc1<length_to_tc2)
-					to_return.setFaction(FT_PLAYER_1);
+						to_return.setFaction(F_PLAYER_1);
 					else
-					to_return.setFaction(FT_PLAYER_2);
+						to_return.setFaction(F_PLAYER_2);
+
+					if(world_positions[current.getY()][current.getX()] == ET_VILLAGER)
+						to_return.setGroup(EG_VILLAGER);
+					else
+						to_return.setGroup(EG_BUILDING);
+
+
 					break;
 			}
 
@@ -332,11 +349,11 @@ void WorldGeneration::nextPosition()
 {
 	int prev_x = current.getX();
 	int prev_y = current.getY();
-	current.move(PD_RIGHT);
+	current.move(D_RIGHT);
 	if(current.getX() == prev_x)
 	{
 		current.set(0,prev_y);
-		current.move(PD_DOWN);
+		current.move(D_DOWN);
 		if(current.getY() == prev_y)
 		{
 			current.set(0,0);
@@ -345,13 +362,13 @@ void WorldGeneration::nextPosition()
 	}
 }
 
-int WorldGeneration::findOffset()
+int WorldGeneration::findOffset(int dis)
 {
 	int x = rand()%100;
 	if(x > 50)
-		return -3;
+		return 0-dis;
 	else
-		return 3;
+		return dis;
 
 }
 
@@ -409,6 +426,154 @@ void WorldGeneration::clearArea(Position pos)
 				if(world_positions[outerIndex][innerIndex] != ET_NONE)
 					entityCount--;
 				world_positions[outerIndex][innerIndex] = ET_NONE;
+			}
+		}
+	}
+}
+
+void WorldGeneration::createPath(int seed)
+{
+	Position path_end;
+	Position path_start;
+	int loc = seed % 2;
+
+	path_start = findPathStart(loc);
+	path_end.set(path_start.getX() + 1, path_start.getY() + 1);
+	world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
+
+	//cout << "path starts at (" << path_start.getX() << ", " << path_start.getY() << ")" << endl;
+	//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+
+	while (path_end.getX() + 1 <= world_info[WI_MAP_SIZE] - 1 && path_end.getY() + 1 <= world_info[WI_MAP_SIZE] - 1)
+	{
+		int x_offset = findOffset(1);
+		int y_offset = findOffset(1);
+
+		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2
+		 || path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
+		 || path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
+
+			loc = pathChange(loc);
+
+		if (loc == 0)//even: starts on x-axis
+		{
+			path_end.set(path_end.getX()+x_offset, path_end.getY() + 1);
+			//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+			world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
+			if (x_offset < 1 && path_end.getY() < world_info[WI_MAP_SIZE]-1)
+				world_positions[path_end.getY() + 1][path_end.getX()] = ET_NONE;
+			else
+				world_positions[path_end.getY() - 1][path_end.getX()] = ET_NONE;
+		}
+		else//odd: starts on y-axis
+		{
+			path_end.set(path_end.getX() + 1, path_end.getY()+y_offset);
+			world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
+			if (y_offset < 1 && path_end.getX() < world_info[WI_MAP_SIZE]-1)
+				world_positions[path_end.getY()][path_end.getX() + 1] = ET_NONE;
+			else
+				world_positions[path_end.getY()][path_end.getX() - 1] = ET_NONE;
+		}
+
+	}
+	//cout << "path ends at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+}
+
+Position WorldGeneration::findPathStart(int loc)
+{
+	bool keep_going = true;
+	Position path_start;
+
+	while (keep_going)
+	{
+		int spot = rand() % world_info[WI_MAP_SIZE];
+		if (spot > 10 && spot < world_info[WI_MAP_SIZE] - 10)
+		{
+			if (loc == 0)//even: starts on x-axis
+				path_start.set(spot, 0);
+			else//odd: starts on y-axis
+				path_start.set(0, spot);
+			keep_going = false;
+			world_positions[path_start.getY()][path_start.getX()] = ET_NONE;
+		}
+	}
+	return path_start;
+}
+
+int WorldGeneration::pathChange(int loc)
+{
+	// This function can be optimized away to just "loc = 1 - loc;" in place of the function call. -CH
+	int x = rand() % 2;
+	if (x == 0 && loc == 0) return 1;
+	if (x == 0 && loc == 1) return 0;
+	if (x == 1 && loc == 0) return 1;
+	if (x == 1 && loc == 1) return 0;
+	return 0;
+}
+
+void WorldGeneration::placePaths()
+{
+	for (int i = 0; i <= world_info[WI_MAP_SIZE] / 10 ; i++)
+	{
+		createPath(rand());
+	}
+}
+
+void WorldGeneration::createPaths2(Position team)
+{
+	for (int x = 0; x < 8; x++)
+	{
+		Direction move;
+		Direction move2;
+		switch(x)
+		{
+			default:
+			case 0: move = D_UP;    move2 = D_UP;    break;
+			case 1: move = D_UP;    move2 = D_LEFT;  break;
+			case 2: move = D_LEFT;  move2 = D_LEFT;  break;
+			case 3: move = D_DOWN;  move2 = D_LEFT;  break;
+			case 4: move = D_DOWN;  move2 = D_DOWN;  break;
+			case 5: move = D_DOWN;  move2 = D_RIGHT; break;
+			case 6: move = D_RIGHT; move2 = D_RIGHT; break;
+			case 7: move = D_UP;    move2 = D_RIGHT; break;
+		}
+
+		Position path = team;
+		int path_depth = 0;
+
+		while (path.getX() + 1 <= world_info[WI_MAP_SIZE] - 1 && path.getY() + 1 <= world_info[WI_MAP_SIZE] - 1
+			&& path.getX() - 1 >= 1 && path.getY() - 1 >= 1)
+		{
+			int x_offset = findOffset(1);
+			int y_offset = findOffset(1);
+
+			if (move == move2)
+			{
+				path.move(move);
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				path.set(path.getX() + x_offset, path.getY());
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				path.set(path.getX(), path.getY() + y_offset);
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+			}
+			else
+			{
+				path.move(move);
+				int rands = rand() % 2;
+				if (rands == 0) path.set(path.getX(), path.getY() + y_offset);
+				else path.set(path.getX() + x_offset, path.getY());
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				//world_positions[path.getY()][path.getX()] = ET_NONE;
+				//world_positions[path.getY()][path.getX()] = ET_NONE;
+				path.move(move2);
+				world_positions[path.getY()][path.getX()] = ET_NONE;
+				//world_positions[path.getY()][path.getX()] = ET_NONE;
+			}
+			path_depth++;
+			int rands2 = rand() % 18;
+			if (path_depth > world_info[WI_MAP_SIZE] / 2)
+			{
+				if (rands2 == 0) break;
 			}
 		}
 	}

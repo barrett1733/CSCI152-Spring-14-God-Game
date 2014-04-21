@@ -22,35 +22,36 @@ void TaskManager::assign()
 		availableVillagers.pop_back();
 
 		if(taskType == TASK_GATHER_FOOD
-		   or taskType == TASK_GATHER_IRON
-		   or taskType == TASK_GATHER_WOOD
-		   or taskType == TASK_GATHER_STONE)
+		   || taskType == TASK_GATHER_IRON
+		   || taskType == TASK_GATHER_WOOD
+		   || taskType == TASK_GATHER_STONE)
 		{
 
 			task->setAssignee(villager);
 			task->setTarget(this->findResource(villager, taskType));
+            
 
 		}
 		else if(taskType == TASK_BUILD_HOUSE
-			or taskType == TASK_BUILD_STONEWORKS
-			or taskType == TASK_BUILD_SMELTING
-			or taskType == TASK_BUILD_FARM
-			or taskType == TASK_BUILD_LUMBERMILL
-			or taskType == TASK_BUILD_STOREHOUSE
-			or taskType == TASK_BUILD_WEAPONSMITH
-			or taskType == TASK_BUILD_ARMORSMITH
-			or taskType == TASK_BUILD_WATCHTOWER
-			or taskType == TASK_BUILD_TOWNCENTER)
+			|| taskType == TASK_BUILD_STONEWORKS
+			|| taskType == TASK_BUILD_SMELTING
+			|| taskType == TASK_BUILD_FARM
+			|| taskType == TASK_BUILD_LUMBERMILL
+			|| taskType == TASK_BUILD_STOREHOUSE
+			|| taskType == TASK_BUILD_WEAPONSMITH
+			|| taskType == TASK_BUILD_ARMORSMITH
+			|| taskType == TASK_BUILD_WATCHTOWER
+			|| taskType == TASK_BUILD_TOWNCENTER)
 		{
 
 			task->setAssignee(villager);
 
 		}
 		else if(taskType == TASK_ATTACK
-			or taskType == TASK_DEFEND
-			or taskType == TASK_PATROL
-			or taskType == TASK_TAME_1
-			or taskType == TASK_PARLEY)
+			|| taskType == TASK_DEFEND
+			|| taskType == TASK_PATROL
+			|| taskType == TASK_TAME_1
+			|| taskType == TASK_PARLEY)
 		{
 
 			task->setAssignee(villager);
@@ -101,9 +102,9 @@ void TaskManager::updateProgress()
 			task->setProgress(++taskProgress);
 
 			if(taskType == TASK_GATHER_FOOD
-			   or taskType == TASK_GATHER_IRON
-			   or taskType == TASK_GATHER_WOOD
-			   or taskType == TASK_GATHER_STONE)
+			   || taskType == TASK_GATHER_IRON
+			   || taskType == TASK_GATHER_WOOD
+			   || taskType == TASK_GATHER_STONE)
 			{
 				// Doesn't compile; resourceManager isn't declared.
 				// Not sure where it belongs though.
@@ -114,28 +115,29 @@ void TaskManager::updateProgress()
 
 			}
 			else if(taskType == TASK_BUILD_HOUSE
-				or taskType == TASK_BUILD_STONEWORKS
-				or taskType == TASK_BUILD_SMELTING
-				or taskType == TASK_BUILD_FARM
-				or taskType == TASK_BUILD_LUMBERMILL
-				or taskType == TASK_BUILD_STOREHOUSE
-				or taskType == TASK_BUILD_WEAPONSMITH
-				or taskType == TASK_BUILD_ARMORSMITH
-				or taskType == TASK_BUILD_WATCHTOWER
-				or taskType == TASK_BUILD_TOWNCENTER)
+				|| taskType == TASK_BUILD_STONEWORKS
+				|| taskType == TASK_BUILD_SMELTING
+				|| taskType == TASK_BUILD_FARM
+				|| taskType == TASK_BUILD_LUMBERMILL
+				|| taskType == TASK_BUILD_STOREHOUSE
+				|| taskType == TASK_BUILD_WEAPONSMITH
+				|| taskType == TASK_BUILD_ARMORSMITH
+				|| taskType == TASK_BUILD_WATCHTOWER
+				|| taskType == TASK_BUILD_TOWNCENTER)
 			{
 
 				target->setCurrentHealth(++targetHealth);
 
 			}
 			else if(taskType == TASK_ATTACK
-				or taskType == TASK_DEFEND
-				or taskType == TASK_PATROL
-				or taskType == TASK_TAME_1
-				or taskType == TASK_PARLEY)
+				|| taskType == TASK_DEFEND
+				|| taskType == TASK_PATROL
+				|| taskType == TASK_TAME_1
+				|| taskType == TASK_PARLEY)
 			{
 
 				//...
+                target->setCurrentHealth(--targetHealth);
 
 			}
 		}
@@ -173,7 +175,7 @@ Entity * TaskManager::findResource(Entity * villager, TaskType taskType)
 Entity * TaskManager::getNearestResource(Entity * villager, EntityVec ev)
 {
 	Entity * nearestTarget = nullptr;
-	double min = INFINITY;
+	double min = DBL_MAX;
 	for (EntityIter it = ev.begin(); it != ev.end(); ++it)
 	{
 		Position p = (*it)->getPosition();
@@ -183,6 +185,7 @@ Entity * TaskManager::getNearestResource(Entity * villager, EntityVec ev)
 			nearestTarget = *it;
 		}
 	}
+    ev.erase(std::find(ev.begin(), ev.end(), nearestTarget));
 	return nearestTarget;
 }
 
@@ -201,6 +204,30 @@ void TaskManager::cleanTaskList()
 			//delete(*iter);
 			iter = inProgressTaskList.erase(iter);
 			availableVillagers.push_back((*iter)->getAssignee());
+            
+            //Make the resource available again if it is not empty
+            if((*iter)->getTarget()->getCurrentHealth() > 0)
+            {
+                switch((*iter)->getType())
+                {
+                    case TASK_GATHER_FOOD:
+                        foodEntities.push_back((*iter)->getTarget());
+                        break;
+                    case TASK_GATHER_IRON:
+                        ironEntities.push_back((*iter)->getTarget());
+                        break;
+                    case TASK_GATHER_STONE:
+                        stoneEntities.push_back((*iter)->getTarget());
+                        break;
+                    case TASK_GATHER_WOOD:
+                        woodEntities.push_back((*iter)->getTarget());
+                        break;
+                    default:
+                        break;
+                }
+                
+            }
+            
 		}
 		else
 			++iter;

@@ -15,6 +15,7 @@
 #include "resource-manager.h"
 #include <memory>
 #include "world-gen.h"
+#include <float.h>
 //#include "worldGen.h"
 extern std::vector<Entity *> foodEntities;
 extern std::vector<Entity *> ironEntities;
@@ -38,7 +39,7 @@ struct Comparator
 typedef std::priority_queue<TaskReference, TaskVec, Comparator> TaskQueue;
 
 //typedef std::map<TaskType, std::vector<Entity *>> TaskResourceMap;
-typedef std::map<TaskType, ResourceType> TaskResourceTypeMap;
+//typedef std::map<TaskType, ResourceType> TaskResourceTypeMap;
 
 //static TaskResourceMap mapTaskResource = {
 //    {TASK_GATHER_FOOD, foodEntities},
@@ -47,12 +48,12 @@ typedef std::map<TaskType, ResourceType> TaskResourceTypeMap;
 //    {TASK_GATHER_WOOD, woodEntities}
 //};
 
-static TaskResourceTypeMap mapTaskResourceType = {
-	{TASK_GATHER_FOOD, RS_FOOD},
-	{TASK_GATHER_IRON, RS_IRON},
-	{TASK_GATHER_STONE, RS_STONE},
-	{TASK_GATHER_WOOD, RS_WOOD}
-};
+// static TaskResourceTypeMap mapTaskResourceType = {
+// 	{TASK_GATHER_FOOD, RS_FOOD},
+// 	{TASK_GATHER_IRON, RS_IRON},
+// 	{TASK_GATHER_STONE, RS_STONE},
+// 	{TASK_GATHER_WOOD, RS_WOOD}
+// };
 
 class TaskManager
 {

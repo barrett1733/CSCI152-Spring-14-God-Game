@@ -8,22 +8,38 @@
 #include "position.h"
 #include <string>
 
-enum Faction {
-	FT_NONE,
-	FT_STATIC,
-	FT_ANIMAL_DOMESTIC,
-	FT_ANIMAL_PASSIVE,
-	FT_ANIMAL_HOSTILE,
-	FT_PLAYER_1,
-	FT_PLAYER_2,
-	FT_PLAYER_3,
-	FT_PLAYER_4,
-	FT_PLAYER_5,
-	FT_PLAYER_6,
-	FT_PLAYER_7,
-	FT_PLAYER_8,
+class Task; // forward declaration of Task class.
+typedef Task * TaskReference;
 
-	FT_COUNT
+enum Faction {
+	F_NONE,
+	F_STATIC, // TODO: Rename F_RESOURCE. -CH
+	F_ANIMAL_DOMESTIC, // Should not exist. Domistics belong to a village faction. -CH
+	F_ANIMAL_PASSIVE,
+	F_ANIMAL_HOSTILE,
+	F_PLAYER_1,
+	F_PLAYER_2,
+	F_PLAYER_3,
+	F_PLAYER_4,
+	F_PLAYER_5,
+	F_PLAYER_6,
+	F_PLAYER_7,
+	F_PLAYER_8,
+
+	F_COUNT
+};
+
+enum EntityGroup {
+	EG_NONE,
+	EG_RESOURCE,
+	EG_BUILDING,
+
+	EG_MOBILE, // if entity.group < EG_MOBILE, then entity isn't mobile
+
+	EG_VILLAGER,
+	EG_DOMESTIC,
+	EG_PASSIVE,
+	EG_HOSTILE,
 };
 
 enum EntityType {
@@ -97,11 +113,12 @@ enum EntityType {
 class Entity
 {
 private:
+	std::string name;
+	EntityGroup group;
 	EntityType type;
+	Faction faction;
 	int maxHealth;
 	int currentHealth;
-	Faction faction;
-	std::string name;
 
 protected:
 	Position position;
@@ -109,12 +126,11 @@ protected:
 public:
 	Entity(const Entity&);
 	Entity(EntityType, int health, Position, Faction);
-	Entity(EntityType, int health, int xPos, int yPos, Faction);
-	Entity(EntityType, Position pos, Faction fac);
 
 	Entity& operator= (const Entity&);
 
 	std::string getName() const;
+	EntityGroup getGroup() const;
 	EntityType getEntityType() const;
 	EntityType getType() const;
 	Faction getFaction() const;
@@ -123,11 +139,12 @@ public:
 	int getCurrentHealth();
 
 	void setName(std::string);
-	void setPosition(Position);
-	void setMaxHealth(int);
-	void setCurrentHealth(int);
+	void setGroup(EntityGroup);
 	void setEntityType(EntityType);
 	void setFaction(Faction);
+	void setMaxHealth(int);
+	void setCurrentHealth(int);
+	void setPosition(Position);
 
 	virtual void update() {}
 
@@ -148,9 +165,10 @@ private:
 	int hunger;
 	int strength;
 	int defense;
+
+	Entity * target;
 public:
-	MobileEntity(EntityType, int health, Position, Faction, int hunger, int strength, int defense);
-	MobileEntity(EntityType, int health, int xPos, int yPos, Faction, int hunger, int strength, int defense);
+	MobileEntity(const Entity&);
 	int getHunger();
 	int getStrength();
 	int getDefense();
@@ -159,8 +177,12 @@ public:
 	void setDefense(int);
 
 	void update();
+
+	bool hasTask();
+	void setTask(TaskReference);
 };
 
-typedef Entity * EntityReference;
-
 #endif
+
+typedef Entity * EntityReference;
+typedef MobileEntity * MobileEntityReference;

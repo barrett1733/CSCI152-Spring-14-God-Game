@@ -1,7 +1,7 @@
 CXX = clang++
 SDL = -framework SDL2 -framework SDL2_image -framework SDL2_ttf
 # If your compiler is a bit older you may need to change -std=c++11 to -std=c++0x
-CFLAGS = -Wall -Werror -pedantic -c -std=c++11 -g
+CFLAGS = -Wall -Werror -pedantic -c -std=c++11 -g -O0
 #-O2
 LFLAGS = $(SDL)
 SRC_DIR = src

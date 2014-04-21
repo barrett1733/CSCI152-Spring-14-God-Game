@@ -73,10 +73,10 @@ double Position::direction(const Position & position)
 
 void Position::move(Direction dir)
 {
-	if(dir & PD_UP)    y--;
-	if(dir & PD_RIGHT) x++;
-	if(dir & PD_DOWN)  y++;
-	if(dir & PD_LEFT)  x--;
+	if(dir & D_UP)    y--;
+	if(dir & D_RIGHT) x++;
+	if(dir & D_DOWN)  y++;
+	if(dir & D_LEFT)  x--;
 
 	checkSanity();
 }

@@ -31,6 +31,7 @@ enum WorldInfo
 	WI_MAP_SIZE = 0x00,
 	WI_DIFFICULTY,
 	WI_NUM_OF_VILLAGERS,
+	//WI_NUM_OF_PATHS,
 	//domestic animals
 	WI_NUM_OF_COWS,
 	WI_SHEEP,
@@ -66,19 +67,20 @@ public:
 	Entity getNextEntity();
 	int getEntityCount();
 	void nextPosition();
-	int findOffset();
+	int findOffset(int);
 	int shiftFromEdge(int);
 	void shiftFromEdge(Position&);
 	void clearArea(Position);
+	void createPath(int);
+	Position findPathStart(int);
+	int pathChange(int);
+	void placePaths();
+	void createPaths2(Position);
 
 
 	std::vector< std::vector<EntityType> > world_positions;
 	std::vector<int> world_info;
 private:
-	//int TC1_x_coord_topleft;//the index of the x coordinate for team 1's town center
-	//int TC1_y_coord_topleft;//the index of the y coordinate for team 1's town center
-	//int TC2_x_coord_topleft;//the index of the x coordinate for team 2's town center
-	//int TC2_y_coord_topleft;//the index of the y coordinate for team 2's town center
 	int entityCount;
 	Position current;
 	Position TC1;

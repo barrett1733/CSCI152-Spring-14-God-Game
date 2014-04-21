@@ -8,32 +8,6 @@
 #include "job.h"
 #include "world-gen.h"
 
-static std::map<JobType, int> mapBuildTaskNum = {
-	{JOB_BUILD_HOUSE, 1},
-	{JOB_BUILD_SMELTING, 2},
-	{JOB_BUILD_STONEWORKS, 2},
-	{JOB_BUILD_FARM, 2},
-	{JOB_BUILD_LUMBERMILL, 3},
-	{JOB_BUILD_WEAPONSMITH, 4},
-	{JOB_BUILD_ARMORSMITH, 4},
-	{JOB_BUILD_WATCHTOWER, 1},
-	{JOB_BUILD_TOWNCENTER, 20},
-	{JOB_BUILD_TEMPLE, 10}
-};
-
-static std::map<JobType, std::string> mapTaskPriority = {
-	{JOB_BUILD_HOUSE, "Build"},
-	{JOB_BUILD_FARM, "Build"},
-	{JOB_BUILD_SMELTING, "Build"},
-	{JOB_BUILD_STONEWORKS, "Build"},
-	{JOB_BUILD_LUMBERMILL, "Build"},
-	{JOB_BUILD_WEAPONSMITH, "Military"},
-	{JOB_BUILD_ARMORSMITH, "Military"},
-	{JOB_BUILD_WATCHTOWER, "Military"},
-	{JOB_BUILD_TOWNCENTER, "Build"},
-	{JOB_BUILD_TEMPLE, "Build"}
-};
-
 typedef std::vector<JobReference> JobVec;
 typedef JobVec::iterator JobIter;
 enum JobPriority
@@ -49,12 +23,17 @@ class JobManager
 	TaskManager * taskManager;
 
 public:
+    static std::map<JobType, int> mapBuildTaskNum;
+    
+    static std::map<JobType, std::string> mapTaskPriority;
+    
 	JobManager() : taskManager(new TaskManager()) {};
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
 
 	void createJobList(JobType, int, int);
+    void createJobList(JobType, int, int, Entity *);
 
 	//void initJobList();
 

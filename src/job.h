@@ -34,24 +34,6 @@ enum JobType// maybe job type enum goes here
 	JOB_PARLEY
 };
 
-static std::map<JobType, TaskType> mp = {
-	{JOB_GATHER_FOOD, TASK_GATHER_FOOD},
-	{JOB_GATHER_IRON, TASK_GATHER_IRON},
-	{JOB_GATHER_WOOD, TASK_GATHER_WOOD},
-	{JOB_GATHER_STONE, TASK_GATHER_STONE},
-
-	{JOB_BUILD_HOUSE, TASK_BUILD_HOUSE},
-	{JOB_BUILD_STONEWORKS, TASK_BUILD_STONEWORKS},
-	{JOB_BUILD_SMELTING, TASK_BUILD_SMELTING},
-	{JOB_BUILD_FARM, TASK_BUILD_FARM},
-	{JOB_BUILD_LUMBERMILL, TASK_BUILD_LUMBERMILL},
-	{JOB_BUILD_WEAPONSMITH, TASK_BUILD_WEAPONSMITH},
-	{JOB_BUILD_ARMORSMITH, TASK_BUILD_ARMORSMITH},
-	{JOB_BUILD_WATCHTOWER, TASK_BUILD_WATCHTOWER},
-	{JOB_BUILD_TOWNCENTER, TASK_BUILD_TOWNCENTER},
-	{JOB_BUILD_TEMPLE, TASK_BUILD_TEMPLE}
-};
-
 class Job // base class
 {
 protected:
@@ -60,6 +42,7 @@ protected:
 	std::vector<TaskReference> _taskList;
 	int _taskNum;
 	int _taskQuota;
+    static std::map<JobType, TaskType> mp;
 
 public:
 	Job(JobType type, int priority, int taskNum, int taskQuota);

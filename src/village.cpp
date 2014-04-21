@@ -1,17 +1,52 @@
 #include "village.h"
 
+typedef MobileEntityReference VillagerReference;
 
-Village::Village(Faction faction) : Creature(faction)
+Village::Village(Faction faction) :
+	faction(faction)
+{ }
+
+void Village::importEntity(EntityReference entity)
 {
+	Faction faction = entity->getFaction();
+	EntityGroup group = entity->getGroup();
+	if(faction == this->faction)
+	{
+		if(group == EG_VILLAGER)
+			villagerList.push_back((MobileEntityReference)entity);
+
+		else if(group == EG_DOMESTIC)
+			domesticList.push_back((MobileEntityReference)entity);
+	}
 }
 
-void Village::run()
+bool Village::hasGodLogic()
+{
+	return false;
+}
+
+void Village::runGodLogic()
+{
+	// TODO: Village::runGodLogic();
+	// Determine military action
+	// Determine miracles
+	// Determine Triangle balance.
+	// jobManager.setBalance(militaryBalance, buildBalance, gatherBalance);
+}
+
+void Village::update()
 {
 	// TODO: Village::runVillageLogic();
 	// Check size of job queue vs population
 	// Check next script instruction
 	// Issue jobs
 	// jobManager.issueJob(...);
+
+	// TODO: Clean out dead entities.
+}
+
+void Village::run()
+{
 	balanceJobs();
 	createBuildings();
 	needsDefending();
