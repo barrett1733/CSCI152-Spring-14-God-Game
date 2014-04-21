@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
+#include <map>
 
 typedef SDL_Surface * ImageReference;
 
@@ -26,7 +27,10 @@ class SdlUtility
 {
 	TTF_Font * font;
 
+	std::map<int, TTF_Font*> fontList;
+
 	void set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+	void loadFont(std::string fontName, int size);
 
 public:
 	SdlUtility();
@@ -38,6 +42,7 @@ public:
 
 	ImageReference createSurface(int width, int height);
 	ImageReference createSurface(int width, int height, Color);
+	ImageReference createTextSurface(const char * text, int fontSize);
 	ImageReference createTextSurface(const char * text);
 	ImageReference createCircle(Color, int size);
 	ImageReference createTriangle(Color, int width, int height);
