@@ -578,3 +578,13 @@ void WorldGeneration::createPaths2(Position team)
 		}
 	}
 }
+
+Position WorldGeneration::getTC1()
+{
+	return TC1;
+}
+
+Position WorldGeneration::getTC2()
+{
+	return TC2;
+}
