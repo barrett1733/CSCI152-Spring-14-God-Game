@@ -6,13 +6,17 @@
 
 class SdlButton : public SdlWidget
 {
+	ImageReference background;
 	ImageReference createButtonBackground(SDL_Rect & rect);
 
+	void setState(WidgetState);
+
 public:
-	SdlButton(SDL_Surface * surface, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event));
-	SdlButton(const char * text, SDL_Rect & rect, void (*)(SDL_Event&));
+	SdlButton(SDL_Surface * surface, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference));
+	SdlButton(const char * text, SDL_Rect & rect, void (*)(SDL_Event&, WidgetReference));
 	~SdlButton();
 
+	const SDL_Rect * getClipping();
 	void handleEvent(SDL_Event & event);
 
 	void setText(const char * text);

@@ -3,17 +3,20 @@
 
 #include "sdl-triangle-slider.h"
 
-SdlTriangleSlider::SdlTriangleSlider(void (*callback_arg)(SDL_Event&)) :
+SdlTriangleSlider::SdlTriangleSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget()
 {
 	callback = callback_arg;
 
-	int width = 128;
-	int height = 96;
+	int width  = rect.w;
+	int height = rect.h;
 
-	boundingBox.x = boundingBox.y = 16;
-	boundingBox.w = clipping.w = width;
-	boundingBox.h = clipping.h = height;
+	clipping.w = width;
+	clipping.h = height;
+	boundingBox.x = rect.x;
+	boundingBox.y = rect.y;
+	boundingBox.w = width;
+	boundingBox.h = height;
 
 	surface = sdlUtility.createSurface(width, height);
 	background = createTriangleSliderBackground();
@@ -21,11 +24,49 @@ SdlTriangleSlider::SdlTriangleSlider(void (*callback_arg)(SDL_Event&)) :
 
 	valueA = valueB = valueC = 1/3.0;
 	renderTriangleSliderSurface();
+
+	state = WS_OFF;
+	liveCallback = callback;
 }
 
-SdlTriangleSlider::SdlTriangleSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event & event)) :
+SdlTriangleSlider::SdlTriangleSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget(surface_arg, rect, callback_arg)
-{}
+{
+	liveCallback = callback;
+}
+
+SdlTriangleSlider::SdlTriangleSlider(SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference), void (*liveCallback_arg)(SDL_Event&, WidgetReference)) :
+	SdlWidget()
+{
+	callback = callback_arg;
+
+	int width  = rect.w;
+	int height = rect.h;
+
+	clipping.w = width;
+	clipping.h = height;
+	boundingBox.x = rect.x;
+	boundingBox.y = rect.y;
+	boundingBox.w = width;
+	boundingBox.h = height;
+
+	surface = sdlUtility.createSurface(width, height);
+	background = createTriangleSliderBackground();
+	handle = createTriangleSliderHandle();
+
+	valueA = valueB = valueC = 1/3.0;
+	renderTriangleSliderSurface();
+
+	state = WS_OFF;
+
+	liveCallback = liveCallback_arg;
+}
+
+SdlTriangleSlider::SdlTriangleSlider(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference), void (*liveCallback_arg)(SDL_Event&, WidgetReference)) :
+	SdlWidget(surface_arg, rect, callback_arg)
+{
+	liveCallback = liveCallback_arg;
+}
 
 SdlTriangleSlider::~SdlTriangleSlider()
 {}
@@ -34,7 +75,7 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 {
 	updateState(event);
 
-	if(state == WIDGET_ACTIVE)
+	if(state == WS_ACTIVE)
 	{
 		int width = boundingBox.w;
 		int height = boundingBox.h;
@@ -58,6 +99,9 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 
 		xMouse -= boundingBox.x;
 		yMouse -= boundingBox.y;
+
+		xMouse *= 1 + ((float)padding / boundingBox.w);
+		yMouse *= 1 + (2.0 * padding / boundingBox.h);
 
 		//  CALCULATE A
 		valueA = 1 - (double)yMouse/height;
@@ -89,15 +133,15 @@ void SdlTriangleSlider::handleEvent(SDL_Event & event)
 
 		renderTriangleSliderSurface();
 
-		callback(event);
+		if(liveCallback)
+			liveCallback(event, this);
 	}
 
-
-	if(state == WIDGET_ON)
+	if(state == WS_ON)
 	{
+		state = WS_OFF;
 		if(callback)
-			callback(event);
-		state = WIDGET_OFF;
+			callback(event, this);
 	}
 }
 
@@ -128,8 +172,6 @@ bool SdlTriangleSlider::isInside(int xMouse, int yMouse)
 
 //////
 
-const int padding = 4;
-
 ImageReference SdlTriangleSlider::createTriangleSliderBackground()
 {
 	int width = boundingBox.w - 2 * padding;
@@ -143,7 +185,7 @@ ImageReference SdlTriangleSlider::createTriangleSliderBackground()
 ImageReference SdlTriangleSlider::createTriangleSliderHandle()
 {
 	int size = padding * 2;
-	ImageReference image = sdlUtility.createCircle(C_BLUE, size, size);
+	ImageReference image = sdlUtility.createCircle(C_BLUE, size);
 
 	return image;
 }
@@ -166,4 +208,7 @@ void SdlTriangleSlider::renderTriangleSliderSurface()
 
 	clip = sdlUtility.createRect(xPos,yPos,16,16);
 	SDL_BlitSurface(handle, NULL, surface, &clip);
+
+	if(texture) SDL_DestroyTexture(texture);
+	texture = 0;
 }

@@ -60,6 +60,8 @@ Thumbs.db
 *.lastbuildstate
 *.unsuccessfulbuild
 *.idb
+*.psess
+*.vsp
 
 # Utility files #
 #################
@@ -71,3 +73,28 @@ Thumbs.db
 #####################
 ref
 lib
+
+# Other Files #
+###############
+*.dll
+*.obj
+*.pdb
+*.aps
+*.suo
+*.user
+*.exe
+*.ilk
+*.cbp
+*.depend
+*.layout
+*.cd
+*.dgml
+*.bsc
+*.sbr
+*.coverage
+*.ipch
+*.lib
+*.exp
+*.cache
+*.pch
+bin
