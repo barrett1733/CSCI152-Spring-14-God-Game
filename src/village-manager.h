@@ -11,6 +11,8 @@
 
 class VillageManager
 {
+	static VillageManager * self;
+
 	WidgetContainerReference buttonContainer;
 
 	std::vector<VillageReference> villageList;
@@ -34,6 +36,9 @@ public:
 
 
 	static void initializeCallbackMap();
+
+	static void buildHouse(SDL_Event&, WidgetReference);
+
 	static void sliderCallback(SDL_Event&, WidgetReference);
 	static void triangleSliderCallback(SDL_Event&, WidgetReference);
 };
