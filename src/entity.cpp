@@ -139,7 +139,7 @@ bool MobileEntity::hasTask()
 
 void MobileEntity::setTask(TaskReference task)
 {
-	i(task)
+	if(task)
 	{
 		task->setAssignee(this);
 		target = task->getTarget();
