@@ -8,11 +8,13 @@ class SdlButton : public SdlWidget
 {
 	ImageReference background;
 	ImageReference createButtonBackground(SDL_Rect & rect);
+	FontSize fontSize;
 
 	void setState(WidgetState);
 
 public:
 	SdlButton(SDL_Surface * surface, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference));
+	SdlButton(const char * text, FontSize, SDL_Rect & rect, void (*)(SDL_Event&, WidgetReference));
 	SdlButton(const char * text, SDL_Rect & rect, void (*)(SDL_Event&, WidgetReference));
 	~SdlButton();
 

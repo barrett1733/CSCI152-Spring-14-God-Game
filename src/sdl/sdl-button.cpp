@@ -2,13 +2,24 @@
 #include "sdl-button.h"
 
 SdlButton::SdlButton(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
-	SdlWidget(surface_arg, rect, callback_arg)
+	SdlWidget(surface_arg, rect, callback_arg),
+	fontSize(16)
 {
 	SDL_BlitSurface(surface, NULL, background, NULL);
 }
 
 SdlButton::SdlButton(const char * text, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
-	SdlWidget(0, rect, callback_arg)
+	SdlWidget(0, rect, callback_arg),
+	fontSize(16)
+{
+	surface = sdlUtility.createSurface(rect.w, WS_COUNT * rect.h);
+	background = createButtonBackground(rect);
+	setText(text);
+}
+
+SdlButton::SdlButton(const char * text, FontSize fontSize, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
+	SdlWidget(0, rect, callback_arg),
+	fontSize(fontSize)
 {
 	surface = sdlUtility.createSurface(rect.w, WS_COUNT * rect.h);
 	background = createButtonBackground(rect);
@@ -75,7 +86,7 @@ void SdlButton::setText(const char * text)
 	SDL_Rect clip;
 
 	SDL_BlitSurface(background, NULL, surface, NULL);
-	SDL_Surface * textSurface = sdlUtility.createTextSurface(text);
+	SDL_Surface * textSurface = sdlUtility.createTextSurface(text, fontSize);
 
 	int yPosText = (height - textSurface->h)/2;
 	int xPosText = (width - textSurface->w)/2;
