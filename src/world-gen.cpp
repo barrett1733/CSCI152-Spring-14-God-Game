@@ -27,9 +27,11 @@ WorldGeneration::WorldGeneration(int seed) :
 
 		ifstream file("res/world-info.txt");
 		int n;
-		while( file >> n ) world_info.push_back(n);
-//////////////////////////////////////////////////////
-//////////////////////////////////////////////////////
+		while (file >> n) world_info.push_back(n);
+		//////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////
+
+		if (world_info[WI_MAP_SIZE] <= 40) world_info[WI_MAP_SIZE] = 40;
 
 	int mapEdgeLength = world_info[WI_MAP_SIZE];
 
