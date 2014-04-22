@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 		std::cout << "Setting up new game." << std::endl;
 		// do world gen, set up new game, etc.
 
+		villageManager.show();
 		villageManager.addVillage(F_PLAYER_1);
 		villageManager.addVillage(F_PLAYER_2);
 
@@ -63,7 +64,10 @@ int main(int argc, char **argv)
 		}
 
 		else if(gameMode == GM_PAUSING)
+		{
+			villageManager.hide();
 			entityManager.hide();
+		}
 
 		sdl.update(); //  this should be the last call, because it will consume the rest of the frame's time.
 	}
