@@ -1,3 +1,6 @@
+
+#include <iostream>
+
 #include "village.h"
 
 typedef MobileEntityReference VillagerReference;
