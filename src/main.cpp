@@ -6,11 +6,13 @@
 #include "entity-manager.h"
 #include "village-manager.h"
 #include "world-gen.h"
+#include "creature.h"
 
 int main(int argc, char **argv)
 {
 	GameManager game;
 	VillageManager villageManager;
+	Creature creatures;
 	GameMode gameMode = GM_ERROR;
 
 	WorldGeneration world(0);
@@ -38,7 +40,7 @@ int main(int argc, char **argv)
 		{
 			record = entityManager.createRecord(&entity);
 			villageManager.importEntity(record->entity);
-
+			creatures.importEntity(record->entity);
 			// Get next entity for next loop iteration.
 			entity = world.getNextEntity();
 		}
@@ -57,6 +59,7 @@ int main(int argc, char **argv)
 				timer = time(0);
 				villageManager.update();
 				//entityManager.sightCheck();
+				creatures.update();
 				entityManager.update();
 			}
 
