@@ -17,6 +17,7 @@ class SdlTextDisplay : public SdlWidget
 
 public:
 	SdlTextDisplay(SDL_Surface * surface_arg, SDL_Rect & rect, std::string text_arg);
+	SdlTextDisplay(std::string text_arg, SDL_Rect & rect);
 	SdlTextDisplay(int xPos, int yPos, int width, int height);
 	~SdlTextDisplay();
 
