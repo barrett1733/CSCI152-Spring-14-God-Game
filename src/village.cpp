@@ -43,6 +43,14 @@ void Village::update()
 	// jobManager.issueJob(...);
 
 	// TODO: Clean out dead entities.
+void Village::buildHouse()
+{
+	std::cout << "Village::buildHouse()" << std::endl;
+	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_HOUSE);
+	// if(resourceManager.reserve(ResourceCost))
+	// 	jobManager.createJob(JOB_BUILD_HOUSE);
+	// else
+	// 	jobManager.createJob(GATHER_RESOURCE, ResourceCost);
 }
 
 void Village::run()

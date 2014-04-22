@@ -31,6 +31,8 @@ public:
 	void runGodLogic();
 	void update();
 
+	void buildHouse();
+
 	Faction getFaction() { return faction; }
 };
 
