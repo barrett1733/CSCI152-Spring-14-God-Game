@@ -39,7 +39,6 @@ GameManager::GameManager()
 	buttonConfig = 0;
 
 	load("res/main-menu.cfg");
-	load("res/sidebar.cfg");
 
 
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
