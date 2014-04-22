@@ -29,7 +29,7 @@ SdlUtility::~SdlUtility()
 
 ////////
 
-void SdlUtility::loadFont(std::string fontName, int fontSize)
+void SdlUtility::loadFont(std::string fontName, FontSize fontSize)
 {
 	fontList[fontSize] = TTF_OpenFont(("res/"+fontName).c_str(), fontSize);
 }
@@ -69,7 +69,7 @@ ImageReference SdlUtility::createSurface(int width, int height, Color color)
 	return result;
 }
 
-ImageReference SdlUtility::createTextSurface(const char * text, int fontSize)
+ImageReference SdlUtility::createTextSurface(const char * text, FontSize fontSize)
 {
 	SDL_Surface * surface = 0;
 	SDL_Color textColor = {0,0,0};

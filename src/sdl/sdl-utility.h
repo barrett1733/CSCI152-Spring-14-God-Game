@@ -8,6 +8,7 @@
 #include <map>
 
 typedef SDL_Surface * ImageReference;
+typedef int FontSize;
 
 enum Color {
 	C_WHITE,
@@ -30,7 +31,7 @@ class SdlUtility
 	std::map<int, TTF_Font*> fontList;
 
 	void set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
-	void loadFont(std::string fontName, int size);
+	void loadFont(std::string fontName, FontSize fontSize);
 
 public:
 	SdlUtility();
@@ -42,7 +43,7 @@ public:
 
 	ImageReference createSurface(int width, int height);
 	ImageReference createSurface(int width, int height, Color);
-	ImageReference createTextSurface(const char * text, int fontSize);
+	ImageReference createTextSurface(const char * text, FontSize fontSize);
 	ImageReference createTextSurface(const char * text);
 	ImageReference createCircle(Color, int size);
 	ImageReference createTriangle(Color, int width, int height);
