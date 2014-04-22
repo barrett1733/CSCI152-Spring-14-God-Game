@@ -11,7 +11,7 @@
 class SdlEntity : public SdlWidget
 {
 
-	int size;
+	float size;
 	const Entity * entity;
 
 public:

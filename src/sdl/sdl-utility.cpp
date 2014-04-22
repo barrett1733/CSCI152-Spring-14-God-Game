@@ -17,10 +17,6 @@ SdlUtility::SdlUtility()
 		throw "TTF_Init()";
 	}
 
-	std::cerr << "SdlUtility::SdlUtility() - TTF_OpenFont()" << std::endl;
-	font = TTF_OpenFont( "res/arial.ttf", 16 );
-	if(!font)
-		std::cerr << TTF_GetError() << std::endl;
 	std::cerr << "SdlUtility::SdlUtility() finished." << std::endl;
 }
 
@@ -29,6 +25,13 @@ SdlUtility::~SdlUtility()
 	if(font)
 		TTF_CloseFont(font);
 	TTF_Quit();
+}
+
+////////
+
+void SdlUtility::loadFont(std::string fontName, FontSize fontSize)
+{
+	fontList[fontSize] = TTF_OpenFont(("res/"+fontName).c_str(), fontSize);
 }
 
 ////////
@@ -66,13 +69,24 @@ ImageReference SdlUtility::createSurface(int width, int height, Color color)
 	return result;
 }
 
-ImageReference SdlUtility::createTextSurface(const char * text)
+ImageReference SdlUtility::createTextSurface(const char * text, FontSize fontSize)
 {
+	SDL_Surface * surface = 0;
 	SDL_Color textColor = {0,0,0};
-	if(!font) std::cerr << "No font!" << std::endl;
-	SDL_Surface * surface = TTF_RenderText_Blended(font, text, textColor);
+	if(!fontList[fontSize])
+		loadFont("arial.ttf", fontSize);
+
+	if(!fontList[fontSize])
+		std::cerr << "No font!" << std::endl;
+
+	surface = TTF_RenderText_Blended(fontList[fontSize], text, textColor);
 	return surface;
 }
+ImageReference SdlUtility::createTextSurface(const char * text)
+{
+	return createTextSurface(text, 16);
+}
+
 
 Uint32 SdlUtility::getColor(ImageReference image, Color color)
 {

@@ -76,6 +76,8 @@ public:
 	int pathChange(int);
 	void placePaths();
 	void createPaths2(Position);
+	Position getTC1();
+	Position getTC2();
 
 
 	std::vector< std::vector<EntityType> > world_positions;

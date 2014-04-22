@@ -49,6 +49,18 @@ public:
 
 	void cleanJobList();
 
+	/*
+	// Desired interface:
+
+	int getTaskCount();
+	ResourceCost getResourceCost(JobType);
+
+	void createJob(JobType, int priority, Position);
+	void createJob(JobType, int priority, EntityReference);
+
+	void assignTask(EntityReference);
+	TaskReference getTask(EntityReference);
+	*/
 };
 
 #endif

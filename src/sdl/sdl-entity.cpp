@@ -10,7 +10,7 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	SdlWidget(WL_NON_INTERACTIVE),
 	entity(&entity)
 {
-	size = mapView->getBoundingBox()->w / worldSize;
+	size = mapView->getBoundingBox()->w / float(worldSize);
 
 	Color color;
 	switch(entity.getFaction())
