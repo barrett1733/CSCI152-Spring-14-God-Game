@@ -1,6 +1,7 @@
 #pragma once
 #include "entity.h"
-#include "job-manager.h"
+#include "entity-manager.h"
+#include "world-gen.h"
 #include <vector>
 
 class Creature
@@ -12,13 +13,15 @@ private:
 
 public:
 	Creature();
-
+	WorldGeneration * world;
 	void importEntity(EntityReference);
 
 	void wander(MobileEntityReference);
 	void attack();
 	void flee();
 
+	std::vector<Direction> checkOpenAreas(Position);
+	Direction checkDirection(int i, int j);
 	void update();
 };
 

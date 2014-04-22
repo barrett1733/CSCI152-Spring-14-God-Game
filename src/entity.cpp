@@ -152,32 +152,5 @@ void MobileEntity::setTask(TaskReference task)
 
 void MobileEntity::update()
 {
-	if(target)
-	{
-		Direction direction = D_NONE;
-		// get next move
-		position.move(direction);
-	}
-	else
-	{
-		int r = rand();
-		switch(r % 4)
-		{
-			case 0:
-				position.move(D_UP);
-				break;
 
-			case 1:
-				position.move(D_RIGHT);
-				break;
-
-			case 2:
-				position.move(D_DOWN);
-				break;
-
-			case 3:
-				position.move(D_LEFT);
-				break;
-		}
-	}
 }

@@ -8,13 +8,18 @@
 #include <math.h>
 #include <iostream>
 
+// Starts at upper left
 enum Direction
 {
-	D_NONE  = 0x00,
-	D_UP    = 0x01,
-	D_RIGHT = 0x02,
-	D_DOWN  = 0x04,
-	D_LEFT  = 0x08,
+	D_NONE  = 0,
+	D_UP_LEFT,
+	D_UP,
+	D_UP_RIGHT,
+	D_RIGHT,
+	D_DOWN_RIGHT,
+	D_DOWN,
+	D_DOWN_LEFT,
+	D_LEFT,
 };
 
 class Position
