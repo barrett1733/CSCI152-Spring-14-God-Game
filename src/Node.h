@@ -23,7 +23,7 @@ public:
 		
 		x_Pos = x;
 		y_Pos = y;
-		id = y * WORLD_SIZE + x;
+		id = y * 150 + x;
 		G = 0;
 		H = 0;
 

@@ -95,7 +95,7 @@ void Pathfinding::pathOpened(int x, int y, double newCost, Node* parent)
 
 	//if(CELL_BLOCKED) { return; }
 
-	int id = y * WORLD_SIZE + x;
+	int id = y * 150 + x;
 
 	for (int i = 0; i < visitedList.size(); i++)
 	{
