@@ -15,11 +15,22 @@ void Village::importEntity(EntityReference entity)
 	EntityGroup group = entity->getGroup();
 	if(faction == this->faction)
 	{
-		if(group == EG_VILLAGER)
+		switch(group)
+		{
+		case EG_VILLAGER:
 			villagerList.push_back((MobileEntityReference)entity);
+			break;
 
-		else if(group == EG_DOMESTIC)
+		case EG_DOMESTIC:
 			domesticList.push_back((MobileEntityReference)entity);
+			break;
+
+		case EG_BUILDING:
+			buildingList.push_back(entity);
+			break;
+
+		default: break;
+		}
 	}
 }
 
