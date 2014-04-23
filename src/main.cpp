@@ -15,6 +15,9 @@ int main(int argc, char **argv)
 	Creature creatures;
 	GameMode gameMode = GM_ERROR;
 
+	//test position
+	Position testpos(140, 140);
+
 	WorldGeneration world(0);
 	int worldSize = world.getWorldSize();
 
@@ -63,6 +66,7 @@ int main(int argc, char **argv)
 				//entityManager.sightCheck();
 				creatures.update();
 				entityManager.update();
+				creatures.moveTowardsTarget(creatures.getACreature(), testpos);
 			}
 
 		}

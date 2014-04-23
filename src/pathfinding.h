@@ -16,8 +16,8 @@ class Pathfinder{
 public:
 	WorldGeneration * world;
 	std::vector<Direction> checkArea(Position);
-	Direction moveTowardsTarget(MobileEntityReference, Position);
-	Direction moveTowardsTarget(MobileEntityReference, MobileEntityReference);
+	void moveTowardsTarget(MobileEntityReference, Position);
+	void moveTowardsTarget(MobileEntityReference, MobileEntityReference);
 };
 
 

@@ -2,15 +2,28 @@
 
 Direction Pathfinder::determineDirection(Position me, Position target)
 {
+	if (me.getY() < target.getY())
+		return D_DOWN;
+	if (me.getY() > target.getY())
+		return D_UP;
+	if (me.getY() == target.getY())
+	{
+		if (me.getX() < target.getX())
+			return D_RIGHT;
+		if (me.getX() > target.getX())
+			return D_LEFT;
+	}
 	return D_NONE;
 }
-Direction Pathfinder::moveTowardsTarget(MobileEntityReference me, Position target)
+void Pathfinder::moveTowardsTarget(MobileEntityReference me, Position target)
 {
-	return D_NONE;
+	Position pos = me->getPosition();
+	pos.move(determineDirection(pos, target));
+	me->setPosition(pos);
 }
-Direction Pathfinder::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
+void Pathfinder::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
 {
-	return moveTowardsTarget(me, target->getPosition());
+	moveTowardsTarget(me, target->getPosition());
 }
 
 std::vector<Direction> Pathfinder::checkArea(Position position)

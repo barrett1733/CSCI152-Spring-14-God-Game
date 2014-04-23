@@ -38,3 +38,7 @@ void Creature::update()
 	for (int i = 0; i < hostileList.size(); i++)
 		wander(hostileList.at(i));
 }
+MobileEntityReference Creature::getACreature()
+{
+	return domesticList.at(0);
+}
