@@ -28,38 +28,42 @@ void Creature::wander(MobileEntityReference creature)
 {
 	Position pos = creature->getPosition();
 	std::vector<Direction> openDirections = checkOpenAreas(creature->getPosition());
-	if (openDirections.size() > 0)
-		pos.move(openDirections.at(rand() % openDirections.size()-1));
+	pos.move(openDirections.at(rand() % openDirections.size()));
 	creature->setPosition(pos);
 }
 std::vector<Direction> Creature::checkOpenAreas(Position position)
 {
 	std::vector<Direction> openDirections;
 	for (int i = position.getX() - 1; i <= position.getX() + 1; i++)
+	{
 		for (int j = position.getY() - 1; j <= position.getY() + 1; j++)
-			if (world->world_positions[i][j] == ET_NONE)
-				openDirections.push_back(checkDirection(i, j));
+			if (i >= 0 && i < world->getWorldSize() && j >= 0 && j < world->getWorldSize())
+				if (world->world_positions[i][j] == ET_NONE)
+					openDirections.push_back(checkDirection(i, j));
+	}
+	openDirections.push_back(D_NONE);
 	return openDirections;
 }
 Direction Creature::checkDirection(int i, int j)
 {
-	if (i == -1 && j == -1)
-		return D_DOWN_LEFT;
 	if (i  == -1 && j == 0)
 		return D_DOWN;
-	if (i  == -1 && j == 1)
-		return D_DOWN_RIGHT;
-	if (i  == 0 && j == -1)
+	else if (i  == 0 && j == -1)
 		return D_LEFT;
-	if (i  == 0 && j == 1)
-		return D_RIGHT;
-	if (i  == 1 && j == -1)
-		return D_UP_LEFT;
-	if (i  == 1 && j == 0)
+	else if (i  == 1 && j == 0)
 		return D_UP;
-	if (i  == 1 && j == 1)
+	else if (i  == 0 && j == 1)
+		return D_RIGHT;
+	/*
+	else if (i == -1 && j == -1)
+		return D_DOWN_LEFT;
+	else if (i  == -1 && j == 1)
+		return D_DOWN_RIGHT;
+	else if (i  == 1 && j == -1)
+		return D_UP_LEFT;
+	else if (i == 1 && j == 1)
 		return D_UP_RIGHT;
-
+		*/
 }
 void Creature::update()
 {

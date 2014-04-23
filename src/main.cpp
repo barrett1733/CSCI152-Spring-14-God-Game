@@ -41,13 +41,13 @@ int main(int argc, char **argv)
 		{
 			record = entityManager.createRecord(&entity);
 			villageManager.importEntity(record->entity);
-			//creatures.importEntity(record->entity);
+			creatures.importEntity(record->entity);
 			// Get next entity for next loop iteration.
 			entity = world.getNextEntity();
 		}
 
 		entityManager.update();
-		//creatures.world = &world;
+		creatures.world = &world;
 	}
 
 	std::cout << "Continuing Game Loop" << std::endl;
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 				timer = time(0);
 				villageManager.update();
 				//entityManager.sightCheck();
-				//creatures.update();
+				creatures.update();
 				entityManager.update();
 			}
 
