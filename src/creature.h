@@ -1,10 +1,10 @@
 #pragma once
 #include "entity.h"
-#include "entity-manager.h"
+#include "pathfinding.h"
 #include "world-gen.h"
 #include <vector>
 
-class Creature
+class Creature : public Pathfinder
 {
 private:
 	std::vector<MobileEntityReference> domesticList; // list of domestic things (cow)
@@ -20,8 +20,6 @@ public:
 	void attack();
 	void flee();
 
-	std::vector<Direction> checkOpenAreas(Position);
-	Direction checkDirection(int i, int j);
 	void update();
 };
 

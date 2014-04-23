@@ -13,7 +13,13 @@ void Creature::importEntity(EntityReference entity)
 	else if (group == EG_HOSTILE)
 		hostileList.push_back((MobileEntityReference)entity);
 }
-
+void Creature::wander(MobileEntityReference mobileEntity)
+{
+	Position pos = mobileEntity->getPosition();
+	std::vector<Direction> openDirections = checkArea(mobileEntity->getPosition());
+	pos.move(openDirections.at(rand() % openDirections.size()));
+	mobileEntity->setPosition(pos);
+}
 void Creature::attack()
 {
 
@@ -22,48 +28,6 @@ void Creature::attack()
 void Creature::flee()
 {
 
-}
-
-void Creature::wander(MobileEntityReference creature)
-{
-	Position pos = creature->getPosition();
-	std::vector<Direction> openDirections = checkOpenAreas(creature->getPosition());
-	pos.move(openDirections.at(rand() % openDirections.size()));
-	creature->setPosition(pos);
-}
-std::vector<Direction> Creature::checkOpenAreas(Position position)
-{
-	std::vector<Direction> openDirections;
-	for (int i = position.getX() - 1; i <= position.getX() + 1; i++)
-	{
-		for (int j = position.getY() - 1; j <= position.getY() + 1; j++)
-			if (i >= 0 && i < world->getWorldSize() && j >= 0 && j < world->getWorldSize())
-				if (world->world_positions[i][j] == ET_NONE)
-					openDirections.push_back(checkDirection(i, j));
-	}
-	openDirections.push_back(D_NONE);
-	return openDirections;
-}
-Direction Creature::checkDirection(int i, int j)
-{
-	if (i  == -1 && j == 0)
-		return D_DOWN;
-	else if (i  == 0 && j == -1)
-		return D_LEFT;
-	else if (i  == 1 && j == 0)
-		return D_UP;
-	else if (i  == 0 && j == 1)
-		return D_RIGHT;
-	/*
-	else if (i == -1 && j == -1)
-		return D_DOWN_LEFT;
-	else if (i  == -1 && j == 1)
-		return D_DOWN_RIGHT;
-	else if (i  == 1 && j == -1)
-		return D_UP_LEFT;
-	else if (i == 1 && j == 1)
-		return D_UP_RIGHT;
-		*/
 }
 void Creature::update()
 {

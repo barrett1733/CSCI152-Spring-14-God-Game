@@ -20,6 +20,7 @@ enum Direction
 	D_UP_RIGHT,
 	D_DOWN_RIGHT,
 	D_DOWN_LEFT,
+
 };
 
 class Position
