@@ -1,7 +1,6 @@
 #pragma once
 #include "entity.h"
 #include "pathfinding.h"
-#include "world-gen.h"
 #include <vector>
 
 class Creature : public Pathfinder
@@ -13,10 +12,8 @@ private:
 
 public:
 	Creature();
-	WorldGeneration * world;
 	void importEntity(EntityReference);
 
-	void wander(MobileEntityReference);
 	void attack();
 	void flee();
 

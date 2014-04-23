@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	GameManager game;
 	VillageManager villageManager;
 	Creature creatures;
+	Pathfinder pathFinder;
 	GameMode gameMode = GM_ERROR;
 
 	WorldGeneration world(0);
@@ -45,9 +46,10 @@ int main(int argc, char **argv)
 			// Get next entity for next loop iteration.
 			entity = world.getNextEntity();
 		}
+		pathFinder.addToWanderList();
 
 		entityManager.update();
-		creatures.world = &world;
+		pathFinder.world = &world;
 	}
 
 	std::cout << "Continuing Game Loop" << std::endl;

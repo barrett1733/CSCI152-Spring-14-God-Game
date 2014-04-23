@@ -1,26 +1,16 @@
 #include "pathfinding.h"
 
-void Pathfinder::addToWanderList(MobileEntityReference mobileEntity)
+Direction Pathfinder::determineDirection(Position me, Position target)
 {
-	thingsToWander.push_back(mobileEntity);
+
 }
-void Pathfinder::removeFromWanderList(MobileEntityReference mobileEntity)
+Direction Pathfinder::moveTowardsTarget(MobileEntityReference me, Position target)
 {
-	for (int i = 0; i < thingsToWander.size(); i++)
-		if (thingsToWander.at(i) == mobileEntity)
-			thingsToWander.erase(thingsToWander.begin() + i);
+
 }
-void Pathfinder::wander()
+Direction Pathfinder::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
 {
-	Position pos;
-	std::vector<Direction> openDirections;
-	for (int i = 0; i < thingsToWander.size(); i++)
-	{
-		pos = thingsToWander.at(i)->getPosition();
-		openDirections = checkArea(pos);
-		pos.move(openDirections.at(rand() % openDirections.size()));
-		thingsToWander.at(i)->setPosition(pos);
-	}
+	moveTowardsTarget(me, target->getPosition());
 }
 
 std::vector<Direction> Pathfinder::checkArea(Position position)
