@@ -62,7 +62,11 @@ int Pathfinder::mapDirectionY(Direction dir)
 }
 bool Pathfinder::checkDirection(Position pos, Direction dir)
 {
-	if (world->world_positions[pos.getX() + mapDirectionX(dir)][pos.getY() + mapDirectionY(dir)] == ET_NONE)
-		return true;
+	int newPosX = pos.getX() + mapDirectionX(dir);
+	int newPosY = pos.getY() + mapDirectionY(dir);
+	int worldSize = world->getWorldSize();
+	if (newPosX >= 0 && newPosX < worldSize && newPosY >= 0 && newPosY < worldSize)
+		if (world->world_positions[newPosX][newPosY] == ET_NONE)
+			return true;
 	return false;
 }
