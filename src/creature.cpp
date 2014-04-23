@@ -31,10 +31,10 @@ void Creature::flee()
 }
 void Creature::update()
 {
-	for (auto iter = domesticList.begin(); iter != domesticList.end(); ++iter)
-		wander(*iter);
-	for (auto iter = passiveList.begin(); iter != passiveList.end(); ++iter)
-		wander(*iter);
-	for (auto iter = hostileList.begin(); iter != hostileList.end(); ++iter)
-		wander(*iter);
+	for (int i = 0; i < domesticList.size(); i++)
+		wander(domesticList.at(i));
+	for (int i = 0; i < passiveList.size(); i++)
+		wander(passiveList.at(i));
+	for (int i = 0; i < hostileList.size(); i++)
+		wander(hostileList.at(i));
 }

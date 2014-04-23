@@ -2,15 +2,15 @@
 
 Direction Pathfinder::determineDirection(Position me, Position target)
 {
-
+	return D_NONE;
 }
 Direction Pathfinder::moveTowardsTarget(MobileEntityReference me, Position target)
 {
-
+	return D_NONE;
 }
 Direction Pathfinder::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
 {
-	moveTowardsTarget(me, target->getPosition());
+	return moveTowardsTarget(me, target->getPosition());
 }
 
 std::vector<Direction> Pathfinder::checkArea(Position position)

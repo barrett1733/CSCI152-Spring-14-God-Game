@@ -14,6 +14,7 @@ public:
 	Creature();
 	void importEntity(EntityReference);
 
+	void wander(MobileEntityReference);
 	void attack();
 	void flee();
 
