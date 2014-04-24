@@ -25,6 +25,7 @@ GameManager::GameManager()
 	callbackMap["none"]                     = doNothing;
 	callbackMap["newGame()"]                = newGame;
 	callbackMap["pauseGame()"]              = pauseGame;
+	callbackMap["unpauseGame()"]            = unpauseGame;
 	callbackMap["showCredits()"]            = showCredits;
 	callbackMap["quitGame()"]               = quitGame;
 	callbackMap["triangleSliderCallback()"] = triangleSliderCallback;
@@ -39,35 +40,16 @@ GameManager::GameManager()
 
 	load("res/main-menu.cfg");
 
-	SDL_Rect rect = {580,20,200,40};
-	new SdlButton("Self-Destructing Button", rect, selfDestruct);
 
-	sdl.launchWindow("Window Title!", 800, 600);
 	sdl.subscribeToEvent(quitGame, SDL_QUIT);
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
 }
 
-void GameManager::newGame(SDL_Event & event, WidgetReference widget)
+void GameManager::setGameState(GameState state)
 {
-	std::cout << "New Game" << std::endl;
+	if(mode_ == state) return;
 
-	switch(mode_)
-	{
-		case GM_MENU:
-			((ButtonReference) widget)->setText("Continue");
-			break;
-
-		case GM_PAUSING:
-			break;
-
-		default:
-			std::cerr << "\033[33m Invalid transition to 'playing' from mode " << mode_ << "\033[m" << std::endl;
-			break;
-
-	}
-
-	mode_ = GM_PLAYING;
-
+	mode_ = state;
 	unsigned long widgetCount = self->widgetList.size();
 	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
 	{
@@ -78,20 +60,22 @@ void GameManager::newGame(SDL_Event & event, WidgetReference widget)
 	}
 }
 
+void GameManager::newGame(SDL_Event & event, WidgetReference widget)
+{
+	std::cout << "New Game" << std::endl;
+	setGameState(GM_PLAYING);
+}
+
 void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Pause Game" << std::endl;
+	setGameState(GM_PAUSING);
+}
 
-	mode_ = GM_PAUSING;
-
-	unsigned long widgetCount = self->widgetList.size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
-	{
-		if(self->widgetList[widgetIndex]->mode & mode_)
-			self->widgetList[widgetIndex]->widget->show();
-		else
-			self->widgetList[widgetIndex]->widget->hide();
-	}
+void GameManager::unpauseGame(SDL_Event & event, WidgetReference widget)
+{
+	std::cout << "Unpause Game" << std::endl;
+	setGameState(GM_PLAYING);
 }
 
 void GameManager::showCredits(SDL_Event & event, WidgetReference widget)
@@ -114,16 +98,16 @@ void GameManager::quitGame(SDL_Event & event)
 
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	double value = ((SliderReference) widget) -> getValue();
+	// double value = ((SliderReference) widget) -> getValue();
 	// Commented out for MAX fps
 	//std::cout << "Slider Update: " << value << std::endl;
 }
 
 void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	double valueA = ((TriangleSliderReference) widget)-> getValueA();
-	double valueB = ((TriangleSliderReference) widget)-> getValueB();
-	double valueC = ((TriangleSliderReference) widget)-> getValueC();
+	// double valueA = ((TriangleSliderReference) widget)-> getValueA();
+	// double valueB = ((TriangleSliderReference) widget)-> getValueB();
+	// double valueC = ((TriangleSliderReference) widget)-> getValueC();
 	// Commented out for MAX fps
 	//std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
 }
@@ -140,6 +124,7 @@ bool GameManager::setProperty(std::string property, std::string value)
 
 	else if(property == "callback")
 	{
+		callbackName = "none";
 		if(!callbackMap[value])
 			return false;
 		callbackName = value;

@@ -31,6 +31,7 @@ enum WorldInfo
 	WI_MAP_SIZE = 0x00,
 	WI_DIFFICULTY,
 	WI_NUM_OF_VILLAGERS,
+	//WI_NUM_OF_PATHS,
 	//domestic animals
 	WI_NUM_OF_COWS,
 	WI_SHEEP,
@@ -51,33 +52,35 @@ public:
 	WorldGeneration(int);
 	~WorldGeneration();
 
-	int getWorldSize()
-	{
-		return world_info[WI_MAP_SIZE];
-	}
-
 	void PlaceResource(int min, int max, EntityType type);
 	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
 	void PlaceTownCenter();
 	void PlaceTemple();
-	void PlaceVillagers(EntityType type, Position pos);
-	void PlaceDomesticBeasts(EntityType type, int number, Position pos);
+	void PlaceAroundTC(EntityType type, int number, Position pos);
 	void PrintMap();
-	Entity getNextEntity();
-	int getEntityCount();
 	void nextPosition();
-	int findOffset();
-	int shiftFromEdge(int);
+	void shiftFromEdge(Position&);
 	void clearArea(Position);
+	void createPath(int);
+	void placePaths();
+	void createPaths2(Position);
+
+	int getWorldSize();
+	int getEntityCount();
+	int findOffset(int);
+	int shiftFromEdge(int);
+	int pathChange(int);
+
+	Entity getNextEntity();
+
+	Position findPathStart(int);
+	Position getTC1();
+	Position getTC2();
 
 
 	std::vector< std::vector<EntityType> > world_positions;
 	std::vector<int> world_info;
 private:
-	//int TC1_x_coord_topleft;//the index of the x coordinate for team 1's town center
-	//int TC1_y_coord_topleft;//the index of the y coordinate for team 1's town center
-	//int TC2_x_coord_topleft;//the index of the x coordinate for team 2's town center
-	//int TC2_y_coord_topleft;//the index of the y coordinate for team 2's town center
 	int entityCount;
 	Position current;
 	Position TC1;

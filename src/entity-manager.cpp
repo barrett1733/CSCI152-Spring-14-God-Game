@@ -8,7 +8,7 @@ EntityManager::EntityManager(int worldSize) :
 {
 	mapView.hide();
 	widgetList.push_back(&mapView);
-	SdlEntity::mapRect = mapView.getBoundingBox();
+	SdlEntity::mapView = &mapView;
 	SdlEntity::worldSize = worldSize;
 }
 
@@ -44,24 +44,28 @@ void EntityManager::deleteEntity(){}
 	ET_CYCLOPS,
 }*/
 
-void EntityManager::createEntity(const Entity & entity)
+EntityRecord * EntityManager::createRecord(const Entity & entity)
 {
 	//return createEntity(*entity);
 
 	Faction faction = entity.getFaction();
+	EntityGroup group = entity.getGroup();
 
-	EM_Record *record = new EM_Record();
-	record->entity = new Entity(entity);
+	EntityRecord *record = new EntityRecord();
+	record->entity = (group < EG_MOBILE) ? new Entity(entity) : new MobileEntity(entity);
 	record->widget = new SdlEntity(*record->entity);
 
 	recordList.push_back(record);
 	widgetList.push_back(record->widget);
+
 	factionMap[faction].push_back(record);
+
+	return record;
 }
 
-void EntityManager::createEntity(const EntityReference entity)
+EntityRecord * EntityManager::createRecord(const EntityReference entity)
 {
-	return createEntity(*entity);
+	return createRecord(*entity);
 }
 
 void EntityManager::update()
@@ -70,7 +74,7 @@ void EntityManager::update()
 
 	unsigned long count = recordList.size();
 	for(unsigned long index = 0; index < count; index ++)
-		recordList[index]->widget->update();
+		recordList[index]->update();
 
 	// ...
 }
@@ -80,11 +84,10 @@ void EntityManager::show()
 	if(visible) return;
 	std::cout << "EntityManager::show()" << std::endl;
 	visible = true;
-	unsigned long count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-	{
-		widgetList[index]->show();
-	}
+	mapView.show();
+	// unsigned long count = widgetList.size();
+	// for(int index = 0; index < count; index ++)
+	// 	widgetList[index]->show();
 }
 
 void EntityManager::hide()
@@ -92,10 +95,7 @@ void EntityManager::hide()
 	if(!visible) return;
 	std::cout << "EntityManager::hide()" << std::endl;
 	visible = false;
-	unsigned long count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-		widgetList[index]->hide();
-
+	mapView.hide();
 }
 
 // from config.

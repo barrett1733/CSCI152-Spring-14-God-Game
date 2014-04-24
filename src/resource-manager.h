@@ -21,16 +21,16 @@ enum ResourceType
 };
 struct ResourcePool
 {
-	int resourcePool[FT_COUNT][RT_COUNT];
+	int resourcePool[F_COUNT][RT_COUNT];
 	ResourcePool()
 	{
-		for(int i = 0; i < FT_COUNT; i++)
+		for(int i = 0; i < F_COUNT; i++)
 			for(int j = 0; j < RT_COUNT; j++)
 				resourcePool[i][j] = 0;
 	}
 	~ResourcePool()
 	{
-		for(int i = 0; i < FT_COUNT; i++)
+		for(int i = 0; i < F_COUNT; i++)
 			for(int j = 0; j < RT_COUNT; j++)
 				resourcePool[i][j] = 0;
 	}

@@ -6,11 +6,12 @@
 
 #include "sdl-widget.h"
 #include "../entity.h"
+#include "sdl-map-view.h"
 
 class SdlEntity : public SdlWidget
 {
 
-	int size;
+	float size;
 	const Entity * entity;
 
 public:
@@ -19,8 +20,8 @@ public:
 	void update();
 	void updatePosition();
 
-	const static SDL_Rect * mapRect;
 	static int worldSize;
+	static SdlMapView * mapView;
 };
 
 typedef SdlEntity * SdlEntityReference;

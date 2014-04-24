@@ -1,37 +1,33 @@
 
 #include "entity.h"
+#include "task.h"
 
 //Entity * EntityList[MAX_ENTITY_COUNT];
 
 Entity::Entity(const Entity & entity) :
+	group(entity.group),
 	type(entity.type),
-	position(entity.position),
+	faction(entity.faction),
 	maxHealth(entity.maxHealth),
 	currentHealth(entity.currentHealth),
-	faction(entity.faction)
+	position(entity.position)
 { }
 
-Entity::Entity(EntityType entityType, int health, Position position, Faction faction) :
-	type(entityType),
-	position(position),
+Entity::Entity(EntityType type, int health, Position position, Faction faction) :
+	type(type),
+	faction(faction),
 	maxHealth(health),
 	currentHealth(health),
-	faction(faction)
+	position(position)
 { }
 
-Entity::Entity(EntityType entityType, int health, int xPos, int yPos, Faction faction) :
-	type(entityType),
-	maxHealth(health),
-	currentHealth(health),
-	faction(faction)
-{
-	position.x = xPos;
-	position.y = yPos;
-}
+
+
 
 Entity& Entity::operator= (const Entity& entity)
 {
 	name = entity.name;
+	group = entity.group;
 	type = entity.type;
 	faction = entity.faction;
 	position = entity.position;
@@ -46,10 +42,16 @@ std::string Entity::getName() const
 	return this->name;
 }
 
+EntityGroup Entity::getGroup() const
+{
+	return this->group;
+}
+
 EntityType Entity::getEntityType() const
 {
 	return this->type;
 }
+
 EntityType Entity::getType() const
 {
 	return this->type;
@@ -71,37 +73,44 @@ int Entity::getMaxHealth() {
 int Entity::getCurrentHealth() {
 	return this->currentHealth;
 }
-void Entity::setEntityType(EntityType type) {
-	this->type = type;
-}
-void Entity::setMaxHealth(int maxHealth) {
-	this->maxHealth = maxHealth;
-}
-void Entity::setCurrentHealth(int currentHealth) {
-	this->currentHealth = currentHealth;
-}
-void Entity::setName(std::string name) {
+
+
+void Entity::setName(std::string name)
+{
 	this->name = name;
 }
-void Entity::setPosition(Position position) {
-	this->position = position;
+void Entity::setGroup(EntityGroup group)
+{
+	this->group = group;
 }
-void Entity::setFaction(Faction faction) {
+void Entity::setEntityType(EntityType type)
+{
+	this->type = type;
+}
+void Entity::setFaction(Faction faction)
+{
 	this->faction = faction;
 }
+void Entity::setMaxHealth(int maxHealth)
+{
+	this->maxHealth = maxHealth;
+}
+void Entity::setCurrentHealth(int currentHealth)
+{
+	this->currentHealth = currentHealth;
+}
+void Entity::setPosition(Position position)
+{
+	this->position = position;
+}
 
-MobileEntity::MobileEntity(EntityType entityType, int health, Position position, Faction faction, int hunger, int strength, int defense):
-	Entity(entityType, health, position, faction),
-	hunger(hunger),
-	strength(strength),
-	defense(defense)
-{ }
-MobileEntity::MobileEntity(EntityType entityType, int health, int xPos, int yPos, Faction faction, int hunger, int strength, int defense):
-	Entity(entityType, health, xPos, yPos, faction),
-	hunger(hunger),
-	strength(strength),
-	defense(defense)
-{ }
+////////
+//  MOBILE ENTITY
+////////
+
+MobileEntity::MobileEntity(const Entity & entity) :
+	Entity(entity)
+{}
 
 int MobileEntity::getHunger() {
 	return this->hunger;
@@ -121,4 +130,54 @@ void MobileEntity::setStrength(int strength) {
 }
 void MobileEntity::setDefense(int defense) {
 	this->defense = defense;
+}
+
+bool MobileEntity::hasTask()
+{
+	return target ? true : false;
+}
+
+void MobileEntity::setTask(TaskReference task)
+{
+	if(task)
+	{
+		task->setAssignee(this);
+		target = task->getTarget();
+	}
+	else
+	{
+		// worship or wander?
+	}
+}
+
+void MobileEntity::update()
+{
+	if(target)
+	{
+		Direction direction = D_NONE;
+		// get next move
+		position.move(direction);
+	}
+	else
+	{
+		int r = rand();
+		switch(r % 4)
+		{
+			case 0:
+				position.move(D_UP);
+				break;
+
+			case 1:
+				position.move(D_RIGHT);
+				break;
+
+			case 2:
+				position.move(D_DOWN);
+				break;
+
+			case 3:
+				position.move(D_LEFT);
+				break;
+		}
+	}
 }

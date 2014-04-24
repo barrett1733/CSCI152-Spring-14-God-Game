@@ -8,41 +8,46 @@
 #include <math.h>
 #include <iostream>
 
+enum Direction
+{
+	D_NONE  = 0x00,
+	D_UP    = 0x01,
+	D_RIGHT = 0x02,
+	D_DOWN  = 0x04,
+	D_LEFT  = 0x08,
+};
+
 class Position
 {
-public:
-	Position() : x(0), y(0) {}
-	Position(int x, int y) : x(x), y(y) {}
-
-	const Position& operator= (const Position & position)
-	{
-		x = position.x;
-		y = position.y;
-
-		return *this;
-	}
-
 	int x;
 	int y;
 
-	double distance(Position & p)
-	{
-		int a = x - p.x;
-		int b = y - p.y;
-		return sqrt(a * a + b * b);
-	}
+	void checkSanity();
 
-	double direction(Position & p)
-	{
-		return atan(y/x) + (x < 0 ? 3.14159265359 : 0);
-	}
+public:
+	Position();
+	Position(int x, int y);
+	Position(const Position &);
 
+	Position& operator= (const Position &);
+
+	double distance(const Position &);
+	double direction(const Position &);
+
+	void move(Direction);
+
+	void set(int x, int y);
+	int getX();
+	int getY();
 
 	friend std::ostream& operator<< (std::ostream & os, const Position & position)
 	{
 		os << "(" << position.x << ", " << position.y << ")";
 		return os;
 	}
+
+	static int max_x;
+	static int max_y;
 };
 
 #endif

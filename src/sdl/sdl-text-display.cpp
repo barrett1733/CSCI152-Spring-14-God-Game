@@ -14,6 +14,20 @@ SdlTextDisplay::SdlTextDisplay(SDL_Surface * surface_arg, SDL_Rect & rect, std::
 	buildSurface();
 }
 
+SdlTextDisplay::SdlTextDisplay(std::string text_arg, SDL_Rect & rect) :
+	SdlWidget(0, rect, 0)
+{
+	surface = sdlUtility.createSurface(rect.w, rect.h);
+	text = text_arg;
+	font = TTF_OpenFont( "res/arial.ttf", 16 );
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	color.a = 0;
+
+	buildSurface();
+}
+
 SdlTextDisplay::SdlTextDisplay(int xPos, int yPos, int width, int height) :
 	SdlWidget()
 {
@@ -56,4 +70,6 @@ void SdlTextDisplay::buildSurface()
 		SDL_FreeSurface(textSurface);
 	}
 
+	if(texture) SDL_DestroyTexture(texture);
+	texture = 0;
 }

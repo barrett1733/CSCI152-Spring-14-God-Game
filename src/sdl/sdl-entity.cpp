@@ -3,40 +3,54 @@
 
 #include "sdl-entity.h"
 
-const SDL_Rect * SdlEntity::mapRect = 0;
+SdlMapView * SdlEntity::mapView = 0;
 int SdlEntity::worldSize = 0;
 
 SdlEntity::SdlEntity(const Entity & entity) :
 	SdlWidget(WL_NON_INTERACTIVE),
 	entity(&entity)
 {
-
-	size = mapRect->w / worldSize;
+	size = mapView->getBoundingBox()->w / float(worldSize);
 
 	Color color;
 	switch(entity.getFaction())
 	{
-		case FT_STATIC:
-			color = C_GRAY;
+		case F_STATIC:
+			switch(entity.getType())
+			{
+			case ET_TREE:
+				color = C_GREEN;
+				break;
+			case ET_STONE:
+				color = C_GRAY;
+				break;
+			case ET_IRON:
+				color = C_BLACK;
+				break;
+
+			default:
+				color = C_GRAY;
+				break;
+			}
 			break;
 
-		case FT_ANIMAL_DOMESTIC:
+		case F_ANIMAL_DOMESTIC:
 			color = C_CYAN;
 			break;
 
-		case FT_ANIMAL_PASSIVE:
+		case F_ANIMAL_PASSIVE:
 			color = C_YELLOW;
 			break;
 
-		case FT_ANIMAL_HOSTILE:
+		case F_ANIMAL_HOSTILE:
 			color = C_MAGENTA;
 			break;
 
-		case FT_PLAYER_1:
+		case F_PLAYER_1:
 			color = C_BLUE;
 			break;
 
-		case FT_PLAYER_2:
+		case F_PLAYER_2:
 			color = C_RED;
 			break;
 
@@ -51,6 +65,8 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	clipping.y = 0;
 	clipping.w = size;
 	clipping.h = size;
+	boundingBox.w = size;
+	boundingBox.h = size;
 
 	updatePosition();
 
@@ -59,10 +75,12 @@ SdlEntity::SdlEntity(const Entity & entity) :
 
 void SdlEntity::updatePosition()
 {
-	boundingBox.x = mapRect->x + entity->getPosition().x * size;
-	boundingBox.y = mapRect->y + entity->getPosition().y * size;
-	boundingBox.w = size;
-	boundingBox.h = size;
+	mapView->clear(boundingBox);
+
+	boundingBox.x = entity->getPosition().getX() * size;
+	boundingBox.y = entity->getPosition().getY() * size;
+
+	mapView->draw(surface, boundingBox);
 }
 
 void SdlEntity::update()

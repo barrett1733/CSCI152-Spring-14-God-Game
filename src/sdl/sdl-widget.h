@@ -28,6 +28,7 @@ class SdlWidget
 protected:
 	void (*callback)(SDL_Event & event, SdlWidget*);
 	SDL_Surface * surface;
+	SDL_Texture * texture;
 	WidgetState state;
 	SDL_Rect clipping;
 	SDL_Rect boundingBox;
@@ -52,7 +53,8 @@ public:
 	SDL_Surface * getSurface();
 	virtual const SDL_Rect * getClipping();
 	virtual const SDL_Rect * getBoundingBox();
-	void render(SDL_Texture * renderTexture);
+	void render(SDL_Renderer * renderer);
+	void render(SDL_Texture * windowTexture);
 
 	virtual void handleEvent(SDL_Event&);
 

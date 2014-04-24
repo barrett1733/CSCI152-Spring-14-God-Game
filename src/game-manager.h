@@ -16,6 +16,8 @@ enum GameMode {
 	GM_QUITTING = 0x08,
 };
 
+typedef GameMode GameState;
+
 enum {
 	BCFG_LABEL = 0x01,
 	BCFG_CALLBACK = 0x02,
@@ -52,8 +54,11 @@ class GameManager : public Config
 	std::string callbackName;
 	int buttonConfig;
 
+	static void setGameState(GameState);
+
 	static void newGame(SDL_Event & event, WidgetReference);
 	static void pauseGame(SDL_Event & event, WidgetReference);
+	static void unpauseGame(SDL_Event & event, WidgetReference);
 	static void showCredits(SDL_Event & event, WidgetReference);
 	static void quitGame(SDL_Event & event);
 	static void quitGame(SDL_Event & event, WidgetReference);
