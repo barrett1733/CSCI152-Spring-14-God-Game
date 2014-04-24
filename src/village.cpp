@@ -1,4 +1,4 @@
-
+﻿
 #include <iostream>
 
 #include "village.h"
@@ -6,7 +6,7 @@
 typedef MobileEntityReference VillagerReference;
 
 Village::Village(Faction faction) :
-	faction(faction)
+faction(faction), villageStarted(false), setBeginningPopCap(false)
 { }
 
 void Village::importEntity(EntityReference entity)
@@ -34,31 +34,62 @@ void Village::importEntity(EntityReference entity)
 	}
 }
 
-bool Village::hasGodLogic()
-{
-	return false;
-}
-
-void Village::runGodLogic()
-{
-	// TODO: Village::runGodLogic();
-	// Determine military action
-	// Determine miracles
-	// Determine Triangle balance.
-	// jobManager.setBalance(militaryBalance, buildBalance, gatherBalance);
-}
-
 void Village::update()
 {
+	// decideAction();
+
+	//if (!setBeginningPopCap)
+	//	setPopulationCap();
+
 	// TODO: Village::runVillageLogic();
 	// Check size of job queue vs population
 	// Check next script instruction
 	// Issue jobs
 	// jobManager.issueJob(...);
-
+}
 	// TODO: Clean out dead entities.
+void Village::villageStart()
+{
+	// meant for the beginning of the game
+	villageStarted = true;
+	buildHouse();
+	buildHouse();
+	buildHouse();
+}
+void Village::decideAction()
+{
+	if (!villageStarted)
+		villageStart();
+	if (villagerList.size() % 6 == 0)
+		buildFoundary();
+	if (villagerList.size() == populationCap)
+		buildHouse();
+	if (getBuildingCount(ET_HOUSE) % 8 == 0)
+		buildMasonry();
+	if (getBuildingCount(ET_HOUSE) % 6 == 0)
+		buildMill();
+	if (villagerList.size() % 15 == 0)
+		buildSmith();
+	if (villagerList.size() % 25 == 0)
+		buildArmory();
+
+}
+int Village::getBuildingCount(EntityType entityType)
+{
+	int count = 0;
+	for (int i = 0; i < buildingList.size(); i++)
+		if (buildingList.at(i)->getEntityType() == entityType)
+			count++;
+	return count;
+}
+void Village::setPopulationCap()
+{
+	setBeginningPopCap = true;
+	populationCap = villagerList.size();
+}
 void Village::buildHouse()
 {
+	populationCap += 3;
 	std::cout << "Village::buildHouse()" << std::endl;
 	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_HOUSE);
 	// if(resourceManager.reserve(ResourceCost))
@@ -66,39 +97,48 @@ void Village::buildHouse()
 	// else
 	// 	jobManager.createJob(GATHER_RESOURCE, ResourceCost);
 }
-
-void Village::run()
+void Village::buildMasonry()
 {
-	balanceJobs();
-	createBuildings();
-	needsDefending();
+	std::cout << "Village::buildMasonry()" << std::endl;
+	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_MASONRY);
+	// if(resourceManager.reserve(ResourceCost))
+	// 	jobManager.createJob(JOB_BUILD_MASONRY);
+	// else
+	// 	jobManager.createJob(GATHER_RESOURCE, ResourceCost);
 }
-
-void Village::balanceJobs()
+void Village::buildMill()
 {
-	// int total = 0;
-	// int average = 0;
-	// for(int i = 0; i < RT_COUNT; i++)
-	// 	total += getResourceAmount(ResourceType(i), faction);
-	// average = total/RT_COUNT;
-
-	// for(int i = 0; i < RT_COUNT; i++)
-	// 	if(getResourceAmount(ResourceType(i), faction) < average)
-	// 		;//createGatherJob(ResourceType(i));
-
-	//gather
-	//create
-	//	check position of building to create - another class?
-	//defend
-	//	check position attacked - another class?
+	std::cout << "Village::buildMill()" << std::endl;
+	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_MILL);
+	// if(resourceManager.reserve(ResourceCost))
+	// 	jobManager.createJob(JOB_BUILD_MILL);
+	// else
+	// 	jobManager.createJob(GATHER_RESOURCE, ResourceCost);
 }
-
-void Village::createBuildings()
+void Village::buildSmith()
 {
-
+	std::cout << "Village::buildSmith()" << std::endl;
+	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_SMITH);
+	// if(resourceManager.reserve(ResourceCost))
+	// 	jobManager.createJob(JOB_BUILD_SMITH);
+	// else
+	// 	jobManager.createJob(GATHER_RESOURCE, ResourceCost);
 }
-
-void Village::needsDefending()
+void Village::buildArmory()
 {
-
+	std::cout << "Village::buildArmory()" << std::endl;
+	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_ARMORY);
+	// if(resourceManager.reserve(ResourceCost))
+	// 	jobManager.createJob(JOB_BUILD_ARMORY);
+	// else
+	// 	jobManager.createJob(GATHER_RESOURCE, ResourceCost);
+}
+void Village::buildFoundary()
+{
+	std::cout << "Village::buildFoundary()" << std::endl;
+	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_FOUNDARY);
+	// if(resourceManager.reserve(ResourceCost))
+	// 	jobManager.createJob(JOB_BUILD_FOUNDARY);
+	// else
+	// 	jobManager.createJob(GATHER_RESOURCE, ResourceCost);
 }

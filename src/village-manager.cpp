@@ -61,10 +61,6 @@ void VillageManager::update()
 	for(long villageIndex = 0; villageIndex < villageCount; villageIndex ++)
 	{
 		VillageReference village = villageList[villageIndex];
-
-		if( village->hasGodLogic() )
-			village->runGodLogic();
-
 		village->update();
 	}
 }
