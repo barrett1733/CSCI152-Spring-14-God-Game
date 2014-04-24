@@ -3,6 +3,7 @@
 
 #include "resource-manager.h"
 #include "job-manager.h"
+#include "world-gen.h"
 
 #ifndef VILLAGE_H_
 #define VILLAGE_H_
@@ -30,6 +31,9 @@ class Village
 
 	int getBuildingCount(EntityType);
 	void setPopulationCap();
+    
+    Position getAvaiableArea(Position);
+    Position getTownCenter();
 
 
 public:
@@ -51,5 +55,8 @@ public:
 };
 
 typedef Village * VillageReference;
+typedef std::vector<EntityReference> EntityVec;
+typedef EntityVec::iterator EntityIter;
+
 
 #endif
