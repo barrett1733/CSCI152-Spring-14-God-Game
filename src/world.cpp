@@ -1,4 +1,4 @@
-#include "map.h"
+#include "world.h"
 
 bool WorldObserver::checkBounds(int x, int y)
 {

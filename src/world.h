@@ -15,10 +15,10 @@ class WorldObserver
 public:
 	void registerWorld(World&);
 	void prepareWorld(int);
-	EntityType get(Position);
-	EntityType get(int x, int y);
-	void change(EntityType, Position);
-	void change(EntityType, int x, int y);
+	EntityType getEntityTypeAt(Position);
+	EntityType getEntityTypeAt(int x, int y);
+	void changeEntityTypeAt(EntityType, Position);
+	void changeEntityTypeAt(EntityType, int x, int y);
 	int getWorldSize() {	return worldSize;	};
 };
 
