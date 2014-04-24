@@ -54,7 +54,6 @@ Thumbs.db
 *.opensdf
 *.sdf
 *.sln
-*.vcxproj
 *.vcxproj.filters
 *.tlog
 *.lastbuildstate
