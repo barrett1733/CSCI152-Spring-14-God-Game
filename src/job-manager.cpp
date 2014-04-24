@@ -27,6 +27,26 @@ std::map<JobType, std::string> JobManager::mapTaskPriority = {
     {JOB_BUILD_TEMPLE, "Build"}
 };
 
+std::map<JobType, ResourceCost> JobManager::mapBuildingCost = {
+  
+    {JOB_BUILD_HOUSE, { 50, 50, 50 } },
+    {JOB_BUILD_FARM, { 50, 50, 50 } },
+    {JOB_BUILD_SMELTING, { 50, 50, 50 } },
+    {JOB_BUILD_STONEWORKS, { 50, 50, 50 } },
+    {JOB_BUILD_LUMBERMILL, { 50, 50, 50 } },
+    {JOB_BUILD_WEAPONSMITH, { 50, 100, 200 } },
+    {JOB_BUILD_ARMORSMITH, { 50, 100, 200 } },
+    {JOB_BUILD_WATCHTOWER, { 50, 50, 50 } },
+    {JOB_BUILD_TOWNCENTER, { 50, 50, 50 } },
+    {JOB_BUILD_TEMPLE, { 50, 50, 50 } }
+    
+};
+
+ResourceCost JobManager::getResourceCost(JobType jobType)
+{
+    return mapBuildingCost[jobType];
+}
+
 void JobManager::registerJob(JobReference job)
 {
 	jobList.push_back(job);

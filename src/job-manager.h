@@ -10,22 +10,30 @@
 
 typedef std::vector<JobReference> JobVec;
 typedef JobVec::iterator JobIter;
-enum JobPriority
+
+
+struct ResourceCost
 {
-	JOBPRIORITY_LOW = 3,
-	JOBPRIORITY_MIDIUM = 7,
-	JOBPRIORITY_HIGH = 10
+    int wood;
+    //int food;
+    int stone;
+    int iron;
 };
+
 
 class JobManager
 {
 	JobVec jobList;
 	TaskManager * taskManager;
-
+    
 public:
     static std::map<JobType, int> mapBuildTaskNum;
     
     static std::map<JobType, std::string> mapTaskPriority;
+    
+    static std::map<JobType, ResourceCost> mapBuildingCost;
+    
+    ResourceCost getResourceCost(JobType);
     
 	JobManager() : taskManager(new TaskManager()) {};
 	~JobManager(){delete taskManager;}
@@ -48,12 +56,14 @@ public:
 	void cleanTaskList(JobReference job);
 
 	void cleanJobList();
+    
+    
 
 	/*
 	// Desired interface:
 
 	int getTaskCount();
-	ResourceCost getResourceCost(JobType);
+
 
 	void createJob(JobType, int priority, Position);
 	void createJob(JobType, int priority, EntityReference);
