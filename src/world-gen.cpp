@@ -31,7 +31,7 @@ WorldGeneration::WorldGeneration(int seed) :
 		//////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////
 
-		if (world_info[WI_MAP_SIZE] <= 40) world_info[WI_MAP_SIZE] = 40;
+		if (world_info[WI_MAP_SIZE] < 40) world_info[WI_MAP_SIZE] = 40;
 
 	int mapEdgeLength = world_info[WI_MAP_SIZE];
 
