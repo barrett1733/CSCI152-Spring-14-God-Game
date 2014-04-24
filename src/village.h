@@ -31,12 +31,6 @@ class Village
 	int getBuildingCount(EntityType);
 	void setPopulationCap();
 
-	void buildHouse();
-	void buildMasonry();
-	void buildMill();
-	void buildSmith();
-	void buildArmory();
-	void buildFoundary();
 
 public:
 	Village(Faction);
@@ -44,6 +38,13 @@ public:
 	void importEntity(EntityReference);
 
 	void update();
+
+	void buildHouse();
+	void buildMasonry();
+	void buildMill();
+	void buildSmith();
+	void buildArmory();
+	void buildFoundary();
 
 
 	Faction getFaction() { return faction; }
