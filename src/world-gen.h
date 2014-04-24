@@ -52,11 +52,6 @@ public:
 	WorldGeneration(int);
 	~WorldGeneration();
 
-	int getWorldSize()
-	{
-		return world_info[WI_MAP_SIZE];
-	}
-
 	void PlaceResource(int min, int max, EntityType type);
 	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
 	void PlaceTownCenter();
@@ -69,11 +64,15 @@ public:
 	void createPath(int);
 	void placePaths();
 	void createPaths2(Position);
+
+	int getWorldSize();
 	int getEntityCount();
 	int findOffset(int);
 	int shiftFromEdge(int);
 	int pathChange(int);
+
 	Entity getNextEntity();
+
 	Position findPathStart(int);
 	Position getTC1();
 	Position getTC2();
