@@ -543,3 +543,8 @@ Position WorldGeneration::getTC2()
 {
 	return TC2;
 }
+
+int WorldGeneration::getWorldSize()
+{
+	return world_info[WI_MAP_SIZE];
+}
