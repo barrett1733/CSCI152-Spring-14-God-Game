@@ -61,21 +61,20 @@ public:
 	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
 	void PlaceTownCenter();
 	void PlaceTemple();
-	void PlaceVillagers(EntityType type, Position pos);
-	void PlaceDomesticBeasts(EntityType type, int number, Position pos);
+	void PlaceAroundTC(EntityType type, int number, Position pos);
 	void PrintMap();
-	Entity getNextEntity();
-	int getEntityCount();
 	void nextPosition();
-	int findOffset(int);
-	int shiftFromEdge(int);
 	void shiftFromEdge(Position&);
 	void clearArea(Position);
 	void createPath(int);
-	Position findPathStart(int);
-	int pathChange(int);
 	void placePaths();
 	void createPaths2(Position);
+	int getEntityCount();
+	int findOffset(int);
+	int shiftFromEdge(int);
+	int pathChange(int);
+	Entity getNextEntity();
+	Position findPathStart(int);
 	Position getTC1();
 	Position getTC2();
 
