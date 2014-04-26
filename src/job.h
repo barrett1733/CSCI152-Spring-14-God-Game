@@ -43,6 +43,7 @@ protected:
 	int _taskNum;
 	int _taskQuota;
     static std::map<JobType, TaskType> mp;
+	static void initMp();
 
 public:
 	Job(JobType type, int priority, int taskNum, int taskQuota);

@@ -1,46 +1,50 @@
 
 #include "job-manager.h"
+std::map<JobType, int> JobManager::mapBuildTaskNum;
+std::map<JobType, std::string> JobManager::mapTaskPriority;
+std::map<JobType, ResourceCost> JobManager::mapBuildingCost;
 
- std::map<JobType, int> JobManager::mapBuildTaskNum = {
-    {JOB_BUILD_HOUSE, 1},
-    {JOB_BUILD_SMELTING, 2},
-    {JOB_BUILD_STONEWORKS, 2},
-    {JOB_BUILD_FARM, 2},
-    {JOB_BUILD_LUMBERMILL, 3},
-    {JOB_BUILD_WEAPONSMITH, 4},
-    {JOB_BUILD_ARMORSMITH, 4},
-    {JOB_BUILD_WATCHTOWER, 1},
-    {JOB_BUILD_TOWNCENTER, 20},
-    {JOB_BUILD_TEMPLE, 10}
-};
+void JobManager::initMapBuildTaskNum()
+{
+	JobManager::mapBuildTaskNum[JOB_BUILD_HOUSE] = 1;
+    JobManager::mapBuildTaskNum[JOB_BUILD_SMELTING] = 2;
+    JobManager::mapBuildTaskNum[JOB_BUILD_STONEWORKS] = 2;
+    JobManager::mapBuildTaskNum[JOB_BUILD_FARM] = 2;
+    JobManager::mapBuildTaskNum[JOB_BUILD_LUMBERMILL] = 3;
+    JobManager::mapBuildTaskNum[JOB_BUILD_WEAPONSMITH] = 4;
+    JobManager::mapBuildTaskNum[JOB_BUILD_ARMORSMITH] = 4;
+    JobManager::mapBuildTaskNum[JOB_BUILD_WATCHTOWER] = 1;
+    JobManager::mapBuildTaskNum[JOB_BUILD_TOWNCENTER] = 20;
+    JobManager::mapBuildTaskNum[JOB_BUILD_TEMPLE] = 10;
+}
 
-std::map<JobType, std::string> JobManager::mapTaskPriority = {
-    {JOB_BUILD_HOUSE, "Build"},
-    {JOB_BUILD_FARM, "Build"},
-    {JOB_BUILD_SMELTING, "Build"},
-    {JOB_BUILD_STONEWORKS, "Build"},
-    {JOB_BUILD_LUMBERMILL, "Build"},
-    {JOB_BUILD_WEAPONSMITH, "Military"},
-    {JOB_BUILD_ARMORSMITH, "Military"},
-    {JOB_BUILD_WATCHTOWER, "Military"},
-    {JOB_BUILD_TOWNCENTER, "Build"},
-    {JOB_BUILD_TEMPLE, "Build"}
-};
+void JobManager::initMapTaskPriority()
+{
+	JobManager::mapTaskPriority[JOB_BUILD_HOUSE] = "Build";
+	JobManager::mapTaskPriority[JOB_BUILD_FARM] = "Build";
+	JobManager::mapTaskPriority[JOB_BUILD_SMELTING] = "Build";
+	JobManager::mapTaskPriority[JOB_BUILD_STONEWORKS] = "Build";
+	JobManager::mapTaskPriority[JOB_BUILD_LUMBERMILL] = "Build";
+	JobManager::mapTaskPriority[JOB_BUILD_WEAPONSMITH] = "Military";
+	JobManager::mapTaskPriority[JOB_BUILD_ARMORSMITH] = "Military";
+	JobManager::mapTaskPriority[JOB_BUILD_WATCHTOWER] = "Military";
+	JobManager::mapTaskPriority[JOB_BUILD_TOWNCENTER] = "Build";
+	JobManager::mapTaskPriority[JOB_BUILD_TEMPLE] = "Build";
+}
 
-std::map<JobType, ResourceCost> JobManager::mapBuildingCost = {
-  
-    {JOB_BUILD_HOUSE, { 50, 50, 50 } },
-    {JOB_BUILD_FARM, { 50, 50, 50 } },
-    {JOB_BUILD_SMELTING, { 50, 50, 50 } },
-    {JOB_BUILD_STONEWORKS, { 50, 50, 50 } },
-    {JOB_BUILD_LUMBERMILL, { 50, 50, 50 } },
-    {JOB_BUILD_WEAPONSMITH, { 50, 100, 200 } },
-    {JOB_BUILD_ARMORSMITH, { 50, 100, 200 } },
-    {JOB_BUILD_WATCHTOWER, { 50, 50, 50 } },
-    {JOB_BUILD_TOWNCENTER, { 50, 50, 50 } },
-    {JOB_BUILD_TEMPLE, { 50, 50, 50 } }
-    
-};
+void JobManager::initMapBuildingCost()
+{
+	JobManager::mapBuildingCost[JOB_BUILD_HOUSE] = ResourceCost(50, 50, 50);
+	JobManager::mapBuildingCost[JOB_BUILD_FARM] = ResourceCost(50, 50, 50);
+	JobManager::mapBuildingCost[JOB_BUILD_SMELTING] = ResourceCost(50, 50, 50);
+	JobManager::mapBuildingCost[JOB_BUILD_STONEWORKS] = ResourceCost(50, 50, 50);
+	JobManager::mapBuildingCost[JOB_BUILD_LUMBERMILL] = ResourceCost(50, 50, 50);
+	JobManager::mapBuildingCost[JOB_BUILD_WEAPONSMITH] = ResourceCost(50, 100, 200);
+	JobManager::mapBuildingCost[JOB_BUILD_ARMORSMITH] = ResourceCost(50, 100, 200);
+	JobManager::mapBuildingCost[JOB_BUILD_WATCHTOWER] = ResourceCost(50, 50, 50);
+	JobManager::mapBuildingCost[JOB_BUILD_TOWNCENTER] = ResourceCost(50, 50, 50);
+	JobManager::mapBuildingCost[JOB_BUILD_TEMPLE] = ResourceCost(50, 50, 50);
+}
 
 ResourceCost JobManager::getResourceCost(JobType jobType)
 {

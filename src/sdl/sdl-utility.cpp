@@ -31,7 +31,7 @@ SdlUtility::~SdlUtility()
 
 void SdlUtility::loadFont(std::string fontName, FontSize fontSize)
 {
-	fontList[fontSize] = TTF_OpenFont(("res/"+fontName).c_str(), fontSize);
+	fontList[fontSize] = TTF_OpenFont((((std::string)"res/").append(fontName)).c_str(), fontSize);
 }
 
 ////////

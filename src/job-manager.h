@@ -18,7 +18,14 @@ struct ResourceCost
     //int food;
     int stone;
     int iron;
+	ResourceCost() {}
+	ResourceCost(int a, int b, int c) :
+		wood(a),
+		stone(b),
+		iron(c)
+	{}
 };
+
 
 
 class JobManager
@@ -27,15 +34,23 @@ class JobManager
 	TaskManager * taskManager;
     
 public:
-    static std::map<JobType, int> mapBuildTaskNum;
-    
-    static std::map<JobType, std::string> mapTaskPriority;
-    
-    static std::map<JobType, ResourceCost> mapBuildingCost;
-    
+	static std::map<JobType, int> mapBuildTaskNum;
+	static void initMapBuildTaskNum();
+
+	static std::map<JobType, std::string> mapTaskPriority;
+	static void initMapTaskPriority();
+
+	static std::map<JobType, ResourceCost> mapBuildingCost;
+	static void initMapBuildingCost();
+
     ResourceCost getResourceCost(JobType);
     
-	JobManager() : taskManager(new TaskManager()) {};
+	JobManager() : taskManager(new TaskManager())
+	{
+		initMapBuildTaskNum();
+		initMapTaskPriority();
+		initMapBuildingCost();
+	};
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
