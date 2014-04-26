@@ -8,7 +8,7 @@
 #include <math.h>
 #include <iostream>
 
-enum Direction
+enum
 {
 	D_NONE  = 0x00,
 	D_UP    = 0x01,
@@ -16,6 +16,7 @@ enum Direction
 	D_DOWN  = 0x04,
 	D_LEFT  = 0x08,
 };
+typedef int Direction;
 
 class Position
 {
