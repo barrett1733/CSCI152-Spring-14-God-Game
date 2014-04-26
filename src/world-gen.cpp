@@ -27,9 +27,11 @@ WorldGeneration::WorldGeneration(int seed) :
 
 		ifstream file("res/world-info.txt");
 		int n;
-		while( file >> n ) world_info.push_back(n);
-//////////////////////////////////////////////////////
-//////////////////////////////////////////////////////
+		while (file >> n) world_info.push_back(n);
+		//////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////
+
+		if (world_info[WI_MAP_SIZE] < 40) world_info[WI_MAP_SIZE] = 40;
 
 	int mapEdgeLength = world_info[WI_MAP_SIZE];
 
@@ -49,21 +51,25 @@ WorldGeneration::WorldGeneration(int seed) :
 	/************************
 	***place all entities***
 	************************/
-
-	PlaceResource(15, 85, ET_TREE);//trees
-	PlaceResource(1, 5, ET_IRON);//iron
-	PlaceResource(30, 35, ET_STONE);//stone
+	//////////////resources/////////////////////
+	PlaceResource(15, 85, ET_TREE);
+	PlaceResource(1, 5, ET_IRON);
+	PlaceResource(30, 35, ET_STONE);
+	////////////////paths///////////////////////
 	placePaths();
+	//////////////towncenter////////////////////
 	PlaceTownCenter();
-	
+	////////////////temple//////////////////////
 	PlaceTemple();
-	PlaceVillagers(ET_VILLAGER, TC1);
-	PlaceVillagers(ET_VILLAGER, TC2);
-	PlaceDomesticBeasts(ET_COW, WI_NUM_OF_COWS, TC1);
-	PlaceDomesticBeasts(ET_COW, WI_NUM_OF_COWS, TC2);
-	PlaceWildBeasts(0, 8, 0, ET_DEER);//deer
-	PlaceWildBeasts(20, 23, 15, ET_WOLF);//wolf
-	PlaceWildBeasts(50, 51, 20, ET_OGRE);//ogre
+	//////villagers and domestics beasts////////
+	PlaceAroundTC(ET_VILLAGER, WI_NUM_OF_VILLAGERS, TC1);
+	PlaceAroundTC(ET_VILLAGER, WI_NUM_OF_VILLAGERS, TC2);
+	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC1);
+	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC2);
+	/////////////wild beasts////////////////////
+	PlaceWildBeasts(0, 8, 0, ET_DEER);
+	PlaceWildBeasts(20, 23, 15, ET_WOLF);
+	PlaceWildBeasts(50, 51, 20, ET_OGRE);
 }
 
 void WorldGeneration::PrintMap()
@@ -166,68 +172,36 @@ void WorldGeneration::PlaceTemple()
 	entityCount++;
 }
 
-void WorldGeneration::PlaceVillagers(EntityType type, Position pos)
+void WorldGeneration::PlaceAroundTC(EntityType type, int num_of_entities, Position pos)
 {
-	int team_villager_count = 0;
-	Position here;
-
-	int pos_x = pos.getX();
-	int pos_y = pos.getY();
-
-	/*********************************************************/
-	/***placing villagers around the town center and shrine***/
-	/*********************************************************/
-	while(team_villager_count < world_info[WI_NUM_OF_VILLAGERS])
-	{
-		for(int outerIndex = pos_y - 4; outerIndex <= pos_y + 4; outerIndex++)
-		{
-			for(int innerIndex = pos_x - 6; innerIndex < pos_x + 6; innerIndex++)
-			{
-				here.set(innerIndex, outerIndex);
-				int chance_for_villager = rand() % 100;
-				if(world_positions[outerIndex][innerIndex] == ET_NONE && team_villager_count < world_info[WI_NUM_OF_VILLAGERS] && chance_for_villager < 20 && here.distance(pos) > 3)
-				{
-					world_positions[outerIndex][innerIndex] = type;
-					team_villager_count++;
-					entityCount++;
-				}
-				else if(team_villager_count == world_info[WI_NUM_OF_VILLAGERS])
-					break;
-			}
-		}
-	}
-}
-
-void WorldGeneration::PlaceDomesticBeasts(EntityType type, int num_of_beasts, Position pos)
-{
-	// This function looks almost identical to PlaceVillagers().
-	// Can they be abstracted?
-	// -CH
+	int number = 0;
 	int team_type_count = 0;
 	Position here;
 
 	int pos_x = pos.getX();
 	int pos_y = pos.getY();
 
-	while(team_type_count < world_info[num_of_beasts])
+	while (team_type_count < world_info[num_of_entities])
 	{
-		for(int outerIndex = pos_y - 4; outerIndex <= pos_y + 4; outerIndex++)
+		for (int outerIndex = pos_y - 4; outerIndex <= pos_y + 4; outerIndex++)
 		{
-			for(int innerIndex = pos_x - 6; innerIndex < pos_x + 6; innerIndex++)
+			for (int innerIndex = pos_x - 6; innerIndex < pos_x + 6; innerIndex++)
 			{
 				here.set(innerIndex, outerIndex);
 				int chance_for_beast = rand() % 100;
-				if(world_positions[outerIndex][innerIndex] == ET_NONE && team_type_count < world_info[num_of_beasts] && chance_for_beast < 20 && here.distance(pos) > 5)
+				if (world_positions[outerIndex][innerIndex] == ET_NONE && team_type_count < world_info[num_of_entities] && chance_for_beast < 20 && here.distance(pos) > 5)
 				{
 					world_positions[outerIndex][innerIndex] = type;
 					team_type_count++;
 					entityCount++;
+					number++;
 				}
-				else if(team_type_count == world_info[num_of_beasts])
+				else if (team_type_count == world_info[num_of_entities])
 					break;
 			}
 		}
 	}
+	cout << "number of type " << type << ": " << number << " around position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
 }
 
 void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, EntityType type)
@@ -259,7 +233,6 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 Entity WorldGeneration::getNextEntity()
 {
-	//string z="noMoreEntities";
 	double length_to_tc1;
 	double length_to_tc2;
 	Entity to_return(ET_NONE,0,current,F_NONE);
@@ -277,7 +250,7 @@ Entity WorldGeneration::getNextEntity()
 				//current_moves++;
 			}
 		}
-		else //if(world_positions[current.y][current.x]!=0)
+		else
 		{
 			if(cycled == true)
 			{
@@ -389,24 +362,6 @@ void WorldGeneration::shiftFromEdge(Position & position)
 		shiftFromEdge(position.getY())
 	);
 }
-
-//void WorldGeneration::clearArea(Position pos)
-//{
-//	for(int outerIndex=pos.y-7; outerIndex < pos.y+7; outerIndex++)
-//	{
-//		for(int innerIndex=pos.x-7; innerIndex < pos.x+7; innerIndex++)
-//		{
-//			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
-//				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
-//			else
-//			{
-//				if(world_positions[outerIndex][innerIndex] != ET_NONE)
-//				entityCount--;
-//				world_positions[outerIndex][innerIndex] = ET_NONE;
-//			}
-//		}
-//	}
-//}
 
 void WorldGeneration::clearArea(Position pos)
 {
@@ -587,4 +542,9 @@ Position WorldGeneration::getTC1()
 Position WorldGeneration::getTC2()
 {
 	return TC2;
+}
+
+int WorldGeneration::getWorldSize()
+{
+	return world_info[WI_MAP_SIZE];
 }

@@ -10,24 +10,47 @@
 
 typedef std::vector<JobReference> JobVec;
 typedef JobVec::iterator JobIter;
-enum JobPriority
+
+
+struct ResourceCost
 {
-	JOBPRIORITY_LOW = 3,
-	JOBPRIORITY_MIDIUM = 7,
-	JOBPRIORITY_HIGH = 10
+    int wood;
+    //int food;
+    int stone;
+    int iron;
+	ResourceCost() {}
+	ResourceCost(int a, int b, int c) :
+		wood(a),
+		stone(b),
+		iron(c)
+	{}
 };
+
+
 
 class JobManager
 {
 	JobVec jobList;
 	TaskManager * taskManager;
-
+    
 public:
-    static std::map<JobType, int> mapBuildTaskNum;
+	static std::map<JobType, int> mapBuildTaskNum;
+	static void initMapBuildTaskNum();
+
+	static std::map<JobType, std::string> mapTaskPriority;
+	static void initMapTaskPriority();
+
+	static std::map<JobType, ResourceCost> mapBuildingCost;
+	static void initMapBuildingCost();
+
+    ResourceCost getResourceCost(JobType);
     
-    static std::map<JobType, std::string> mapTaskPriority;
-    
-	JobManager() : taskManager(new TaskManager()) {};
+	JobManager() : taskManager(new TaskManager())
+	{
+		initMapBuildTaskNum();
+		initMapTaskPriority();
+		initMapBuildingCost();
+	};
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
@@ -48,12 +71,14 @@ public:
 	void cleanTaskList(JobReference job);
 
 	void cleanJobList();
+    
+    
 
 	/*
 	// Desired interface:
 
 	int getTaskCount();
-	ResourceCost getResourceCost(JobType);
+
 
 	void createJob(JobType, int priority, Position);
 	void createJob(JobType, int priority, EntityReference);
