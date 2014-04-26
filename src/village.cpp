@@ -51,12 +51,23 @@ void Village::villageStart()
 {
 	// meant for the beginning of the game
 	villageStarted = true;
+	//  MAGIC: Initial buildings should be from file, not hardcoded.
+	// -CH
 	buildHouse();
 	buildHouse();
 	buildHouse();
 }
 void Village::decideAction()
 {
+	//  MAGIC: All these numbers should be loaded from a script file.
+	// Also, to build a certain buildings at a certain population level is probably incorrect.
+	// I.E.:
+	// Population size reaches 12, so a foundary is built.
+	// Someone dies, so population goes back to 11.
+	// Then someone is born, so population goes back to 12,
+	// so another foundary is built.
+	// lololfoundarieseverywhere.
+	// -CH
 	if (!villageStarted)
 		villageStart();
 	if (villagerList.size() % 6 == 0)
@@ -84,9 +95,13 @@ int Village::getBuildingCount(EntityType entityType)
 
 Position Village::getTownCenter()
 {
+	// How often is this going to be called?
+	// Is it better to just store the as a property of the village?
+	// -CH
+
     //Get TownCenter position
     Position p;
-    
+
     for (EntityIter iter = buildingList.begin(); iter != buildingList.end(); ++iter)
     {
         if ((*iter)->getEntityType() == ET_TOWN_CENTER)
@@ -94,7 +109,7 @@ Position Village::getTownCenter()
             p = (*iter)->getPosition();
         }
     }
-    
+
     //Find the nearest unoccupied area
     return p;
 }
@@ -110,6 +125,9 @@ Position Village::getAvaiableArea(Position p)
     else
     {
         que.push(p);
+        //  TODO: Refactor.
+        // Nested if-statements like this is silly.
+        // -CH
         while(!que.empty())
         {
             current = que.front();
@@ -140,9 +158,9 @@ Position Village::getAvaiableArea(Position p)
                         if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
                             current = temp;
                     }
-                    
+
                 }
-                
+
             }
         }
     }
@@ -156,7 +174,7 @@ void Village::setPopulationCap()
 }
 void Village::buildHouse()
 {
-	populationCap += 3;
+	populationCap += 3; //  MAGIC: why three? Config file, imo. -CH
 	std::cout << "Village::buildHouse()" << std::endl;
 	// ResourceCost = jobManager.getResourceCost(JOB_BUILD_HOUSE);
 	// if(resourceManager.reserve(ResourceCost))
@@ -165,6 +183,10 @@ void Village::buildHouse()
 	// else
 	// 	jobManager.createJob(GATHER_RESOURCE, priority, ResourceCost);
 }
+
+//  The following functions are are nearly identical and should be abstracted.
+//  void Village::buildSomething(EntityType buildingType);
+// -CH
 void Village::buildMasonry()
 {
 	std::cout << "Village::buildMasonry()" << std::endl;

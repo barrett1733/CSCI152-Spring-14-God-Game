@@ -20,6 +20,9 @@ class Village
 	// Should resources be 'discovered' instead of all known immediately?
 	//
 	// TODO: Villager creation every 30 secs
+	// NOTE: ^ driven from the outside. A Village probably doesn't need to maintain a concept of 'time'. -CH
+	// + bool hasFoodToSpawnVillager();
+	// + void spawnVillager();
 	//
 	bool villageStarted;
 	int populationCap;
@@ -31,7 +34,7 @@ class Village
 
 	int getBuildingCount(EntityType);
 	void setPopulationCap();
-    
+
     Position getAvaiableArea(Position);
     Position getTownCenter();
 
