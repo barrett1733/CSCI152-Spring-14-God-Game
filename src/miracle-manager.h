@@ -1,19 +1,13 @@
-/******************************
- * Miracles: An action or actions that are defined by the player.
- * Ex: Summon:Cow, AOE:Heal
- *
- */
- #include <map>
- #include "entity.h"
- #include "entity.cpp"
+//
+// Miracles: An action or actions that are defined by the player.
+// Ex: Summon:Cow, AOE:Heal
+//
 
- struct Pair
- {
-	std::string name;
-	int cost;
- };
+#include <map>
+#include "entity.h"
+#include "entity.cpp"
 
- // Entity class for miracle to enable manager to interact with entities
+// Entity class for miracle to enable manager to interact with entities
 class MiracleEntity : public Entity
 {
 	//	static int AOE=0;
