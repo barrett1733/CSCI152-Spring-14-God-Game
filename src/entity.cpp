@@ -155,7 +155,24 @@ void MobileEntity::update()
 	if(target)
 	{
 		Direction direction = D_NONE;
-		// get next move
+		int targetX = target->getPosition().getX();
+		int targetY = target->getPosition().getY();
+		int sourceX = position.getX();
+		int sourceY = position.getY();
+
+		if(targetX < sourceX)
+			direction |= D_LEFT;
+		else if(targetX > sourceX)
+			direction |= D_RIGHT;
+
+		if(targetY < sourceY)
+			direction |= D_UP;
+		else if(targetY < sourceY)
+			direction |= D_DOWN;
+
+		// TODO: if(!canMove(direction)) adjust(direction);
+		//
+
 		position.move(direction);
 	}
 	else
