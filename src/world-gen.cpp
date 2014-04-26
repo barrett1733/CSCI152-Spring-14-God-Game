@@ -51,6 +51,11 @@ WorldGeneration::WorldGeneration(int seed) :
 	/************************
 	***place all entities***
 	************************/
+	// It's time to move all these magic numbers to a config file
+	// and to use a more friendly config format.
+	// The config file should be understandable
+	//  without having to closely read the code to understand what each numbers mean.
+	// -CH
 	//////////////resources/////////////////////
 	PlaceResource(15, 85, ET_TREE);
 	PlaceResource(1, 5, ET_IRON);
