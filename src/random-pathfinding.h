@@ -1,5 +1,5 @@
-#ifndef PATHFINDING_H_
-#define PATHFINDING_H_
+#ifndef RANDOM_PATHFINDING_H_
+#define RANDOM_PATHFINDING_H_
 
 #include <iostream>
 #include <vector>
@@ -8,7 +8,7 @@
 using namespace std;
 
 
-class Pathfinder{
+class RandomPathfinding{
 	int mapDirectionX(Direction direction);
 	int mapDirectionY(Direction direction);
 	bool checkDirection(Position position, Direction direction);

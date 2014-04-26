@@ -1,6 +1,6 @@
-#include "pathfinding.h"
+#include "random-pathfinding.h"
 
-Direction Pathfinder::determineDirection(Position me, Position target)
+Direction RandomPathfinding::determineDirection(Position me, Position target)
 {
 	if (me.getY() < target.getY())
 		return D_DOWN;
@@ -15,18 +15,18 @@ Direction Pathfinder::determineDirection(Position me, Position target)
 	}
 	return D_NONE;
 }
-void Pathfinder::moveTowardsTarget(MobileEntityReference me, Position target)
+void RandomPathfinding::moveTowardsTarget(MobileEntityReference me, Position target)
 {
 	Position pos = me->getPosition();
 	pos.move(determineDirection(pos, target));
 	me->setPosition(pos);
 }
-void Pathfinder::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
+void RandomPathfinding::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
 {
 	moveTowardsTarget(me, target->getPosition());
 }
 
-std::vector<Direction> Pathfinder::checkArea(Position position)
+std::vector<Direction> RandomPathfinding::checkArea(Position position)
 {
 	std::vector<Direction> openDirections;
 	if (checkDirection(position, D_UP))
@@ -40,7 +40,7 @@ std::vector<Direction> Pathfinder::checkArea(Position position)
 	openDirections.push_back(D_NONE);
 	return openDirections;
 }
-int Pathfinder::mapDirectionX(Direction dir)
+int RandomPathfinding::mapDirectionX(Direction dir)
 {
 	if (dir & D_RIGHT)		return 1;
 	if (dir & D_UP_RIGHT)	return 1;
@@ -50,7 +50,7 @@ int Pathfinder::mapDirectionX(Direction dir)
 	if (dir & D_DOWN_LEFT)  return -1;
 	if (dir & D_NONE)		return 0;
 }
-int Pathfinder::mapDirectionY(Direction dir)
+int RandomPathfinding::mapDirectionY(Direction dir)
 {
 	if (dir & D_UP)			return -1;
 	if (dir & D_UP_RIGHT)	return -1;
@@ -60,7 +60,7 @@ int Pathfinder::mapDirectionY(Direction dir)
 	if (dir & D_DOWN_LEFT)  return 1;
 	if (dir & D_NONE)		return 0;
 }
-bool Pathfinder::checkDirection(Position pos, Direction dir)
+bool RandomPathfinding::checkDirection(Position pos, Direction dir)
 {
 	int newPosX = pos.getX() + mapDirectionX(dir);
 	int newPosY = pos.getY() + mapDirectionY(dir);

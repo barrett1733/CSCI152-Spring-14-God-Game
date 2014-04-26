@@ -1,18 +1,16 @@
 #pragma once
 #include "entity.h"
-#include "pathfinding.h"
+#include "random-pathfinding.h"
 #include <vector>
 
-class Creature : public Pathfinder
+class Creature : public RandomPathfinding
 {
-	std::vector<MobileEntityReference> domesticList; // list of domestic things (cow)
-	std::vector<MobileEntityReference> passiveList; // list of passive things (deer)
-	std::vector<MobileEntityReference> hostileList; // list of hostile things (orges, wolves)
+	std::vector<MobileEntityReference> creatureList; // list of creatures
 
 public:
 	Creature();
 	void importEntity(EntityReference);
-
+	void decideAction(MobileEntityReference);
 	void wander(MobileEntityReference);
 	void attack();
 	void flee();
