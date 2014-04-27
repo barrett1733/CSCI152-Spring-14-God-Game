@@ -171,7 +171,7 @@ void MobileEntity::update()
 
 		if(targetY < sourceY)
 			direction |= D_UP;
-		else if(targetY < sourceY)
+		else if(targetY > sourceY)
 			direction |= D_DOWN;
 
 		if(direction == D_NONE && task)
