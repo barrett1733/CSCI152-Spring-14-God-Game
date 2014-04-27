@@ -150,9 +150,10 @@ void EntityManager::build(SDL_Event & event, WidgetReference widget)
 	std::cout << "EntityManager::build(" << widget->id << ")" << std::endl;
 	if(self)
 	{
-		//  NOTE: widget->id is the EntityType (needs to be cast).
+		// EntityType type = (EntityType) widget->id;
+		Faction faction = F_PLAYER_1;
 
-		self->villageManager.buildHouse();
+		EntityReference townCenter = villageManager.getTownCenter(faction);
 	}
 	else
 		std::cerr << "EntityManager not initialized." << std::endl;
