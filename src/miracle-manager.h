@@ -23,3 +23,6 @@ class MiracleManager : config
 		int getCost( EntityType et );
 		Entity* createMiracle( EntityType et , Position p );
 }
+// this will convert a string into an EntityType.
+// 	only works for Miracle types. may expand later.
+EntityType string_to_ET(std::string name);
