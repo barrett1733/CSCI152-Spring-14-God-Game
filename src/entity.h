@@ -183,6 +183,7 @@ private:
 	int defense;
 
 	Entity * target;
+	TaskReference task;
 public:
 	MobileEntity(const Entity&);
 	int getHunger();

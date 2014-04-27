@@ -110,6 +110,7 @@ void Entity::setPosition(Position position)
 
 MobileEntity::MobileEntity(const Entity & entity) :
 	Entity(entity),
+	task(0),
 	target(0)
 {}
 
@@ -135,18 +136,20 @@ void MobileEntity::setDefense(int defense) {
 
 bool MobileEntity::hasTask()
 {
-	return target ? true : false;
+	return task ? true : false;
 }
 
 void MobileEntity::setTask(TaskReference task)
 {
 	if(task)
 	{
-		task->setAssignee(this);
+		task = task;
 		target = task->getTarget();
 	}
 	else
 	{
+		task = 0;
+		target = 0;
 		// worship or wander?
 	}
 }
@@ -170,6 +173,9 @@ void MobileEntity::update()
 			direction |= D_UP;
 		else if(targetY < sourceY)
 			direction |= D_DOWN;
+
+		if(direction == D_NONE && task)
+			;//task->work();
 
 		// TODO: if(!canMove(direction)) adjust(direction);
 		//
