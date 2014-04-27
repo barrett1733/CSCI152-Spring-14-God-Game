@@ -1,5 +1,8 @@
 
 #include "job-manager.h"
+#include "entity-manager.h"
+
+EntityManager * JobManager::entityManager = 0;
 
  std::map<JobType, int> JobManager::mapBuildTaskNum = {
     {JOB_BUILD_HOUSE, 1},
