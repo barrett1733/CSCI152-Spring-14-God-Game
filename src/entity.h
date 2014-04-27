@@ -46,7 +46,7 @@ enum EntityType {
 	ET_NONE = 0x00,
 
 	// RESOURCES
-	ET_TREE = 0x000001,
+	ET_TREE = 0x00000001,
 	ET_TREE_2,
 	ET_SHRUB_1,
 	ET_SHRUB_2,
@@ -58,7 +58,7 @@ enum EntityType {
 	ET_COPPER,
 
 	// VILLAGERS
-	ET_VILLAGER = 0x000100,
+	ET_VILLAGER = 0x00000100,
 
 	ET_ELDER_VILLAGER,
 	ET_CHILD_VILLAGER,
@@ -91,7 +91,7 @@ enum EntityType {
 	ET_CYCLOPS,
 
 	// BUILDINGS
-	ET_FOUNDATION = 0x010000,
+	ET_FOUNDATION = 0x00010000,
 	ET_STOREHOUSE,
 	ET_STONEWORKS,
 	ET_LUMBERMILL,
@@ -103,12 +103,12 @@ enum EntityType {
 	// In-Game buildings
 	ET_TOWN_CENTER,
 	ET_TEMPLE,
-	ET_HOUSE,
-	ET_MILL,
-	ET_MASONRY,
-	ET_FOUNDARY,
-	ET_SMITH,
-	ET_ARMORY,
+	ET_HOUSE = 0x00020001, //  NOTE: Do not change.
+	ET_MILL, //  NOTE: Do not change.
+	ET_MASONRY, //  NOTE: Do not change.
+	ET_FOUNDARY, //  NOTE: Do not change.
+	ET_SMITH, //  NOTE: Do not change.
+	ET_ARMORY, //  NOTE: Do not change.
 
 	ET_HOVEL,
 	ET_MANSION,
@@ -117,7 +117,7 @@ enum EntityType {
 	ET_MINES,
 
 	//Miracles
-	ET_MIRACLE = 0x100000,
+	ET_MIRACLE = 0x00100000,
 	ET_MIRACLE_HEAL,
 	ET_MIRACLE_SUMMONCOW,
 	ET_MIRACLE_STATBOOST,
