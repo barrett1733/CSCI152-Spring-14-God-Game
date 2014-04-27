@@ -164,6 +164,8 @@ public:
 
 	virtual void update() {}
 
+	bool operator==(EntityType type) { return this->type == type; }
+
 	friend std::ostream& operator<< (std::ostream & os, const Entity & entity)
 	{
 		os << entity.name << " ";
@@ -182,8 +184,8 @@ private:
 	int strength;
 	int defense;
 
-	Entity * target;
 	TaskReference task;
+	Entity * target;
 public:
 	MobileEntity(const Entity&);
 	int getHunger();

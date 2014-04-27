@@ -143,13 +143,13 @@ void MobileEntity::setTask(TaskReference task)
 {
 	if(task)
 	{
-		task = task;
-		target = task->getTarget();
+		this->task = task;
+		this->target = task->getTarget();
 	}
 	else
 	{
-		task = 0;
-		target = 0;
+		this->task = 0;
+		this->target = 0;
 		// worship or wander?
 	}
 }
