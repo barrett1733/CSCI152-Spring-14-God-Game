@@ -5,6 +5,7 @@
 typedef MobileEntityReference VillagerReference;
 
 Village::Village(Faction faction) :
+	townCenter(0),
 faction(faction), villageStarted(false), setBeginningPopCap(false)
 { }
 
@@ -26,6 +27,12 @@ void Village::importEntity(EntityReference entity)
 
 		case EG_BUILDING:
 			buildingList.push_back(entity);
+			if(*entity == ET_TOWN_CENTER)
+			{
+				if(townCenter)
+					std::cerr << "A second town center? How fancy!" << std::endl;
+				townCenter = entity;
+			}
 			break;
 
 		default: break;
@@ -93,25 +100,9 @@ int Village::getBuildingCount(EntityType entityType)
 	return count;
 }
 
-Position Village::getTownCenter()
+EntityReference Village::getTownCenter()
 {
-	// How often is this going to be called?
-	// Is it better to just store the as a property of the village?
-	// -CH
-
-    //Get TownCenter position
-    Position p;
-
-    for (EntityIter iter = buildingList.begin(); iter != buildingList.end(); ++iter)
-    {
-        if ((*iter)->getEntityType() == ET_TOWN_CENTER)
-        {
-            p = (*iter)->getPosition();
-        }
-    }
-
-    //Find the nearest unoccupied area
-    return p;
+	return townCenter;
 }
 
 //Use BFS to find the nearest available area from a given position
