@@ -1,31 +1,25 @@
-//
-// Miracles: An action or actions that are defined by the player.
-// Ex: Summon:Cow, AOE:Heal
-//
-
-#include <map>
-#include "entity.h"
-#include "entity.cpp"
-
-// Entity class for miracle to enable manager to interact with entities
-class MiracleEntity : public Entity
-{
-	//	static int AOE=0;
-	//	virtual Action()=0;
-};
-
-typedef std::map<std::string, std::int> MiracleMap;
-typedef std::pair<std::string, std::int> MiraclePair;
+/******************************
+ *
+ * Miracle Manager
+ *		Takes input data and returns an Entity:Miracle
+ */
+ #include <map>
+ #include <string>
+ 
+ #include "entity.cpp"
+ #include "config.cpp"
+ 
+typedef std::map<EntityType, std::int> MiracleMap;
 
 //miracle manager. go between for player and map
-class MiracleManager : public Config
+class MiracleManager : config
 {
-	MiracleMap miracleList;
-	ResourceManager *resources;
-
-	Miracle(std::string fileName,ResourceManager *);
-	int getCost(std::string);
-	int getET_Name(std::string);
-	bool castMiracle(std::string, Callback input);
-	void setResourceManager(ResourceManager *);
-};
+	private:
+		MiracleMap miracleList;
+		bool setProperty(std::string property, int value);
+		
+	public:
+		MiracleManager( std::string file ); // constructor
+		int getCost( EntityType et );
+		Entity* createMiracle( EntityType et , Position p );
+}
