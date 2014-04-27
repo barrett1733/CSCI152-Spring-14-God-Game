@@ -109,7 +109,8 @@ void Entity::setPosition(Position position)
 ////////
 
 MobileEntity::MobileEntity(const Entity & entity) :
-	Entity(entity)
+	Entity(entity),
+	target(0)
 {}
 
 int MobileEntity::getHunger() {
