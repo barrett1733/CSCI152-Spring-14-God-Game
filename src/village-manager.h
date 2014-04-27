@@ -6,22 +6,14 @@
 #include <map>
 
 #include "village.h"
-#include "entity-manager.h"
-#include "sdl/sdl-widget-container.h"
+#include "entity.h"
 
 class VillageManager
 {
-	static VillageManager * self;
-
-	WidgetContainerReference buttonContainer;
-
 	std::vector<VillageReference> villageList;
 	std::vector<EntityReference> resourceList;
 
 	bool visible;
-
-	static std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
-	static bool callbackMapInitialized;
 
 public:
 	VillageManager();
@@ -34,13 +26,7 @@ public:
 	void hide();
 	void update();
 
-
-	static void initializeCallbackMap();
-
-	static void buildHouse(SDL_Event&, WidgetReference);
-
-	static void sliderCallback(SDL_Event&, WidgetReference);
-	static void triangleSliderCallback(SDL_Event&, WidgetReference);
+	void buildHouse();
 };
 
 #endif

@@ -5,10 +5,12 @@
 #include <vector>
 #include <map>
 
+#include "config.h"
+#include "entity.h"
+#include "village-manager.h"
 #include "sdl/sdl-entity.h"
 #include "sdl/sdl-map-view.h"
-#include "entity.h"
-#include "config.h"
+#include "sdl/sdl-widget-container.h"
 
 typedef std::map<EntityType, int> Entity_HealthMap;
 typedef std::pair<EntityType, int> Entity_HealthPair;
@@ -54,6 +56,12 @@ class EntityManager : public Config
 	SdlMapView mapView;
 	int worldSize;
 
+	static EntityManager * self;
+	static VillageManager villageManager;
+	static bool callbackMapInitialized;
+	static std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
+	static WidgetContainerReference buttonContainer;
+
 public:
 	EntityManager(int worldSize);
 
@@ -69,10 +77,17 @@ public:
 	void show();
 	void hide();
 
+
+	static void initializeCallbackMap();
+
+	static void build(SDL_Event&, WidgetReference);
+
+	static void sliderCallback(SDL_Event&, WidgetReference);
+	static void triangleSliderCallback(SDL_Event&, WidgetReference);
 	// From Config, we use this to pull from a config file
-	bool setProperty(std::string property, std::string value);
-	bool setProperty(std::string property, int value);
-	bool setProperty(std::string property, int value1, int value2);
+	// bool setProperty(std::string property, std::string value);
+	// bool setProperty(std::string property, int value);
+	// bool setProperty(std::string property, int value1, int value2);
 };
 
 #endif

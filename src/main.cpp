@@ -4,13 +4,11 @@
 #include <ctime>
 #include "game-manager.h"
 #include "entity-manager.h"
-#include "village-manager.h"
 #include "world-gen.h"
 
 int main(int argc, char **argv)
 {
 	GameManager game;
-	VillageManager villageManager;
 	GameMode gameMode = GM_ERROR;
 
 	WorldGeneration world(0);
@@ -23,22 +21,16 @@ int main(int argc, char **argv)
 	while(game.mode() == GM_MENU)
 		sdl.update();
 
-	EntityRecord * record;
-
 	if(game.mode() == GM_PLAYING)
 	{
 		std::cout << "Setting up new game." << std::endl;
 		// do world gen, set up new game, etc.
 
-		villageManager.show();
-		villageManager.addVillage(F_PLAYER_1);
-		villageManager.addVillage(F_PLAYER_2);
 
 		Entity entity = world.getNextEntity();
 		while(entity.getType() != ET_NONE)
 		{
-			record = entityManager.createRecord(&entity);
-			villageManager.importEntity(record->entity);
+			entityManager.createRecord(&entity);
 
 			// Get next entity for next loop iteration.
 			entity = world.getNextEntity();
@@ -56,7 +48,6 @@ int main(int argc, char **argv)
 			if(timer < time(0))
 			{
 				timer = time(0);
-				villageManager.update();
 				//entityManager.sightCheck();
 				entityManager.update();
 			}
@@ -65,7 +56,6 @@ int main(int argc, char **argv)
 
 		else if(gameMode == GM_PAUSING)
 		{
-			villageManager.hide();
 			entityManager.hide();
 		}
 

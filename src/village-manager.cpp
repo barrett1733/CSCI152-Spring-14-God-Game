@@ -3,22 +3,8 @@
 
 #include "village-manager.h"
 
-VillageManager * VillageManager::self = 0;
-std::map<std::string, void (*)(SDL_Event&, WidgetReference)> VillageManager::callbackMap;
-bool VillageManager::callbackMapInitialized = false;
-
 VillageManager::VillageManager()
 {
-	if(self)
-	{
-		std::cerr << "\033[31m VillagerManager already exists!\033[m" << std::endl;
-		return;
-	}
-	self = this;
-
-	initializeCallbackMap();
-
-	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
 	hide();
 }
 
@@ -42,14 +28,12 @@ void VillageManager::show()
 {
 	if(visible) return;
 	visible = true;
-	buttonContainer->show();
 }
 
 void VillageManager::hide()
 {
 	if(!visible) return;
 	visible = false;
-	buttonContainer->hide();
 }
 
 void VillageManager::update()
@@ -65,36 +49,8 @@ void VillageManager::update()
 	}
 }
 
-//
-
-void VillageManager::initializeCallbackMap()
+void VillageManager::buildHouse()
 {
-	if(callbackMapInitialized) return;
-	callbackMapInitialized = true;
-
-	callbackMap["buildHouse()"] = buildHouse;
-
-	callbackMap["triangleSliderCallback()"] = triangleSliderCallback;
-	callbackMap["sliderCallback()"] = sliderCallback;
+	std::cout << "VillageManager::buildHouse()" << std::endl;
+	villageList[0]->buildHouse();
 }
-
-//
-
-void VillageManager::buildHouse(SDL_Event & event, WidgetReference widget)
-{
-	if(self)
-		self->villageList[0]->buildHouse();
-	else
-		std::cerr << "VillagerManager not initialized." << std::endl;
-}
-
-
-void VillageManager::sliderCallback(SDL_Event & event, WidgetReference widget)
-{
-
-}
-void VillageManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
-{
-
-}
-
