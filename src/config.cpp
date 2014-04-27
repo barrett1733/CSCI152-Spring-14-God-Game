@@ -9,12 +9,13 @@ using namespace std;
 enum ConfigType {
 	CT_ERROR,
 	CT_STRING,
-	CT_INT,
-	CT_NUMBER,
 	CT_FLOAT,
 	CT_DECIMAL,
+	CT_INT,
+	CT_NUMBER,
 	CT_INT_PAIR,
 	CT_INT_TRIPLE,
+	CT_HEX,
 };
 
 Config::Config()
@@ -56,6 +57,7 @@ void Config::load(std::string file)
 		else if(typeString == "NUMBER") type = CT_NUMBER;
 		else if(typeString == "INT_PAIR") type = CT_INT_PAIR;
 		else if(typeString == "INT_TRIPLE") type = CT_INT_TRIPLE;
+		else if(typeString == "HEX") type = CT_HEX;
 
 		switch(type)
 		{
@@ -88,6 +90,11 @@ void Config::load(std::string file)
 				fin >> valueNumber[1];
 				fin >> valueNumber[2];
 				accepted = setProperty(property, valueNumber, 3);
+				break;
+
+			case CT_HEX:
+				fin >> std::hex >> valueNumber[0] >> std::dec;
+				accepted = setProperty(property, valueNumber[0]);
 				break;
 
 			default:
