@@ -13,6 +13,8 @@ class VillageManager
 	std::vector<VillageReference> villageList;
 	std::vector<EntityReference> resourceList;
 
+	std::map<Faction, VillageReference> villageMap;
+
 	bool visible;
 
 public:
@@ -27,6 +29,8 @@ public:
 	void update();
 
 	void buildHouse();
+
+	EntityReference getTownCenter(Faction);
 };
 
 #endif

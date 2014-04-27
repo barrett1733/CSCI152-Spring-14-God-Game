@@ -10,7 +10,11 @@ VillageManager::VillageManager()
 
 long VillageManager::addVillage(Faction faction)
 {
-	villageList.push_back(new Village(faction));
+	VillageReference village = new Village(faction);
+
+	villageMap[faction] = village;
+	villageList.push_back(village);
+
 	return villageList.size();
 }
 
@@ -47,6 +51,12 @@ void VillageManager::update()
 		VillageReference village = villageList[villageIndex];
 		village->update();
 	}
+}
+
+EntityReference VillageManager::getTownCenter(Faction faction)
+{
+	VillageReference village = villageMap[faction];
+	return village->getTownCenter();
 }
 
 void VillageManager::buildHouse()
