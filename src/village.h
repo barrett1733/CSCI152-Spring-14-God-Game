@@ -47,13 +47,7 @@ public:
 
 	EntityReference getTownCenter();
 
-	void buildHouse();
-	void buildMasonry();
-	void buildMill();
-	void buildSmith();
-	void buildArmory();
-	void buildFoundary();
-
+	void build(JobType);
 
 	Faction getFaction() { return faction; }
 };
