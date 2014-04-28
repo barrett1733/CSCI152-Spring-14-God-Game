@@ -16,6 +16,13 @@ enum
 	D_DOWN  = 0x04,
 	D_LEFT  = 0x08,
 };
+enum
+{
+	D_NORTH    = 0x01,
+	D_EAST = 0x02,
+	D_SOUTH  = 0x04,
+	D_WEST  = 0x08,
+};
 typedef int Direction;
 
 class Position
