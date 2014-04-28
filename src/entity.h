@@ -5,8 +5,10 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
-#include "position.h"
 #include <string>
+#include <vector>
+#include "position.h"
+#include "obstruction-map.h"
 
 class Task; // forward declaration of Task class.
 typedef Task * TaskReference;
@@ -168,7 +170,7 @@ public:
 	void setCurrentHealth(int);
 	void setPosition(Position);
 
-	virtual void update() {}
+	virtual void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap) {}
 
 	bool operator==(EntityType type) { return this->type == type; }
 
@@ -201,7 +203,7 @@ public:
 	void setStrength(int);
 	void setDefense(int);
 
-	void update();
+	void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap);
 
 	bool hasTask();
 	void setTask(TaskReference);

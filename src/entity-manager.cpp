@@ -83,9 +83,11 @@ EntityRecord * EntityManager::createRecord(const Entity & entity)
 	}
 	else
 		record->entity = new MobileEntity(entity);
+
 	record->widget = new SdlEntity(*record->entity);
 
 	recordList.push_back(record);
+	entityList.push_back((EntityReference) record->entity);
 	widgetList.push_back(record->widget);
 
 	factionMap[faction].push_back(record);
@@ -108,7 +110,7 @@ void EntityManager::update()
 
 	unsigned long count = recordList.size();
 	for(unsigned long index = 0; index < count; index ++)
-		recordList[index]->update();
+		recordList[index]->update(entityList, obstructionMap);
 
 	// ...
 }
