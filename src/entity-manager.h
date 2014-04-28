@@ -29,9 +29,9 @@ struct EntityRecord
 	Entity * entity;
 	SdlEntityReference widget;
 
-	void update()
+	void update(std::vector<EntityReference>& entityList, ObstructionMapReference obstructionMap)
 	{
-		if(entity) entity->update();
+		if(entity) entity->update(entityList, obstructionMap);
 		if(widget) widget->update();
 	}
 };
@@ -40,8 +40,9 @@ class EntityManager : public Config
 {
 	bool visible;
 
-	std::vector<WidgetReference> widgetList;
 	std::vector<EntityRecord*> recordList;
+	std::vector<EntityReference> entityList;
+	std::vector<WidgetReference> widgetList;
 
 	std::map<Faction, std::vector<EntityRecord*> > factionMap;
 	// these lists are sub-catagories of the entitylist, should still be the same reference //
