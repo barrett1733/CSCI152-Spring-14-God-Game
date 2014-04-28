@@ -19,10 +19,16 @@ Entity::Entity(EntityType type, int health, Position position, Faction faction) 
 	maxHealth(health),
 	currentHealth(health),
 	position(position)
-{ }
-
-
-
+{
+	if(type < ET_RESOURCE)      group = EG_NONE;
+	else if(type < ET_VILLAGER) group = EG_RESOURCE;
+	else if(type < ET_DOMESTIC) group = EG_VILLAGER;
+	else if(type < ET_PASSIVE)  group = EG_DOMESTIC;
+	else if(type < ET_HOSTILE)  group = EG_PASSIVE;
+	else if(type < ET_BUILDING) group = EG_HOSTILE;
+	else if(type < ET_MIRACLE)  group = EG_BUILDING;
+	else                        group = EG_MIRACLE;
+}
 
 Entity& Entity::operator= (const Entity& entity)
 {
