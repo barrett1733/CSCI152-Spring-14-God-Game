@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 	GameManager game;
 	GameMode gameMode = GM_ERROR;
 
-	WorldGeneration world(0);
+	WorldGeneration world(time(0));
 	int worldSize = world.getWorldSize();
 
 	EntityManager entityManager(worldSize);
