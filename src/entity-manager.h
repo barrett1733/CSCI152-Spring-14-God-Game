@@ -11,6 +11,7 @@
 #include "sdl/sdl-entity.h"
 #include "sdl/sdl-map-view.h"
 #include "sdl/sdl-widget-container.h"
+#include "obstruction-map.h"
 
 typedef std::map<EntityType, int> Entity_HealthMap;
 typedef std::pair<EntityType, int> Entity_HealthPair;
@@ -52,9 +53,10 @@ class EntityManager : public Config
 	// data to pair up Entity Type and Health
 	std::map<EntityType, int> Entity_HealthMap;
 
-
 	SdlMapView mapView;
 	int worldSize;
+
+	ObstructionMapReference obstructionMap;
 
 	static EntityManager * self;
 	static VillageManager villageManager;
@@ -81,6 +83,7 @@ public:
 	static void initializeCallbackMap();
 
 	static void build(SDL_Event&, WidgetReference);
+	static void miracle(SDL_Event&, WidgetReference);
 
 	static void sliderCallback(SDL_Event&, WidgetReference);
 	static void triangleSliderCallback(SDL_Event&, WidgetReference);

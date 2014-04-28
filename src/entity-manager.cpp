@@ -32,6 +32,8 @@ EntityManager::EntityManager(int worldSize) :
 	villageManager.addVillage(F_PLAYER_1);
 	villageManager.addVillage(F_PLAYER_2);
 	hide();
+
+	obstructionMap = new ObstructionMap(worldSize);
 }
 
 void EntityManager::deleteEntity(){}
@@ -74,14 +76,19 @@ EntityRecord * EntityManager::createRecord(const Entity & entity)
 	EntityGroup group = entity.getGroup();
 
 	EntityRecord *record = new EntityRecord();
-	record->entity = (group < EG_MOBILE) ? new Entity(entity) : new MobileEntity(entity);
+	if(group < EG_MOBILE)
+	{
+		record->entity = new Entity(entity);
+		obstructionMap->set(record->entity->getPosition(), OT_OBSTRUCTED);
+	}
+	else
+		record->entity = new MobileEntity(entity);
 	record->widget = new SdlEntity(*record->entity);
 
 	recordList.push_back(record);
 	widgetList.push_back(record->widget);
 
 	factionMap[faction].push_back(record);
-
 
 	villageManager.importEntity(record->entity);
 
@@ -150,10 +157,37 @@ void EntityManager::build(SDL_Event & event, WidgetReference widget)
 	std::cout << "EntityManager::build(" << widget->id << ")" << std::endl;
 	if(self)
 	{
-		// EntityType type = (EntityType) widget->id;
 		Faction faction = F_PLAYER_1;
-
+		EntityType type = (EntityType) widget->id;
 		EntityReference townCenter = villageManager.getTownCenter(faction);
+
+		if(!townCenter)
+			std::cerr << "No town center." << std::endl;
+		else
+		{
+			Position origin = townCenter->getPosition();
+			Position position = self->obstructionMap->findOpenPosition(origin);
+
+			EntityReference entity = new Entity(type, 1, position, faction);
+			self->createRecord(entity);
+
+			//self->obstructionMap->set(position, OT_CONSIDERED);
+
+			//std::cout << (*(self->obstructionMap)) << std::endl;
+		}
+
+		//self->villageManager.buildHouse();
+	}
+	else
+		std::cerr << "EntityManager not initialized." << std::endl;
+}
+
+void EntityManager::miracle(SDL_Event & event, WidgetReference widget)
+{
+	std::cout << "EntityManager::miracle(" << widget->id << ")" << std::endl;
+	if(self)
+	{
+		//  NOTE: widget->id is the MiracleType (needs to be cast).
 	}
 	else
 		std::cerr << "EntityManager not initialized." << std::endl;
