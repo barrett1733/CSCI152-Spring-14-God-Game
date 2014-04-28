@@ -112,7 +112,6 @@ bool SdlWidgetContainer::setProperty(std::string property, std::string value)
 
 bool SdlWidgetContainer::setProperty(std::string property, int value)
 {
-	std::cout << "SdlWidgetContainer::SetProperty() : " << property << " = " << value << std::endl;
 	if(property == "id")
 	{
 		buttonId = value;
