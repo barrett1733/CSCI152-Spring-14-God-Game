@@ -33,6 +33,7 @@ enum EntityGroup {
 	EG_NONE,
 	EG_RESOURCE,
 	EG_BUILDING,
+	EG_MIRACLE,
 
 	EG_MOBILE, // if entity.group < EG_MOBILE, then entity isn't mobile
 
@@ -46,7 +47,8 @@ enum EntityType {
 	ET_NONE = 0x00,
 
 	// RESOURCES
-	ET_TREE = 0x00000001,
+	ET_RESOURCE = 0x00000001, // NOTE: Marker. Do not change.
+	ET_TREE,
 	ET_TREE_2,
 	ET_SHRUB_1,
 	ET_SHRUB_2,
@@ -64,6 +66,7 @@ enum EntityType {
 	ET_CHILD_VILLAGER,
 
 	// DOMESTIC ANIMALS
+	ET_DOMESTIC = 0x00000200, // NOTE: Marker. Do not change.
 	ET_COW,
 
 	ET_SHEEP,
@@ -73,9 +76,11 @@ enum EntityType {
 	ET_FISH,
 
 	// PASSIVE
+	ET_PASSIVE = 0x00000300, // NOTE: Marker. Do not change.
 	ET_DEER,
 
 	// HOSTILE
+	ET_HOSTILE = 0x00000400, // NOTE: Marker. Do not change.
 	ET_WOLF,
 	ET_OGRE,
 
@@ -91,14 +96,7 @@ enum EntityType {
 	ET_CYCLOPS,
 
 	// BUILDINGS
-	ET_FOUNDATION = 0x00010000,
-	ET_STOREHOUSE,
-	ET_STONEWORKS,
-	ET_LUMBERMILL,
-	ET_SMELTER,
-	ET_WEAPONSMITH,
-	ET_ARMORSMITH,
-	ET_FARM,
+	ET_BUILDING = 0x00010000, // NOTE: Marker. Do not change.
 
 	// In-Game buildings
 	ET_TOWN_CENTER,
@@ -110,6 +108,14 @@ enum EntityType {
 	ET_SMITH, //  NOTE: Do not change.
 	ET_ARMORY, //  NOTE: Do not change.
 
+	ET_FOUNDATION,
+	ET_STOREHOUSE,
+	ET_STONEWORKS,
+	ET_LUMBERMILL,
+	ET_SMELTER,
+	ET_WEAPONSMITH,
+	ET_ARMORSMITH,
+	ET_FARM,
 	ET_HOVEL,
 	ET_MANSION,
 	ET_QUARRY,
@@ -117,7 +123,7 @@ enum EntityType {
 	ET_MINES,
 
 	//Miracles
-	ET_MIRACLE = 0x00100000,
+	ET_MIRACLE = 0x00100000, // NOTE: Marker. Do not change.
 	ET_MIRACLE_HEAL,
 	ET_MIRACLE_SUMMONCOW,
 	ET_MIRACLE_STATBOOST,
