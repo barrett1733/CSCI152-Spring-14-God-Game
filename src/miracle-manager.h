@@ -21,7 +21,7 @@ class MiracleManager : config
 	public:
 		MiracleManager( std::string file ); // constructor
 		int getCost( EntityType et );
-		Entity* createMiracle( EntityType et , Position p );
+		Entity* createMiracle( EntityType et , Position p, Faction f);
 }
 // this will convert a string into an EntityType.
 // 	only works for Miracle types. may expand later.
