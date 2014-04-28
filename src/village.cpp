@@ -60,9 +60,7 @@ void Village::villageStart()
 	villageStarted = true;
 	//  MAGIC: Initial buildings should be from file, not hardcoded.
 	// -CH
-	buildHouse();
-	buildHouse();
-	buildHouse();
+	// 3 house start
 }
 void Village::decideAction()
 {
@@ -78,17 +76,17 @@ void Village::decideAction()
 	if (!villageStarted)
 		villageStart();
 	if (villagerList.size() % 6 == 0)
-		buildFoundary();
+		build(JOB_BUILD_FARM);
 	if (villagerList.size() == populationCap)
-		buildHouse();
+		build(JOB_BUILD_HOUSE);
 	if (getBuildingCount(ET_HOUSE) % 8 == 0)
-		buildMasonry();
+		build(JOB_BUILD_STONEWORKS);
 	if (getBuildingCount(ET_HOUSE) % 6 == 0)
-		buildMill();
+		build(JOB_BUILD_LUMBERMILL);
 	if (villagerList.size() % 15 == 0)
-		buildSmith();
+		build(JOB_BUILD_WEAPONSMITH);
 	if (villagerList.size() % 25 == 0)
-		buildArmory();
+		build(JOB_BUILD_ARMORSMITH);
 
 }
 int Village::getBuildingCount(EntityType entityType)
@@ -174,7 +172,7 @@ void Village::setPopulationCap()
 }
 void Village::build(JobType job)
 {
-	// populationCap += 3; //  MAGIC: why three? Config file, imo. -CH
+	// House populationCap += 3; //  MAGIC: why three? Config file, imo. -CH
 	std::cout << "Village::build()" << std::endl;
 	// ResourceCost = jobManager.getResourceCost(job);
 	// if(resourceManager.reserve(ResourceCost))
