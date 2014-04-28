@@ -120,9 +120,7 @@ Position Village::getAvaiableArea(Position p)
     WorldGeneration world(0);
     std::queue<Position> que;
     Position current, temp;
-    if (world.world_positions[p.getY()][p.getX()] == ET_NONE)
-        return p;
-    else
+    if (world.world_positions[p.getY()][p.getX()] != ET_NONE)
     {
         que.push(p);
         //  TODO: Refactor.
@@ -133,38 +131,33 @@ Position Village::getAvaiableArea(Position p)
             current = que.front();
             temp = current;
             que.pop();
+            
+
             temp.move(D_UP);
             if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
-                current = temp;
-            else
-            {
-                que.push(temp);
-                temp = current;
-                temp.move(D_DOWN);
-                if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
-                    current = temp;
-                else
-                {
-                    que.push(temp);
-                    temp = current;
-                    temp.move(D_LEFT);
-                    if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
-                        current = temp;
-                    else
-                    {
-                        que.push(temp);
-                        temp = current;
-                        temp.move(D_LEFT);
-                        if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
-                            current = temp;
-                    }
-
-                }
-
-            }
+                return temp;
+            que.push(temp);
+            
+            temp = current;
+            temp.move(D_DOWN);
+            if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
+                return temp;
+            que.push(temp);
+            
+            temp = current;
+            temp.move(D_LEFT);
+            if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
+                return temp;
+            que.push(temp);
+            
+            temp = current;
+            temp.move(D_RIGHT);
+            if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
+                return temp;
+            que.push(temp);
         }
     }
-    return current;
+    return p;
 }
 
 void Village::setPopulationCap()
