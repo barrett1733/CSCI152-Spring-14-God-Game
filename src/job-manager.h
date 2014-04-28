@@ -11,6 +11,7 @@
 typedef std::vector<JobReference> JobVec;
 typedef JobVec::iterator JobIter;
 
+class EntityManager; // Forward Declaration
 
 struct ResourceCost
 {
@@ -27,6 +28,7 @@ class JobManager
 	TaskManager * taskManager;
     
 public:
+	static EntityManager * entityManager;
     static std::map<JobType, int> mapBuildTaskNum;
     
     static std::map<JobType, std::string> mapTaskPriority;

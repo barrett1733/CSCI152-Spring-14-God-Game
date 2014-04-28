@@ -3,28 +3,18 @@
 
 #include "village-manager.h"
 
-VillageManager * VillageManager::self = 0;
-std::map<std::string, void (*)(SDL_Event&, WidgetReference)> VillageManager::callbackMap;
-bool VillageManager::callbackMapInitialized = false;
-
 VillageManager::VillageManager()
 {
-	if(self)
-	{
-		std::cerr << "\033[31m VillagerManager already exists!\033[m" << std::endl;
-		return;
-	}
-	self = this;
-
-	initializeCallbackMap();
-
-	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
 	hide();
 }
 
 long VillageManager::addVillage(Faction faction)
 {
-	villageList.push_back(new Village(faction));
+	VillageReference village = new Village(faction);
+
+	villageMap[faction] = village;
+	villageList.push_back(village);
+
 	return villageList.size();
 }
 
@@ -42,14 +32,12 @@ void VillageManager::show()
 {
 	if(visible) return;
 	visible = true;
-	buttonContainer->show();
 }
 
 void VillageManager::hide()
 {
 	if(!visible) return;
 	visible = false;
-	buttonContainer->hide();
 }
 
 void VillageManager::update()
@@ -65,36 +53,14 @@ void VillageManager::update()
 	}
 }
 
-//
-
-void VillageManager::initializeCallbackMap()
+EntityReference VillageManager::getTownCenter(Faction faction)
 {
-	if(callbackMapInitialized) return;
-	callbackMapInitialized = true;
-
-	callbackMap["buildHouse()"] = buildHouse;
-
-	callbackMap["triangleSliderCallback()"] = triangleSliderCallback;
-	callbackMap["sliderCallback()"] = sliderCallback;
+	VillageReference village = villageMap[faction];
+	return village->getTownCenter();
 }
 
-//
-
-void VillageManager::buildHouse(SDL_Event & event, WidgetReference widget)
+void VillageManager::buildHouse()
 {
-	if(self)
-		self->villageList[0]->buildHouse();
-	else
-		std::cerr << "VillagerManager not initialized." << std::endl;
+	std::cout << "VillageManager::buildHouse()" << std::endl;
+	villageList[0]->buildHouse();
 }
-
-
-void VillageManager::sliderCallback(SDL_Event & event, WidgetReference widget)
-{
-
-}
-void VillageManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
-{
-
-}
-

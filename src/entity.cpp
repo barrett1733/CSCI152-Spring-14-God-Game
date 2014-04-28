@@ -19,10 +19,16 @@ Entity::Entity(EntityType type, int health, Position position, Faction faction) 
 	maxHealth(health),
 	currentHealth(health),
 	position(position)
-{ }
-
-
-
+{
+	if(type < ET_RESOURCE)      group = EG_NONE;
+	else if(type < ET_VILLAGER) group = EG_RESOURCE;
+	else if(type < ET_DOMESTIC) group = EG_VILLAGER;
+	else if(type < ET_PASSIVE)  group = EG_DOMESTIC;
+	else if(type < ET_HOSTILE)  group = EG_PASSIVE;
+	else if(type < ET_BUILDING) group = EG_HOSTILE;
+	else if(type < ET_MIRACLE)  group = EG_BUILDING;
+	else                        group = EG_MIRACLE;
+}
 
 Entity& Entity::operator= (const Entity& entity)
 {
@@ -109,7 +115,9 @@ void Entity::setPosition(Position position)
 ////////
 
 MobileEntity::MobileEntity(const Entity & entity) :
-	Entity(entity)
+	Entity(entity),
+	task(0),
+	target(0)
 {}
 
 int MobileEntity::getHunger() {
@@ -134,23 +142,25 @@ void MobileEntity::setDefense(int defense) {
 
 bool MobileEntity::hasTask()
 {
-	return target ? true : false;
+	return task ? true : false;
 }
 
 void MobileEntity::setTask(TaskReference task)
 {
 	if(task)
 	{
-		task->setAssignee(this);
-		target = task->getTarget();
+		this->task = task;
+		this->target = task->getTarget();
 	}
 	else
 	{
+		this->task = 0;
+		this->target = 0;
 		// worship or wander?
 	}
 }
 
-void MobileEntity::update()
+void MobileEntity::update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap)
 {
 	if(target)
 	{
@@ -167,8 +177,11 @@ void MobileEntity::update()
 
 		if(targetY < sourceY)
 			direction |= D_UP;
-		else if(targetY < sourceY)
+		else if(targetY > sourceY)
 			direction |= D_DOWN;
+
+		if(direction == D_NONE && task)
+			;//task->work();
 
 		// TODO: if(!canMove(direction)) adjust(direction);
 		//

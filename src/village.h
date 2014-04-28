@@ -10,6 +10,7 @@
 
 class Village
 {
+	EntityReference townCenter;
 	Faction faction;
 	ResourceManager resourceManager;
 	JobManager jobManager;
@@ -36,8 +37,6 @@ class Village
 	void setPopulationCap();
 
     Position getAvaiableArea(Position);
-    Position getTownCenter();
-
 
 public:
 	Village(Faction);
@@ -46,13 +45,9 @@ public:
 
 	void update();
 
-	void buildHouse();
-	void buildMasonry();
-	void buildMill();
-	void buildSmith();
-	void buildArmory();
-	void buildFoundary();
+	EntityReference getTownCenter();
 
+	void build(JobType);
 
 	Faction getFaction() { return faction; }
 };

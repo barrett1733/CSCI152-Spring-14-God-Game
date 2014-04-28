@@ -5,8 +5,10 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
-#include "position.h"
 #include <string>
+#include <vector>
+#include "position.h"
+#include "obstruction-map.h"
 
 class Task; // forward declaration of Task class.
 typedef Task * TaskReference;
@@ -33,6 +35,7 @@ enum EntityGroup {
 	EG_NONE,
 	EG_RESOURCE,
 	EG_BUILDING,
+	EG_MIRACLE,
 
 	EG_MOBILE, // if entity.group < EG_MOBILE, then entity isn't mobile
 
@@ -46,7 +49,8 @@ enum EntityType {
 	ET_NONE = 0x00,
 
 	// RESOURCES
-	ET_TREE = 0x000001,
+	ET_RESOURCE = 0x00000001, // NOTE: Marker. Do not change.
+	ET_TREE,
 	ET_TREE_2,
 	ET_SHRUB_1,
 	ET_SHRUB_2,
@@ -58,12 +62,13 @@ enum EntityType {
 	ET_COPPER,
 
 	// VILLAGERS
-	ET_VILLAGER = 0x000100,
+	ET_VILLAGER = 0x00000100,
 
 	ET_ELDER_VILLAGER,
 	ET_CHILD_VILLAGER,
 
 	// DOMESTIC ANIMALS
+	ET_DOMESTIC = 0x00000200, // NOTE: Marker. Do not change.
 	ET_COW,
 
 	ET_SHEEP,
@@ -71,11 +76,13 @@ enum EntityType {
 	ET_CHICKEN,
 	ET_PIG,
 	ET_FISH,
-	endofdmestics,
+
 	// PASSIVE
+	ET_PASSIVE = 0x00000300, // NOTE: Marker. Do not change.
 	ET_DEER,
 
 	// HOSTILE
+	ET_HOSTILE = 0x00000400, // NOTE: Marker. Do not change.
 	ET_WOLF,
 	ET_OGRE,
 
@@ -91,7 +98,19 @@ enum EntityType {
 	ET_CYCLOPS,
 
 	// BUILDINGS
-	ET_FOUNDATION = 0x010000,
+	ET_BUILDING = 0x00010000, // NOTE: Marker. Do not change.
+
+	// In-Game buildings
+	ET_TOWN_CENTER,
+	ET_TEMPLE,
+	ET_HOUSE = 0x00020001, //  NOTE: Do not change.
+	ET_MILL, //  NOTE: Do not change.
+	ET_MASONRY, //  NOTE: Do not change.
+	ET_FOUNDARY, //  NOTE: Do not change.
+	ET_SMITH, //  NOTE: Do not change.
+	ET_ARMORY, //  NOTE: Do not change.
+
+	ET_FOUNDATION,
 	ET_STOREHOUSE,
 	ET_STONEWORKS,
 	ET_LUMBERMILL,
@@ -99,25 +118,14 @@ enum EntityType {
 	ET_WEAPONSMITH,
 	ET_ARMORSMITH,
 	ET_FARM,
-
-	// In-Game buildings
-	ET_TOWN_CENTER,
-	ET_TEMPLE,
-	ET_HOUSE,
-	ET_MILL,
-	ET_MASONRY,
-	ET_FOUNDARY,
-	ET_SMITH,
-	ET_ARMORY,
-
 	ET_HOVEL,
 	ET_MANSION,
 	ET_QUARRY,
 	ET_WATCHTOWER,
 	ET_MINES,
-	
+
 	//Miracles
-	ET_MIRACLE = 0x100000,
+	ET_MIRACLE = 0x00100000, // NOTE: Marker. Do not change.
 	ET_MIRACLE_HEAL,
 	ET_MIRACLE_SUMMONCOW,
 	ET_MIRACLE_STATBOOST,
@@ -162,7 +170,9 @@ public:
 	void setCurrentHealth(int);
 	void setPosition(Position);
 
-	virtual void update() {}
+	virtual void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap) {}
+
+	bool operator==(EntityType type) { return this->type == type; }
 
 	friend std::ostream& operator<< (std::ostream & os, const Entity & entity)
 	{
@@ -182,6 +192,7 @@ private:
 	int strength;
 	int defense;
 
+	TaskReference task;
 	Entity * target;
 public:
 	MobileEntity(const Entity&);
@@ -192,7 +203,7 @@ public:
 	void setStrength(int);
 	void setDefense(int);
 
-	void update();
+	void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap);
 
 	bool hasTask();
 	void setTask(TaskReference);
