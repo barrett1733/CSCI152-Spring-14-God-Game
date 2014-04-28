@@ -108,6 +108,22 @@ EntityReference Village::getTownCenter()
 //Use BFS to find the nearest available area from a given position
 Position Village::getAvaiableArea(Position p)
 {
+	//
+	// 1) Don't regenerate the whole world again
+	// (it's theoretically expensive).
+	// We got away with this previously because the seed was always zero;
+	// but I just corrected it to time(0).
+	//
+	// 2) If Village needs access to the whole world,
+	// then this logic is probably (but not necessarily) at the wrong level
+	// (i.e. it should be higher up the chain).
+	//
+	// 3) This will only work *BEFORE THE FIRST TICK*, because after that,
+	// entities will have moved, and there may be new entities.
+	//
+	// -CH
+	//
+
     WorldGeneration world(0);
     std::queue<Position> que;
     Position current, temp;
