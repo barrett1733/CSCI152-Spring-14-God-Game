@@ -37,25 +37,25 @@ enum TaskType
 
 };
 
-// enum TaskStatus {
-// 	UNASSIGNED = 0x01,
-// 	IN_PROGRESS,
-// 	COMPLETED
-// 	//...
-// };
-
 class Task
 {
 protected:
 	TaskType _type;
-	Entity * _target;
+	Position _position;
 	Entity * _assignee;
+    Entity * _target;
 	int _priority;
 	int _progress;
 	int _taskQuota;
 
 public:
-	Task(TaskType type, int priority, int progress, int);
+    //Constructor for Gather Task
+	Task(TaskType type, int priority, int);
+    //Constructor for Build Task
+	Task(TaskType type, int priority, Position, int);
+    //Constructor for Military Task
+    Task(TaskType type, int priority, Entity *, int);
+    
 	void setType(TaskType type);
 	void setTarget(Entity * target);
 	void setAssignee(Entity * villager);
@@ -67,28 +67,10 @@ public:
 	int getProgress();
 	int getPriority();
 	int getQuota();
+    Position getPosition();
 	bool isCompleted();
 };
 
-class GatherTask : public Task
-{
-public:
-	GatherTask(TaskType, int, int, int);
-};
-
-class BuildTask : public Task
-{
-	//...
-public:
-	BuildTask(TaskType, Entity *, int, int, int);
-};
-
-class MilitaryTask : public Task
-{
-	//...
-public:
-	MilitaryTask(TaskType, Entity *, int, int, int);
-};
 #endif
 
 typedef Task * TaskReference;

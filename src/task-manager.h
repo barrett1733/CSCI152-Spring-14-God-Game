@@ -55,6 +55,14 @@ typedef std::priority_queue<TaskReference, TaskVec, Comparator> TaskQueue;
 // 	{TASK_GATHER_WOOD, RS_WOOD}
 // };
 
+enum TaskGroup
+{
+    TG_NONE,
+    TG_GATHER,
+    TG_BUILD,
+    TG_MILITARY
+};
+
 class TaskManager
 {
 private:
@@ -74,6 +82,7 @@ public:
 	EntityVec getavailableVillagers();
 	TaskVec getInProgressTaskList();
 	TaskQueue getUnassignedTaskQueue();
+    TaskGroup getTaskGroup(TaskType type);
 	void cleanTaskList();
 };
 #endif

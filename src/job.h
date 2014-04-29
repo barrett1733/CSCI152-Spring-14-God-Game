@@ -11,10 +11,11 @@ enum JobType// maybe job type enum goes here
 {
 	JOB_NONE = 0x00,
 //Gather job type
-	JOB_GATHER_FOOD = 0x01,
-	JOB_GATHER_IRON,
-	JOB_GATHER_WOOD,
-	JOB_GATHER_STONE,
+    JOB_GATHER_RESOURCE = 0x01,
+//	JOB_GATHER_FOOD = 0x01,
+//	JOB_GATHER_IRON,
+//	JOB_GATHER_WOOD,
+//	JOB_GATHER_STONE,
 //Build job type
 	JOB_BUILD_HOUSE = 0x100,
 	JOB_BUILD_SMELTING,
@@ -34,6 +35,14 @@ enum JobType// maybe job type enum goes here
 	JOB_PARLEY
 };
 
+struct ResourceCost
+{
+    int wood;
+    int food;
+    int stone;
+    int iron;
+};
+
 class Job // base class
 {
 protected:
@@ -45,22 +54,26 @@ protected:
     static std::map<JobType, TaskType> mp;
 
 public:
-	Job(JobType type, int priority, int taskNum, int taskQuota);
+    static std::map<JobType, int> mapBuildTaskNum;
+    static std::map<JobType, int> mapBuildingHealth;
+	Job(JobType type, int priority);
 	virtual ~Job() {};
 	void setType(JobType type);
 	void setPriority(int priority);
 	JobType getType();
 	int getPriority();
 	bool isCompleted();
-	virtual void createTaskList() = 0;
+    void virtual createTaskList() = 0;
 	std::vector<TaskReference> getTaskList();
 	void cleanTaskList();
 };
 
 class GatherJob : public Job
 {
+protected:
+    ResourceCost cost;
 public:
-	GatherJob(JobType type, int priority, int taskNum, int taskQuota);
+	GatherJob(JobType type, int priority, ResourceCost);
 	virtual ~GatherJob() {};
 	void createTaskList();
 	//std::vector<TaskReference> getTaskList();
@@ -69,9 +82,9 @@ public:
 class BuildJob : public Job
 {
 protected:
-	Entity * _target;
+	Position _target;
 public:
-	BuildJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target);
+	BuildJob(JobType type, int priority, Position psn);
 	virtual ~BuildJob() {};
 	void createTaskList();
 	//std::vector<TaskReference> getTaskList();
@@ -80,9 +93,9 @@ public:
 class MilitaryJob : public Job
 {
 protected:
-	Entity * _target;
+	Position _target;
 public:
-	MilitaryJob(JobType type, int priority, int taskNum, int taskQuota, Entity * target);
+	MilitaryJob(JobType type, int priority, Position psn);
 	virtual ~MilitaryJob() {};
 	void createTaskList();
 	//std::vector<TaskReference> getTaskList();

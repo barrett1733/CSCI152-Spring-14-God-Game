@@ -1,10 +1,24 @@
 #include "task.h"
 
-Task::Task(TaskType type, int priority, int progress, int taskQuota) :
+Task::Task(TaskType type, int priority, int cost) :
 	_type(type),
 	_priority(priority),
-	_progress(progress),
-	_taskQuota(taskQuota)
+    _taskQuota(cost)
+{ }
+
+Task::Task(TaskType type, int priority, Position psn, int cost) :
+	_type(type),
+	_priority(priority),
+    _position(psn),
+    _taskQuota(cost)
+{ }
+
+Task::Task(TaskType type, int priority, Entity * target, int cost) :
+    _type(type),
+    _priority(priority),
+    _target(target),
+    _position(target->getPosition()),
+    _taskQuota(cost)
 { }
 
 void Task::setType(TaskType type)
@@ -57,24 +71,12 @@ int Task::getQuota()
 	return this->_taskQuota;
 }
 
+Position Task::getPosition()
+{
+    return this->_position;
+}
+
 bool Task::isCompleted()
 {
 	return this->_taskQuota == this->_progress;
-}
-
-
-GatherTask::GatherTask(TaskType type,  int priority, int progress, int amount):
-	Task(type, priority, progress, amount)
-{ }
-
-BuildTask::BuildTask(TaskType type, Entity * target, int priority, int hpBuilt, int hpAmount):
-	Task(type, priority, hpBuilt, hpAmount)
-{
-	_target = target;
-}
-
-MilitaryTask::MilitaryTask(TaskType type, Entity * target, int priority, int hpDamaged, int hpAmount):
-	Task(type, priority, hpDamaged, hpAmount)
-{
-	_target = target;
 }

@@ -13,12 +13,12 @@ typedef JobVec::iterator JobIter;
 
 class EntityManager; // Forward Declaration
 
-struct ResourceCost
+enum JobGroup
 {
-    int wood;
-    //int food;
-    int stone;
-    int iron;
+    JG_NONE,
+    JG_GATHER,
+    JG_BUILD,
+    JG_MILITARY
 };
 
 
@@ -29,9 +29,6 @@ class JobManager
     
 public:
 	static EntityManager * entityManager;
-    static std::map<JobType, int> mapBuildTaskNum;
-    
-    static std::map<JobType, std::string> mapTaskPriority;
     
     static std::map<JobType, ResourceCost> mapBuildingCost;
     
@@ -41,19 +38,20 @@ public:
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
-
-	void createJobList(JobType, int, int);
-    void createJobList(JobType, int, int, Entity *);
+//
+//	void createJobList(JobType, int, int);
+//    void createJobList(JobType, int, int, Entity *);
+    
+    void createJob(JobType, int priority, ResourceCost);
+	void createJob(JobType, int priority, Position psn);
+    
+    JobGroup getJobGroup(JobType type);
 
 	//void initJobList();
 
 	JobVec getJobList();
 
-	Faction getFaction();
-
 	TaskManager * getTaskManager();
-
-	Entity * findJobTarget(JobType);
 
 	void cleanTaskList(JobReference job);
 
