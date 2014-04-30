@@ -57,27 +57,22 @@ WorldGeneration::WorldGeneration(int seed) :
 	/************************
 	***place all entities***
 	************************/
-	// It's time to move all these magic numbers to a config file
-	// and to use a more friendly config format.
-	// The config file should be understandable
-	//  without having to closely read the code to understand what each numbers mean.
-	// -CH
 	//////////////resources/////////////////////
 	PlaceResource(TREES_MIN, TREES_MAX, ET_TREE);
 	PlaceResource(IRON_MIN, IRON_MAX, ET_IRON);
 	PlaceResource(STONE_MIN, STONE_MAX, ET_STONE);
-	////////////////paths///////////////////////
+	
 	placePaths();
-	//////////////towncenter////////////////////
+	
 	PlaceTownCenter();
-	////////////////temple//////////////////////
+	
 	PlaceTemple();
-	//////villagers and domestics beasts////////
+	
 	PlaceAroundTC(ET_VILLAGER, WI_NUM_OF_VILLAGERS, TC1);
 	PlaceAroundTC(ET_VILLAGER, WI_NUM_OF_VILLAGERS, TC2);
 	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC1);
 	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC2);
-	/////////////wild beasts////////////////////
+
 	PlaceWildBeasts(DEER_MIN, DEER_MAX, DEER_CTD, ET_DEER);
 	PlaceWildBeasts(WOLVES_MIN, WOLVES_MAX, WOLVES_CTD, ET_WOLF);
 	PlaceWildBeasts(OGRES_MIN, OGRES_MAX, OGRES_CTD, ET_OGRE);
