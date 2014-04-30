@@ -590,11 +590,6 @@ bool WorldGeneration::setProperty(string property, int value)
 		STONE_MAX = value;
 		return true;
 	}
-	else if (property == "trees_min")
-	{
-		TREES_MIN = value;
-		return true;
-	}
 	else if (property == "deer_min")
 	{
 		DEER_MIN = value;
