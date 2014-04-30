@@ -14,9 +14,7 @@ WorldGeneration::~WorldGeneration(){}
 WorldGeneration::WorldGeneration(int seed) :
 	current(0,0)
 {
-	//time_t timer;
-	srand(seed);//rand must be seeded before placement, if not here then in another module that needs it first
-	//if it is used I will remove it from this location
+	srand(seed);
 
 	entityCount = 0;
 	cycled = false;
@@ -26,16 +24,6 @@ WorldGeneration::WorldGeneration(int seed) :
 	******config******
 	*****************/
 	load("res/world-info.cfg");
-
-	/*****************
-	***get map info***
-	*****************/
-
-		/*ifstream file("res/world-info.txt");
-		int n;
-		while (file >> n) world_info.push_back(n);*/
-		//////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////
 
 	if (world_info[WI_MAP_SIZE] < 40) world_info[WI_MAP_SIZE] = 40;
 
@@ -137,7 +125,7 @@ void WorldGeneration::PlaceTownCenter()
 			keep_going=false;
 	}
 
-	//createPaths2(TC1);
+	//createPaths2(TC1);//uncomment these to use the second(inferior) path creation
 	//createPaths2(TC2);
 
 	/**************************/
@@ -207,7 +195,7 @@ void WorldGeneration::PlaceAroundTC(EntityType type, int num_of_entities, Positi
 			}
 		}
 	}
-	cout << "number of type " << type << ": " << number << " around position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
+	//cout << "number of type " << type << ": " << number << " around position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
 }
 
 void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, EntityType type)
@@ -248,19 +236,18 @@ Entity WorldGeneration::getNextEntity()
 		{
 			if(cycled == true)
 			{
-				return to_return;//throw (1);
+				return to_return;
 			}
 			else
 			{
 				nextPosition();
-				//current_moves++;
 			}
 		}
 		else
 		{
 			if(cycled == true)
 			{
-				return to_return;//throw (1);
+				return to_return;
 			}
 			else
 			{
@@ -311,7 +298,6 @@ Entity WorldGeneration::getNextEntity()
 			}
 
 			nextPosition();
-			//current_moves++;
 			return to_return;
 			}
 		}
@@ -524,11 +510,8 @@ void WorldGeneration::createPaths2(Position team)
 				if (rands == 0) path.set(path.getX(), path.getY() + y_offset);
 				else path.set(path.getX() + x_offset, path.getY());
 				world_positions[path.getY()][path.getX()] = ET_NONE;
-				//world_positions[path.getY()][path.getX()] = ET_NONE;
-				//world_positions[path.getY()][path.getX()] = ET_NONE;
 				path.move(move2);
 				world_positions[path.getY()][path.getX()] = ET_NONE;
-				//world_positions[path.getY()][path.getX()] = ET_NONE;
 			}
 			path_depth++;
 			int rands2 = rand() % 18;
