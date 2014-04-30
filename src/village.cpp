@@ -122,7 +122,7 @@ Position Village::getAvaiableArea(Position p)
 	// -CH
 	//
 
-    WorldGeneration world(0);
+	WorldGeneration world(0);
     std::queue<Position> que;
     Position current, temp;
     if (world.world_positions[p.getY()][p.getX()] != ET_NONE)

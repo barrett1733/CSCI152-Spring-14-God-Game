@@ -2,6 +2,7 @@
 #define WORLD_GEN_H_
 
 #include <vector>
+#include "config.h"
 #include "entity.h"
 
 /*
@@ -41,22 +42,17 @@ enum WorldInfo
 	WI_FISH,
 };
 
-//struct entities
-//{
-//	int
-//};
-
-class WorldGeneration
+class WorldGeneration : public Config
 {
 public:
 	WorldGeneration(int);
 	~WorldGeneration();
 
-	void PlaceResource(int min, int max, EntityType type);
-	void PlaceWildBeasts(int min, int max, int delete_chance, EntityType type);
+	void PlaceResource(int, int, EntityType);
+	void PlaceWildBeasts(int, int, int, EntityType);
 	void PlaceTownCenter();
 	void PlaceTemple();
-	void PlaceAroundTC(EntityType type, int number, Position pos);
+	void PlaceAroundTC(EntityType, int, Position);
 	void PrintMap();
 	void nextPosition();
 	void shiftFromEdge(Position&);
@@ -80,12 +76,20 @@ public:
 
 	std::vector< std::vector<EntityType> > world_positions;
 	std::vector<int> world_info;
+
+	bool setProperty(std::string property, int value);
 private:
 	int entityCount;
 	Position current;
 	Position TC1;
 	Position TC2;
 	bool cycled;
+	int	TREES_MIN, TREES_MAX,
+		IRON_MIN, IRON_MAX,
+		STONE_MIN, STONE_MAX,
+		DEER_MIN, DEER_MAX, DEER_CTD,
+		WOLVES_MIN, WOLVES_MAX, WOLVES_CTD,
+		OGRES_MIN, OGRES_MAX, OGRES_CTD;
 
 };
 

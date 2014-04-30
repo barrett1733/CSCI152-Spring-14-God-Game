@@ -72,6 +72,7 @@ void JobManager::createJob(JobType type, int priority, Position psn)
         job = new BuildJob(type, priority, psn);
     else if (this->getJobGroup(type) == JG_MILITARY)
         job = new MilitaryJob(type, priority, psn);
+	else job = new BuildJob(type, priority, psn);////////this is just so I can compile
     this->registerJob(job);
 }
 
