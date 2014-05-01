@@ -8,7 +8,11 @@
 
 class miracle-entity:public entity{
 public:
+	// has from entity
+	// EntityType
+	// health
+	// position
 	miracle-entity(EntityType, int health, Position, Faction);
 	miracle-entity(const Entity&);
-	void update();
+	void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap);
 }
