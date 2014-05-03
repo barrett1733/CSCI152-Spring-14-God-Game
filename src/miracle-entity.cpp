@@ -29,4 +29,16 @@ void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructio
 	setCurrentHealth(0);
 };
 
+std::vector<Entity*>& getEntitiesWithin(double range, Position p, std::vector<Entity*>& entityList){
+	std::vector<Entity*> returnList;
+	
+	for(int i=0; i<entityList.size(); i++){
+		if(p.distance(entityList[i].getPosition()) <= range){
+			retrunList.pushBack(entityList[i]);
+		}
+	}
+	
+	return(&returnList);
+}
+
 
