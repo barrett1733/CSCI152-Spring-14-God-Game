@@ -19,7 +19,7 @@ std::map<JobType, int> Job::mapBuildTaskNum = {
     {JOB_BUILD_SMELTING, 2},
     {JOB_BUILD_STONEWORKS, 2},
     {JOB_BUILD_FARM, 2},
-    {JOB_BUILD_LUMBERMILL, 3},
+    {JOB_BUILD_LUMBERMILL, 4},
     {JOB_BUILD_WEAPONSMITH, 4},
     {JOB_BUILD_ARMORSMITH, 4},
     {JOB_BUILD_WATCHTOWER, 1},
@@ -82,7 +82,6 @@ void Job::cleanTaskList()
 	{
 		if ((*iter)->isCompleted() == true)
 		{
-			delete(*iter);
 			_taskList.erase(iter);
 		}
 		else
