@@ -42,7 +42,7 @@ class Task
 protected:
 	TaskType _type;
 	Position _position;
-	Entity * _assignee;
+	MobileEntityReference _assignee;
     Entity * _target;
 	int _priority;
 	int _progress;
@@ -58,12 +58,12 @@ public:
     
 	void setType(TaskType type);
 	void setTarget(Entity * target);
-	void setAssignee(Entity * villager);
+	void setAssignee(MobileEntityReference villager);
 	void setPriority(int priority);
 	void setProgress(int progress);
 	TaskType getType();
 	Entity * getTarget();
-	Entity * getAssignee();
+	MobileEntityReference getAssignee();
 	int getProgress();
 	int getPriority();
 	int getQuota();
