@@ -38,27 +38,18 @@ public:
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
-//
-//	void createJobList(JobType, int, int);
-//    void createJobList(JobType, int, int, Entity *);
     
     void createJob(JobType, int priority, ResourceCost);
 	void createJob(JobType, int priority, Position psn);
     
     JobGroup getJobGroup(JobType type);
 
-	//void initJobList();
-
 	JobVec getJobList();
 
 	TaskManager * getTaskManager();
 
-	void cleanTaskList(JobReference job);
-
 	void cleanJobList();
     
-    
-
 	/*
 	// Desired interface:
 

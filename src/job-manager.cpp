@@ -61,7 +61,6 @@ void JobManager::createJob(JobType type, int priority, ResourceCost resourceCost
     JobReference job = new GatherJob(type, priority, resourceCost);
     
     //Create tasks
-    job->createTaskList();
     registerJob(job);
 }
 
