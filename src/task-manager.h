@@ -17,12 +17,15 @@
 #include "world-gen.h"
 #include <float.h>
 //#include "worldGen.h"
-extern std::vector<Entity *> foodEntities;
-extern std::vector<Entity *> ironEntities;
-extern std::vector<Entity *> stoneEntities;
-extern std::vector<Entity *> woodEntities;
+//extern std::vector<Entity *> foodEntities;
+//extern std::vector<Entity *> ironEntities;
+//extern std::vector<Entity *> stoneEntities;
+//extern std::vector<Entity *> woodEntities;
 
-typedef std::vector<Entity *> EntityVec;
+typedef std::vector<MobileEntityReference> MobileEntityVec;
+typedef MobileEntityVec ::iterator MobileEntityIter;
+
+typedef std::vector<EntityReference> EntityVec;
 typedef EntityVec ::iterator EntityIter;
 
 typedef std::vector<TaskReference> TaskVec;
@@ -38,23 +41,6 @@ struct Comparator
 
 typedef std::priority_queue<TaskReference, TaskVec, Comparator> TaskQueue;
 
-//typedef std::map<TaskType, std::vector<Entity *>> TaskResourceMap;
-//typedef std::map<TaskType, ResourceType> TaskResourceTypeMap;
-
-//static TaskResourceMap mapTaskResource = {
-//    {TASK_GATHER_FOOD, foodEntities},
-//    {TASK_GATHER_IRON, ironEntities},
-//    {TASK_GATHER_STONE, stoneEntities},
-//    {TASK_GATHER_WOOD, woodEntities}
-//};
-
-// static TaskResourceTypeMap mapTaskResourceType = {
-// 	{TASK_GATHER_FOOD, RS_FOOD},
-// 	{TASK_GATHER_IRON, RS_IRON},
-// 	{TASK_GATHER_STONE, RS_STONE},
-// 	{TASK_GATHER_WOOD, RS_WOOD}
-// };
-
 enum TaskGroup
 {
     TG_NONE,
@@ -68,22 +54,20 @@ class TaskManager
 private:
 	TaskQueue unassignedTaskQueue;
 	TaskVec inProgressTaskList;
-	EntityVec availableVillagers;
+	//EntityVec availableVillagers;
 
 public:
-	void assign();
+	void assign(MobileEntityVec & villagerList);
 	void updateProgress();
 	void registerTask(TaskReference task);
-	void registerVillager(Entity * villager);
-	Entity * getVillager();
-	TaskQueue getUnassignedTaskList();
-	Entity * getNearestResource(Entity * villager, EntityVec ev);
-	Entity * findResource(Entity *, TaskType);
-	EntityVec getavailableVillagers();
+
+//	Entity * getNearestResource(Entity * villager, EntityVec ev);
+//	Entity * findResource(Entity *, TaskType);
+
 	TaskVec getInProgressTaskList();
 	TaskQueue getUnassignedTaskQueue();
     TaskGroup getTaskGroup(TaskType type);
-	void cleanTaskList();
+	void cleanTaskList(MobileEntityVec & villagerList);
 };
 #endif
 

@@ -1,25 +1,21 @@
 #include "task-manager.h"
 
-//std::vector<Entity *> foodEntities;
-//std::vector<Entity *> ironEntities;
-//std::vector<Entity *> stoneEntities;
-//std::vector<Entity *> woodEntities;
-
-void TaskManager::assign()
+void TaskManager::assign(MobileEntityVec & villagerList)
 {
 	//pop from unassignedTaskList
 	//pop a villager
 	//if a gatherTask, find the nearest resource for the villager
 	//if a buildTask, set target to job target
 	//if a militaryTask, set target to job target
-	while (!availableVillagers.empty()) {
+	while (!villagerList.empty()) {
 		TaskReference task = unassignedTaskQueue.top();
 		TaskType taskType = task->getType();
 
 		unassignedTaskQueue.pop();
 		inProgressTaskList.push_back(task);
-		Entity * villager = getVillager();
-		availableVillagers.pop_back();
+		MobileEntityReference villager = villagerList.back();
+        //std::cout << villager->getName() << std::endl;
+		villagerList.pop_back();
 
 		if(this->getTaskGroup(taskType) == TG_GATHER)
 		{
@@ -41,29 +37,10 @@ void TaskManager::assign()
 			task->setAssignee(villager);
 
 		}
+        villager->setTask(task);
         //findPath() -- Maybe somewhere else
 	}
 
-}
-
-TaskQueue TaskManager::getUnassignedTaskList()
-{
-	return unassignedTaskQueue;
-}
-
-void TaskManager:: registerVillager(Entity * villager)
-{
-	availableVillagers.push_back(villager);
-}
-
-Entity * TaskManager::getVillager()
-{
-	return availableVillagers.back();
-}
-
-EntityVec TaskManager::getavailableVillagers()
-{
-	return availableVillagers;
 }
 
 TaskVec TaskManager::getInProgressTaskList()
@@ -143,15 +120,19 @@ TaskGroup TaskManager::getTaskGroup(TaskType type)
     else return TG_MILITARY;
 }
 
-void TaskManager::cleanTaskList()
+void TaskManager::cleanTaskList(MobileEntityVec & villagerList)
 {
-	for (TaskIter iter = inProgressTaskList.begin(); iter != inProgressTaskList.end(); ++iter)
+	for (TaskIter iter = inProgressTaskList.begin(); iter != inProgressTaskList.end();)
 	{
 		if ((*iter)->isCompleted())
 		{
 			//delete(*iter);
 			iter = inProgressTaskList.erase(iter);
-			availableVillagers.push_back((*iter)->getAssignee());
+			villagerList.push_back((*iter)->getAssignee());
+        }else
+            ++iter;
+		
+            //std::cout << villagerList.size() << std::endl;
             
 //            //Make the resource available again if it is not empty
 //            if((*iter)->getTarget()->getCurrentHealth() > 0)
@@ -176,6 +157,5 @@ void TaskManager::cleanTaskList()
 //                
 //            }
             
-		}
 	}
 }
