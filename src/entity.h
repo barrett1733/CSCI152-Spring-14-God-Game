@@ -126,11 +126,11 @@ enum EntityType {
 
 	//Miracles
 	ET_MIRACLE = 0x00100000, // NOTE: Marker. Do not change.
-	ET_MIRACLE_HEAL,
-	ET_MIRACLE_SUMMONCOW,
-	ET_MIRACLE_STATBOOST,
-	ET_MIRACLE_LIGTNING,
-	ET_MIRACLE_EARTHQUAKE,
+	ET_MIRACLE_HEAL = 0x00100001, //  NOTE: Do note change.
+	ET_MIRACLE_SUMMONCOW, //  NOTE: Do note change.
+	ET_MIRACLE_STATBOOST, //  NOTE: Do note change.
+	ET_MIRACLE_LIGTNING, //  NOTE: Do note change.
+	ET_MIRACLE_EARTHQUAKE, //  NOTE: Do note change.
 	ET_MIRACLE_METEOR
 };
 
