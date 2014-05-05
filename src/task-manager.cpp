@@ -1,6 +1,14 @@
 #include "task-manager.h"
 
-void TaskManager::assign(MobileEntityVec & villagerList)
+std::map<TaskType, ResourceGroup> TaskManager::taskResourceGroupMap
+{
+    { TASK_GATHER_FOOD, RG_FOOD },
+    { TASK_GATHER_WOOD, RG_WOOD },
+    { TASK_GATHER_IRON, RG_IRON },
+    { TASK_GATHER_STONE, RG_STONE }
+};
+
+void TaskManager::assign(MobileEntityVec & villagerList, EntityVec & resourceList)
 {
 	//pop from unassignedTaskList
 	//pop a villager
@@ -21,8 +29,7 @@ void TaskManager::assign(MobileEntityVec & villagerList)
 		{
 
 			task->setAssignee(villager);
-            //findNearestResource -- Should be defined somewhere else
-			//task->setTarget(new Entity());
+            task->setPosition(getNearestResource(villager, resourceList, taskType));
             
 		}
 		else if(this->getTaskGroup(taskType) == TG_BUILD)
@@ -70,43 +77,26 @@ TaskQueue TaskManager::getUnassignedTaskQueue()
 	return unassignedTaskQueue;
 }
 
-//Entity * TaskManager::findResource(Entity * villager, TaskType taskType)
-//{
-//	if (taskType == TASK_GATHER_FOOD)
-//	{
-//		return getNearestResource(villager, foodEntities);
-//	}
-//	else if (taskType == TASK_GATHER_IRON)
-//	{
-//		return getNearestResource(villager, ironEntities);
-//	}
-//	else if (taskType == TASK_GATHER_STONE)
-//	{
-//		return getNearestResource(villager, stoneEntities);
-//	}
-//	else if (taskType == TASK_GATHER_WOOD)
-//	{
-//		return getNearestResource(villager, woodEntities);
-//	}
-//	return getNearestResource(villager, foodEntities);
-//}
-//
-//Entity * TaskManager::getNearestResource(Entity * villager, EntityVec ev)
-//{
-//	Entity * nearestTarget = nullptr;
-//	double min = DBL_MAX;
-//	for (EntityIter it = ev.begin(); it != ev.end(); ++it)
-//	{
-//		Position p = (*it)->getPosition();
-//		if(min > (villager->getPosition().distance(p)))
-//		{
-//			min = villager->getPosition().distance(p);
-//			nearestTarget = *it;
-//		}
-//	}
-//    ev.erase(std::find(ev.begin(), ev.end(), nearestTarget));
-//	return nearestTarget;
-//}
+
+Position TaskManager::getNearestResource(MobileEntityReference villager, EntityVec & resourceList, TaskType taskType)
+{
+	EntityReference nearestTarget = nullptr;
+	double min = DBL_MAX;
+	for (EntityIter it = resourceList.begin(); it != resourceList.end(); ++it)
+	{
+        if (getResourceGroup( (*it)->getType() ) == taskResourceGroupMap[taskType])
+        {
+            Position p = (*it)->getPosition();
+            if(min > (villager->getPosition().distance(p)))
+            {
+                min = villager->getPosition().distance(p);
+                nearestTarget = *it;
+            }
+        }
+	}
+
+	return nearestTarget->getPosition();
+}
 
 void TaskManager::registerTask(TaskReference task)
 {
@@ -116,8 +106,21 @@ void TaskManager::registerTask(TaskReference task)
 TaskGroup TaskManager::getTaskGroup(TaskType type)
 {
     if (type < TASK_BUILD_HOUSE) return TG_GATHER;
-    if (type < TASK_ATTACK) return TG_BUILD;
+    else if (type < TASK_ATTACK) return TG_BUILD;
     else return TG_MILITARY;
+}
+
+ResourceGroup TaskManager::getResourceGroup(EntityType type)
+{
+    if (type > ET_RESOURCE && type < ET_BOULDER)
+        return RG_WOOD;
+    else if (type > ET_SHRUB_2 && type < ET_COAL)
+        return RG_STONE;
+    else if (type > ET_COAL && type < ET_COPPER)
+        return RG_IRON;
+    else if (type > ET_DOMESTIC && type < ET_BUILDING)
+        return RG_FOOD;
+    return RG_NONE;
 }
 
 void TaskManager::cleanTaskList(MobileEntityVec & villagerList)

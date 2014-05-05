@@ -7,6 +7,7 @@
 
 #include "entity.h"
 #include "position.h"
+#include "map"
 
 enum TaskType
 {
@@ -47,6 +48,7 @@ protected:
 	int _priority;
 	int _progress;
 	int _taskQuota;
+    static std::map<TaskType, EntityType> taskTypeEntityTypeMap;
 
 public:
     //Constructor for Gather Task
@@ -61,6 +63,7 @@ public:
 	void setAssignee(MobileEntityReference villager);
 	void setPriority(int priority);
 	void setProgress(int progress);
+    void setPosition(Position psn);
 	TaskType getType();
 	Entity * getTarget();
 	MobileEntityReference getAssignee();

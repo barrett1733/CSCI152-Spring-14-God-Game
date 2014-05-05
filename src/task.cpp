@@ -44,6 +44,11 @@ void Task::setProgress(int progress)
 	this->_progress = progress;
 }
 
+void Task::setPosition(Position psn)
+{
+    this->_position = psn;
+}
+
 int Task::getPriority()
 {
 	return _priority;

@@ -49,24 +49,36 @@ enum TaskGroup
     TG_MILITARY
 };
 
+enum ResourceGroup
+{
+    RG_NONE,
+    RG_FOOD,
+    RG_WOOD,
+    RG_IRON,
+    RG_STONE
+};
+
 class TaskManager
 {
 private:
 	TaskQueue unassignedTaskQueue;
 	TaskVec inProgressTaskList;
 	//EntityVec availableVillagers;
+    static std::map<TaskType, ResourceGroup> taskResourceGroupMap;
 
 public:
-	void assign(MobileEntityVec & villagerList);
+	void assign(MobileEntityVec & villagerList, EntityVec & resourceList);
 	void updateProgress();
 	void registerTask(TaskReference task);
 
+    Position getNearestResource(MobileEntityReference villager, EntityVec & resourceList, TaskType taskType);
 //	Entity * getNearestResource(Entity * villager, EntityVec ev);
 //	Entity * findResource(Entity *, TaskType);
 
 	TaskVec getInProgressTaskList();
 	TaskQueue getUnassignedTaskQueue();
     TaskGroup getTaskGroup(TaskType type);
+    ResourceGroup getResourceGroup(EntityType type);
 	void cleanTaskList(MobileEntityVec & villagerList);
 };
 #endif
