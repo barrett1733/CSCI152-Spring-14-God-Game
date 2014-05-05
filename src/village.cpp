@@ -6,8 +6,11 @@ typedef MobileEntityReference VillagerReference;
 
 Village::Village(Faction faction) :
 	townCenter(0),
-faction(faction), villageStarted(false), setBeginningPopCap(false)
-{ }
+	faction(faction), 
+	villageStarted(false)
+{
+	load("res/village.cfg");
+}
 
 void Village::importEntity(EntityReference entity)
 {
@@ -165,11 +168,6 @@ Position Village::getAvaiableArea(Position p)
     return p;
 }
 
-void Village::setPopulationCap()
-{
-	setBeginningPopCap = true;
-	populationCap = villagerList.size();
-}
 void Village::build(JobType job)
 {
 	// House populationCap += 3; //  MAGIC: why three? Config file, imo. -CH

@@ -1,14 +1,14 @@
+#ifndef VILLAGE_H_
+#define VILLAGE_H_
 
 #include <vector>
 
 #include "resource-manager.h"
 #include "job-manager.h"
 #include "world-gen.h"
+#include "config.h"
 
-#ifndef VILLAGE_H_
-#define VILLAGE_H_
-
-class Village
+class Village : public Config
 {
 	EntityReference townCenter;
 	Faction faction;
@@ -22,19 +22,17 @@ class Village
 	//
 	// TODO: Villager creation every 30 secs
 	// NOTE: ^ driven from the outside. A Village probably doesn't need to maintain a concept of 'time'. -CH
-	// + bool hasFoodToSpawnVillager();
-	// + void spawnVillager();
-	//
 	bool villageStarted;
 	int populationCap;
-	bool setBeginningPopCap;
+
+	bool hasFoodToSpawnVillager();
+	void spawnVillager();
 
 	void villageStart();
 
 	void decideAction();
 
 	int getBuildingCount(EntityType);
-	void setPopulationCap();
 
     Position getAvaiableArea(Position);
 

@@ -43,21 +43,13 @@ std::vector<Direction> RandomPathfinding::checkArea(Position position)
 int RandomPathfinding::mapDirectionX(Direction dir)
 {
 	if (dir & D_RIGHT)		return 1;
-	if (dir & D_UP_RIGHT)	return 1;
-	if (dir & D_DOWN_RIGHT) return 1;
 	if (dir & D_LEFT)		return -1;
-	if (dir & D_UP_LEFT)	return -1;
-	if (dir & D_DOWN_LEFT)  return -1;
 	if (dir & D_NONE)		return 0;
 }
 int RandomPathfinding::mapDirectionY(Direction dir)
 {
 	if (dir & D_UP)			return -1;
-	if (dir & D_UP_RIGHT)	return -1;
-	if (dir & D_UP_LEFT)	return -1;
 	if (dir & D_DOWN)		return 1;
-	if (dir & D_DOWN_RIGHT) return 1;
-	if (dir & D_DOWN_LEFT)  return 1;
 	if (dir & D_NONE)		return 0;
 }
 bool RandomPathfinding::checkDirection(Position pos, Direction dir)
