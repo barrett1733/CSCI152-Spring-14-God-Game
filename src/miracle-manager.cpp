@@ -31,7 +31,7 @@ bool MiracleManager::setProperty(std::string property, int value)
 }
 
 // converter. String -> EntityType
-EntityType string_to_ET(std::string name)
+EntityType string_to_ET(std::string property)
 {
 	if(property=="ET_MIRACLE_HEAL"){
 		return(ET_MIRACLE_HEAL);
