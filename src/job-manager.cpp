@@ -56,6 +56,13 @@ std::vector<JobReference> JobManager:: getJobList()
 	return this->jobList;
 }
 
+void JobManager::update(MobileEntityVec & villagerList, EntityVec & resourceList)
+{
+    taskManager->assign(villagerList, resourceList);
+    taskManager->updateProgress();
+    taskManager->cleanTaskList(villagerList);
+}
+
 void JobManager::createJob(JobType type, int priority, ResourceCost resourceCost)
 {
     JobReference job = new GatherJob(type, priority, resourceCost);

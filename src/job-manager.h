@@ -45,6 +45,8 @@ public:
     JobGroup getJobGroup(JobType type);
 
 	JobVec getJobList();
+    
+    void update(MobileEntityVec & villagerList, EntityVec & resourceList);
 
 	TaskManager * getTaskManager();
 
