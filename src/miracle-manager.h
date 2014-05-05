@@ -8,8 +8,8 @@
  #include <map>
  #include <string>
 
- #include "entity.cpp"
- #include "config.cpp"
+ #include "entity.h"
+ #include "config.h"
 
 typedef std::map<EntityType, int> MiracleMap;
 
@@ -31,3 +31,4 @@ class MiracleManager:public Config
 EntityType string_to_ET(std::string property);
 
 #endif
+

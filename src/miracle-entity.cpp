@@ -1,14 +1,14 @@
 #include "miracle-entity.h"
 
 // Miracle Entity, Constructor 1
-miracleEntity::miracleEntity(EntityType et, int health, Position p, Faction f):Entity(et,health,p,f){}
+MiracleEntity::MiracleEntity(EntityType et, int health, Position p, Faction f):Entity(et,health,p,f){}
 
 // Miracle Entity, Constructor 2
 // BUG: compile error.
-//miracleEntity::miracleEntity(const Entity&):Entity(const Entity&){}
+//MiracleEntity::MiracleEntity(const Entity&):Entity(const Entity&){}
 
 // Miracle Entity, update function
-void miracleEntity::update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap){
+void MiracleEntity::update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap){
 	std::vector<Entity*> affectedEntitiesList;
 	if(this->getEntityType()==ET_MIRACLE_HEAL){
 		affectedEntitiesList=getEntitiesWithin(50.0, this->getPosition(),entityList);
@@ -63,5 +63,6 @@ std::vector<Entity*> getEntitiesWithin(double range, Position p, std::vector<Ent
 
 	return(returnList);
 }
+
 
 

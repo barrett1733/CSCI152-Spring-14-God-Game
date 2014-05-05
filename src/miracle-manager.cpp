@@ -1,5 +1,5 @@
 #include "miracle-manager.h"
-#include "miracle-entity.cpp"
+#include "miracle-entity.h"
 
 MiracleManager::MiracleManager(std::string file)
 {
@@ -15,7 +15,7 @@ int MiracleManager::getCost(EntityType et)
 Entity* MiracleManager::createMiracle(EntityType et, Position p, Faction f)
 {
 	// Will make an entity based on incoming data.
-	return (new miracleEntity(et,100,p,f));
+	return (new MiracleEntity(et,100,p,f));
 	// MAGIC - How much health does a Miracle Have?
 	//				- Using default health of 100
 	//				- When it comes down to it. This really does
@@ -55,3 +55,4 @@ EntityType string_to_ET(std::string property)
 		return(ET_MIRACLE);
 	}
 }
+
