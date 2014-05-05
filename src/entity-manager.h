@@ -7,6 +7,7 @@
 
 #include "config.h"
 #include "entity.h"
+#include "miracle-entity.h"
 #include "village-manager.h"
 #include "sdl/sdl-entity.h"
 #include "sdl/sdl-map-view.h"

@@ -147,6 +147,7 @@ void EntityManager::initializeCallbackMap()
 	callbackMapInitialized = true;
 
 	callbackMap["build()"] = build;
+	callbackMap["miracle()"] = miracle;
 
 	callbackMap["triangleSliderCallback()"] = triangleSliderCallback;
 	callbackMap["sliderCallback()"] = sliderCallback;
@@ -190,6 +191,25 @@ void EntityManager::miracle(SDL_Event & event, WidgetReference widget)
 	if(self)
 	{
 		//  NOTE: widget->id is the MiracleType (needs to be cast).
+		Faction faction = F_PLAYER_1;
+		EntityType type = (EntityType) widget->id;
+		EntityReference townCenter = villageManager.getTownCenter(faction);
+
+		if(!townCenter)
+			std::cout << "No town center." << std::endl;
+		else if(!type)
+			std::cout << "No type." << std::endl;
+		else if(0)
+		{
+			Position origin = townCenter->getPosition();
+			Position position = origin;
+
+			EntityReference entity = new MiracleEntity(type, 1, position, faction);
+			self->createRecord(entity);
+		}
+		else
+			std::cout << "Type: " << type << ", but not implemented." << std::endl;
+
 	}
 	else
 		std::cerr << "EntityManager not initialized." << std::endl;
