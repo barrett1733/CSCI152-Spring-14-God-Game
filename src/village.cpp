@@ -76,6 +76,12 @@ void Village::decideAction()
 	// so another foundary is built.
 	// lololfoundarieseverywhere.
 	// -CH
+
+	// building jobs will be handled by ratios.
+	// so if 6 villagers to 1 farm, create another farm.
+	// if villager dies and another spawns, 
+	// 6 villagers to 2 farms = no new farm
+	// -SB
 	if (!villageStarted)
 		villageStart();
 	if (villagerList.size() % 6 == 0)
@@ -178,4 +184,9 @@ void Village::build(JobType job)
 	// 	jobManager.createJob(job, priority, target);
 	// else
 	// 	jobManager.createJob(GATHER_RESOURCE, priority, ResourceCost);
+}
+
+bool Village::setProperty(std::string property, int value)
+{
+
 }
