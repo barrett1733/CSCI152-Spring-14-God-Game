@@ -1,5 +1,4 @@
 /******************************
- *
  * Miracle Manager
  *		Takes input data and returns an Entity:Miracle
  */
@@ -23,6 +22,7 @@ class MiracleManager : config
 		int getCost( EntityType et );
 		Entity* createMiracle( EntityType et , Position p, Faction f);
 }
+
 // this will convert a string into an EntityType.
 // 	only works for Miracle types. may expand later.
 EntityType string_to_ET(std::string name);

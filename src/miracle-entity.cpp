@@ -1,10 +1,13 @@
 #include "miracle-entity.h"
 
-miracle-entity(EntityType, int health, Position, Faction):Entity(EntityType, int health, Position, Faction){}
+// Miracle Entity, Constructor 1
+miracleEntity::miracleEntity(EntityType, int health, Position, Faction):Entity(EntityType, int health, Position, Faction){}
+// Miracle Entity, Constructor 1
+// BUG: compile error.
+//miracleEntity::miracleEntity(const Entity&):Entity(const Entity&){}
 
-miracle-entity(const Entity&):Entity(const Entity&){}
-
-void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap){
+// Miracle Entity, update function
+void miracleEntity::update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap){
 	std::vector<Entity*> affectedEntitiesList;
 	if(EntityType==ET_MIRACLE_HEAL){
 		affectedEntitiesList=getEntitiesWithin(50.0, this->getPosition(),entityList);
@@ -41,21 +44,23 @@ void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructio
 		}
 	}
 	else{
-	
+
 	}
 	setCurrentHealth(0);
 };
 
+
+// function, getEntitiesWithin
 std::vector<Entity*>& getEntitiesWithin(double range, Position p, std::vector<Entity*>& entityList){
 	std::vector<Entity*> returnList;
-	
+
 	for(int i=0; i<entityList.size(); i++){
 		if(p.distance(entityList[i].getPosition()) <= range){
-			retrunList.pushBack(entityList[i]);
+			returnList.pushBack(entityList[i]);
 		}
 	}
-	
-	return(&returnList);
+
+	return(returnList);
 }
 
 
