@@ -1,9 +1,10 @@
-#pragma once
+#ifndef CREATURE_H_
+#define CREATURE_H_
+
 #include "entity.h"
-#include "random-pathfinding.h"
 #include <vector>
 
-class Creature : public RandomPathfinding
+class Creature
 {
 	std::vector<MobileEntityReference> creatureList; // list of creatures
 
@@ -19,3 +20,5 @@ public:
 };
 
 typedef Creature * CreatureReference;
+
+#endif

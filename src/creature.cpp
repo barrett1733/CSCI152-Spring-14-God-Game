@@ -23,7 +23,7 @@ void Creature::decideAction(MobileEntityReference mobileEntity)
 }
 void Creature::wander(MobileEntityReference mobileEntity)
 {
-	// Entity should probably wander ? direction for ? distance
+	// Entity wander rand() direction for rand() distance?
 	// -SB
 	/*
 	Position pos = mobileEntity->getPosition();
@@ -35,28 +35,23 @@ void Creature::wander(MobileEntityReference mobileEntity)
 void Creature::attack()
 {
 	// Detect entities in range
-	// If  in range, attack
-	// for Wolves
-	// If 
+	// Wolves and orges attack everything not hostile
 	// -SB
 }
 
 void Creature::flee()
 {
-	// If Villager, Wolf, Orge
+	// If Villager, Wolf, Orge in range flee opposite direction
+	// Deer
 
 }
 void Creature::update()
 {
-	for (int i = 0; i < domesticList.size(); i++)
-		decideAction(domesticList.at(i));
-	for (int i = 0; i < passiveList.size(); i++)
-		decideAction(passiveList.at(i));
-	for (int i = 0; i < hostileList.size(); i++)
-		decideAction(hostileList.at(i));
+	for (int i = 0; i < creatureList.size(); i++)
+		decideAction(creatureList.at(i));
 }
 MobileEntityReference Creature::getACreature()
 {
 	// Redundant function - will remove
-	return domesticList.at(0);
+	return creatureList.at(0);
 }

@@ -11,21 +11,15 @@
 typedef std::vector<JobReference> JobVec;
 typedef JobVec::iterator JobIter;
 
+class EntityManager; // Forward Declaration
 
-struct ResourceCost
+enum JobGroup
 {
-    int wood;
-    //int food;
-    int stone;
-    int iron;
-	ResourceCost() {}
-	ResourceCost(int a, int b, int c) :
-		wood(a),
-		stone(b),
-		iron(c)
-	{}
+    JG_NONE,
+    JG_GATHER,
+    JG_BUILD,
+    JG_MILITARY
 };
-
 
 
 class JobManager
@@ -34,46 +28,28 @@ class JobManager
 	TaskManager * taskManager;
     
 public:
-	static std::map<JobType, int> mapBuildTaskNum;
-	static void initMapBuildTaskNum();
-
-	static std::map<JobType, std::string> mapTaskPriority;
-	static void initMapTaskPriority();
-
-	static std::map<JobType, ResourceCost> mapBuildingCost;
-	static void initMapBuildingCost();
-
+	static EntityManager * entityManager;
+    
+    static std::map<JobType, ResourceCost> mapBuildingCost;
+    
     ResourceCost getResourceCost(JobType);
     
-	JobManager() : taskManager(new TaskManager())
-	{
-		initMapBuildTaskNum();
-		initMapTaskPriority();
-		initMapBuildingCost();
-	};
+	JobManager() : taskManager(new TaskManager()) {};
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
-
-	void createJobList(JobType, int, int);
-    void createJobList(JobType, int, int, Entity *);
-
-	//void initJobList();
+    
+    void createJob(JobType, int priority, ResourceCost);
+	void createJob(JobType, int priority, Position psn);
+    
+    JobGroup getJobGroup(JobType type);
 
 	JobVec getJobList();
 
-	Faction getFaction();
-
 	TaskManager * getTaskManager();
-
-	Entity * findJobTarget(JobType);
-
-	void cleanTaskList(JobReference job);
 
 	void cleanJobList();
     
-    
-
 	/*
 	// Desired interface:
 

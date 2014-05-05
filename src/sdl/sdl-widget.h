@@ -69,6 +69,8 @@ public:
 		boundingBox.x = xPos;
 		boundingBox.y = yPos;
 	}
+
+	int id;
 };
 
 typedef SdlWidget * WidgetReference;

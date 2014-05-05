@@ -5,10 +5,13 @@
 #include <vector>
 #include <map>
 
+#include "config.h"
+#include "entity.h"
+#include "village-manager.h"
 #include "sdl/sdl-entity.h"
 #include "sdl/sdl-map-view.h"
-#include "entity.h"
-#include "config.h"
+#include "sdl/sdl-widget-container.h"
+#include "obstruction-map.h"
 
 typedef std::map<EntityType, int> Entity_HealthMap;
 typedef std::pair<EntityType, int> Entity_HealthPair;
@@ -26,9 +29,9 @@ struct EntityRecord
 	Entity * entity;
 	SdlEntityReference widget;
 
-	void update()
+	void update(std::vector<EntityReference>& entityList, ObstructionMapReference obstructionMap)
 	{
-		if(entity) entity->update();
+		if(entity) entity->update(entityList, obstructionMap);
 		if(widget) widget->update();
 	}
 };
@@ -37,8 +40,9 @@ class EntityManager : public Config
 {
 	bool visible;
 
-	std::vector<WidgetReference> widgetList;
 	std::vector<EntityRecord*> recordList;
+	std::vector<EntityReference> entityList;
+	std::vector<WidgetReference> widgetList;
 
 	std::map<Faction, std::vector<EntityRecord*> > factionMap;
 	// these lists are sub-catagories of the entitylist, should still be the same reference //
@@ -50,9 +54,16 @@ class EntityManager : public Config
 	// data to pair up Entity Type and Health
 	std::map<EntityType, int> Entity_HealthMap;
 
-
 	SdlMapView mapView;
 	int worldSize;
+
+	ObstructionMapReference obstructionMap;
+
+	static EntityManager * self;
+	static VillageManager villageManager;
+	static bool callbackMapInitialized;
+	static std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
+	static WidgetContainerReference buttonContainer;
 
 public:
 	EntityManager(int worldSize);
@@ -69,10 +80,18 @@ public:
 	void show();
 	void hide();
 
+
+	static void initializeCallbackMap();
+
+	static void build(SDL_Event&, WidgetReference);
+	static void miracle(SDL_Event&, WidgetReference);
+
+	static void sliderCallback(SDL_Event&, WidgetReference);
+	static void triangleSliderCallback(SDL_Event&, WidgetReference);
 	// From Config, we use this to pull from a config file
-	bool setProperty(std::string property, std::string value);
-	bool setProperty(std::string property, int value);
-	bool setProperty(std::string property, int value1, int value2);
+	// bool setProperty(std::string property, std::string value);
+	// bool setProperty(std::string property, int value);
+	// bool setProperty(std::string property, int value1, int value2);
 };
 
 #endif

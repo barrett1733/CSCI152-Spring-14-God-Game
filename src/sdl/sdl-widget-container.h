@@ -17,6 +17,7 @@ class SdlWidgetContainer : public SdlWidget, public Config
 
 	std::string callbackName;
 	std::string buttonLabel;
+	int buttonId;
 	SDL_Rect rect;
 	int buttonConfig;
 

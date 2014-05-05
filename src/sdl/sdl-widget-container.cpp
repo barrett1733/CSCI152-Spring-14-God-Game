@@ -18,7 +18,12 @@ void SdlWidgetContainer_doNothing(SDL_Event& event, WidgetReference widget)
 {}
 
 SdlWidgetContainer::SdlWidgetContainer(std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap, const char * fileName) :
-	callbackMap(callbackMap)
+	callbackMap(callbackMap),
+	visible(true),
+	callbackName(""),
+	buttonLabel(""),
+	buttonId(0),
+	buttonConfig(0)
 {
 	this->callbackMap["nothing"] = SdlWidgetContainer_doNothing;
 	load(fileName);
@@ -94,8 +99,10 @@ bool SdlWidgetContainer::setProperty(std::string property, std::string value)
 
 		else return false;
 
+		widget->id = buttonId;
 		widgetList.push_back(widget);
 		buttonConfig = 0;
+		buttonId = 0;
 	}
 
 	else return false;
@@ -105,7 +112,11 @@ bool SdlWidgetContainer::setProperty(std::string property, std::string value)
 
 bool SdlWidgetContainer::setProperty(std::string property, int value)
 {
-	std::cout << "SdlWidgetContainer::SetProperty() : " << property << " = " << value << std::endl;
+	if(property == "id")
+	{
+		buttonId = value;
+		return true;
+	}
 	return false;
 }
 

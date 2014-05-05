@@ -10,6 +10,7 @@
 
 class Village
 {
+	EntityReference townCenter;
 	Faction faction;
 	ResourceManager resourceManager;
 	JobManager jobManager;
@@ -20,6 +21,9 @@ class Village
 	// Should resources be 'discovered' instead of all known immediately?
 	//
 	// TODO: Villager creation every 30 secs
+	// NOTE: ^ driven from the outside. A Village probably doesn't need to maintain a concept of 'time'. -CH
+	// + bool hasFoodToSpawnVillager();
+	// + void spawnVillager();
 	//
 	bool villageStarted;
 	int populationCap;
@@ -31,10 +35,8 @@ class Village
 
 	int getBuildingCount(EntityType);
 	void setPopulationCap();
-    
-    Position getAvaiableArea(Position);
-    Position getTownCenter();
 
+    Position getAvaiableArea(Position);
 
 public:
 	Village(Faction);
@@ -43,13 +45,9 @@ public:
 
 	void update();
 
-	void buildHouse();
-	void buildMasonry();
-	void buildMill();
-	void buildSmith();
-	void buildArmory();
-	void buildFoundary();
+	EntityReference getTownCenter();
 
+	void build(JobType);
 
 	Faction getFaction() { return faction; }
 };
