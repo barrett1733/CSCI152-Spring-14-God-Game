@@ -46,6 +46,8 @@ class EntityManager : public Config
 
 	std::map<Faction, std::vector<EntityRecord*> > factionMap;
 	// these lists are sub-catagories of the entitylist, should still be the same reference //
+	// TODO: make use of these list
+	// TODO: change the lists to Entity*
 	std::vector<EntityRecord*> villagerList;
 	std::vector<EntityRecord*> peacefulMobList;
 	std::vector<EntityRecord*> enemyList;
