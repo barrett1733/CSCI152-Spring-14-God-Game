@@ -27,10 +27,8 @@ WorldGeneration::WorldGeneration(int seed) :
 
 	if (world_info[WI_MAP_SIZE] < 40) world_info[WI_MAP_SIZE] = 40;
 
-	int mapEdgeLength = world_info[WI_MAP_SIZE];
-
-	world_positions.resize(mapEdgeLength);
-	Position::max_x = Position::max_y = mapEdgeLength - 1;
+	world_positions.resize(world_info[WI_MAP_SIZE]);
+	Position::max_x = Position::max_y = world_info[WI_MAP_SIZE] - 1;
 
 	/**************************
 	***fill with empty space***
@@ -45,12 +43,11 @@ WorldGeneration::WorldGeneration(int seed) :
 	/************************
 	***place all entities***
 	************************/
-	//////////////resources/////////////////////
 	PlaceResource(TREES_MIN, TREES_MAX, ET_TREE);
 	PlaceResource(IRON_MIN, IRON_MAX, ET_IRON);
 	PlaceResource(STONE_MIN, STONE_MAX, ET_STONE);
 	
-	placePaths();
+	placePaths();//comment this out and uncomment placePaths2 in the PlaceTownCenter function to use the other kind path creation
 	
 	PlaceTownCenter();
 	
@@ -69,7 +66,6 @@ WorldGeneration::WorldGeneration(int seed) :
 void WorldGeneration::PrintMap()
 {
 	int temp_count = 0;
-	int sidelength = world_info[WI_MAP_SIZE];
 	for(int outerIndex = 0; outerIndex < world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
@@ -77,7 +73,7 @@ void WorldGeneration::PrintMap()
 			int et_type = world_positions[outerIndex][innerIndex];
 			cout << et_type;
 			temp_count = temp_count+1;
-			if(temp_count % sidelength == 0)
+			if (temp_count % world_info[WI_MAP_SIZE] == 0)
 				cout<<endl;
 		}
 	}
@@ -117,7 +113,7 @@ void WorldGeneration::PlaceTownCenter()
 			rand() % world_info[WI_MAP_SIZE]	//y-coord
 		);
 		TC2.set(
-			rand() % world_info[WI_MAP_SIZE],
+			rand() % world_info[WI_MAP_SIZE],	//x-coord
 			rand() % world_info[WI_MAP_SIZE]	//y-coord
 		);
 
@@ -125,8 +121,8 @@ void WorldGeneration::PlaceTownCenter()
 			keep_going=false;
 	}
 
-	//createPaths2(TC1);//uncomment these to use the second(inferior) path creation
-	//createPaths2(TC2);
+	//placePaths2(TC1);//uncomment these to use the second(inferior) path creation
+	//placePaths2(TC2);
 
 	/**************************/
 	/***move away from edges***/
@@ -200,6 +196,7 @@ void WorldGeneration::PlaceAroundTC(EntityType type, int num_of_entities, Positi
 
 void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, EntityType type)
 {
+	Position here;
 	for(int outerIndex = 0; outerIndex < world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
@@ -210,7 +207,6 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
 
-				Position here;
 				here.set(innerIndex, outerIndex);
 
 				int chance_to_delete = rand() % 100;
@@ -251,10 +247,10 @@ Entity WorldGeneration::getNextEntity()
 			}
 			else
 			{
-			to_return.setEntityType(world_positions[current.getY()][current.getX()]);//set the entity's type
+			to_return.setEntityType(world_positions[current.getY()][current.getX()]);//set the entity's type which is stored in world_positions[][]
 			to_return.setPosition(current);//the the entity's position
 
-			switch(world_positions[current.getY()][current.getX()])
+			switch(world_positions[current.getY()][current.getX()])//switch to set faction of the returned entity
 			{
 				//resources
 				case ET_TREE:
@@ -367,7 +363,7 @@ void WorldGeneration::clearArea(Position pos)
 		{
 			here.set(innerIndex, outerIndex);
 			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
-				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
+				;//do nothing
 			else if(here.distance(pos) < 8)
 			{
 				if(world_positions[outerIndex][innerIndex] != ET_NONE)
@@ -390,22 +386,21 @@ void WorldGeneration::createPath(int seed)
 
 	//cout << "path starts at (" << path_start.getX() << ", " << path_start.getY() << ")" << endl;
 	//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
-
 	while (path_end.getX() + 1 <= world_info[WI_MAP_SIZE] - 1 && path_end.getY() + 1 <= world_info[WI_MAP_SIZE] - 1)
 	{
 		int x_offset = findOffset(1);
 		int y_offset = findOffset(1);
 
 		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2
-		 || path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
-		 || path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
-
+			|| path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
+			|| path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
+		
 			loc = pathChange(loc);
-
+		
 		if (loc == 0)//even: starts on x-axis
 		{
 			path_end.set(path_end.getX()+x_offset, path_end.getY() + 1);
-			//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+			//cout << "path at "<<path_end<< endl;
 			world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
 			if (x_offset < 1 && path_end.getY() < world_info[WI_MAP_SIZE]-1)
 				world_positions[path_end.getY() + 1][path_end.getX()] = ET_NONE;
@@ -460,13 +455,13 @@ int WorldGeneration::pathChange(int loc)
 
 void WorldGeneration::placePaths()
 {
-	for (int i = 0; i <= world_info[WI_MAP_SIZE] / 10 ; i++)
+	for (int i = 0; i <= world_info[WI_MAP_SIZE] / 10; i++)
 	{
 		createPath(rand());
 	}
 }
 
-void WorldGeneration::createPaths2(Position team)
+void WorldGeneration::placePaths2(Position team)
 {
 	for (int x = 0; x < 8; x++)
 	{

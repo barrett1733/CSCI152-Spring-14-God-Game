@@ -61,7 +61,7 @@ public:
 	void clearArea(Position);
 	void createPath(int);
 	void placePaths();
-	void createPaths2(Position);
+	void placePaths2(Position);
 
 	int getWorldSize();
 	int getEntityCount();
