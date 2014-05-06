@@ -58,8 +58,3 @@ EntityReference VillageManager::getTownCenter(Faction faction)
 	VillageReference village = villageMap[faction];
 	return village->getTownCenter();
 }
-
-void VillageManager::buildHouse()
-{
-	std::cout << "VillageManager::buildHouse()" << std::endl;
-}

@@ -28,8 +28,6 @@ public:
 	void hide();
 	void update();
 
-	void buildHouse();
-
 	EntityReference getTownCenter(Faction);
 };
 
