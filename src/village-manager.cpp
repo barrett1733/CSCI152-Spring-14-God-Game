@@ -18,6 +18,11 @@ long VillageManager::addVillage(Faction faction)
 	return villageList.size();
 }
 
+VillageReference VillageManager::getVillage(Faction faction)
+{
+	return villageMap[faction];
+}
+
 void VillageManager::importEntity(EntityReference entity)
 {
 	long villageCount = villageList.size();
@@ -55,6 +60,7 @@ void VillageManager::update()
 
 EntityReference VillageManager::getTownCenter(Faction faction)
 {
+	std::cerr << "\033[33m VillageManager::getTownCenter() is deprecated. \033[m" << std::endl;
 	VillageReference village = villageMap[faction];
 	return village->getTownCenter();
 }

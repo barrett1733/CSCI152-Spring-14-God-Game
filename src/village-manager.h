@@ -21,6 +21,7 @@ public:
 	VillageManager();
 
 	long addVillage(Faction);
+	VillageReference getVillage(Faction);
 
 	void importEntity(EntityReference);
 
