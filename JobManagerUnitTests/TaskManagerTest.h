@@ -25,21 +25,21 @@ class TaskManagerTest : public CppUnit::TestFixture
     CPPUNIT_TEST_SUITE_END();
     
     TaskManager * taskManager;
-    TaskReference gatherFoodTask = nullptr;
-    TaskReference gatherWoodTask = nullptr;
-    TaskReference gatherIronTask = nullptr;
-    TaskReference gatherStoneTask = nullptr;
-    TaskReference buildHouseTask = nullptr;
-    TaskReference buildStoneworksTask = nullptr;
-    TaskReference buildArmorsmithTask = nullptr;
-    TaskReference buildWatchTowerTask = nullptr;
-    TaskReference attackTask = nullptr;
+    TaskReference gatherFoodTask = 0;
+    TaskReference gatherWoodTask = 0;
+    TaskReference gatherIronTask = 0;
+    TaskReference gatherStoneTask = 0;
+    TaskReference buildHouseTask = 0;
+    TaskReference buildStoneworksTask = 0;
+    TaskReference buildArmorsmithTask = 0;
+    TaskReference buildWatchTowerTask = 0;
+    TaskReference attackTask = 0;
     
-    MobileEntityReference villager1 = nullptr;
-    MobileEntityReference villager2 = nullptr;
-    MobileEntityReference villager3 = nullptr;
-    MobileEntityReference villager4 = nullptr;
-    MobileEntityReference villager5 = nullptr;
+    MobileEntityReference villager1 = 0;
+    MobileEntityReference villager2 = 0;
+    MobileEntityReference villager3 = 0;
+    MobileEntityReference villager4 = 0;
+    MobileEntityReference villager5 = 0;
     
     MobileEntityVec villagerList;
     
