@@ -140,6 +140,11 @@ void MobileEntity::setDefense(int defense) {
 	this->defense = defense;
 }
 
+EntityReference MobileEntity::getTarget()
+{
+	return target;
+}
+
 bool MobileEntity::hasTask()
 {
 	return task ? true : false;

@@ -4,20 +4,19 @@
 #include <iostream>
 #include <vector>
 #include "world-gen.h"
-
-using namespace std;
-
+#include "obstruction-map.h"
 
 class RandomPathfinding{
-	int mapDirectionX(Direction direction);
-	int mapDirectionY(Direction direction);
-	bool checkDirection(Position position, Direction direction);
-	Direction determineDirection(Position me, Position target);
+	Direction determineDirection(Position source, Position target);
+	// TODO: finish these two functions
+	Direction randomDirection(Position source);
+	Direction invertDirection(Direction source);
 public:
-	WorldGeneration * world;
-	std::vector<Direction> checkArea(Position);
-	void moveTowardsTarget(MobileEntityReference, Position);
-	void moveTowardsTarget(MobileEntityReference, MobileEntityReference);
+	Position moveTowardsTarget(MobileEntityReference, Position);
+	Position moveTowardsTarget(MobileEntityReference, MobileEntityReference);
+	Position moveAwayFromTarget(MobileEntityReference, Position);
+	Position moveAwayFromTarget(MobileEntityReference, MobileEntityReference);
+	Position moveRandomly(MobileEntityReference);
 };
 
 

@@ -1,64 +1,74 @@
 #include "random-pathfinding.h"
 
-Direction RandomPathfinding::determineDirection(Position me, Position target)
+Direction RandomPathfinding::determineDirection(Position source, Position target)
 {
-	if (me.getY() < target.getY())
-		return D_DOWN;
-	if (me.getY() > target.getY())
-		return D_UP;
-	if (me.getY() == target.getY())
-	{
-		if (me.getX() < target.getX())
-			return D_RIGHT;
-		if (me.getX() > target.getX())
-			return D_LEFT;
-	}
-	return D_NONE;
-}
-void RandomPathfinding::moveTowardsTarget(MobileEntityReference me, Position target)
-{
-	Position pos = me->getPosition();
-	pos.move(determineDirection(pos, target));
-	me->setPosition(pos);
-}
-void RandomPathfinding::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
-{
-	moveTowardsTarget(me, target->getPosition());
-}
+	Direction direction = D_NONE;
+	int targetX = target.getX();
+	int targetY = target.getY();
+	int sourceX = source.getX();
+	int sourceY = source.getY();
 
-std::vector<Direction> RandomPathfinding::checkArea(Position position)
-{
-	std::vector<Direction> openDirections;
-	if (checkDirection(position, D_UP))
-		openDirections.push_back(D_UP);
-	if (checkDirection(position, D_RIGHT))
-		openDirections.push_back(D_RIGHT);
-	if (checkDirection(position, D_DOWN))
-		openDirections.push_back(D_DOWN);
-	if (checkDirection(position, D_LEFT))
-		openDirections.push_back(D_LEFT);
-	openDirections.push_back(D_NONE);
-	return openDirections;
+	if (targetX < sourceX)
+		direction |= D_LEFT;
+	else if (targetX > sourceX)
+		direction |= D_RIGHT;
+
+	if (targetY < sourceY)
+		direction |= D_UP;
+	else if (targetY > sourceY)
+		direction |= D_DOWN;
+
+	return direction;
 }
-int RandomPathfinding::mapDirectionX(Direction dir)
+Direction RandomPathfinding::randomDirection(Position source)
 {
-	if (dir & D_RIGHT)		return 1;
-	if (dir & D_LEFT)		return -1;
-	if (dir & D_NONE)		return 0;
+
 }
-int RandomPathfinding::mapDirectionY(Direction dir)
+Direction RandomPathfinding::invertDirection(Direction source)
 {
-	if (dir & D_UP)			return -1;
-	if (dir & D_DOWN)		return 1;
-	if (dir & D_NONE)		return 0;
+
 }
-bool RandomPathfinding::checkDirection(Position pos, Direction dir)
+Position RandomPathfinding::moveTowardsTarget(MobileEntityReference me, Position target)
 {
-	int newPosX = pos.getX() + mapDirectionX(dir);
-	int newPosY = pos.getY() + mapDirectionY(dir);
-	int worldSize = world->getWorldSize();
-	if (newPosX >= 0 && newPosX < worldSize && newPosY >= 0 && newPosY < worldSize)
-		if (world->world_positions[newPosX][newPosY] == ET_NONE)
-			return true;
-	return false;
+	Position position = me->getPosition();
+	position.move(determineDirection(position, target));
+	return position;
+}
+Position RandomPathfinding::moveTowardsTarget(MobileEntityReference me, MobileEntityReference target)
+{
+	return moveTowardsTarget(me, target->getPosition());
+}
+Position RandomPathfinding::moveAwayFromTarget(MobileEntityReference me, Position target)
+{
+	Position position = me->getPosition();
+	position.move(determineDirection(position, target));
+	return position;
+}
+Position RandomPathfinding::moveAwayFromTarget(MobileEntityReference me, MobileEntityReference target)
+{
+	return moveTowardsTarget(me, target->getPosition());
+}
+Position RandomPathfinding::moveRandomly(MobileEntityReference source)
+{
+	Position position = source->getPosition();
+	int r = rand();
+	switch (r % 4)
+	{
+	case 0:
+		position.move(D_UP);
+		break;
+
+	case 1:
+		position.move(D_RIGHT);
+		break;
+
+	case 2:
+		position.move(D_DOWN);
+		break;
+
+	case 3:
+		position.move(D_LEFT);
+		break;
+	}
+	return position;
 }

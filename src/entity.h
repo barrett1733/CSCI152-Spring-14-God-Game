@@ -202,6 +202,7 @@ public:
 	void setHunger(int);
 	void setStrength(int);
 	void setDefense(int);
+	EntityReference getTarget();
 
 	void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap);
 

@@ -23,14 +23,7 @@ void Creature::decideAction(MobileEntityReference mobileEntity)
 }
 void Creature::wander(MobileEntityReference mobileEntity)
 {
-	// Entity wander rand() direction for rand() distance?
-	// -SB
-	/*
-	Position pos = mobileEntity->getPosition();
-	std::vector<Direction> openDirections = checkArea(mobileEntity->getPosition());
-	pos.move(openDirections.at(rand() % openDirections.size()));
-	mobileEntity->setPosition(pos);
-	*/
+	
 }
 void Creature::attack()
 {
