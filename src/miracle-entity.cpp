@@ -19,42 +19,44 @@ MiracleEntity::MiracleEntity(EntityType et, int health, Position p, Faction f):E
 // Miracle Entity, update function
 void MiracleEntity::update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap){
 	std::vector<Entity*> affectedEntitiesList;
-	if(this->getEntityType()==ET_MIRACLE_HEAL){
-		affectedEntitiesList=getEntitiesWithin(50.0, this->getPosition(),entityList);
-		for(int i=0; i<affectedEntitiesList.size(); i++){
-			affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList[i]->getCurrentHealth()+20);
-		}
-	}
-	else if(this->getEntityType()==ET_MIRACLE_SUMMONCOW){
-		entityList.push_back(new Entity(ET_COW, 100, this->getPosition(), this->getFaction()));
-	}
-	else if(this->getEntityType()==ET_MIRACLE_STATBOOST){
-		affectedEntitiesList=getEntitiesWithin(75.0, this->getPosition(),entityList);
-		for(int i=0; i<affectedEntitiesList.size(); i++){
-			affectedEntitiesList.at(i)->setMaxHealth(affectedEntitiesList.at(i)->getMaxHealth()*2);
-			affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList.at(i)->getMaxHealth());
-		}
-	}
-	else if(this->getEntityType()==ET_MIRACLE_LIGTNING){
-		affectedEntitiesList=getEntitiesWithin(25.0, this->getPosition(),entityList);
-		for(int i=0; i<affectedEntitiesList.size(); i++){
-			affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList.at(i)->getCurrentHealth()*0.75-20);
-		}
-	}
-	else if(this->getEntityType()==ET_MIRACLE_EARTHQUAKE){
-		affectedEntitiesList=getEntitiesWithin(100.0, this->getPosition(),entityList);
-		for(int i=0; i<affectedEntitiesList.size(); i++){
-			affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList.at(i)->getCurrentHealth()*0.50-20);
-		}
-	}
-	else if(this->getEntityType()==ET_MIRACLE_METEOR){
-		affectedEntitiesList=getEntitiesWithin(80.0, this->getPosition(),entityList);
-		for(int i=0; i<affectedEntitiesList.size(); i++){
-			affectedEntitiesList.at(i)->setCurrentHealth(0);
-		}
-	}
-	else{
-
+	switch(this->getEntityType())
+	{
+		case ET_MIRACLE_HEAL:
+			affectedEntitiesList=getEntitiesWithin(50.0, this->getPosition(),entityList);
+			for(int i=0; i<affectedEntitiesList.size(); i++){
+				affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList[i]->getCurrentHealth()+20);
+			}
+			break;
+		case ET_MIRACLE_SUMMONCOW:
+			entityList.push_back(new Entity(ET_COW, 100, this->getPosition(), this->getFaction()));
+			break;
+		case ET_MIRACLE_STATBOOST:
+			affectedEntitiesList=getEntitiesWithin(75.0, this->getPosition(),entityList);
+			for(int i=0; i<affectedEntitiesList.size(); i++){
+				affectedEntitiesList.at(i)->setMaxHealth(affectedEntitiesList.at(i)->getMaxHealth()*2);
+				affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList.at(i)->getMaxHealth());
+			}
+			break;
+		case ET_MIRACLE_LIGTNING:
+			affectedEntitiesList=getEntitiesWithin(25.0, this->getPosition(),entityList);
+			for(int i=0; i<affectedEntitiesList.size(); i++){
+				affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList.at(i)->getCurrentHealth()*0.75-20);
+			}
+			break;
+		case ET_MIRACLE_EARTHQUAKE:
+			affectedEntitiesList=getEntitiesWithin(100.0, this->getPosition(),entityList);
+			for(int i=0; i<affectedEntitiesList.size(); i++){
+				affectedEntitiesList.at(i)->setCurrentHealth(affectedEntitiesList.at(i)->getCurrentHealth()*0.50-20);
+			}
+			break;
+		case ET_MIRACLE_METEOR:
+			affectedEntitiesList=getEntitiesWithin(80.0, this->getPosition(),entityList);
+			for(int i=0; i<affectedEntitiesList.size(); i++){
+				affectedEntitiesList.at(i)->setCurrentHealth(0);
+			}
+			break;
+		default:
+			break;
 	}
 	setCurrentHealth(0);
 };
