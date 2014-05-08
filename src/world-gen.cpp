@@ -1,3 +1,11 @@
+//
+//  File: world-gen.cpp
+//  Author: Robert Boettcher
+//  CSci 152
+//  Spring 2014
+//
+// Implementation of world gen
+//
 #include <iostream>
 #include <vector>
 #include <fstream>

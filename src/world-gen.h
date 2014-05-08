@@ -1,3 +1,10 @@
+//
+//  File: world-gen.h
+//  Author: Robert Boettcher
+//  CSci 152
+//  Spring 2014
+//
+//
 #ifndef WORLD_GEN_H_
 #define WORLD_GEN_H_
 
