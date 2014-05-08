@@ -1,3 +1,15 @@
+//
+//  File: sdl-map-view.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Map View Widget Definition
+// Extends the generic Widget Class.
+// Provides the on-screen representation of the game world.
+// SDL Entity Widgets are blitted onto this.
+//
 
 #ifndef SDL_MAP_VIEW_H_
 #define SDL_MAP_VIEW_H_

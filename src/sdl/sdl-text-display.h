@@ -1,3 +1,15 @@
+//
+//  File: sdl-text-display.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Text Display Widget Definition
+// Extends the generic Widget Class.
+// Simply display a string of text.
+// Text can be changed via setText() method.
+//
 
 #ifndef SDL_TEXT_DISPLAY_H_
 #define SDL_TEXT_DISPLAY_H_

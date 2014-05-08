@@ -1,3 +1,19 @@
+//
+//  File: sdl-slider.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Slider Widget Definition
+// Extends the generic Widget Class.
+// Renders an interactive slider control.
+// Values range from 0 on the left to 100 on the right.
+// Two callbacks are available:
+//  A standard callback for when the slider is release.
+//  A live callback for when the slider value is changed.
+// The getValue() method provides the slider value.
+//
 
 #ifndef SDL_SLIDER_H_
 #define SDL_SLIDER_H_

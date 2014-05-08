@@ -1,3 +1,15 @@
+//
+//  File: sdl-button.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Button Widget Class Definition
+// Extends the generic Widget Class.
+// Renders as a clickable rectangle.
+// Successfully 'clicking' the button will invoke the callback.
+//
 
 #ifndef SDL_BUTTON_H_
 #define SDL_BUTTON_H_

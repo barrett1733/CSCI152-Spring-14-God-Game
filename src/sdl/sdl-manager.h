@@ -1,3 +1,16 @@
+//
+//  File: sdl-manager.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Manager Class Definition
+// This is a singleton class.
+// It provides a global static instance called 'sdl'.
+// It is reponsible for rendering all the on-screen assets.
+// It handles user-driven events.
+//
 
 #ifndef SDL_MANAGER_H_
 #define SDL_MANAGER_H_

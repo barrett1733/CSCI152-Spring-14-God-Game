@@ -1,3 +1,13 @@
+//
+//  File: sdl-manager.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Manager Implementation
+//
+
 #include <ctime>
 #include "sdl-manager.h"
 #include <iostream>
@@ -52,7 +62,7 @@ SdlManager::~SdlManager()
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
-	if(texture) SDL_DestroyTexture(texture);
+	if(texture)  SDL_DestroyTexture(texture);
 
 	IMG_Quit();
 	SDL_Quit();
@@ -72,7 +82,6 @@ bool SdlManager::setProperty(std::string property, int value)
 	}
 	return false;
 }
-
 
 ////////
 
