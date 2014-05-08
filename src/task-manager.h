@@ -1,5 +1,15 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: task-manager.h
+//  Author: Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//
+//  Task Manager is responsible for
+//		Creating tasks
+//		Maintaining tasks
+//		Assign tasks to villagers
+//		Update tasks
+//		Remove complete tasks
 //
 
 #ifndef TASK_MANAGER_H_

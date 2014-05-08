@@ -1,4 +1,15 @@
-
+//
+//  File: job-manager.h
+//  Author: Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//
+//  Job Manager is responsible for
+//  	Creating jobs
+//		Keeping track of all jobs
+//		Updating the task manager
+//		Remove complete jobs
+//
 #ifndef JOB_MANAGER_H_
 #define JOB_MANAGER_H_
 

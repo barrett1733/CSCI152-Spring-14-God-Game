@@ -1,7 +1,11 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: <task.h>
+//  Author: <Jimmy Ouyang>
+//  CSci 152
+//  Spring 2014
 //
-
+//  Each task belongs to a job and will be assigned to a villager
+//
 #ifndef TASK_H_
 #define TASK_H_
 

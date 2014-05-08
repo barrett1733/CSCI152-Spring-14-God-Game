@@ -1,3 +1,10 @@
+//
+//  File: task-manager.cpp
+//  Author: Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//
+//  
 #include "task-manager.h"
 
 std::map<TaskType, ResourceGroup> TaskManager::taskResourceGroupMap

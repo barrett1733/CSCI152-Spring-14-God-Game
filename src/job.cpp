@@ -1,4 +1,10 @@
-
+//
+//  File: job.cpp
+//  Author: Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//
+//  
 #include "job.h"
 
 std::map<JobType, TaskType> Job::mp = {

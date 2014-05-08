@@ -1,4 +1,13 @@
-
+//
+//  File: job.h
+//  Author: Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//
+//  Each job can be breaked down to a number of tasks
+//  The tasks will be generated once a job is created
+//  A job is completed after all the tass are completed
+//
 #ifndef JOB_H_
 #define JOB_H_
 #include <vector>

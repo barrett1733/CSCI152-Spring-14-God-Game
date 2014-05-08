@@ -1,4 +1,9 @@
-
+//
+//  File: job-manager.cpp
+//  Author: Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//
 #include "job-manager.h"
 #include "entity-manager.h"
 
