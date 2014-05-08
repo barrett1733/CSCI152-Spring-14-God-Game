@@ -45,59 +45,39 @@ void Village::importEntity(EntityReference entity)
 
 void Village::update()
 {
+	// might be entity type problem detection
+	// which will cause job spam
+	// -SB
 	// decideAction();
-
-	//if (!setBeginningPopCap)
-	//	setPopulationCap();
-
-	// TODO: Village::runVillageLogic();
-	// Check size of job queue vs population
-	// Check next script instruction
-	// Issue jobs
-	// jobManager.issueJob(...);
 }
-	// TODO: Clean out dead entities.
 void Village::villageStart()
 {
 	// meant for the beginning of the game
 	villageStarted = true;
-	//  MAGIC: Initial buildings should be from file, not hardcoded.
-	// -CH
-	// 3 house start
+	for (int i = 0; i < amountOfStartingHouses; i++)
+		build(JOB_BUILD_HOUSE);
 }
 void Village::decideAction()
 {
-	//  MAGIC: All these numbers should be loaded from a script file.
-	// Also, to build a certain buildings at a certain population level is probably incorrect.
-	// I.E.:
-	// Population size reaches 12, so a foundary is built.
-	// Someone dies, so population goes back to 11.
-	// Then someone is born, so population goes back to 12,
-	// so another foundary is built.
-	// lololfoundarieseverywhere.
-	// -CH
-
-	// building jobs will be handled by ratios.
-	// so if 6 villagers to 1 farm, create another farm.
-	// if villager dies and another spawns, 
-	// 6 villagers to 2 farms = no new farm
-	// -SB
 	if (!villageStarted)
 		villageStart();
-	if (villagerList.size() % 6 == 0)
-		build(JOB_BUILD_FARM);
-	if (villagerList.size() == populationCap)
-		build(JOB_BUILD_HOUSE);
-	if (getBuildingCount(ET_HOUSE) % 8 == 0)
-		build(JOB_BUILD_STONEWORKS);
-	if (getBuildingCount(ET_HOUSE) % 6 == 0)
-		build(JOB_BUILD_LUMBERMILL);
-	if (villagerList.size() % 15 == 0)
-		build(JOB_BUILD_WEAPONSMITH);
-	if (villagerList.size() % 25 == 0)
-		build(JOB_BUILD_ARMORSMITH);
-
+	if (villagerList.size() > 0)
+	{
+		if (villagerList.size() / getBuildingCount(ET_FOUNDARY) > buildingRatios[BR_FOUNDARY])
+			build(JOB_BUILD_FARM);
+		if (villagerList.size() / getBuildingCount(ET_HOUSE) > buildingRatios[BR_HOUSE])
+			build(JOB_BUILD_HOUSE);
+		if (villagerList.size() / getBuildingCount(ET_MASONRY) > buildingRatios[BR_MASONRY])
+			build(JOB_BUILD_STONEWORKS);
+		if (villagerList.size() / getBuildingCount(ET_MILL) > buildingRatios[BR_MILL])
+			build(JOB_BUILD_LUMBERMILL);
+		if (villagerList.size() / getBuildingCount(ET_SMITH) > buildingRatios[BR_SMITH])
+			build(JOB_BUILD_WEAPONSMITH);
+		if (villagerList.size() / getBuildingCount(ET_ARMORY) > buildingRatios[BR_ARMORY])
+			build(JOB_BUILD_ARMORSMITH);
+	}
 }
+
 int Village::getBuildingCount(EntityType entityType)
 {
 	int count = 0;
@@ -176,7 +156,6 @@ Position Village::getAvaiableArea(Position p)
 
 void Village::build(JobType job)
 {
-	// House populationCap += 3; //  MAGIC: why three? Config file, imo. -CH
 	std::cout << "Village::build()" << std::endl;
 	// ResourceCost = jobManager.getResourceCost(job);
 	// if(resourceManager.reserve(ResourceCost))
@@ -186,7 +165,35 @@ void Village::build(JobType job)
 	// 	jobManager.createJob(GATHER_RESOURCE, priority, ResourceCost);
 }
 
-bool Village::setProperty(std::string property, int value)
+bool Village::setProperty(std::string property, double value)
 {
-
+	if (property == "starting_houses")
+	{
+		amountOfStartingHouses = value;
+		return true;
+	}
+	else if (property == "house_ratio")
+	{
+		buildingRatios[BR_HOUSE] = value;
+	}
+	else if (property == "mill_ratio")
+	{
+		buildingRatios[BR_MILL] = value;
+	}
+	else if (property == "masonry_ratio")
+	{
+		buildingRatios[BR_MASONRY] = value;
+	}
+	else if (property == "foundary_ratio")
+	{
+		buildingRatios[BR_FOUNDARY] = value;
+	}
+	else if (property == "smith_ratio")
+	{
+		buildingRatios[BR_SMITH] = value;
+	}
+	else if (property == "armory_ratio")
+	{
+		buildingRatios[BR_ARMORY] = value;
+	}
 }

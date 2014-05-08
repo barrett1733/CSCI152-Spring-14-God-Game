@@ -8,6 +8,17 @@
 #include "world-gen.h"
 #include "config.h"
 
+enum BuildingRatios
+{
+	BR_HOUSE,
+	BR_MILL,
+	BR_MASONRY,
+	BR_FOUNDARY,
+	BR_SMITH,
+	BR_ARMORY,
+	BR_COUNT
+};
+
 class Village : public Config
 {
 	EntityReference townCenter;
@@ -25,6 +36,8 @@ class Village : public Config
 	// NOTE: ^ driven from the outside. A Village probably doesn't need to maintain a concept of 'time'. -CH
 	bool villageStarted;
 	int populationCap;
+	int amountOfStartingHouses;
+	double buildingRatios[BR_COUNT];
 
 	bool hasFoodToSpawnVillager();
 	void spawnVillager();
@@ -36,7 +49,7 @@ class Village : public Config
 	int getBuildingCount(EntityType);
 
     Position getAvaiableArea(Position);
-	bool setProperty(std::string property, int value);
+	bool setProperty(std::string property, double value);
 
 public:
 	Village(Faction);
