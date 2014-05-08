@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "villager-ai.h"
 #include "resource-manager.h"
 #include "game-manager.h"
 
@@ -13,11 +12,11 @@ namespace UnitTest1
 	public:
 		TEST_METHOD(TestResourceManager)
 		{
-			ResourcePool rtest;
-			VillagerAI test;
-			rtest.resourcePool[RS_FOOD] = 100;
-			test.registerResourcePool(rtest);
-			Assert::AreEqual(rtest.resourcePool[RS_FOOD], test.getResourceAmount(RS_FOOD));
+			ResourcePool pool;
+			ResourceManager manager;
+			pool.resourcePool[0][RS_FOOD] = 100;
+			manager.registerResourcePool(pool);
+			Assert::AreEqual(pool.resourcePool[0][RS_FOOD], manager.getResourceAmount(RS_FOOD));
 		}
 	};
 }
