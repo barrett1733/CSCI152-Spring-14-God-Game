@@ -1,4 +1,14 @@
-﻿#include <iostream>
+﻿//
+//  File: village.h
+//  Author: Chad Hatcher, Steven Barrett, Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Village Class Implementation
+//
+
+#include <iostream>
 
 #include "village.h"
 
@@ -136,25 +146,25 @@ Position Village::getAvaiableArea(Position p)
             current = que.front();
             temp = current;
             que.pop();
-            
+
 
             temp.move(D_UP);
             if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
                 return temp;
             que.push(temp);
-            
+
             temp = current;
             temp.move(D_DOWN);
             if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
                 return temp;
             que.push(temp);
-            
+
             temp = current;
             temp.move(D_LEFT);
             if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)
                 return temp;
             que.push(temp);
-            
+
             temp = current;
             temp.move(D_RIGHT);
             if (world.world_positions[temp.getY()][temp.getX()] == ET_NONE)

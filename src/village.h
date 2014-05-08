@@ -1,3 +1,14 @@
+//
+//  File: village.h
+//  Author: Chad Hatcher, Steven Barrett, Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Village Class Definition
+// Maintains a collection of faction-aligned Entities.
+// Maintains a Job Manager and Resource Manager.
+//
 
 #include <vector>
 
