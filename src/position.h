@@ -1,5 +1,14 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: position.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Position Class Definition
+// Maintains an x,y pair corresponding to a position on the map.
+// Provides a move() method for adjusting the position via Direction values.
+// Enforces boundaries if maximums are set.
 //
 
 #ifndef POSITION_H_

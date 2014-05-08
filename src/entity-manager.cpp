@@ -1,3 +1,12 @@
+//
+//  File: entity-manager.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Entity Manager Implementation
+//
 
 #include <iostream>
 

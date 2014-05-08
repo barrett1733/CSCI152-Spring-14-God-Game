@@ -1,3 +1,12 @@
+//
+//  File: config.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Config Class Implementation
+//
 
 #include "config.h"
 
@@ -5,18 +14,6 @@
 #include <fstream>
 
 using namespace std;
-
-enum ConfigType {
-	CT_ERROR,
-	CT_STRING,
-	CT_FLOAT,
-	CT_DECIMAL,
-	CT_INT,
-	CT_NUMBER,
-	CT_INT_PAIR,
-	CT_INT_TRIPLE,
-	CT_HEX,
-};
 
 Config::Config()
 {}

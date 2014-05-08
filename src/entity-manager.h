@@ -1,3 +1,16 @@
+//
+//  File: entity-manager.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Entity Manager Definition
+// Implements the Config interface.
+// Maintains a list of all game Entities.
+// Provides subsets of this list to the Village Manager.
+// Maintains the sidebar interface.
+//
 
 #ifndef ENTITY_MANAGER_H_
 #define ENTITY_MANAGER_H_

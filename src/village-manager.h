@@ -1,3 +1,13 @@
+//
+//  File: village-manager.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Village Manager Definition
+// Maintains a collection of Village objects.
+//
 
 #ifndef VILLAGE_MANAGER_H_
 #define VILLAGE_MANAGER_H_

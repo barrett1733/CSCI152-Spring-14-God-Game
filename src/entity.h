@@ -1,5 +1,17 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: entity-manager.h
+//  Author: Chad Hatcher, Steven Barrett
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Entity Class Definition
+// Maintains a collection of Entity properties.
+//
+//  Mobile Entity Class Defintion
+// Extends Entity class.
+// Maintains a collection of MobileEntity properties.
+// Invokes pathfinding when it has a task.
 //
 
 #ifndef ENTITY_H_

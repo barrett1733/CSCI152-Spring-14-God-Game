@@ -1,3 +1,12 @@
+//
+//  File: game-manager.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Game Manager Implementation
+//
 
 #include "game-manager.h"
 #include "sdl/sdl-triangle-slider.h"

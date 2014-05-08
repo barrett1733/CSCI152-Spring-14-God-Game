@@ -1,3 +1,12 @@
+//
+//  File: obstruction-map.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Obstruction Map Class Implementation
+//
 
 #include "obstruction-map.h"
 

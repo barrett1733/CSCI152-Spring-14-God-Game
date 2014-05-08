@@ -1,3 +1,12 @@
+//
+//  File: main.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Main function
+//
 
 #include <iostream>
 #include <sstream>

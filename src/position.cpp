@@ -1,3 +1,12 @@
+//
+//  File: position.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Position Class Implementation
+//
 
 #include "position.h"
 #include <iostream>

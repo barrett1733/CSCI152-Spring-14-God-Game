@@ -1,3 +1,13 @@
+//
+//  File: entity-manager.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Entity Class Implementation
+//  Mobile Entity Class Implementation
+//
 
 #include "entity.h"
 #include "task.h"

@@ -1,3 +1,14 @@
+//
+//  File: obstruction-map.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Obstruction Map Class Definition
+// Stores a 2D array indicating which tiles are obstructed by resources or buildings.
+// Provides a method for finding an open space to place something.
+//
 
 #ifndef OBSTRUCTION_MAP_H_
 #define OBSTRUCTION_MAP_H_
