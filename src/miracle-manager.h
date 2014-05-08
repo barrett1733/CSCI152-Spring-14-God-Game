@@ -1,7 +1,15 @@
-/******************************
- * Miracle Manager
- *		Takes input data and returns an Entity:Miracle
- */
+//
+//  File: miracle-manager.h
+//  Author: Allen Mills
+//  CSci 152
+//  Spring 2014
+//
+// Definition of MiracleManager, a class to manage/create miracle entities
+//	simply by using clear methods.
+//	Includes function 'string_to_ET' to quickly convert a string to an
+//	EntityType for miracle entity types.
+//
+
  #ifndef MIRACLE_MANAGER_H_
 #define  MIRACLE_MANAGER_H_
 

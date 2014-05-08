@@ -1,3 +1,12 @@
+//
+//  File: miracle-manager.cpp
+//  Author: Allen Mills
+//  CSci 152
+//  Spring 2014
+//
+// Compilable file for miracle-manager.h
+//
+
 #include "miracle-manager.h"
 #include "miracle-entity.h"
 

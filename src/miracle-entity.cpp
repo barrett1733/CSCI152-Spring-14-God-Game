@@ -1,3 +1,12 @@
+//
+//  File: miracle-entity.cpp
+//  Author: Allen Mills
+//  CSci 152
+//  Spring 2014
+//
+// Compilable file for miracle-entity.h
+//
+
 #include "miracle-entity.h"
 
 // Miracle Entity, Constructor 1
