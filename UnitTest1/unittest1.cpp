@@ -14,9 +14,9 @@ namespace UnitTest1
 		{
 			ResourcePool pool;
 			ResourceManager manager;
-			pool.resourcePool[0][RS_FOOD] = 100;
-			manager.registerResourcePool(pool);
-			Assert::AreEqual(pool.resourcePool[0][RS_FOOD], manager.getResourceAmount(RS_FOOD));
+			pool.resourcePool[F_PLAYER_1][RS_FOOD] = 100;
+			manager.sendResource(RS_FOOD, 100, F_PLAYER_1);
+			Assert::AreEqual(pool.resourcePool[0][RS_FOOD], manager.getResourceAmount(RS_FOOD,F_PLAYER_1));
 		}
 	};
 }
