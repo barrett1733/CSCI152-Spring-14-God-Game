@@ -39,12 +39,8 @@ struct ResourcePool
 class ResourceManager
 {
 private:
-	ResourcePool *ptr_resourcePool;
+	ResourcePool resourcePool;
 public:
-	ResourceManager();
-	ResourceManager(ResourcePool&);
-	~ResourceManager();
-	void registerResourcePool(ResourcePool&);
 	bool requestResource(ResourceType,int,Faction);
 	void sendResource(ResourceType,int,Faction);
 	int getResourceAmount(ResourceType,Faction);

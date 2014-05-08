@@ -1,3 +1,18 @@
+//
+//  File: sdl-utility.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Utility Definition
+// Provides a host of utility function:
+// : createRect() returns an SDL_Rect of the specified dimentions.
+// : createSurface() returns a rectangle of the specified size and optional color filled.
+// : createTextSurface() returns a surface initialized with text characteristics.
+// : createCircle() returns a circular surface of the specified size with specified color filled.
+// : createTriangle() returns a triangular (isoceles, pointing up) surface.
+//
 
 #ifndef SDL_UTILITY_H_
 #define SDL_UTILITY_H_

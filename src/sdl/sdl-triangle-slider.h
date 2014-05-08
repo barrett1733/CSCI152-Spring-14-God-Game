@@ -1,3 +1,18 @@
+//
+//  File: sdl-triangle-slider.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Triangle Slider Widget Defintion
+// Extends the generic Widget Class.
+// Provides an interactive triangular slider interface.
+// Values for each point of the trangle range from 0 to 1.
+// Values are calculated as the orthongonal distance from the opposite edge.
+// The methods getValueA(), getValueB(), and getValueC() provide the
+// values for the top, bottom right, and bottom left values.
+//
 
 #ifndef SDL_TRIANGLE_SLIDER_H_
 #define SDL_TRIANGLE_SLIDER_H_

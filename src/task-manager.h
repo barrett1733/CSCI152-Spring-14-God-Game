@@ -1,5 +1,15 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: task-manager.h
+//  Author: Jimmy Ouyang
+//  CSci 152
+//  Spring 2014
+//
+//  Task Manager is responsible for
+//		Creating tasks
+//		Maintaining tasks
+//		Assign tasks to villagers
+//		Update tasks
+//		Remove complete tasks
 //
 
 #ifndef TASK_MANAGER_H_
@@ -17,12 +27,15 @@
 #include "world-gen.h"
 #include <float.h>
 //#include "worldGen.h"
-extern std::vector<Entity *> foodEntities;
-extern std::vector<Entity *> ironEntities;
-extern std::vector<Entity *> stoneEntities;
-extern std::vector<Entity *> woodEntities;
+//extern std::vector<Entity *> foodEntities;
+//extern std::vector<Entity *> ironEntities;
+//extern std::vector<Entity *> stoneEntities;
+//extern std::vector<Entity *> woodEntities;
 
-typedef std::vector<Entity *> EntityVec;
+typedef std::vector<MobileEntityReference> MobileEntityVec;
+typedef MobileEntityVec ::iterator MobileEntityIter;
+
+typedef std::vector<EntityReference> EntityVec;
 typedef EntityVec ::iterator EntityIter;
 
 typedef std::vector<TaskReference> TaskVec;
@@ -38,43 +51,45 @@ struct Comparator
 
 typedef std::priority_queue<TaskReference, TaskVec, Comparator> TaskQueue;
 
-//typedef std::map<TaskType, std::vector<Entity *>> TaskResourceMap;
-//typedef std::map<TaskType, ResourceType> TaskResourceTypeMap;
+enum TaskGroup
+{
+    TG_NONE,
+    TG_GATHER,
+    TG_BUILD,
+    TG_MILITARY
+};
 
-//static TaskResourceMap mapTaskResource = {
-//    {TASK_GATHER_FOOD, foodEntities},
-//    {TASK_GATHER_IRON, ironEntities},
-//    {TASK_GATHER_STONE, stoneEntities},
-//    {TASK_GATHER_WOOD, woodEntities}
-//};
-
-// static TaskResourceTypeMap mapTaskResourceType = {
-// 	{TASK_GATHER_FOOD, RS_FOOD},
-// 	{TASK_GATHER_IRON, RS_IRON},
-// 	{TASK_GATHER_STONE, RS_STONE},
-// 	{TASK_GATHER_WOOD, RS_WOOD}
-// };
+enum ResourceGroup
+{
+    RG_NONE,
+    RG_FOOD,
+    RG_WOOD,
+    RG_IRON,
+    RG_STONE
+};
 
 class TaskManager
 {
 private:
 	TaskQueue unassignedTaskQueue;
 	TaskVec inProgressTaskList;
-	EntityVec availableVillagers;
+	//EntityVec availableVillagers;
+    static std::map<TaskType, ResourceGroup> taskResourceGroupMap;
 
 public:
-	void assign();
+	void assign(MobileEntityVec & villagerList, EntityVec & resourceList);
 	void updateProgress();
 	void registerTask(TaskReference task);
-	void registerVillager(Entity * villager);
-	Entity * getVillager();
-	TaskQueue getUnassignedTaskList();
-	Entity * getNearestResource(Entity * villager, EntityVec ev);
-	Entity * findResource(Entity *, TaskType);
-	EntityVec getavailableVillagers();
+
+    Position getNearestResource(MobileEntityReference villager, EntityVec & resourceList, TaskType taskType);
+//	Entity * getNearestResource(Entity * villager, EntityVec ev);
+//	Entity * findResource(Entity *, TaskType);
+
 	TaskVec getInProgressTaskList();
 	TaskQueue getUnassignedTaskQueue();
-	void cleanTaskList();
+    TaskGroup getTaskGroup(TaskType type);
+    ResourceGroup getResourceGroup(EntityType type);
+	void cleanTaskList(MobileEntityVec & villagerList);
 };
 #endif
 

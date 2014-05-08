@@ -1,3 +1,12 @@
+//
+//  File: sdl-map-view.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Map View Implementation
+//
 
 #include "sdl-map-view.h"
 

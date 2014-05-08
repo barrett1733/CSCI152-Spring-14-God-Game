@@ -1,3 +1,14 @@
+//
+//  File: sdl-event-subscriber.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Event Subscriber Definition
+// Provides an interface to invoke a specified callback.
+// Requires a fully qualified SDL_Event to instantiate.
+//
 
 #ifndef SDL_EVENT_SUBSCRIBER_H_
 #define SDL_EVENT_SUBSCRIBER_H_

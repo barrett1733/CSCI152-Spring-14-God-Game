@@ -1,3 +1,12 @@
+//
+//  File: sdl-entity.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Entity Widget Implementation
+//
 
 #include <iostream>
 

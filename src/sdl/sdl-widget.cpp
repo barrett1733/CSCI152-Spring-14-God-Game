@@ -1,3 +1,12 @@
+//
+//  File: sdl-widget.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Widget Implementation
+//
 
 #include "sdl-widget.h"
 #include "sdl-manager.h"

@@ -1,7 +1,7 @@
 CXX = clang++
 SDL = -framework SDL2 -framework SDL2_image -framework SDL2_ttf
 # If your compiler is a bit older you may need to change -std=c++11 to -std=c++0x
-CFLAGS = -Wall -Werror -pedantic -c -std=c++11 -g -O0
+CFLAGS = -Wall -Werror -pedantic -c -std=c++11 -g -O0 -Wno-reorder
 #-O2
 LFLAGS = $(SDL)
 SRC_DIR = src
@@ -9,10 +9,10 @@ SDL_DIR = sdl
 OBJ_DIR = obj
 RES_DIR = res
 BIN_DIR = bin
-SOURCES = main.cpp config.cpp
+SOURCES = main.cpp config.cpp miracle-entity.cpp obstruction-map.cpp
 SDL_SOURCES = sdl-manager.cpp sdl-utility.cpp sdl-widget.cpp sdl-widget-container.cpp sdl-text-display.cpp sdl-button.cpp sdl-slider.cpp sdl-triangle-slider.cpp sdl-entity.cpp sdl-map-view.cpp
-MGR_SOURCES = game-manager.cpp resource-manager.cpp entity-manager.cpp village-manager.cpp job-manager.cpp task-manager.cpp
-OBJECTS = main.o config.o village.o managers.a sdl.a position.o world-gen.o entity.o job.o task.o
+MGR_SOURCES = game-manager.cpp resource-manager.cpp entity-manager.cpp village-manager.cpp job-manager.cpp task-manager.cpp miracle-manager.cpp
+OBJECTS = main.o config.o village.o obstruction-map.o managers.a sdl.a position.o world-gen.o entity.o job.o task.o miracle-entity.o
 EXECUTABLE = a.out
 
 define compile

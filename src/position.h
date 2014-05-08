@@ -1,5 +1,14 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: position.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Position Class Definition
+// Maintains an x,y pair corresponding to a position on the map.
+// Provides a move() method for adjusting the position via Direction values.
+// Enforces boundaries if maximums are set.
 //
 
 #ifndef POSITION_H_
@@ -8,7 +17,7 @@
 #include <math.h>
 #include <iostream>
 
-enum Direction
+enum
 {
 	D_NONE  = 0x00,
 	D_UP    = 0x01,
@@ -16,6 +25,14 @@ enum Direction
 	D_DOWN  = 0x04,
 	D_LEFT  = 0x08,
 };
+enum
+{
+	D_NORTH    = 0x01,
+	D_EAST = 0x02,
+	D_SOUTH  = 0x04,
+	D_WEST  = 0x08,
+};
+typedef int Direction;
 
 class Position
 {

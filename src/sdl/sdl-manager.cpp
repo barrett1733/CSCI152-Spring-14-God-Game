@@ -1,3 +1,13 @@
+//
+//  File: sdl-manager.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Manager Implementation
+//
+
 #include <ctime>
 #include "sdl-manager.h"
 #include <iostream>
@@ -52,7 +62,7 @@ SdlManager::~SdlManager()
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
-	if(texture) SDL_DestroyTexture(texture);
+	if(texture)  SDL_DestroyTexture(texture);
 
 	IMG_Quit();
 	SDL_Quit();
@@ -72,7 +82,6 @@ bool SdlManager::setProperty(std::string property, int value)
 	}
 	return false;
 }
-
 
 ////////
 
@@ -217,110 +226,3 @@ SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event&),
 
 	return subscriber;
 }
-
-////////
-//  TEXT WIDGET METHODS
-////////
-
-WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yPos)
-{
-	SDL_Surface * surface = sdlUtility.createTextSurface(text);
-	SDL_Rect rect = {xPos, yPos, surface->w, surface->h};
-
-	SdlWidget * widget = new SdlWidget(surface, rect);
-	addWidget(widget, WL_NON_INTERACTIVE);
-	return widget;
-}
-
-TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, int yPos)
-{
-	std::cout << "SdlManager::createTextDisplay()" << std::endl;
-
-	int width = 256;
-	int height = 32;
-
-	SDL_Surface * surface = sdlUtility.createSurface(width, 4*height);
-
-	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
-	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
-	addWidget(textDisplay, WL_NON_INTERACTIVE);
-
-	std::cout << "SdlManager::createTextDisplay() finished" << std::endl;
-	return textDisplay;
-}
-
-////////
-//  IMAGE METHODS
-////////
-
-SDL_Texture * SdlManager::loadImage(const char * file)
-{
-	SDL_Texture * texture = 0;
-
-	SDL_Surface * surface = IMG_Load(file);
-	if( ! surface)
-		throw "IMG_Load";
-
-	texture = SDL_CreateTextureFromSurface( renderer, surface );
-
-	if( ! texture)
-		throw "SDL_CreateTextureFromSurface";
-
-	SDL_FreeSurface(surface);
-
-	return texture;
-}
-
-void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos, int width, int height)
-{
-	SDL_Rect boundingBox = {xPos, yPos, width, height};
-
-	SDL_RenderCopy(renderer, image, NULL, &boundingBox);
-}
-
-void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
-{
-	int width, height;
-
-	//Query the image to get its width and height to use
-	SDL_QueryTexture(image, NULL, NULL, &width, &height);
-
-	return renderImage(image, xPos, yPos, width, height);
-}
-
-////////
-//  BUTTON WIDGET METHODS
-////////
-
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * labelText, int xPos, int yPos)
-{
-	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
-}
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * text, int xPos, int yPos, int width, int height)
-{
-	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
-	SdlButton * button = new SdlButton(text, rect, callback);
-	addWidget(button, WL_INTERACTIVE);
-	return button;
-}
-
-////////
-
-SliderReference SdlManager::createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos)
-{
-	return createSlider(callback, background, xPos, yPos, 256, 32);
-}
-SliderReference SdlManager::createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos, int width, int height)
-{
-	std::cout << "SdlManager::createSlider()" << std::endl;
-
-
-	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
-	SdlSlider * slider = new SdlSlider(rect, callback);
-	addWidget(slider, WL_INTERACTIVE);
-
-	std::cout << "createSlider() finished" << std::endl;
-	return slider;
-}
-
-////////

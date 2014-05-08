@@ -1,3 +1,11 @@
+//
+//  File: world-gen.cpp
+//  Author: Robert Boettcher
+//  CSci 152
+//  Spring 2014
+//
+// Implementation of world gen
+//
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -14,29 +22,21 @@ WorldGeneration::~WorldGeneration(){}
 WorldGeneration::WorldGeneration(int seed) :
 	current(0,0)
 {
-	//time_t timer;
-	srand(seed);//rand must be seeded before placement, if not here then in another module that needs it first
-	//if it is used I will remove it from this location
+	srand(seed);
 
 	entityCount = 0;
 	cycled = false;
+	world_info.resize(4);
 
 	/*****************
-	***get map info***
+	******config******
 	*****************/
+	load("res/world-info.cfg");
 
-		ifstream file("res/world-info.txt");
-		int n;
-		while (file >> n) world_info.push_back(n);
-		//////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////
+	if (world_info[WI_MAP_SIZE] < 40) world_info[WI_MAP_SIZE] = 40;
 
-		if (world_info[WI_MAP_SIZE] < 40) world_info[WI_MAP_SIZE] = 40;
-
-	int mapEdgeLength = world_info[WI_MAP_SIZE];
-
-	world_positions.resize(mapEdgeLength);
-	Position::max_x = Position::max_y = mapEdgeLength - 1;
+	world_positions.resize(world_info[WI_MAP_SIZE]);
+	Position::max_x = Position::max_y = world_info[WI_MAP_SIZE] - 1;
 
 	/**************************
 	***fill with empty space***
@@ -51,31 +51,29 @@ WorldGeneration::WorldGeneration(int seed) :
 	/************************
 	***place all entities***
 	************************/
-	//////////////resources/////////////////////
-	PlaceResource(15, 85, ET_TREE);
-	PlaceResource(1, 5, ET_IRON);
-	PlaceResource(30, 35, ET_STONE);
-	////////////////paths///////////////////////
-	placePaths();
-	//////////////towncenter////////////////////
+	PlaceResource(TREES_MIN, TREES_MAX, ET_TREE);
+	PlaceResource(IRON_MIN, IRON_MAX, ET_IRON);
+	PlaceResource(STONE_MIN, STONE_MAX, ET_STONE);
+	
+	placePaths();//comment this out and uncomment placePaths2 in the PlaceTownCenter function to use the other kind path creation
+	
 	PlaceTownCenter();
-	////////////////temple//////////////////////
+	
 	PlaceTemple();
-	//////villagers and domestics beasts////////
+	
 	PlaceAroundTC(ET_VILLAGER, WI_NUM_OF_VILLAGERS, TC1);
 	PlaceAroundTC(ET_VILLAGER, WI_NUM_OF_VILLAGERS, TC2);
 	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC1);
 	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC2);
-	/////////////wild beasts////////////////////
-	PlaceWildBeasts(0, 8, 0, ET_DEER);
-	PlaceWildBeasts(20, 23, 15, ET_WOLF);
-	PlaceWildBeasts(50, 51, 20, ET_OGRE);
+
+	PlaceWildBeasts(DEER_MIN, DEER_MAX, DEER_CTD, ET_DEER);
+	PlaceWildBeasts(WOLVES_MIN, WOLVES_MAX, WOLVES_CTD, ET_WOLF);
+	PlaceWildBeasts(OGRES_MIN, OGRES_MAX, OGRES_CTD, ET_OGRE);
 }
 
 void WorldGeneration::PrintMap()
 {
 	int temp_count = 0;
-	int sidelength = world_info[WI_MAP_SIZE];
 	for(int outerIndex = 0; outerIndex < world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
@@ -83,7 +81,7 @@ void WorldGeneration::PrintMap()
 			int et_type = world_positions[outerIndex][innerIndex];
 			cout << et_type;
 			temp_count = temp_count+1;
-			if(temp_count % sidelength == 0)
+			if (temp_count % world_info[WI_MAP_SIZE] == 0)
 				cout<<endl;
 		}
 	}
@@ -123,7 +121,7 @@ void WorldGeneration::PlaceTownCenter()
 			rand() % world_info[WI_MAP_SIZE]	//y-coord
 		);
 		TC2.set(
-			rand() % world_info[WI_MAP_SIZE],
+			rand() % world_info[WI_MAP_SIZE],	//x-coord
 			rand() % world_info[WI_MAP_SIZE]	//y-coord
 		);
 
@@ -131,8 +129,8 @@ void WorldGeneration::PlaceTownCenter()
 			keep_going=false;
 	}
 
-	//createPaths2(TC1);
-	//createPaths2(TC2);
+	//placePaths2(TC1);//uncomment these to use the second(inferior) path creation
+	//placePaths2(TC2);
 
 	/**************************/
 	/***move away from edges***/
@@ -201,11 +199,12 @@ void WorldGeneration::PlaceAroundTC(EntityType type, int num_of_entities, Positi
 			}
 		}
 	}
-	cout << "number of type " << type << ": " << number << " around position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
+	//cout << "number of type " << type << ": " << number << " around position: (" << pos.getX() << ", " << pos.getY() << ")" << endl;
 }
 
 void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, EntityType type)
 {
+	Position here;
 	for(int outerIndex = 0; outerIndex < world_positions.size(); outerIndex++)
 	{
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
@@ -216,7 +215,6 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
 
-				Position here;
 				here.set(innerIndex, outerIndex);
 
 				int chance_to_delete = rand() % 100;
@@ -242,26 +240,25 @@ Entity WorldGeneration::getNextEntity()
 		{
 			if(cycled == true)
 			{
-				return to_return;//throw (1);
+				return to_return;
 			}
 			else
 			{
 				nextPosition();
-				//current_moves++;
 			}
 		}
 		else
 		{
 			if(cycled == true)
 			{
-				return to_return;//throw (1);
+				return to_return;
 			}
 			else
 			{
-			to_return.setEntityType(world_positions[current.getY()][current.getX()]);//set the entity's type
+			to_return.setEntityType(world_positions[current.getY()][current.getX()]);//set the entity's type which is stored in world_positions[][]
 			to_return.setPosition(current);//the the entity's position
 
-			switch(world_positions[current.getY()][current.getX()])
+			switch(world_positions[current.getY()][current.getX()])//switch to set faction of the returned entity
 			{
 				//resources
 				case ET_TREE:
@@ -305,7 +302,6 @@ Entity WorldGeneration::getNextEntity()
 			}
 
 			nextPosition();
-			//current_moves++;
 			return to_return;
 			}
 		}
@@ -375,7 +371,7 @@ void WorldGeneration::clearArea(Position pos)
 		{
 			here.set(innerIndex, outerIndex);
 			if(world_positions[outerIndex][innerIndex] == ET_TOWN_CENTER)
-				world_positions[outerIndex][innerIndex] = ET_TOWN_CENTER;
+				;//do nothing
 			else if(here.distance(pos) < 8)
 			{
 				if(world_positions[outerIndex][innerIndex] != ET_NONE)
@@ -398,22 +394,21 @@ void WorldGeneration::createPath(int seed)
 
 	//cout << "path starts at (" << path_start.getX() << ", " << path_start.getY() << ")" << endl;
 	//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
-
 	while (path_end.getX() + 1 <= world_info[WI_MAP_SIZE] - 1 && path_end.getY() + 1 <= world_info[WI_MAP_SIZE] - 1)
 	{
 		int x_offset = findOffset(1);
 		int y_offset = findOffset(1);
 
 		if (path_end.getX() == world_info[WI_MAP_SIZE] / 2 || path_end.getY() == world_info[WI_MAP_SIZE] / 2
-		 || path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
-		 || path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
-
+			|| path_end.getX() == world_info[WI_MAP_SIZE] / 3 || path_end.getY() == world_info[WI_MAP_SIZE] / 3
+			|| path_end.getX() == world_info[WI_MAP_SIZE] / 4 || path_end.getY() == world_info[WI_MAP_SIZE] / 4)
+		
 			loc = pathChange(loc);
-
+		
 		if (loc == 0)//even: starts on x-axis
 		{
 			path_end.set(path_end.getX()+x_offset, path_end.getY() + 1);
-			//cout << "path at (" << path_end.getX() << ", " << path_end.getY() << ")" << endl;
+			//cout << "path at "<<path_end<< endl;
 			world_positions[path_end.getY()][path_end.getX()] = ET_NONE;
 			if (x_offset < 1 && path_end.getY() < world_info[WI_MAP_SIZE]-1)
 				world_positions[path_end.getY() + 1][path_end.getX()] = ET_NONE;
@@ -468,13 +463,13 @@ int WorldGeneration::pathChange(int loc)
 
 void WorldGeneration::placePaths()
 {
-	for (int i = 0; i <= world_info[WI_MAP_SIZE] / 10 ; i++)
+	for (int i = 0; i <= world_info[WI_MAP_SIZE] / 10; i++)
 	{
 		createPath(rand());
 	}
 }
 
-void WorldGeneration::createPaths2(Position team)
+void WorldGeneration::placePaths2(Position team)
 {
 	for (int x = 0; x < 8; x++)
 	{
@@ -518,11 +513,8 @@ void WorldGeneration::createPaths2(Position team)
 				if (rands == 0) path.set(path.getX(), path.getY() + y_offset);
 				else path.set(path.getX() + x_offset, path.getY());
 				world_positions[path.getY()][path.getX()] = ET_NONE;
-				//world_positions[path.getY()][path.getX()] = ET_NONE;
-				//world_positions[path.getY()][path.getX()] = ET_NONE;
 				path.move(move2);
 				world_positions[path.getY()][path.getX()] = ET_NONE;
-				//world_positions[path.getY()][path.getX()] = ET_NONE;
 			}
 			path_depth++;
 			int rands2 = rand() % 18;
@@ -547,4 +539,104 @@ Position WorldGeneration::getTC2()
 int WorldGeneration::getWorldSize()
 {
 	return world_info[WI_MAP_SIZE];
+}
+
+bool WorldGeneration::setProperty(string property, int value)
+{
+	if (property == "map_size")
+	{
+		world_info[WI_MAP_SIZE] = value;
+		return true;
+	}
+	else if (property == "difficulty")
+	{
+		world_info[WI_DIFFICULTY] = value;
+		return true;
+	}
+	else if (property == "num_of_villagers")
+	{
+		world_info[WI_NUM_OF_VILLAGERS] = value;
+		return true;
+	}
+	else if (property == "num_of_cows")
+	{
+		world_info[WI_NUM_OF_COWS] = value;
+		return true;
+	}
+	else if (property == "trees_min")
+	{
+		TREES_MIN = value;
+		return true;
+	}
+	else if (property == "trees_max")
+	{
+		TREES_MAX = value;
+		return true;
+	}
+	else if (property == "iron_min")
+	{
+		IRON_MIN = value;
+		return true;
+	}
+	else if (property == "iron_max")
+	{
+		IRON_MAX = value;
+		return true;
+	}
+	else if (property == "stone_min")
+	{
+		STONE_MIN = value;
+		return true;
+	}
+	else if (property == "stone_max")
+	{
+		STONE_MAX = value;
+		return true;
+	}
+	else if (property == "deer_min")
+	{
+		DEER_MIN = value;
+		return true;
+	}
+	else if (property == "deer_max")
+	{
+		DEER_MAX = value;
+		return true;
+	}
+	else if (property == "deer_chance_to_delete")
+	{
+		DEER_CTD = value;
+		return true;
+	}
+	else if (property == "wolves_min")
+	{
+		WOLVES_MIN = value;
+		return true;
+	}
+	else if (property == "wolves_max")
+	{
+		WOLVES_MAX = value;
+		return true;
+	}
+	else if (property == "wolves_chance_to_delete")
+	{
+		WOLVES_CTD = value;
+		return true;
+	}
+	else if (property == "ogres_min")
+	{
+		OGRES_MIN = value;
+		return true;
+	}
+	else if (property == "ogres_max")
+	{
+		OGRES_MAX = value;
+		return true;
+	}
+	else if (property == "ogres_chance_to_delete")
+	{
+		OGRES_CTD = value;
+		return true;
+	}
+	else return false;
 }

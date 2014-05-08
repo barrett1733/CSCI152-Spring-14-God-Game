@@ -1,12 +1,17 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: <task.h>
+//  Author: <Jimmy Ouyang>
+//  CSci 152
+//  Spring 2014
 //
-
+//  Each task belongs to a job and will be assigned to a villager
+//
 #ifndef TASK_H_
 #define TASK_H_
 
 #include "entity.h"
 #include "position.h"
+#include "map"
 
 enum TaskType
 {
@@ -37,58 +42,42 @@ enum TaskType
 
 };
 
-// enum TaskStatus {
-// 	UNASSIGNED = 0x01,
-// 	IN_PROGRESS,
-// 	COMPLETED
-// 	//...
-// };
-
 class Task
 {
 protected:
 	TaskType _type;
-	Entity * _target;
-	Entity * _assignee;
+	Position _position;
+	MobileEntityReference _assignee;
+    Entity * _target;
 	int _priority;
 	int _progress;
 	int _taskQuota;
+    static std::map<TaskType, EntityType> taskTypeEntityTypeMap;
 
 public:
-	Task(TaskType type, int priority, int progress, int);
+    //Constructor for Gather Task
+	Task(TaskType type, int priority, int);
+    //Constructor for Build Task
+	Task(TaskType type, int priority, Position, int);
+    //Constructor for Military Task
+    Task(TaskType type, int priority, Entity *, int);
+    
 	void setType(TaskType type);
 	void setTarget(Entity * target);
-	void setAssignee(Entity * villager);
+	void setAssignee(MobileEntityReference villager);
 	void setPriority(int priority);
 	void setProgress(int progress);
+    void setPosition(Position psn);
 	TaskType getType();
 	Entity * getTarget();
-	Entity * getAssignee();
+	MobileEntityReference getAssignee();
 	int getProgress();
 	int getPriority();
 	int getQuota();
+    Position getPosition();
 	bool isCompleted();
 };
 
-class GatherTask : public Task
-{
-public:
-	GatherTask(TaskType, int, int, int);
-};
-
-class BuildTask : public Task
-{
-	//...
-public:
-	BuildTask(TaskType, Entity *, int, int, int);
-};
-
-class MilitaryTask : public Task
-{
-	//...
-public:
-	MilitaryTask(TaskType, Entity *, int, int, int);
-};
 #endif
 
 typedef Task * TaskReference;

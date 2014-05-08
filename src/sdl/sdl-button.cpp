@@ -1,3 +1,12 @@
+//
+//  File: sdl-button.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Button Widget Implementation
+//
 
 #include "sdl-button.h"
 

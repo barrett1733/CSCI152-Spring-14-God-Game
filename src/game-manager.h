@@ -1,3 +1,16 @@
+//
+//  File: game-manager.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Game Manager Definition
+// Implements the Config interface.
+// This is a singleton class.
+// Maintains the game state.
+// Provides the main menu (new game, etc), and the pause button.
+//
 
 #ifndef GAME_MANAGER_H_
 #define GAME_MANAGER_H_

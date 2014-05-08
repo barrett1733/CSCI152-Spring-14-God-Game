@@ -1,3 +1,14 @@
+//
+//  File: sdl-widget-container.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Widget Container Defintion
+// Implements the Config class to load a specified set of widget definitions from file.
+// Stores a collection of widgets to be shown and hidden together.
+//
 
 #ifndef SDL_WIDGET_CONTAINER_H_
 #define SDL_WIDGET_CONTAINER_H_
@@ -17,6 +28,7 @@ class SdlWidgetContainer : public SdlWidget, public Config
 
 	std::string callbackName;
 	std::string buttonLabel;
+	int buttonId;
 	SDL_Rect rect;
 	int buttonConfig;
 

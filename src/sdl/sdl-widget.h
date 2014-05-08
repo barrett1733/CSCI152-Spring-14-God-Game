@@ -1,3 +1,15 @@
+//
+//  File: sdl-widget.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Widget Definition
+// The base class for all other widgets.
+// Maintains an internal state, textures, bounding box, etc.
+// Manages event handling (if a callback is provided).
+//
 
 #ifndef SDL_WIDGET_H_
 #define SDL_WIDGET_H_
@@ -69,6 +81,8 @@ public:
 		boundingBox.x = xPos;
 		boundingBox.y = yPos;
 	}
+
+	int id;
 };
 
 typedef SdlWidget * WidgetReference;

@@ -1,3 +1,12 @@
+//
+//  File: game-manager.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Game Manager Implementation
+//
 
 #include "game-manager.h"
 #include "sdl/sdl-triangle-slider.h"
@@ -7,12 +16,6 @@ GameManager * GameManager::self = 0;
 GameMode GameManager::mode_ = GM_ERROR;
 
 void doNothing(SDL_Event & event, WidgetReference widget) {}
-
-void selfDestruct(SDL_Event & event, WidgetReference widget)
-{
-	std::cout << "Widget, \"ASPLODE!\"" << std::endl;
-	delete widget;
-}
 
 GameManager::GameManager()
 {
