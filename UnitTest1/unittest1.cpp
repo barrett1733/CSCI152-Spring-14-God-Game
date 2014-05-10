@@ -1,22 +1,15 @@
 #include "stdafx.h"
-#include "CppUnitTest.h"
-#include "resource-manager.h"
-#include "game-manager.h"
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+BEGIN_TEST_MODULE_ATTRIBUTE()
+TEST_MODULE_ATTRIBUTE(L"Date", L"2010/6/12")
+END_TEST_MODULE_ATTRIBUTE()
 
-namespace UnitTest1
-{		
-	TEST_CLASS(UnitTest1)
-	{
-	public:
-		TEST_METHOD(TestResourceManager)
-		{
-			ResourcePool pool;
-			ResourceManager manager;
-			pool.resourcePool[F_PLAYER_1][RS_FOOD] = 100;
-			manager.sendResource(RS_FOOD, 100, F_PLAYER_1);
-			Assert::AreEqual(pool.resourcePool[0][RS_FOOD], manager.getResourceAmount(RS_FOOD,F_PLAYER_1));
-		}
-	};
+TEST_MODULE_INITIALIZE(ModuleInitialize)
+{
+	Logger::WriteMessage("In Module Initialize");
+}
+
+TEST_MODULE_CLEANUP(ModuleCleanup)
+{
+	Logger::WriteMessage("In Module Cleanup");
 }

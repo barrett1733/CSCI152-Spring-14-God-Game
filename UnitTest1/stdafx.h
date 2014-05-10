@@ -9,5 +9,11 @@
 
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
+#include "TaskManagerTest.h"
+#include "JobManagerTest.h"
+#include "JobTest.h"
+#include "ResourceManagerTest.h"
+
 
 // TODO: reference additional headers your program requires here
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
