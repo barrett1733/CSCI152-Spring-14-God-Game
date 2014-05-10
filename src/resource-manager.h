@@ -1,3 +1,11 @@
+//
+//  File: resource-manager.h
+//  Author: Steven Barrett
+//  CSci 152
+//  Spring 2014
+//
+//  Handles the resources for a village
+//
 #include "entity.h"
 
 #ifndef RESOURCE_MANAGER_H_
@@ -10,29 +18,15 @@ enum ResourceType
 	RS_FOOD,
 	RS_STONE,
 	RS_IRON,
-
-	// Making the count part of the enum allows you
-	// to add or remove enumerations without having to make two updates
-	// (one to add the enumerations and one to update the count).
-	// This only works if your enum's int values start at zero
-	// and are automatically incremented (as is the case here).
-	// I.e., move NUM_RESOURCETYPE from below as a define, to here:
 	RT_COUNT
 };
 struct ResourcePool
 {
-	int resourcePool[F_COUNT][RT_COUNT];
+	int resourcePool[RT_COUNT];
 	ResourcePool()
 	{
-		for(int i = 0; i < F_COUNT; i++)
 			for(int j = 0; j < RT_COUNT; j++)
-				resourcePool[i][j] = 0;
-	}
-	~ResourcePool()
-	{
-		for(int i = 0; i < F_COUNT; i++)
-			for(int j = 0; j < RT_COUNT; j++)
-				resourcePool[i][j] = 0;
+				resourcePool[j] = 0;
 	}
 };
 
@@ -41,9 +35,9 @@ class ResourceManager
 private:
 	ResourcePool resourcePool;
 public:
-	bool requestResource(ResourceType,int,Faction);
-	void sendResource(ResourceType,int,Faction);
-	int getResourceAmount(ResourceType,Faction);
+	bool requestResource(ResourceType,int);
+	void sendResource(ResourceType,int);
+	int getResourceAmount(ResourceType);
 };
 
 
