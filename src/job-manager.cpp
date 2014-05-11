@@ -5,12 +5,9 @@
 //  Spring 2014
 //
 #include "job-manager.h"
-#include "entity-manager.h"
-
-EntityManager * JobManager::entityManager = 0;
 
 std::map<JobType, ResourceCost> JobManager::mapBuildingCost = {
-  
+
     {JOB_BUILD_HOUSE, { 50, 50, 50 } },
     {JOB_BUILD_FARM, { 50, 50, 50 } },
     {JOB_BUILD_SMELTING, { 50, 50, 50 } },
@@ -21,7 +18,7 @@ std::map<JobType, ResourceCost> JobManager::mapBuildingCost = {
     {JOB_BUILD_WATCHTOWER, { 50, 50, 50 } },
     {JOB_BUILD_TOWNCENTER, { 50, 50, 50 } },
     {JOB_BUILD_TEMPLE, { 50, 50, 50 } }
-    
+
 };
 
 ResourceCost JobManager::getResourceCost(JobType jobType)
@@ -71,7 +68,7 @@ void JobManager::update(MobileEntityVec & villagerList, EntityVec & resourceList
 void JobManager::createJob(JobType type, int priority, ResourceCost resourceCost)
 {
     JobReference job = new GatherJob(type, priority, resourceCost);
-    
+
     //Create tasks
     registerJob(job);
 }

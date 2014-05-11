@@ -37,32 +37,30 @@ class JobManager
 {
 	JobVec jobList;
 	TaskManager * taskManager;
-    
+
 public:
-	static EntityManager * entityManager;
-    
     static std::map<JobType, ResourceCost> mapBuildingCost;
-    
+
     ResourceCost getResourceCost(JobType);
-    
+
 	JobManager() : taskManager(new TaskManager()) {};
 	~JobManager(){delete taskManager;}
 
 	void registerJob(JobReference job);
-    
+
     void createJob(JobType, int priority, ResourceCost);
 	void createJob(JobType, int priority, Position psn);
-    
+
     JobGroup getJobGroup(JobType type);
 
 	JobVec getJobList();
-    
+
     void update(MobileEntityVec & villagerList, EntityVec & resourceList);
 
 	TaskManager * getTaskManager();
 
 	void cleanJobList();
-    
+
 	/*
 	// Desired interface:
 

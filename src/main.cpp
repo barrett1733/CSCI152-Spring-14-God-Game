@@ -24,7 +24,6 @@ int main(int argc, char **argv)
 	int worldSize = world.getWorldSize();
 
 	EntityManager entityManager(worldSize);
-	JobManager::entityManager = &entityManager;
 
 	std::cout << "Starting Game Loop" << std::endl;
 	sdl.launchWindow("Window Title!", 800, 600);
