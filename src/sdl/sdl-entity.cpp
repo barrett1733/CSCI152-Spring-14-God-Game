@@ -20,6 +20,7 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	entity(&entity)
 {
 	size = mapView->getBoundingBox()->w / float(worldSize);
+	scale = 1.0;
 
 	Color color;
 	switch(entity.getFaction())
@@ -68,14 +69,14 @@ SdlEntity::SdlEntity(const Entity & entity) :
 			break;
 	}
 
-	surface = sdlUtility.createCircle(color, size);
+	surface = sdlUtility.createCircle(color, size * scale);
 
 	clipping.x = 0;
 	clipping.y = 0;
-	clipping.w = size;
-	clipping.h = size;
-	boundingBox.w = size;
-	boundingBox.h = size;
+	clipping.w = size * scale;
+	clipping.h = size * scale;
+	boundingBox.w = size * scale;
+	boundingBox.h = size * scale;
 
 	updatePosition();
 
@@ -86,8 +87,8 @@ void SdlEntity::updatePosition()
 {
 	mapView->clear(boundingBox);
 
-	boundingBox.x = entity->getPosition().getX() * size;
-	boundingBox.y = entity->getPosition().getY() * size;
+	boundingBox.x = (entity->getPosition().getX() - (scale - 1)/2) * size;
+	boundingBox.y = (entity->getPosition().getY() - (scale - 1)/2) * size;
 
 	mapView->draw(surface, boundingBox);
 }
