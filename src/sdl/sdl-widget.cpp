@@ -68,8 +68,8 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 	clipping.h = rect.h;
 }
 
-SdlWidget::~SdlWidget() {
-
+SdlWidget::~SdlWidget()
+{
 	if(surface) SDL_FreeSurface(surface);
 	if(texture) SDL_DestroyTexture(texture);
 
