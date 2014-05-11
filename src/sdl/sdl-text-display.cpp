@@ -8,6 +8,8 @@
 //  SDL Text Display Widget Implementation
 //
 
+#include <iostream>
+
 #include "sdl-text-display.h"
 
 SdlTextDisplay::SdlTextDisplay(SDL_Surface * surface_arg, SDL_Rect & rect, std::string text_arg) :
@@ -45,6 +47,8 @@ SdlTextDisplay::SdlTextDisplay(int xPos, int yPos, int width, int height) :
 	surface = sdlUtility.createSurface(width, height);
 	text = "";
 	font = TTF_OpenFont( "res/arial.ttf", 16 );
+	if(!font)
+		std::cerr << TTF_GetError() << std::endl;
 	color.r = 0;
 	color.g = 0;
 	color.b = 0;
