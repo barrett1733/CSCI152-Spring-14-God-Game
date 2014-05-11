@@ -10,7 +10,10 @@
 #include "miracle-entity.h"
 
 // Miracle Entity, Constructor 1
-MiracleEntity::MiracleEntity(EntityType et, int health, Position p, Faction f):Entity(et,health,p,f){}
+MiracleEntity::MiracleEntity(EntityType type, int health, Position position, Faction faction) :
+	Entity(type, position, faction)
+{
+}
 
 // Miracle Entity, Constructor 2
 // BUG: compile error.
