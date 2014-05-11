@@ -93,6 +93,16 @@ public:
 	static void sliderCallback(SDL_Event&, WidgetReference);
 	static void triangleSliderCallback(SDL_Event&, WidgetReference);
 	// From Config, we use this to pull from a config file
+	friend std::ostream & operator<<(std::ostream & os, const EntityManager & manager)
+	{
+		long entityCount = manager.entityList.size();
+		for(long entityIndex = 0; entityIndex < entityCount; entityIndex ++)
+		{
+			EntityReference entity = manager.entityList[entityIndex];
+			os << *entity << std::endl;
+		}
+		return os;
+	}
 };
 
 #endif
