@@ -12,8 +12,6 @@
 #include "entity.h"
 #include "task.h"
 
-//Entity * EntityList[MAX_ENTITY_COUNT];
-
 Entity::Entity(const Entity & entity) :
 	group(entity.group),
 	type(entity.type),
@@ -39,6 +37,34 @@ Entity::Entity(EntityType type, int health, Position position, Faction faction) 
 	else if(type < ET_MIRACLE)  group = EG_BUILDING;
 	else                        group = EG_MIRACLE;
 }
+
+Entity::Entity(EntityType type, Position position, Faction faction) :
+	type(type),
+	faction(faction),
+	maxHealth(0),
+	currentHealth(0),
+	position(position)
+{
+	if(type < ET_RESOURCE)      group = EG_NONE;
+	else if(type < ET_VILLAGER) group = EG_RESOURCE;
+	else if(type < ET_DOMESTIC) group = EG_VILLAGER;
+	else if(type < ET_PASSIVE)  group = EG_DOMESTIC;
+	else if(type < ET_HOSTILE)  group = EG_PASSIVE;
+	else if(type < ET_BUILDING) group = EG_HOSTILE;
+	else if(type < ET_MIRACLE)  group = EG_BUILDING;
+	else                        group = EG_MIRACLE;
+
+	entityManager.createRecord(this);
+}
+
+Entity::Entity(Position position) :
+	type(ET_NONE),
+	group(EG_NONE),
+	faction(F_NONE),
+	maxHealth(0),
+	currentHealth(0),
+	position(position)
+{ }
 
 Entity& Entity::operator= (const Entity& entity)
 {

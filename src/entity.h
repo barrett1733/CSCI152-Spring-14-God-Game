@@ -162,6 +162,8 @@ protected:
 public:
 	Entity(const Entity&);
 	Entity(EntityType, int health, Position, Faction);
+	Entity(EntityType, Position, Faction);
+	Entity(Position);
 
 	Entity& operator= (const Entity&);
 
