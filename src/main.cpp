@@ -23,7 +23,8 @@ int main(int argc, char **argv)
 	WorldGeneration world(time(0));
 	int worldSize = world.getWorldSize();
 
-	EntityManager entityManager(worldSize);
+	EntityManager entityManager;
+	entityManager.setWorldSize(worldSize);
 
 	std::cout << "Starting Game Loop" << std::endl;
 	sdl.launchWindow("Window Title!", 800, 600);

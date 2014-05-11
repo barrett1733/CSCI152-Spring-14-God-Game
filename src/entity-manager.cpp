@@ -18,7 +18,8 @@ bool EntityManager::callbackMapInitialized = false;
 VillageManager EntityManager::villageManager;
 WidgetContainerReference EntityManager::buttonContainer = 0;
 
-EntityManager::EntityManager(int worldSize) :
+EntityManager::EntityManager() :
+	worldSize(0),
 	visible(false)
 {
 	if(self)
@@ -28,6 +29,10 @@ EntityManager::EntityManager(int worldSize) :
 	}
 	self = this;
 
+}
+
+void EntityManager::setWorldSize(int worldSize)
+{
 	initializeCallbackMap();
 	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
 

@@ -80,7 +80,8 @@ class EntityManager : public Config
 	static WidgetContainerReference buttonContainer;
 
 public:
-	EntityManager(int worldSize);
+	EntityManager();
+	void setWorldSize(int worldSize);
 
 	EntityRecord * createRecord(const EntityReference);
 	EntityRecord * createRecord(const Entity&);
