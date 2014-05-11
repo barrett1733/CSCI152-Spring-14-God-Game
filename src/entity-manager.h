@@ -27,9 +27,6 @@
 #include "sdl/sdl-widget-container.h"
 #include "obstruction-map.h"
 
-typedef std::map<EntityType, int> Entity_HealthMap;
-typedef std::pair<EntityType, int> Entity_HealthPair;
-
 struct EntityRecord
 {
 	Entity * entity;
@@ -58,7 +55,7 @@ class EntityManager : public Config
 	std::vector<EntityRecord*> buildingList;
 
 	// data to pair up Entity Type and Health
-	std::map<EntityType, int> Entity_HealthMap;
+	std::map<EntityType, int> entityHealthMap;
 
 	SdlMapView * mapView;
 	int worldSize;
