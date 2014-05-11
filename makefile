@@ -32,6 +32,7 @@ all: $(EXECUTABLE)
 	@echo "\033[33mDone\033[m"
 
 $(EXECUTABLE): $(addprefix $(OBJ_DIR)/, $(OBJECTS))
+	@mkdir -p $(BIN_DIR)/$(RES_DIR)
 	$(CXX) $(LFLAGS) $(addprefix , $^) -o $(BIN_DIR)/$@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
