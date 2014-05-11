@@ -45,7 +45,6 @@ Entity::Entity(EntityType type, Position position, Faction faction) :
 	else if(type < ET_MIRACLE)  group = EG_BUILDING;
 	else                        group = EG_MIRACLE;
 
-	entityManager.createRecord(this);
 }
 
 Entity::Entity(Position position) :

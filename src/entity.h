@@ -165,6 +165,8 @@ public:
 	Entity(Position);
 	Entity(const Entity&);
 
+	virtual ~Entity();
+
 	Entity& operator= (const Entity&);
 
 	std::string getName() const;
