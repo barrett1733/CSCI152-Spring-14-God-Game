@@ -173,6 +173,7 @@ public:
 	Position getPosition() const;
 	int getMaxHealth();
 	int getCurrentHealth();
+	int getHealth() const;
 
 	void setName(std::string);
 	void setGroup(EntityGroup);
@@ -181,6 +182,7 @@ public:
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
 	void setPosition(Position);
+	void setHealth(int health);
 
 	virtual void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap) {}
 

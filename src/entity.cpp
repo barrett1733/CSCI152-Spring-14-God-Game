@@ -89,6 +89,10 @@ int Entity::getMaxHealth() {
 int Entity::getCurrentHealth() {
 	return this->currentHealth;
 }
+int Entity::getHealth() const
+{
+	return currentHealth;
+}
 
 
 void Entity::setName(std::string name)
@@ -114,6 +118,14 @@ void Entity::setMaxHealth(int maxHealth)
 void Entity::setCurrentHealth(int currentHealth)
 {
 	this->currentHealth = currentHealth;
+}
+void Entity::setHealth(int health)
+{
+	currentHealth = health;
+	if(maxHealth == 0)
+		maxHealth = health;
+	if(currentHealth > maxHealth)
+		currentHealth = maxHealth;
 }
 void Entity::setPosition(Position position)
 {
