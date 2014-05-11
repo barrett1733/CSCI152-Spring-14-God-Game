@@ -192,11 +192,11 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 bool SdlManager::removeWidget(WidgetReference widget, int layer)
 {
-	unsigned long widgetCount = widgetList[layer].size();
-	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
+	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount[layer]; ++widgetIndex)
 		if(widgetList[layer][widgetIndex] == widget)
 		{
 			widgetList[layer].erase(widgetList[layer].begin()+widgetIndex);
+			widgetCount[layer] = widgetList[layer].size();
 			return true;
 		}
 	return false;
