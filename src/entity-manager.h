@@ -68,7 +68,7 @@ class EntityManager : public Config
 	// data to pair up Entity Type and Health
 	std::map<EntityType, int> Entity_HealthMap;
 
-	SdlMapView mapView;
+	SdlMapView * mapView;
 	int worldSize;
 
 	ObstructionMapReference obstructionMap;

@@ -31,9 +31,10 @@ EntityManager::EntityManager(int worldSize) :
 	initializeCallbackMap();
 	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
 
-	mapView.hide();
-	widgetList.push_back(&mapView);
-	SdlEntity::mapView = &mapView;
+	mapView = new SdlMapView();
+	mapView->hide();
+	widgetList.push_back(mapView);
+	SdlEntity::mapView = mapView;
 	SdlEntity::worldSize = worldSize;
 
 	//  Village Manager
@@ -130,7 +131,7 @@ void EntityManager::show()
 	std::cout << "EntityManager::show()" << std::endl;
 	visible = true;
 	villageManager.show();
-	mapView.show();
+	mapView->show();
 	buttonContainer->show();
 	// unsigned long count = widgetList.size();
 	// for(int index = 0; index < count; index ++)
@@ -143,7 +144,7 @@ void EntityManager::hide()
 	if(!visible) return;
 	std::cout << "EntityManager::hide()" << std::endl;
 	visible = false;
-	mapView.hide();
+	mapView->hide();
 	buttonContainer->hide();
 }
 
