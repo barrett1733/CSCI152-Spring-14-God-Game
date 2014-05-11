@@ -160,10 +160,10 @@ protected:
 	Position position;
 
 public:
-	Entity(const Entity&);
 	Entity(EntityType, int health, Position, Faction);
 	Entity(EntityType, Position, Faction);
 	Entity(Position);
+	Entity(const Entity&);
 
 	Entity& operator= (const Entity&);
 

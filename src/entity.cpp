@@ -12,15 +12,6 @@
 #include "entity.h"
 #include "task.h"
 
-Entity::Entity(const Entity & entity) :
-	group(entity.group),
-	type(entity.type),
-	faction(entity.faction),
-	maxHealth(entity.maxHealth),
-	currentHealth(entity.currentHealth),
-	position(entity.position)
-{ }
-
 Entity::Entity(EntityType type, int health, Position position, Faction faction) :
 	type(type),
 	faction(faction),
@@ -65,6 +56,19 @@ Entity::Entity(Position position) :
 	currentHealth(0),
 	position(position)
 { }
+
+Entity::Entity(const Entity & entity) :
+	group(entity.group),
+	type(entity.type),
+	faction(entity.faction),
+	maxHealth(entity.maxHealth),
+	currentHealth(entity.currentHealth),
+	position(entity.position)
+{ }
+
+Entity::~Entity()
+{
+}
 
 Entity& Entity::operator= (const Entity& entity)
 {
