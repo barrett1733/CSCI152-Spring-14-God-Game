@@ -30,14 +30,6 @@
 typedef std::map<EntityType, int> Entity_HealthMap;
 typedef std::pair<EntityType, int> Entity_HealthPair;
 
-/*
-Entity Data list, this is what I have.
-	storing in map
-	entityType	<->	health
-
-	"nearly" constructed entity passed
-	eg. a full entity except for a health.
-*/
 struct EntityRecord
 {
 	Entity * entity;
@@ -104,9 +96,6 @@ public:
 	static void sliderCallback(SDL_Event&, WidgetReference);
 	static void triangleSliderCallback(SDL_Event&, WidgetReference);
 	// From Config, we use this to pull from a config file
-	// bool setProperty(std::string property, std::string value);
-	// bool setProperty(std::string property, int value);
-	// bool setProperty(std::string property, int value1, int value2);
 };
 
 #endif

@@ -53,40 +53,12 @@ void EntityManager::setWorldSize(int worldSize)
 
 void EntityManager::deleteEntity(){}
 
-/*void EntityManager::getEntityType(Entity* entityIn){
-    ET_VILLAGER
-	ET_ELDER_VILLAGER
-	ET_CHILD_VILLAGER
 
-	// DOMESTIC ANIMALS
-	ET_COW
-	ET_SHEEP
-	ET_HORSE
-	ET_CHICKEN
-	ET_PIG
-	ET_FISH
-	ET_DEER
 
-	// HOSTILE
-	ET_WOLF,
-	ET_OGRE,
 
-	ET_BOAR,
-	ET_FOX,
-	ET_VAMPIRE,
-	ET_WEREWOLF,
-	ET_HARPY,
-	ET_SNOW_TROLL,
-	ET_SIREN,
-	ET_CTHULHU,
-	ET_UNICORN,
-	ET_CYCLOPS,
-}*/
 
 EntityRecord * EntityManager::createRecord(const Entity & entity)
 {
-	//return createEntity(*entity);
-
 	Faction faction = entity.getFaction();
 	EntityGroup group = entity.getGroup();
 
