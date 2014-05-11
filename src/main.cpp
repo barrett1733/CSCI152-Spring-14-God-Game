@@ -37,12 +37,13 @@ int main(int argc, char **argv)
 		// do world gen, set up new game, etc.
 
 
-		Entity entity = world.getNextEntity();
-		while(entity.getType() != ET_NONE)
+		EntityReference entity = world.getNextEntity();
+		while(entity && entity->getType() != ET_NONE)
 		{
-			entityManager.createRecord(&entity);
+			entityManager.createRecord(entity);
 
 			// Get next entity for next loop iteration.
+			delete entity;
 			entity = world.getNextEntity();
 		}
 

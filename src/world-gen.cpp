@@ -229,11 +229,11 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 	}
 }
 
-Entity WorldGeneration::getNextEntity()
+EntityReference WorldGeneration::getNextEntity()
 {
 	double length_to_tc1;
 	double length_to_tc2;
-	Entity to_return(ET_NONE,0,current,F_NONE);
+	EntityReference to_return = new Entity(current);
 	do
 	{
 		if(world_positions[current.getY()][current.getX()]==ET_NONE)
@@ -255,8 +255,8 @@ Entity WorldGeneration::getNextEntity()
 			}
 			else
 			{
-			to_return.setEntityType(world_positions[current.getY()][current.getX()]);//set the entity's type which is stored in world_positions[][]
-			to_return.setPosition(current);//the the entity's position
+			to_return->setEntityType(world_positions[current.getY()][current.getX()]);//set the entity's type which is stored in world_positions[][]
+			to_return->setPosition(current);//the the entity's position
 
 			switch(world_positions[current.getY()][current.getX()])//switch to set faction of the returned entity
 			{
@@ -264,38 +264,38 @@ Entity WorldGeneration::getNextEntity()
 				case ET_TREE:
 				case ET_STONE:
 				case ET_IRON:
-					to_return.setFaction(F_STATIC);
-					to_return.setGroup(EG_RESOURCE);
+					to_return->setFaction(F_STATIC);
+					to_return->setGroup(EG_RESOURCE);
 					break;
 				//passive animals
 				case ET_DEER:
-					to_return.setFaction(F_ANIMAL_PASSIVE);
-					to_return.setGroup(EG_PASSIVE);
+					to_return->setFaction(F_ANIMAL_PASSIVE);
+					to_return->setGroup(EG_PASSIVE);
 					break;
 				//hostile animals
 				case ET_WOLF:
 				case ET_OGRE:
-					to_return.setFaction(F_ANIMAL_HOSTILE);
-					to_return.setGroup(EG_HOSTILE);
+					to_return->setFaction(F_ANIMAL_HOSTILE);
+					to_return->setGroup(EG_HOSTILE);
 					break;
 				//domestic animals
 				case ET_COW:
-					to_return.setFaction(F_ANIMAL_DOMESTIC);
-					to_return.setGroup(EG_DOMESTIC);
+					to_return->setFaction(F_ANIMAL_DOMESTIC);
+					to_return->setGroup(EG_DOMESTIC);
 					break;
 				//everything whose faction is not determined by what it is
 				default:
 					length_to_tc1 = TC1.distance(current);
 					length_to_tc2 = TC2.distance(current);
 					if(length_to_tc1<length_to_tc2)
-						to_return.setFaction(F_PLAYER_1);
+						to_return->setFaction(F_PLAYER_1);
 					else
-						to_return.setFaction(F_PLAYER_2);
+						to_return->setFaction(F_PLAYER_2);
 
 					if(world_positions[current.getY()][current.getX()] == ET_VILLAGER)
-						to_return.setGroup(EG_VILLAGER);
+						to_return->setGroup(EG_VILLAGER);
 					else
-						to_return.setGroup(EG_BUILDING);
+						to_return->setGroup(EG_BUILDING);
 
 
 					break;

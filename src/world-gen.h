@@ -76,7 +76,7 @@ public:
 	int shiftFromEdge(int);
 	int pathChange(int);
 
-	Entity getNextEntity();
+	EntityReference getNextEntity();
 
 	Position findPathStart(int);
 	Position getTC1();
