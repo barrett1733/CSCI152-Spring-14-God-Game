@@ -52,6 +52,7 @@ public:
 	double direction(const Position &);
 
 	void move(Direction);
+	void move(Direction, int distance);
 
 	void set(int x, int y);
 	int getX();
