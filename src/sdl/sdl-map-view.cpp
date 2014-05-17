@@ -42,7 +42,7 @@ ImageReference SdlMapView::createBackground(SDL_Rect & rect)
 
 void SdlMapView::clear(SDL_Rect & rect)
 {
-	SDL_Rect clip = sdlUtility.createRect(0, 0, rect.w - 1, rect.h - 1);
+	SDL_Rect clip = sdlUtility.createRect(0, 0, rect.w, rect.h);
 	SDL_BlitSurface(clearSurface, &clip, surface, &rect);
 
 	if(texture) SDL_DestroyTexture(texture);
