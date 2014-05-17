@@ -1,3 +1,10 @@
+//
+//  File: vector2.h
+//  Author: Anthony Smith
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
 
 
 struct vector2{

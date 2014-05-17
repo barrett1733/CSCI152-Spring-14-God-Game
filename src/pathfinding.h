@@ -1,3 +1,10 @@
+//
+//  File: pathfinding.h
+//  Author: Anthony Smith
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
 #ifndef PATHFINDING_H_
 #define PATHFINDING_H_
 

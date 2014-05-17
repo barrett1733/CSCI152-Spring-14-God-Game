@@ -1,5 +1,5 @@
 //
-//  File: resource-manager.h
+//  File: resource-manager.cpp
 //  Author: Steven Barrett
 //  CSci 152
 //  Spring 2014

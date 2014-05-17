@@ -1,6 +1,6 @@
 //
-//  File: entity-manager.h
-//  Author: Chad Hatcher
+//  File: entity.cpp
+//  Author: Chad Hatcher, Steven Barrett
 //  CSci 152
 //  Spring 2014
 //  Instructor: Alex Liu

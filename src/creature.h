@@ -1,3 +1,12 @@
+//
+//  File: creature.h
+//  Author: Steven Barrett
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Creature Class Implementation
+//
 #ifndef CREATURE_H_
 #define CREATURE_H_
 

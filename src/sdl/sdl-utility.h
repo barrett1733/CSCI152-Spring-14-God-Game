@@ -1,5 +1,5 @@
 //
-//  File: sdl-utility.cpp
+//  File: sdl-utility.h
 //  Author: Chad Hatcher
 //  CSci 152
 //  Spring 2014

@@ -1,6 +1,12 @@
+//
+//  File: pathfinding.cpp
+//  Author: Anthony Smith
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+
 #include "pathfinding.h"
-
-
 
 Pathfinding::Pathfinding(void){
 	

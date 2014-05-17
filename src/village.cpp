@@ -1,5 +1,5 @@
 ﻿//
-//  File: village.h
+//  File: village.cpp
 //  Author: Chad Hatcher, Steven Barrett, Jimmy Ouyang
 //  CSci 152
 //  Spring 2014

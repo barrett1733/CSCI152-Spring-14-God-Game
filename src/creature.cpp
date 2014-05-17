@@ -1,3 +1,12 @@
+//
+//  File: creature.cpp
+//  Author: Steven Barrett
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Creature Class Implementation
+//
 #include "creature.h"
 
 Creature::Creature()

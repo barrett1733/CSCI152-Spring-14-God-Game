@@ -1,5 +1,5 @@
 //
-//  File: sdl-triangle-slider.cpp
+//  File: sdl-triangle-slider.h
 //  Author: Chad Hatcher
 //  CSci 152
 //  Spring 2014

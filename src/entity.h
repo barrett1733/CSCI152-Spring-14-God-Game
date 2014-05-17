@@ -1,5 +1,5 @@
 //
-//  File: entity-manager.h
+//  File: entity.h
 //  Author: Chad Hatcher, Steven Barrett
 //  CSci 152
 //  Spring 2014

@@ -1,5 +1,5 @@
 //
-//  File: sdl-widget-container.cpp
+//  File: sdl-widget-container.h
 //  Author: Chad Hatcher
 //  CSci 152
 //  Spring 2014

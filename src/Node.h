@@ -1,3 +1,10 @@
+//
+//  File: Node.h
+//  Author: Anthony Smith
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
 #ifndef NODE_H_
 #define NODE_H_
 
