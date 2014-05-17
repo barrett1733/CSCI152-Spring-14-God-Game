@@ -123,7 +123,7 @@ void SdlUtility::set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 ImageReference SdlUtility::createCircle(Color color, int size)
 {
-	ImageReference image = createSurface(size+1,size+1);
+	ImageReference image = createSurface(size,size);
 
 	double cx = size / 2;
 	double cy = size / 2;
@@ -199,6 +199,22 @@ ImageReference SdlUtility::createCircle(Color color, int size)
 	return image;
 }
 
+ImageReference SdlUtility::createSquare(Color color, int size)
+{
+	ImageReference image = createSurface(size, size);
+	SDL_FillRect(image, NULL, getColor(image, C_BLACK));
+	ImageReference interior = createSurface(size-2, size-2);
+	SDL_FillRect(interior, NULL, getColor(image, color));
+	SDL_Rect clip = createRect(1, 1, size-2, size-2);
+	SDL_BlitSurface(interior, NULL, image, &clip);
+	return image;
+}
+
+ImageReference SdlUtility::createTriangle(Color color, int size)
+{
+	return createTriangle(color, size, size);
+}
+
 ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 {
 	ImageReference image = createSurface(width, height);;
@@ -221,7 +237,7 @@ ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 
 
 		set_pixel(image, mid - y / m, y, outer);
-		set_pixel(image, width - mid + y / m + 1, y, outer);
+		set_pixel(image, width - mid + y / m, y, outer);
 	}
 	for(x = 0; x <= mid; x ++)
 	{

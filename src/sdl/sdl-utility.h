@@ -61,6 +61,8 @@ public:
 	ImageReference createTextSurface(const char * text, FontSize fontSize);
 	ImageReference createTextSurface(const char * text);
 	ImageReference createCircle(Color, int size);
+	ImageReference createSquare(Color, int size);
+	ImageReference createTriangle(Color, int size);
 	ImageReference createTriangle(Color, int width, int height);
 };
 
