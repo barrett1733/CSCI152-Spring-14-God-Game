@@ -69,7 +69,27 @@ SdlEntity::SdlEntity(const Entity & entity) :
 			break;
 	}
 
-	surface = sdlUtility.createCircle(color, size * scale);
+	switch(entity.getGroup())
+	{
+		case EG_RESOURCE:
+			surface = sdlUtility.createTriangle(color, size * scale);
+			break;
+
+		case EG_BUILDING:
+			surface = sdlUtility.createSquare(color, size * scale);
+			break;
+
+		case EG_MIRACLE:
+			color = C_RED;
+			scale = 2.0;
+			surface = sdlUtility.createCircle(color, size * scale);
+			break;
+
+		default:
+			surface = sdlUtility.createCircle(color, size * scale);
+			break;
+	}
+
 
 	clipping.x = 0;
 	clipping.y = 0;
