@@ -69,7 +69,7 @@ Position ObstructionMap::findOpenPosition(Position origin)
 			position.move(direction);
 			position.move(direction);
 
-			if(isOpen(position))
+			if(isOpen(position) && rand()%8==0)
 				return position;
 		}
 
