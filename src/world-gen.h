@@ -13,16 +13,16 @@
 #include "entity.h"
 
 /*
-WorldGeneration will initialize a two dimentional vector and fill every spot with the int that signifies open space,
+WorldGeneration will initialize a two dimentional vector and fill every spot with EntityType that signifies open space,
 then it will place all entities on the map.
 
-Each index of the inner vector will contain an int. The location on the map will be an (x,y) coordinate system,
+Each index of the inner vector will contain an EntityType. The location on the map will be an (x,y) coordinate system,
 the x-coord will be the index of the inner vector and the y-coord the index of the outer vector
 
 like this -->>  world_positions[outer][inner]
 
 with 0 being the top(north) row and the higher number the bottom (south). The map will be a square with each outer 
-index holding a vector the same size as the outer vector. Each different placeable item will have a differnt int 
+index holding a vector the same size as the outer vector. Each different placeable item will have a differnt EntityType 
 specification designated in the entity enumeration.
 
 each faction will start with 15 villagers and 5 cows(adjustable in "res/world-info.cfg". deer, wolves and ogres 
