@@ -44,11 +44,22 @@ enum WorldInfo
 	WI_NUM_OF_VILLAGERS,
 	//domestic animals
 	WI_NUM_OF_COWS,
-	WI_SHEEP,
-	WI_HORSE,
-	WI_CHICKEN,
-	WI_PIG,
-	WI_FISH,
+	WI_TREES_MIN,
+	WI_TREES_MAX,
+	WI_IRON_MIN,
+	WI_IRON_MAX,
+	WI_STONE_MIN,
+	WI_STONE_MAX,
+	WI_DEER_MIN,
+	WI_DEER_MAX,
+	WI_DEER_CTD,
+	WI_WOLVES_MIN,
+	WI_WOLVES_MAX,
+	WI_WOLVES_CTD,
+	WI_OGRES_MIN,
+	WI_OGRES_MAX,
+	WI_OGRES_CTD,
+	WI_COUNT
 };
 
 class WorldGeneration : public Config
@@ -93,13 +104,6 @@ private:
 	Position TC1;
 	Position TC2;
 	bool cycled;
-	int	TREES_MIN, TREES_MAX,
-		IRON_MIN, IRON_MAX,
-		STONE_MIN, STONE_MAX,
-		DEER_MIN, DEER_MAX, DEER_CTD,
-		WOLVES_MIN, WOLVES_MAX, WOLVES_CTD,
-		OGRES_MIN, OGRES_MAX, OGRES_CTD;
-
 };
 
 #endif

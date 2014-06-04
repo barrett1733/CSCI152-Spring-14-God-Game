@@ -26,7 +26,7 @@ WorldGeneration::WorldGeneration(int seed) :
 
 	entityCount = 0;
 	cycled = false;
-	world_info.resize(4);
+	world_info.resize(WI_COUNT);
 
 	/*****************
 	******config******
@@ -51,9 +51,9 @@ WorldGeneration::WorldGeneration(int seed) :
 	/************************
 	***place all entities***
 	************************/
-	PlaceResource(TREES_MIN, TREES_MAX, ET_TREE);
-	PlaceResource(IRON_MIN, IRON_MAX, ET_IRON);
-	PlaceResource(STONE_MIN, STONE_MAX, ET_STONE);
+	PlaceResource(WI_TREES_MIN, WI_TREES_MAX, ET_TREE);
+	PlaceResource(WI_IRON_MIN, WI_IRON_MAX, ET_IRON);
+	PlaceResource(WI_STONE_MIN, WI_STONE_MAX, ET_STONE);
 	
 	placePaths();//comment this out and uncomment placePaths2 in the PlaceTownCenter function to use the other kind path creation
 	
@@ -66,9 +66,9 @@ WorldGeneration::WorldGeneration(int seed) :
 	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC1);
 	PlaceAroundTC(ET_COW, WI_NUM_OF_COWS, TC2);
 
-	PlaceWildBeasts(DEER_MIN, DEER_MAX, DEER_CTD, ET_DEER);
-	PlaceWildBeasts(WOLVES_MIN, WOLVES_MAX, WOLVES_CTD, ET_WOLF);
-	PlaceWildBeasts(OGRES_MIN, OGRES_MAX, OGRES_CTD, ET_OGRE);
+	PlaceWildBeasts(WI_DEER_MIN, WI_DEER_MAX, WI_DEER_CTD, ET_DEER);
+	PlaceWildBeasts(WI_WOLVES_MIN, WI_WOLVES_MAX, WI_WOLVES_CTD, ET_WOLF);
+	PlaceWildBeasts(WI_OGRES_MIN, WI_OGRES_MAX, WI_OGRES_CTD, ET_OGRE);
 }
 
 void WorldGeneration::PrintMap()
@@ -94,10 +94,10 @@ void WorldGeneration::PlaceResource(int min, int max, EntityType type)
 
 	for(int outerIndex = 0; outerIndex < world_positions.size(); outerIndex++)
 	{
-		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
+		for (int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
 		{
 			temp_random_variable = rand() % 100;
-			if(temp_random_variable > min && temp_random_variable < max)
+			if (temp_random_variable > world_info[min] && temp_random_variable < world_info[max])
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				num_of_resource++;
@@ -210,7 +210,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 		for(int innerIndex = 0; innerIndex < world_positions.size(); innerIndex++)
 		{
 			int chance_for_entity = rand() % 100;
-			if(world_positions[outerIndex][innerIndex] == ET_NONE && chance_for_entity >= min && chance_for_entity<max)
+			if (world_positions[outerIndex][innerIndex] == ET_NONE && chance_for_entity >= world_info[min] && chance_for_entity < world_info[max])
 			{
 				world_positions[outerIndex][innerIndex] = type;
 				entityCount++;
@@ -219,7 +219,7 @@ void WorldGeneration::PlaceWildBeasts(int min, int max, int delete_chance, Entit
 
 				int chance_to_delete = rand() % 100;
 
-				if(TC1.distance(here) <= 30.0 || TC2.distance(here) <= 30.0 || chance_to_delete <= delete_chance)
+				if (TC1.distance(here) <= 30.0 || TC2.distance(here) <= 30.0 || chance_to_delete <= world_info[delete_chance])
 				{
 					world_positions[outerIndex][innerIndex] = ET_NONE;
 					entityCount--;
@@ -565,77 +565,77 @@ bool WorldGeneration::setProperty(string property, int value)
 	}
 	else if (property == "trees_min")
 	{
-		TREES_MIN = value;
+		world_info[WI_TREES_MIN] = value;
 		return true;
 	}
 	else if (property == "trees_max")
 	{
-		TREES_MAX = value;
+		world_info[WI_TREES_MAX] = value;
 		return true;
 	}
 	else if (property == "iron_min")
 	{
-		IRON_MIN = value;
+		world_info[WI_IRON_MIN] = value;
 		return true;
 	}
 	else if (property == "iron_max")
 	{
-		IRON_MAX = value;
+		world_info[WI_IRON_MAX] = value;
 		return true;
 	}
 	else if (property == "stone_min")
 	{
-		STONE_MIN = value;
+		world_info[WI_STONE_MIN] = value;
 		return true;
 	}
 	else if (property == "stone_max")
 	{
-		STONE_MAX = value;
+		world_info[WI_STONE_MAX] = value;
 		return true;
 	}
 	else if (property == "deer_min")
 	{
-		DEER_MIN = value;
+		world_info[WI_DEER_MIN] = value;
 		return true;
 	}
 	else if (property == "deer_max")
 	{
-		DEER_MAX = value;
+		world_info[WI_DEER_MAX] = value;
 		return true;
 	}
 	else if (property == "deer_chance_to_delete")
 	{
-		DEER_CTD = value;
+		world_info[WI_DEER_CTD] = value;
 		return true;
 	}
 	else if (property == "wolves_min")
 	{
-		WOLVES_MIN = value;
+		world_info[WI_WOLVES_MIN] = value;
 		return true;
 	}
 	else if (property == "wolves_max")
 	{
-		WOLVES_MAX = value;
+		world_info[WI_WOLVES_MAX] = value;
 		return true;
 	}
 	else if (property == "wolves_chance_to_delete")
 	{
-		WOLVES_CTD = value;
+		world_info[WI_WOLVES_CTD] = value;
 		return true;
 	}
 	else if (property == "ogres_min")
 	{
-		OGRES_MIN = value;
+		world_info[WI_OGRES_MIN] = value;
 		return true;
 	}
 	else if (property == "ogres_max")
 	{
-		OGRES_MAX = value;
+		world_info[WI_OGRES_MAX] = value;
 		return true;
 	}
 	else if (property == "ogres_chance_to_delete")
 	{
-		OGRES_CTD = value;
+		world_info[WI_OGRES_CTD] = value;
 		return true;
 	}
 	else return false;
