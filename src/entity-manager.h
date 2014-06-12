@@ -29,8 +29,8 @@ class EntityManager
 
 
 public:
-	EntityRecord * createRecord(const EntityReference);
-	EntityRecord * createRecord(const Entity&);
+	void createRecord(const EntityReference);
+	void createRecord(const Entity&);
 	void addWidget(WidgetReference);
 	void addEntity();
 	void deleteEntity(); // removes entity from all applicable lists

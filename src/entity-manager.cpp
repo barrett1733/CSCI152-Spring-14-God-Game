@@ -17,7 +17,7 @@ void EntityManager::addWidget(WidgetReference widget)
 
 void EntityManager::deleteEntity(){}
 
-EntityRecord * EntityManager::createRecord(const Entity & entity)
+void EntityManager::createRecord(const Entity & entity)
 {
 	Faction faction = entity.getFaction();
 	EntityGroup group = entity.getGroup();
@@ -38,13 +38,9 @@ EntityRecord * EntityManager::createRecord(const Entity & entity)
 	widgetList.push_back(record->widget);
 
 	factionMap[faction].push_back(record);
-
-	//villageManager.importEntity(record->entity);
-
-	return record;
 }
 
-EntityRecord * EntityManager::createRecord(const EntityReference entity)
+void EntityManager::createRecord(const EntityReference entity)
 {
-	return createRecord(*entity);
+	createRecord(*entity);
 }

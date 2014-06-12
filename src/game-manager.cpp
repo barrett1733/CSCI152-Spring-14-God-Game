@@ -53,6 +53,8 @@ void GameManager::setup()
 	hide();
 
 	obstructionMap = new ObstructionMap(worldSize);
+
+
 	EntityReference entity = world.getNextEntity();
 	while (entity && entity->getType() != ET_NONE)
 	{
@@ -138,7 +140,7 @@ void GameManager::build(SDL_Event & event, WidgetReference widget)
 			Position position = self->obstructionMap->findOpenPosition(origin);
 
 			EntityReference entity = new Entity(type, 1, position, faction);
-			//self->createRecord(entity);
+			entityManager.createRecord(entity);
 
 			//self->obstructionMap->set(position, OT_CONSIDERED);
 
