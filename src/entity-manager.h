@@ -2,6 +2,18 @@
 #include "entity.h"
 #include "sdl\sdl-entity.h"
 
+enum EntityRecordList
+{
+	EL_ALL,
+	EL_VILLAGE,
+	EL_WIDGET,
+	EL_PEACEFUL,
+	EL_ENEMY,
+	EL_BUILDING,
+
+	EL_COUNT
+};
+
 struct EntityRecord
 {
 	Entity * entity;
@@ -15,16 +27,11 @@ struct EntityRecord
 };
 class EntityManager
 {
-	std::vector<EntityRecord*> recordList;
+	std::vector<std::vector<EntityRecord*>> recordList;
 	std::vector<EntityReference> entityList;
 	std::vector<WidgetReference> widgetList;
 
 	std::map<Faction, std::vector<EntityRecord*> > factionMap;
-	// these lists are sub-catagories of the entitylist, should still be the same reference //
-	std::vector<EntityRecord*> villagerList;
-	std::vector<EntityRecord*> peacefulMobList;
-	std::vector<EntityRecord*> enemyList;
-	std::vector<EntityRecord*> buildingList;
 
 
 public:
