@@ -12,8 +12,8 @@
 // Maintains the sidebar interface.
 //
 
-#ifndef ENTITY_MANAGER_H_
-#define ENTITY_MANAGER_H_
+#ifndef GAME_MANAGER_H_
+#define GAME_MANAGER_H_
 
 #include <vector>
 #include <map>
@@ -39,7 +39,7 @@ struct EntityRecord
 	}
 };
 
-class EntityManager : public Config
+class GameManager : public Config
 {
 	bool visible;
 
@@ -62,14 +62,14 @@ class EntityManager : public Config
 
 	ObstructionMapReference obstructionMap;
 
-	static EntityManager * self;
+	static GameManager * self;
 	static VillageManager villageManager;
 	static bool callbackMapInitialized;
 	static std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
 	static WidgetContainerReference buttonContainer;
 
 public:
-	EntityManager();
+	GameManager();
 	void setWorldSize(int worldSize);
 
 	EntityRecord * createRecord(const EntityReference);
@@ -93,7 +93,7 @@ public:
 	static void sliderCallback(SDL_Event&, WidgetReference);
 	static void triangleSliderCallback(SDL_Event&, WidgetReference);
 	// From Config, we use this to pull from a config file
-	friend std::ostream & operator<<(std::ostream & os, const EntityManager & manager)
+	friend std::ostream & operator<<(std::ostream & os, const GameManager & manager)
 	{
 		long entityCount = manager.entityList.size();
 		for(long entityIndex = 0; entityIndex < entityCount; entityIndex ++)

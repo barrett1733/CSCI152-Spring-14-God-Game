@@ -10,28 +10,28 @@
 
 #include <iostream>
 
-#include "entity-manager.h"
+#include "game-manager.h"
 
-EntityManager * EntityManager::self = 0;
-std::map<std::string, void (*)(SDL_Event&, WidgetReference)> EntityManager::callbackMap;
-bool EntityManager::callbackMapInitialized = false;
-VillageManager EntityManager::villageManager;
-WidgetContainerReference EntityManager::buttonContainer = 0;
+GameManager * GameManager::self = 0;
+std::map<std::string, void (*)(SDL_Event&, WidgetReference)> GameManager::callbackMap;
+bool GameManager::callbackMapInitialized = false;
+VillageManager GameManager::villageManager;
+WidgetContainerReference GameManager::buttonContainer = 0;
 
-EntityManager::EntityManager() :
+GameManager::GameManager() :
 	worldSize(0),
 	visible(false)
 {
 	if(self)
 	{
-		std::cerr << "\033[31m EntityManager already exists!\033[m" << std::endl;
+		std::cerr << "\033[31m GameManager already exists!\033[m" << std::endl;
 		return;
 	}
 	self = this;
 
 }
 
-void EntityManager::setWorldSize(int worldSize)
+void GameManager::setWorldSize(int worldSize)
 {
 	initializeCallbackMap();
 	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
@@ -51,13 +51,13 @@ void EntityManager::setWorldSize(int worldSize)
 	obstructionMap = new ObstructionMap(worldSize);
 }
 
-void EntityManager::deleteEntity(){}
+void GameManager::deleteEntity(){}
 
 
 
 
 
-EntityRecord * EntityManager::createRecord(const Entity & entity)
+EntityRecord * GameManager::createRecord(const Entity & entity)
 {
 	Faction faction = entity.getFaction();
 	EntityGroup group = entity.getGroup();
@@ -84,12 +84,12 @@ EntityRecord * EntityManager::createRecord(const Entity & entity)
 	return record;
 }
 
-EntityRecord * EntityManager::createRecord(const EntityReference entity)
+EntityRecord * GameManager::createRecord(const EntityReference entity)
 {
 	return createRecord(*entity);
 }
 
-void EntityManager::update()
+void GameManager::update()
 {
 	if(!visible) show();
 
@@ -102,10 +102,10 @@ void EntityManager::update()
 	// ...
 }
 
-void EntityManager::show()
+void GameManager::show()
 {
 	if(visible) return;
-	std::cout << "EntityManager::show()" << std::endl;
+	std::cout << "GameManager::show()" << std::endl;
 	visible = true;
 	villageManager.show();
 	mapView->show();
@@ -115,11 +115,11 @@ void EntityManager::show()
 	// 	widgetList[index]->show();
 }
 
-void EntityManager::hide()
+void GameManager::hide()
 {
 	villageManager.hide();
 	if(!visible) return;
-	std::cout << "EntityManager::hide()" << std::endl;
+	std::cout << "GameManager::hide()" << std::endl;
 	visible = false;
 	mapView->hide();
 	buttonContainer->hide();
@@ -128,7 +128,7 @@ void EntityManager::hide()
 
 //
 
-void EntityManager::initializeCallbackMap()
+void GameManager::initializeCallbackMap()
 {
 	if(callbackMapInitialized) return;
 	callbackMapInitialized = true;
@@ -142,9 +142,9 @@ void EntityManager::initializeCallbackMap()
 
 //
 
-void EntityManager::build(SDL_Event & event, WidgetReference widget)
+void GameManager::build(SDL_Event & event, WidgetReference widget)
 {
-	std::cout << "EntityManager::build(" << widget->id << ")" << std::endl;
+	std::cout << "GameManager::build(" << widget->id << ")" << std::endl;
 	if(self)
 	{
 		Faction faction = F_PLAYER_1;
@@ -170,12 +170,12 @@ void EntityManager::build(SDL_Event & event, WidgetReference widget)
 		//self->villageManager.buildHouse();
 	}
 	else
-		std::cerr << "EntityManager not initialized." << std::endl;
+		std::cerr << "GameManager not initialized." << std::endl;
 }
 
-void EntityManager::miracle(SDL_Event & event, WidgetReference widget)
+void GameManager::miracle(SDL_Event & event, WidgetReference widget)
 {
-	std::cout << "EntityManager::miracle(" << widget->id << ")" << std::endl;
+	std::cout << "GameManager::miracle(" << widget->id << ")" << std::endl;
 	if(self)
 	{
 		//  NOTE: widget->id is the MiracleType (needs to be cast).
@@ -200,15 +200,15 @@ void EntityManager::miracle(SDL_Event & event, WidgetReference widget)
 
 	}
 	else
-		std::cerr << "EntityManager not initialized." << std::endl;
+		std::cerr << "GameManager not initialized." << std::endl;
 }
 
-void EntityManager::sliderCallback(SDL_Event & event, WidgetReference widget)
+void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
 
 }
 
-void EntityManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
+void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
 {
 
 }

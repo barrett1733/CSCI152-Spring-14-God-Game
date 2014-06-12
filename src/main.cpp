@@ -12,7 +12,7 @@
 #include <sstream>
 #include <ctime>
 #include "game-state-manager.h"
-#include "entity-manager.h"
+#include "game-manager.h"
 #include "world-gen.h"
 
 int main(int argc, char **argv)
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	WorldGeneration world(time(0));
 	int worldSize = world.getWorldSize();
 
-	EntityManager entityManager;
+	GameManager entityManager;
 	entityManager.setWorldSize(worldSize);
 
 	std::cout << "Starting Game Loop" << std::endl;
