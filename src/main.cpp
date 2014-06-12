@@ -20,9 +20,6 @@ int main(int argc, char **argv)
 	GameStateManager game;
 	GameMode gameMode = GM_ERROR;
 
-	WorldGeneration world(time(0));
-	int worldSize = world.getWorldSize();
-
 	GameManager entityManager;
 	entityManager.setWorldSize(worldSize);
 
