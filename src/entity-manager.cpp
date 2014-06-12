@@ -10,6 +10,11 @@ EntityManager::~EntityManager()
 {
 }
 
+void EntityManager::addWidget(WidgetReference widget)
+{
+	widgetList.push_back(widget);
+}
+
 void EntityManager::deleteEntity(){}
 
 EntityRecord * EntityManager::createRecord(const Entity & entity)

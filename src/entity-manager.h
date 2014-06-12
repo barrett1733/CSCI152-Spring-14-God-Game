@@ -25,12 +25,14 @@ class EntityManager
 	std::vector<EntityRecord*> peacefulMobList;
 	std::vector<EntityRecord*> enemyList;
 	std::vector<EntityRecord*> buildingList;
+	void update();
 
-	void updateLists();
 
 public:
 	EntityRecord * createRecord(const EntityReference);
 	EntityRecord * createRecord(const Entity&);
+	void addWidget(WidgetReference);
+	void addEntity();
 	void deleteEntity(); // removes entity from all applicable lists
 
 	void getEntityType();

@@ -33,18 +33,7 @@ int main(int argc, char **argv)
 		std::cout << "Setting up new game." << std::endl;
 		// do world gen, set up new game, etc.
 
-
-		EntityReference entity = world.getNextEntity();
-		while(entity && entity->getType() != ET_NONE)
-		{
-			entityManager.createRecord(entity);
-
-			// Get next entity for next loop iteration.
-			delete entity;
-			entity = world.getNextEntity();
-		}
-
-		entityManager.update();
+		entityManager.setup();
 	}
 
 	std::cout << "Continuing Game Loop" << std::endl;

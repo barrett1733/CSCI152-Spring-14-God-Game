@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <map>
+#include <ctime>
 
 #include "config.h"
 #include "entity.h"
@@ -26,6 +27,7 @@
 #include "sdl/sdl-map-view.h"
 #include "sdl/sdl-widget-container.h"
 #include "obstruction-map.h"
+#include "entity-manager.h"
 
 
 class GameManager : public Config
@@ -36,17 +38,17 @@ class GameManager : public Config
 	std::map<EntityType, int> entityHealthMap;
 
 	SdlMapView * mapView;
-	WorldGeneration world(time(0));
-	int worldSize = world.getWorldSize();
 	int worldSize;
 
 	ObstructionMapReference obstructionMap;
 
 	static GameManager * self;
 	static VillageManager villageManager;
+	static EntityManager entityManager;
 	static bool callbackMapInitialized;
 	static std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
 	static WidgetContainerReference buttonContainer;
+
 
 public:
 	GameManager();

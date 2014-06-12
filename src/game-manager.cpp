@@ -16,6 +16,7 @@ GameManager * GameManager::self = 0;
 std::map<std::string, void (*)(SDL_Event&, WidgetReference)> GameManager::callbackMap;
 bool GameManager::callbackMapInitialized = false;
 VillageManager GameManager::villageManager;
+EntityManager GameManager::entityManager;
 WidgetContainerReference GameManager::buttonContainer = 0;
 
 GameManager::GameManager() :
@@ -31,6 +32,21 @@ GameManager::GameManager() :
 
 }
 
+void GameManager::setup()
+{
+	WorldGeneration world(time(0));
+	int worldSize = world.getWorldSize();
+	EntityReference entity = world.getNextEntity();
+	while (entity && entity->getType() != ET_NONE)
+	{
+		entityManager.createRecord(entity);
+
+		// Get next entity for next loop iteration.
+		delete entity;
+		entity = world.getNextEntity();
+	}
+}
+
 void GameManager::setWorldSize(int worldSize)
 {
 	initializeCallbackMap();
@@ -38,7 +54,7 @@ void GameManager::setWorldSize(int worldSize)
 
 	mapView = new SdlMapView();
 	mapView->hide();
-	widgetList.push_back(mapView);
+	entityManager.addWidget(mapView);
 	SdlEntity::mapView = mapView;
 	SdlEntity::worldSize = worldSize;
 
@@ -58,6 +74,7 @@ void GameManager::update()
 
 	villageManager.update();
 
+	// update should be replaced with checkObstructions(obstructionMap)
 	unsigned long count = recordList.size();
 	for(unsigned long index = 0; index < count; index ++)
 		recordList[index]->update(entityList, obstructionMap);
