@@ -157,7 +157,8 @@ void GameManager::miracle(SDL_Event & event, WidgetReference widget)
 		//  NOTE: widget->id is the MiracleType (needs to be cast).
 		Faction faction = F_PLAYER_1;
 		EntityType type = (EntityType) widget->id;
-		EntityReference townCenter = villageManager.getTownCenter(faction);
+		VillageReference village = villageManager.getVillage(faction);
+		EntityReference townCenter = village->getTownCenter();
 
 		if(!townCenter)
 			std::cout << "No town center." << std::endl;

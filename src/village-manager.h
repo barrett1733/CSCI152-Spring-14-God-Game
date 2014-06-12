@@ -12,7 +12,6 @@
 #ifndef VILLAGE_MANAGER_H_
 #define VILLAGE_MANAGER_H_
 
-#include <vector>
 #include <map>
 
 #include "village.h"
@@ -20,9 +19,6 @@
 
 class VillageManager
 {
-	std::vector<VillageReference> villageList;
-	std::vector<EntityReference> resourceList;
-
 	std::map<Faction, VillageReference> villageMap;
 
 	bool visible;
@@ -30,16 +26,12 @@ class VillageManager
 public:
 	VillageManager();
 
-	long addVillage(Faction);
+	void addVillage(Faction);
 	VillageReference getVillage(Faction);
-
-	void importEntity(EntityReference);
 
 	void show();
 	void hide();
 	void update();
-
-	EntityReference getTownCenter(Faction);
 };
 
 #endif
