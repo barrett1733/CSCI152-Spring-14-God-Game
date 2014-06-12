@@ -35,20 +35,8 @@ GameManager::GameManager() :
 void GameManager::setup()
 {
 	WorldGeneration world(time(0));
-	int worldSize = world.getWorldSize();
-	EntityReference entity = world.getNextEntity();
-	while (entity && entity->getType() != ET_NONE)
-	{
-		entityManager.createRecord(entity);
+	worldSize = world.getWorldSize();
 
-		// Get next entity for next loop iteration.
-		delete entity;
-		entity = world.getNextEntity();
-	}
-}
-
-void GameManager::setWorldSize(int worldSize)
-{
 	initializeCallbackMap();
 	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
 
@@ -65,6 +53,15 @@ void GameManager::setWorldSize(int worldSize)
 	hide();
 
 	obstructionMap = new ObstructionMap(worldSize);
+	EntityReference entity = world.getNextEntity();
+	while (entity && entity->getType() != ET_NONE)
+	{
+		entityManager.createRecord(entity);
+
+		// Get next entity for next loop iteration.
+		delete entity;
+		entity = world.getNextEntity();
+	}
 }
 
 
@@ -75,9 +72,10 @@ void GameManager::update()
 	villageManager.update();
 
 	// update should be replaced with checkObstructions(obstructionMap)
+	/*
 	unsigned long count = recordList.size();
 	for(unsigned long index = 0; index < count; index ++)
-		recordList[index]->update(entityList, obstructionMap);
+		recordList[index]->update(entityList, obstructionMap);*/
 
 	// ...
 }
@@ -140,7 +138,7 @@ void GameManager::build(SDL_Event & event, WidgetReference widget)
 			Position position = self->obstructionMap->findOpenPosition(origin);
 
 			EntityReference entity = new Entity(type, 1, position, faction);
-			self->createRecord(entity);
+			//self->createRecord(entity);
 
 			//self->obstructionMap->set(position, OT_CONSIDERED);
 
@@ -173,7 +171,7 @@ void GameManager::miracle(SDL_Event & event, WidgetReference widget)
 			Position position = origin;
 
 			EntityReference entity = new MiracleEntity(type, 1, position, faction);
-			self->createRecord(entity);
+			//self->createRecord(entity);
 		}
 		else
 			std::cout << "Type: " << type << ", but not implemented." << std::endl;

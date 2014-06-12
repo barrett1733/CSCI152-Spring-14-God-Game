@@ -26,7 +26,7 @@ EntityRecord * EntityManager::createRecord(const Entity & entity)
 	if (group < EG_MOBILE)
 	{
 		record->entity = new Entity(entity);
-		obstructionMap->set(record->entity->getPosition(), OT_OBSTRUCTED);
+		//obstructionMap->set(record->entity->getPosition(), OT_OBSTRUCTED);
 	}
 	else
 		record->entity = new MobileEntity(entity);
@@ -39,7 +39,7 @@ EntityRecord * EntityManager::createRecord(const Entity & entity)
 
 	factionMap[faction].push_back(record);
 
-	villageManager.importEntity(record->entity);
+	//villageManager.importEntity(record->entity);
 
 	return record;
 }

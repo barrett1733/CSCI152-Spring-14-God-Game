@@ -52,8 +52,6 @@ class GameManager : public Config
 
 public:
 	GameManager();
-	void setWorldSize(int worldSize);
-
 	void setup();
 	void update();
 	void show();
@@ -68,7 +66,7 @@ public:
 	static void sliderCallback(SDL_Event&, WidgetReference);
 	static void triangleSliderCallback(SDL_Event&, WidgetReference);
 	// From Config, we use this to pull from a config file
-	friend std::ostream & operator<<(std::ostream & os, const GameManager & manager)
+/*	friend std::ostream & operator<<(std::ostream & os, const GameManager & manager)
 	{
 		long entityCount = manager.entityList.size();
 		for(long entityIndex = 0; entityIndex < entityCount; entityIndex ++)
@@ -77,7 +75,7 @@ public:
 			os << *entity << std::endl;
 		}
 		return os;
-	}
+	}*/
 };
 
 #endif

@@ -21,7 +21,6 @@ int main(int argc, char **argv)
 	GameMode gameMode = GM_ERROR;
 
 	GameManager gameManager;
-	gameManager.setWorldSize();
 
 	std::cout << "Starting Game Loop" << std::endl;
 	sdl.launchWindow("Window Title!", 800, 600);
