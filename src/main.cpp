@@ -20,8 +20,8 @@ int main(int argc, char **argv)
 	GameStateManager game;
 	GameMode gameMode = GM_ERROR;
 
-	GameManager entityManager;
-	entityManager.setWorldSize(worldSize);
+	GameManager gameManager;
+	gameManager.setWorldSize();
 
 	std::cout << "Starting Game Loop" << std::endl;
 	sdl.launchWindow("Window Title!", 800, 600);
@@ -33,7 +33,9 @@ int main(int argc, char **argv)
 		std::cout << "Setting up new game." << std::endl;
 		// do world gen, set up new game, etc.
 
-		entityManager.setup();
+		gameManager.setup();
+
+		std::cout << "Setting up new game completed." << std::endl;
 	}
 
 	std::cout << "Continuing Game Loop" << std::endl;
@@ -45,15 +47,15 @@ int main(int argc, char **argv)
 			if(timer < time(0))
 			{
 				timer = time(0);
-				//entityManager.sightCheck();
-				entityManager.update();
+				//gameManager.sightCheck();
+				gameManager.update();
 			}
 
 		}
 
 		else if(gameMode == GM_PAUSING)
 		{
-			entityManager.hide();
+			gameManager.hide();
 		}
 
 		sdl.update(); //  this should be the last call, because it will consume the rest of the frame's time.
