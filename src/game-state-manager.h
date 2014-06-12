@@ -12,8 +12,8 @@
 // Provides the main menu (new game, etc), and the pause button.
 //
 
-#ifndef GAME_MANAGER_H_
-#define GAME_MANAGER_H_
+#ifndef GAME_STATE_MANAGER_H_
+#define GAME_STATE_MANAGER_H_
 
 #include <vector>
 #include <map>
@@ -52,9 +52,9 @@ struct GM_Widget
 	}
 };
 
-class GameManager : public Config
+class GameStateManager : public Config
 {
-	static GameManager * self;
+	static GameStateManager * self;
 	static GameMode mode_;
 
 	std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
@@ -84,7 +84,7 @@ class GameManager : public Config
 	bool setProperty(std::string property, int value1, int value2);
 
 public:
-	GameManager();
+	GameStateManager();
 
 	GameMode mode() { return mode_; }
 };

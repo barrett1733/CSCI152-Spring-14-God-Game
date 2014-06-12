@@ -8,19 +8,19 @@
 //  Game Manager Implementation
 //
 
-#include "game-manager.h"
+#include "game-state-manager.h"
 #include "sdl/sdl-triangle-slider.h"
 #include "sdl/sdl-map-view.h"
 
-GameManager * GameManager::self = 0;
-GameMode GameManager::mode_ = GM_ERROR;
+GameStateManager * GameStateManager::self = 0;
+GameMode GameStateManager::mode_ = GM_ERROR;
 
 void doNothing(SDL_Event & event, WidgetReference widget) {}
 
-GameManager::GameManager()
+GameStateManager::GameStateManager()
 {
 	if(self)
-		throw "GameManager already initialized";
+		throw "GameStateManager already initialized";
 
 	self = this;
 	mode_ = GM_MENU;
@@ -48,7 +48,7 @@ GameManager::GameManager()
 	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
 }
 
-void GameManager::setGameState(GameState state)
+void GameStateManager::setGameState(GameState state)
 {
 	if(mode_ == state) return;
 
@@ -63,50 +63,50 @@ void GameManager::setGameState(GameState state)
 	}
 }
 
-void GameManager::newGame(SDL_Event & event, WidgetReference widget)
+void GameStateManager::newGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "New Game" << std::endl;
 	setGameState(GM_PLAYING);
 }
 
-void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
+void GameStateManager::pauseGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Pause Game" << std::endl;
 	setGameState(GM_PAUSING);
 }
 
-void GameManager::unpauseGame(SDL_Event & event, WidgetReference widget)
+void GameStateManager::unpauseGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Unpause Game" << std::endl;
 	setGameState(GM_PLAYING);
 }
 
-void GameManager::showCredits(SDL_Event & event, WidgetReference widget)
+void GameStateManager::showCredits(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Show Credits (NOT IMPLEMENTED - QUITING)" << std:: endl;
 	mode_ = GM_QUITTING;
 }
 
-void GameManager::quitGame(SDL_Event & event, WidgetReference widget)
+void GameStateManager::quitGame(SDL_Event & event, WidgetReference widget)
 {
 	std::cout << "Quit Game (from button)" << std::endl;
 	mode_ = GM_QUITTING;
 }
 
-void GameManager::quitGame(SDL_Event & event)
+void GameStateManager::quitGame(SDL_Event & event)
 {
 	std::cout << "Quit Game" << std::endl;
 	mode_ = GM_QUITTING;
 }
 
-void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
+void GameStateManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
 	// double value = ((SliderReference) widget) -> getValue();
 	// Commented out for MAX fps
 	//std::cout << "Slider Update: " << value << std::endl;
 }
 
-void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
+void GameStateManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
 {
 	// double valueA = ((TriangleSliderReference) widget)-> getValueA();
 	// double valueB = ((TriangleSliderReference) widget)-> getValueB();
@@ -116,7 +116,7 @@ void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widg
 }
 
 // From Config
-bool GameManager::setProperty(std::string property, std::string value)
+bool GameStateManager::setProperty(std::string property, std::string value)
 {
 
 	if(property == "label")
@@ -179,13 +179,13 @@ bool GameManager::setProperty(std::string property, std::string value)
 	return true;
 }
 
-bool GameManager::setProperty(std::string property, int value)
+bool GameStateManager::setProperty(std::string property, int value)
 {
-	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
+	std::cout << "GameStateManager::SetProperty() : " << property << " = " << value << std::endl;
 	return false;
 }
 
-bool GameManager::setProperty(std::string property, int value1, int value2)
+bool GameStateManager::setProperty(std::string property, int value1, int value2)
 {
 	if(property == "position")
 	{

@@ -11,13 +11,13 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
-#include "game-manager.h"
+#include "game-state-manager.h"
 #include "entity-manager.h"
 #include "world-gen.h"
 
 int main(int argc, char **argv)
 {
-	GameManager game;
+	GameStateManager game;
 	GameMode gameMode = GM_ERROR;
 
 	WorldGeneration world(time(0));
