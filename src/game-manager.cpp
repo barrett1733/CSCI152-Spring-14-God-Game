@@ -42,7 +42,7 @@ void GameManager::setup()
 
 	mapView = new SdlMapView();
 	mapView->hide();
-	entityManager.addWidget(mapView);
+
 	SdlEntity::mapView = mapView;
 	SdlEntity::worldSize = worldSize;
 

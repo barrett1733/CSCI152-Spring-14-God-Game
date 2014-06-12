@@ -10,12 +10,7 @@ EntityManager::~EntityManager()
 {
 }
 
-void EntityManager::addWidget(WidgetReference widget)
-{
-	widgetList.push_back(widget);
-}
-
-void EntityManager::deleteEntity(){}
+void EntityManager::deleteRecord(){}
 
 void EntityManager::createRecord(const Entity & entity)
 {
@@ -33,9 +28,7 @@ void EntityManager::createRecord(const Entity & entity)
 
 	record->widget = new SdlEntity(*record->entity);
 
-	recordList.push_back(record);
-	entityList.push_back((EntityReference)record->entity);
-	widgetList.push_back(record->widget);
+	recordMap.insert(EntityRecordPair(record->entity->getGroup(), record));
 
 	factionMap[faction].push_back(record);
 }
@@ -47,7 +40,7 @@ void EntityManager::createRecord(const EntityReference entity)
 
 void EntityManager::update(ObstructionMapReference obstructionMap)
 {
-	unsigned long count = recordList.size();
-	for (unsigned long index = 0; index < count; index++)
-		recordList[index]->update(entityList, obstructionMap);
+	std::map<EntityGroup, EntityRecord*>::iterator it;
+	for (it = recordMap.begin(); it != recordMap.end(); ++it)
+		it->second->update(obstructionMap);
 }

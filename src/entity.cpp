@@ -211,7 +211,7 @@ void MobileEntity::setTask(TaskReference task)
 	}
 }
 
-void MobileEntity::update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap)
+void MobileEntity::update(ObstructionMapReference obstructionMap)
 {
 	if(target)
 	{

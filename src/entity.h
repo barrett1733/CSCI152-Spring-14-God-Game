@@ -188,7 +188,7 @@ public:
 	void setPosition(Position);
 	void setHealth(int health);
 
-	virtual void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap) {}
+	virtual void update(ObstructionMapReference obstructionMap) {}
 
 	bool operator==(EntityType type) { return this->type == type; }
 
@@ -221,7 +221,7 @@ public:
 	void setStrength(int);
 	void setDefense(int);
 
-	void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap);
+	void update(ObstructionMapReference obstructionMap);
 
 	bool hasTask();
 	void setTask(TaskReference);
