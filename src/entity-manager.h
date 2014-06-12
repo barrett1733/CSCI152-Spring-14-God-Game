@@ -25,7 +25,6 @@ class EntityManager
 	std::vector<EntityRecord*> peacefulMobList;
 	std::vector<EntityRecord*> enemyList;
 	std::vector<EntityRecord*> buildingList;
-	void update();
 
 
 public:
@@ -34,6 +33,7 @@ public:
 	void addWidget(WidgetReference);
 	void addEntity();
 	void deleteEntity(); // removes entity from all applicable lists
+	void update(ObstructionMapReference);
 
 	void getEntityType();
 	// needs a return of some kind, this will define what lists

@@ -73,11 +73,7 @@ void GameManager::update()
 
 	villageManager.update();
 
-	// update should be replaced with checkObstructions(obstructionMap)
-	/*
-	unsigned long count = recordList.size();
-	for(unsigned long index = 0; index < count; index ++)
-		recordList[index]->update(entityList, obstructionMap);*/
+	entityManager.update(obstructionMap);
 
 	// ...
 }

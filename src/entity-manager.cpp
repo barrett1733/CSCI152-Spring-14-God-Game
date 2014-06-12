@@ -44,3 +44,10 @@ void EntityManager::createRecord(const EntityReference entity)
 {
 	createRecord(*entity);
 }
+
+void EntityManager::update(ObstructionMapReference obstructionMap)
+{
+	unsigned long count = recordList.size();
+	for (unsigned long index = 0; index < count; index++)
+		recordList[index]->update(entityList, obstructionMap);
+}
