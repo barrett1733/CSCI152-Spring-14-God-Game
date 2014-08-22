@@ -58,6 +58,18 @@ public:
 	int getX();
 	int getY();
 
+	friend bool operator==(const Position& a, const Position& b)
+	{
+		if ((a.x == b.x) && (a.y == b.y))
+			return true;
+		return false;
+	}
+
+	friend bool operator!=(const Position& a, const Position& b)
+	{
+		return !(a == b);
+	}
+
 	friend std::ostream& operator<< (std::ostream & os, const Position & position)
 	{
 		os << "(" << position.x << ", " << position.y << ")";
