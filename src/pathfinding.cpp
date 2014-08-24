@@ -1,206 +1,74 @@
-//
-//  File: pathfinding.cpp
-//  Author: Anthony Smith
-//  CSci 152
-//  Spring 2014
-//  Instructor: Alex Liu
-//
-
 #include "pathfinding.h"
 
-Pathfinding::Pathfinding(void){
-	
-	initializedStartGoal = false;
-	foundGoal = false;
+Pathfinding::Pathfinding(){
 
 }
 
-void Pathfinding::findPath( vector2 currentPos, vector2 targetPos ){
-	
-	if (!initializedStartGoal){
-		
-		for (int i = 0; i < openList.size(); i++) { delete openList[i]; }
-
-		openList.clear();
-
-		for (int i = 0; i < visitedList.size(); i++) { delete visitedList[i]; }
-
-		visitedList.clear();
-
-		for (int i = 0; i < pathToGoal.size(); i++) { delete pathToGoal[i]; }
-
-		pathToGoal.clear();
-
-		//Initialize start
-		Node start;
-		start.x_Pos = currentPos.x;
-		start.y_Pos = currentPos.y;
-
-		//initialize goal
-		Node goal;
-		goal.x_Pos = targetPos.x;
-		goal.y_Pos = targetPos.y;
-
-		set_Start_Goal(start, goal);
-		initializedStartGoal = true;
-
-	}
-	
-	if (initializedStartGoal) { continuePath(); }
-
-
-}
-
-void Pathfinding::set_Start_Goal(Node start, Node goal)
+bool Pathfinding::exists(NodeList* nodeList, Node* node)
 {
-
-	startNode = new Node(start.x_Pos, start.y_Pos, NULL);
-	goalNode = new Node(goal.x_Pos, goal.y_Pos, &goal);
-
-	startNode->G = 0;
-	startNode->H = startNode->goalDistance(goalNode);
-	startNode->parent = 0;
-
-	openList.push_back(startNode);
-
-}
-
-Node* Pathfinding::getNextNode()
-{
-	
-	double bestF = 999999.0;
-	int nodeIndex = -1;
-	Node* nextNode = NULL;
-
-	for (int i = 0; i < openList.size(); i++)
+	for (int i = 0; i < nodeList->size(); i++)
 	{
-
-		if (openList[i]->getF() < bestF)
+		if (nodeList->at(i) == node)
 		{
-			
-			bestF = openList[i]->getF();
-			nodeIndex = i;
-
+			return true;
 		}
-
 	}
-
-	if (nodeIndex >= 0)
-	{
-		nextNode = openList[nodeIndex];
-		visitedList.push_back(nextNode);
-		openList.erase(openList.begin() + nodeIndex);
-
-	}
-
-	return nextNode;
+	return false;
 }
 
-void Pathfinding::pathOpened(int x, int y, double newCost, Node* parent)
+Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 {
-
-	//if(CELL_BLOCKED) { return; }
-
-	int id = y * 150 + x;
-
-	for (int i = 0; i < visitedList.size(); i++)
+	if (!nodeList->empty())
 	{
-		if (id == visitedList[i]->id)
-		{
-			return;
-		}
-
+		Node* lowestNode = nodeList->at(0);
+		for (int i = 0; i < nodeList->size(); i++)
+		if (nodeList->at(i)->finalCost < lowestNode->finalCost)
+			lowestNode = nodeList->at(i);
+		return lowestNode;
 	}
-	
-	Node* newChild = new Node(x, y, parent);
-	newChild->G = newCost;
-	newChild->H = parent->goalDistance(goalNode);
+	return NULL;
+}
 
-	for (int i = 0; i < openList.size(); i++)
+NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
+{
+	double heuristicCost = sqrt(pow((start.getX() - goal.getX()), 2) + pow((start.getY() - goal.getY()), 2));
+	bool goalReached = false;
+
+	Node startNode(start, NULL, heuristicCost);
+	openList.push_back(&startNode);
+
+	Node* currentNode = NULL;
+
+	while (!goalReached)
 	{
-
-		if (id == openList[i]->id)
+		currentNode = findLowestFCostNode(&openList);
+		if (currentNode == NULL)
 		{
-
-			double newF = newChild->G + newCost + openList[i]->H;
-
-			if (openList[i]->getF() > newF)
-			{
-
-				openList[i]->G = newChild->G + newCost;
-				openList[i]->parent = newChild;
-
-			}
+			std::cout << "Path finding error" << std::endl;
+			break;
+		}
+		else
+		{
+			if (currentNode->pos == goal)
+				goalReached = true;
 			else
 			{
+				closedList.push_back(currentNode);
+				openList.erase(std::find(openList.begin(), openList.end(), currentNode));
 
-				delete newChild;
-				return;
-
+				//find Neighbors
+				for (int x = -1; x <= 1; x++)
+				for (int y = -1; y <= 1; y++)
+				{
+					Node neighborNode(Position(currentNode->pos.getX() + x, currentNode->pos.getY() + y), currentNode, heuristicCost);
+					if (!exists(&closedList, &neighborNode))
+					{
+						neighborNode.parentNode = currentNode;
+						neighborNode.exactCost++;
+						neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
+					}
+				}
 			}
-
-		}
-
-	}
-
-	openList.push_back(newChild);
-}
-
-void Pathfinding::continuePath()
-{
-
-	if (openList.empty()) { return; }
-	
-	Node* currentNode = getNextNode();
-
-	if (currentNode->id == goalNode->id)
-	{
-
-		goalNode->parent = currentNode->parent;
-
-		Node* getPath;
-
-		for (getPath = goalNode; getPath != NULL; getPath = getPath->parent)
-		{
-
-			pathToGoal.push_back(new vector2(getPath->x_Pos, getPath->y_Pos));
-
-		}
-
-		foundGoal = true;
-		return;
-	}
-
-	else
-	{
-
-		//right
-		pathOpened(currentNode->x_Pos + 1, currentNode->y_Pos, currentNode->G + 1, currentNode);
-		//left
-		pathOpened(currentNode->x_Pos - 1, currentNode->y_Pos, currentNode->G + 1, currentNode);
-		//up
-		pathOpened(currentNode->x_Pos, currentNode->y_Pos + 1, currentNode->G + 1, currentNode);
-		//down
-		pathOpened(currentNode->x_Pos, currentNode->y_Pos - 1, currentNode->G + 1, currentNode);
-		//left-up
-		pathOpened(currentNode->x_Pos - 1, currentNode->y_Pos + 1, currentNode->G + 1.414, currentNode);
-		//right-up
-		pathOpened(currentNode->x_Pos + 1, currentNode->y_Pos + 1, currentNode->G + 1.414, currentNode);
-		//left-down
-		pathOpened(currentNode->x_Pos - 1, currentNode->y_Pos - 1, currentNode->G + 1.414, currentNode);
-		//right-down
-		pathOpened(currentNode->x_Pos + 1, currentNode->y_Pos - 1, currentNode->G + 1.414, currentNode);
-
-		for (int i = 0; i < openList.size(); i++)
-		{
-
-			if (currentNode->id == openList[i]->id)
-			{
-				openList.erase(openList.begin() + i);
-			}
-
 		}
 	}
 }
-
-//TODO: Implement structure for storing paths
