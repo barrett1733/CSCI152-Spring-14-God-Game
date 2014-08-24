@@ -39,7 +39,10 @@ class Position
 	int x;
 	int y;
 
-	void checkSanity();
+	//Creation and moving of a position forces sanity
+	//Setting checks sanity
+	void forceSanity();
+	bool checkSanity(int x, int y);
 
 public:
 	Position();
@@ -54,7 +57,7 @@ public:
 	void move(Direction);
 	void move(Direction, int distance);
 
-	void set(int x, int y);
+	bool set(int x, int y);
 	int getX();
 	int getY();
 

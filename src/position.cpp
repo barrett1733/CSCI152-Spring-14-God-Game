@@ -33,12 +33,21 @@ Position::Position(const Position & position) :
 	checkSanity();
 }
 
-void Position::checkSanity()
+bool Position::checkSanity(int x, int y)
 {
-	if(x < 0) x = 0;
-	if(y < 0) y = 0;
-	if(max_x && x > max_x) x = max_x;
-	if(max_y && y > max_y) y = max_y;
+	if (x < 0) return false;
+	if (y < 0) return false;
+	if (max_x && x > max_x) return false;
+	if (max_y && y > max_y) return false;
+	return true;
+}
+
+void Position::forceSanity()
+{
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+	if (max_x && x > max_x) x = max_x;
+	if (max_y && y > max_y) y = max_y;
 }
 
 Position& Position::operator= (const Position & position)
@@ -46,16 +55,21 @@ Position& Position::operator= (const Position & position)
 	x = position.x;
 	y = position.y;
 
-	checkSanity();
+	forceSanity();
 
 	return *this;
 }
 
-void Position::set(int x, int y)
+bool Position::set(int x, int y)
 {
-	this->x = x;
-	this->y = y;
-	checkSanity();
+	if (checkSanity(x, y))
+	{
+		this->x = x;
+		this->y = y;
+		return true;
+	}
+	else
+		return false;
 }
 
 int Position::getX()
@@ -87,7 +101,7 @@ void Position::move(Direction direction)
 	if(direction & D_DOWN)  y++;
 	if(direction & D_LEFT)  x--;
 
-	checkSanity();
+	forceSanity();
 }
 
 void Position::move(Direction direction, int distance)
@@ -97,5 +111,5 @@ void Position::move(Direction direction, int distance)
 	if(direction & D_DOWN)  y += distance;
 	if(direction & D_LEFT)  x -= distance;
 
-	checkSanity();
+	forceSanity();
 }
