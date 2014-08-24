@@ -53,6 +53,8 @@ private:
 	Node* findLowestFCostNode(NodeList* nodeList);
 	double calcHeuristicCost(Position start, Position goal);
 	Position getNeighbor(Position,Neighbors);
+	NodeList* identifySuccessors(Node* cur, Position start, Position end);
+	NodeList* jump(Node* cur, Position direction, Position start, Position end);
 };
 
 

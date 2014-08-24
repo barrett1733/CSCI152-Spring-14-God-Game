@@ -2,8 +2,8 @@
 
 bool Pathfinding::exists(NodeList* nodeList, Node* node)
 {
-	for (int i = 0; i < nodeList->size(); i++)
-		if (nodeList->at(i) == node)
+	for (Node* i : *nodeList)
+		if (i == node)
 			return true;
 	return false;
 }
@@ -13,9 +13,9 @@ Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 	if (!nodeList->empty())
 	{
 		Node* lowestNode = nodeList->at(0);
-		for (int i = 0; i < nodeList->size(); i++)
-		if (nodeList->at(i)->finalCost < lowestNode->finalCost)
-			lowestNode = nodeList->at(i);
+		for (Node* i : *nodeList)
+		if (i->finalCost < lowestNode->finalCost)
+			lowestNode = i;
 		return lowestNode;
 	}
 	return NULL;
@@ -33,6 +33,23 @@ Position Pathfinding::getNeighbor(Position pos, Neighbors direction)
 	neighbor.move(direction);
 	return neighbor;
 }
+
+NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position end)
+{
+	NodeList successors;
+	NodeList neighbors;
+	neighbors.push_back(cur);
+	for (Node* i : neighbors)
+	{
+
+	}
+}
+
+Node* Pathfinding::jump(Node* cur, Position direction, Position start, Position end)
+{
+
+}
+
 
 NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
 {
