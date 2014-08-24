@@ -47,7 +47,18 @@ NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position en
 
 Node* Pathfinding::jump(Node* cur, Position direction, Position start, Position end)
 {
-
+	/*
+	Node n = step(cur,direction)
+	if( n = obstructed or checksanity fails)
+		return null;
+	if ( n = g)
+		return n
+	if direction = diagonal
+		for all directions i
+			if jump (cur, i, start, end) != null
+				return n
+	return jump (cur, direction, start, end)
+	*/
 }
 
 
