@@ -1,18 +1,10 @@
 #include "pathfinding.h"
 
-Pathfinding::Pathfinding(){
-
-}
-
 bool Pathfinding::exists(NodeList* nodeList, Node* node)
 {
 	for (int i = 0; i < nodeList->size(); i++)
-	{
 		if (nodeList->at(i) == node)
-		{
 			return true;
-		}
-	}
 	return false;
 }
 
@@ -29,10 +21,17 @@ Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 	return NULL;
 }
 
+double Pathfinding::calculateHeuristicCost(Position start, Position goal)
+{
+	//Eucildian calculation
+	return sqrt(pow((start.getX() - goal.getX()), 2) + pow((start.getY() - goal.getY()), 2));
+}
+
 NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
 {
-	double heuristicCost = sqrt(pow((start.getX() - goal.getX()), 2) + pow((start.getY() - goal.getY()), 2));
-	bool goalReached = false;
+	double heuristicCost = calculateHeuristicCost(start,goal);
+
+	goalReached = false;
 
 	Node startNode(start, NULL, heuristicCost);
 	openList.push_back(&startNode);
@@ -44,13 +43,15 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 		currentNode = findLowestFCostNode(&openList);
 		if (currentNode == NULL)
 		{
-			std::cout << "Path finding error" << std::endl;
+			std::cout << "Pathfinding error" << std::endl;
 			break;
 		}
 		else
 		{
 			if (currentNode->pos == goal)
+			{
 				goalReached = true;
+			}
 			else
 			{
 				closedList.push_back(currentNode);

@@ -30,9 +30,11 @@ private:
 
 	NodeList openList;
 	NodeList closedList;
+	bool goalReached;
 
 	bool exists(NodeList*, Node*);
 	Node* findLowestFCostNode(NodeList* nodeList);
+	double calculateHeuristicCost(Position start, Position goal);
 };
 
 
