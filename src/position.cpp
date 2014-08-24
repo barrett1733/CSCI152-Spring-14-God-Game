@@ -23,14 +23,14 @@ Position::Position(int x, int y) :
 	x(x),
 	y(y)
 {
-	checkSanity();
+	forceSanity();
 }
 
 Position::Position(const Position & position) :
 	x(position.x),
 	y(position.y)
 {
-	checkSanity();
+	forceSanity();
 }
 
 bool Position::checkSanity(int x, int y)
