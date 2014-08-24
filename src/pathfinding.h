@@ -19,8 +19,25 @@ struct Node {
 		finalCost(0)
 	{}
 };
+
 typedef std::vector<Node*> NodeList;
 typedef std::vector<Node*>::iterator NodeListIter;
+#define standardNeighbor 5
+#define diagonalNeighbor 7
+
+enum
+{
+	N_UP = 0,
+	N_UP_RIGHT,
+	N_RIGHT,
+	N_DOWN_RIGHT,
+	N_DOWN,
+	N_DOWN_LEFT,
+	N_LEFT,
+	N_LEFT_UP,
+	N_COUNT
+};
+typedef int Neighbors;
 
 class Pathfinding
 {
@@ -34,7 +51,8 @@ private:
 
 	bool exists(NodeList*, Node*);
 	Node* findLowestFCostNode(NodeList* nodeList);
-	double calculateHeuristicCost(Position start, Position goal);
+	double calcHeuristicCost(Position start, Position goal);
+	Position getNeighbor(Position,Neighbors);
 };
 
 

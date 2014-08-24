@@ -21,19 +21,24 @@ Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 	return NULL;
 }
 
-double Pathfinding::calculateHeuristicCost(Position start, Position goal)
+double Pathfinding::calcHeuristicCost(Position start, Position goal)
 {
 	//Eucildian calculation
 	return sqrt(pow((start.getX() - goal.getX()), 2) + pow((start.getY() - goal.getY()), 2));
 }
 
+Position Pathfinding::getNeighbor(Position pos, Neighbors direction)
+{
+	Position neighbor(pos);
+	neighbor.move(direction);
+	return neighbor;
+}
+
 NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
 {
-	double heuristicCost = calculateHeuristicCost(start,goal);
-
 	goalReached = false;
 
-	Node startNode(start, NULL, heuristicCost);
+	Node startNode(start, NULL, calcHeuristicCost(start, goal));
 	openList.push_back(&startNode);
 
 	Node* currentNode = NULL;
@@ -46,28 +51,41 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 			std::cout << "Pathfinding error" << std::endl;
 			break;
 		}
+
+		closedList.push_back(currentNode);
+
+		if (currentNode->pos == goal)
+		{
+			goalReached = true;
+		}
 		else
 		{
-			if (currentNode->pos == goal)
+			openList.erase(std::find(openList.begin(), openList.end(), currentNode));
+			//find Neighbors
+			for (int i = N_UP; i < N_COUNT; i++)
 			{
-				goalReached = true;
-			}
-			else
-			{
-				closedList.push_back(currentNode);
-				openList.erase(std::find(openList.begin(), openList.end(), currentNode));
-
-				//find Neighbors
-				for (int x = -1; x <= 1; x++)
-				for (int y = -1; y <= 1; y++)
+				Node neighborNode(getNeighbor(currentNode->pos, i), currentNode, calcHeuristicCost(currentNode->pos, goal));
+				if (exists(&closedList, &neighborNode))
 				{
-					Node neighborNode(Position(currentNode->pos.getX() + x, currentNode->pos.getY() + y), currentNode, heuristicCost);
-					if (!exists(&closedList, &neighborNode))
-					{
-						neighborNode.parentNode = currentNode;
-						neighborNode.exactCost++;
-						neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
-					}
+					neighborNode.parentNode = currentNode;
+					if (i % 2 == 0)
+						neighborNode.exactCost = currentNode->exactCost + standardNeighbor;
+					else
+						neighborNode.exactCost = currentNode->exactCost + diagonalNeighbor;
+
+					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
+				}
+				else if (!exists(&openList, &neighborNode))
+				{
+					neighborNode.parentNode = currentNode;
+					neighborNode.exactCost++;
+					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
+				}
+				else
+				{
+					neighborNode.parentNode = currentNode;
+					neighborNode.exactCost++;
+					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
 				}
 			}
 		}
