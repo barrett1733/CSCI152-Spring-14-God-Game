@@ -41,7 +41,7 @@ bool Position::checkSanity(int x, int y)
 	if (max_y && y > max_y) return false;
 	return true;
 }
-
+//Return true if inside of map
 bool Position::checkSanity()
 {
 	return checkSanity(x, y);

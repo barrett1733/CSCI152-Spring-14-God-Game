@@ -18,6 +18,18 @@ Direction Pathfinding::direction(Position cur, Position neighbor)
 	return direction;
 }
 
+Direction* parseDirection(Direction direction)
+{
+	Direction directionArray[2];
+	directionArray[0] = directionArray[1] = 0;
+	int i = 0;
+	if (direction & D_UP) { directionArray[i] = D_UP; i++; }
+	if (direction & D_DOWN) { directionArray[i] = D_DOWN; i++; }
+	if (direction & D_LEFT) { directionArray[i] = D_LEFT; i++; }
+	if (direction & D_RIGHT) { directionArray[i] = D_RIGHT; i++; }
+	return directionArray;
+}
+
 Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 {
 	if (!nodeList->empty())
@@ -51,26 +63,32 @@ NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position en
 	neighbors.push_back(cur);
 	for (Node* i : neighbors)
 	{
-		i = jump(cur, direction(cur, i), start, end);
+		i = jump(cur, direction(cur->pos, i->pos), start, end);
 		successors.push_back(i);
 	}
 	return &successors;
 }
 
-Node* Pathfinding::jump(Node* cur, Position direction, Position start, Position end)
+Node* Pathfinding::jump(Node* cur, Direction direction, Position start, Position end)
 {
-	/*
-	Node n = step(cur,direction)  ?? getNeighbor
-	if( n = obstructed or checksanity fails)
-		return null;
-	if ( n = g)
-		return n
-	if direction = diagonal
-		for all directions i
-			if jump (cur, i, start, end) != null
-				return n
-	return jump (cur, direction, start, end)
-	*/
+	Node neighbor(*cur);
+	neighbor.pos.move(direction);
+	if (!neighbor.pos.checkSanity()) // check obstruction
+		return NULL;
+	if (neighbor.pos == end)
+		return &neighbor;
+	if (direction != D_UP &&
+		direction != D_DOWN &&
+		direction != D_LEFT &&
+		direction != D_RIGHT &&
+		direction != D_NONE) //direction is diagonal
+	{
+		Direction* directions = parseDirection(direction);
+		for (int i = 0; i < sizeof(directions); i++)
+			if (jump(cur, directions[i], start, end) != NULL)
+				return &neighbor;
+	}
+	return jump(cur, direction, start, end);
 }
 
 
