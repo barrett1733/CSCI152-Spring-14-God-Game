@@ -8,6 +8,16 @@ bool Pathfinding::exists(NodeList* nodeList, Node* node)
 	return false;
 }
 
+Direction Pathfinding::direction(Position cur, Position neighbor)
+{
+	int direction = 0;
+	if (cur.getX() > neighbor.getX()) direction & D_DOWN;
+	if (cur.getX() < neighbor.getX()) direction & D_UP;
+	if (cur.getY() > neighbor.getY()) direction & D_RIGHT;
+	if (cur.getY() < neighbor.getY()) direction & D_LEFT;
+	return direction;
+}
+
 Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 {
 	if (!nodeList->empty())
@@ -27,10 +37,10 @@ double Pathfinding::calcHeuristicCost(Position start, Position goal)
 	return sqrt(pow((start.getX() - goal.getX()), 2) + pow((start.getY() - goal.getY()), 2));
 }
 
-Position Pathfinding::getNeighbor(Position pos, Neighbors direction)
+Position Pathfinding::getNeighbor(Position pos, Position direction)
 {
 	Position neighbor(pos);
-	neighbor.move(direction);
+	neighbor.set(direction);
 	return neighbor;
 }
 
@@ -41,14 +51,16 @@ NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position en
 	neighbors.push_back(cur);
 	for (Node* i : neighbors)
 	{
-
+		i = jump(cur, direction(cur, i), start, end);
+		successors.push_back(i);
 	}
+	return &successors;
 }
 
 Node* Pathfinding::jump(Node* cur, Position direction, Position start, Position end)
 {
 	/*
-	Node n = step(cur,direction)
+	Node n = step(cur,direction)  ?? getNeighbor
 	if( n = obstructed or checksanity fails)
 		return null;
 	if ( n = g)

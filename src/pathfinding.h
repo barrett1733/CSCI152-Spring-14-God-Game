@@ -25,19 +25,6 @@ typedef std::vector<Node*>::iterator NodeListIter;
 #define standardNeighbor 5
 #define diagonalNeighbor 7
 
-enum
-{
-	N_UP = 0,
-	N_UP_RIGHT,
-	N_RIGHT,
-	N_DOWN_RIGHT,
-	N_DOWN,
-	N_DOWN_LEFT,
-	N_LEFT,
-	N_LEFT_UP,
-	N_COUNT
-};
-typedef int Neighbors;
 
 class Pathfinding
 {
@@ -49,10 +36,12 @@ private:
 	NodeList closedList;
 	bool goalReached;
 
+	
 	bool exists(NodeList*, Node*);
+	Direction direction(Position, Position);
 	Node* findLowestFCostNode(NodeList* nodeList);
 	double calcHeuristicCost(Position start, Position goal);
-	Position getNeighbor(Position,Neighbors);
+	Position getNeighbor(Position,Position);
 	NodeList* identifySuccessors(Node* cur, Position start, Position end);
 	Node* jump(Node* cur, Position direction, Position start, Position end);
 };
