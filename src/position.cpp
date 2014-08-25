@@ -72,6 +72,11 @@ bool Position::set(int x, int y)
 		return false;
 }
 
+bool Position::set(Position pos)
+{
+	return set(pos.x, pos.y);
+}
+
 int Position::getX()
 {
 	return x;

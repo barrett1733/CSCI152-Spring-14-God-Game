@@ -58,6 +58,7 @@ public:
 	void move(Direction, int distance);
 
 	bool set(int x, int y);
+	bool set(Position);
 	int getX();
 	int getY();
 
