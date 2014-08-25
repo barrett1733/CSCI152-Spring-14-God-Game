@@ -51,6 +51,8 @@ public:
 
 	Position& operator= (const Position &);
 
+	bool checkSanity();
+
 	double distance(const Position &);
 	double direction(const Position &);
 

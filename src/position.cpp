@@ -42,6 +42,11 @@ bool Position::checkSanity(int x, int y)
 	return true;
 }
 
+bool Position::checkSanity()
+{
+	return checkSanity(x, y);
+}
+
 void Position::forceSanity()
 {
 	if (x < 0) x = 0;
@@ -105,8 +110,6 @@ void Position::move(Direction direction)
 	if(direction & D_RIGHT) x++;
 	if(direction & D_DOWN)  y++;
 	if(direction & D_LEFT)  x--;
-
-	forceSanity();
 }
 
 void Position::move(Direction direction, int distance)
