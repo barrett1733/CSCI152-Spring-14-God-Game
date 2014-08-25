@@ -42,7 +42,7 @@ private:
 	Direction* parseDirection(Direction);
 	Node* findLowestFCostNode(NodeList* nodeList);
 	double calcHeuristicCost(Position start, Position goal);
-	Position getNeighbor(Position,Position);
+	Position getNeighbor(Position,Direction);
 	NodeList* identifySuccessors(Node* cur, Position start, Position end);
 	Node* jump(Node* cur, Direction direction, Position start, Position end);
 };

@@ -49,10 +49,10 @@ double Pathfinding::calcHeuristicCost(Position start, Position goal)
 	return sqrt(pow((start.getX() - goal.getX()), 2) + pow((start.getY() - goal.getY()), 2));
 }
 
-Position Pathfinding::getNeighbor(Position pos, Position direction)
+Position Pathfinding::getNeighbor(Position pos, Direction direction)
 {
 	Position neighbor(pos);
-	neighbor.set(direction);
+	neighbor.move(direction);
 	return neighbor;
 }
 
@@ -120,31 +120,13 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 		{
 			openList.erase(std::find(openList.begin(), openList.end(), currentNode));
 			//find Neighbors
-			for (int i = N_UP; i < N_COUNT; i++)
+			Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHeuristicCost(currentNode->pos, goal));
+			if (!exists(&closedList, &neighborNode))
 			{
-				Node neighborNode(getNeighbor(currentNode->pos, i), currentNode, calcHeuristicCost(currentNode->pos, goal));
-				if (exists(&closedList, &neighborNode))
-				{
-					neighborNode.parentNode = currentNode;
-					if (i % 2 == 0)
-						neighborNode.exactCost = currentNode->exactCost + standardNeighbor;
-					else
-						neighborNode.exactCost = currentNode->exactCost + diagonalNeighbor;
-
-					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
-				}
-				else if (!exists(&openList, &neighborNode))
-				{
-					neighborNode.parentNode = currentNode;
-					neighborNode.exactCost++;
-					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
-				}
-				else
-				{
-					neighborNode.parentNode = currentNode;
-					neighborNode.exactCost++;
-					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
-				}
+				neighborNode.parentNode = currentNode;
+				neighborNode.exactCost++;
+				neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
+				openList.push_back(&neighborNode);
 			}
 		}
 	}
