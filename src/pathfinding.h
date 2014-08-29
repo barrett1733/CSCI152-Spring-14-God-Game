@@ -1,22 +1,9 @@
 #ifndef PATHFINDING_H_
 #define PATHFINDING_H_
 
-/*
-Jump Point Search Code:
-https://code.google.com/p/ddh/
-
-Jump Point Search Paper:
-http://www.aaai.org/ocs/index.php/AAAI/AAAI11/paper/viewFile/3761/4007
-
-Jump Point Search Explaination:
-http://harablog.wordpress.com/2011/09/07/jump-point-search/
-
-*/
-
 #include <iostream>
 #include <math.h>
 #include <vector>
-#include <set>
 #include <algorithm>
 #include "obstruction-map.h"
 
@@ -33,7 +20,8 @@ struct Node {
 	{}
 };
 
-typedef std::set<Node*> NodeList;
+typedef std::vector<Node*> NodeList;
+typedef std::vector<Node*>::iterator NodeListIter;
 #define standardNeighbor 5
 #define diagonalNeighbor 7
 
@@ -48,7 +36,8 @@ private:
 	NodeList closedList;
 	bool goalReached;
 
-	// nodeLists should not be passed
+	
+	bool exists(NodeList*, Node*);
 	Direction direction(Position, Position);
 	Direction* parseDirection(Direction);
 	Node* findLowestFCostNode(NodeList* nodeList);
@@ -56,7 +45,6 @@ private:
 	Position getNeighbor(Position,Direction);
 	NodeList* identifySuccessors(Node* cur, Position start, Position end);
 	Node* jump(Node* cur, Direction direction, Position start, Position end);
-	void cleanUp(); // needs implimentation
 };
 
 
