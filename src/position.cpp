@@ -76,21 +76,19 @@ bool Position::set(int x, int y)
 	else
 		return false;
 }
-
 bool Position::set(Position pos)
 {
 	return set(pos.x, pos.y);
 }
-
 bool Position::setX(int x)
 {
 	return set(x, y);
 }
-
 bool Position::setY(int y)
 {
 	return set(x, y);
 }
+
 
 int Position::getX()
 {
@@ -120,6 +118,10 @@ void Position::move(Direction direction)
 	if(direction & D_RIGHT) x++;
 	if(direction & D_DOWN)  y++;
 	if(direction & D_LEFT)  x--;
+
+
+	//worldgen.getnextentity needs this
+	forceSanity();
 }
 
 void Position::move(Direction direction, int distance)
@@ -128,4 +130,6 @@ void Position::move(Direction direction, int distance)
 	if(direction & D_RIGHT) x += distance;
 	if(direction & D_DOWN)  y += distance;
 	if(direction & D_LEFT)  x -= distance;
+
+	forceSanity();
 }

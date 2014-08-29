@@ -316,14 +316,16 @@ int WorldGeneration::getEntityCount()
 
 void WorldGeneration::nextPosition()
 {
+	int prev_x = current.getX();
+	int prev_y = current.getY();
 	current.move(D_RIGHT);
-	if (current.getX() == world_info[WI_MAP_SIZE])
+	if(current.getX() == prev_x)
 	{
+		current.set(0,prev_y);
 		current.move(D_DOWN);
-		current.setX(0);
-		if (current.getY() == world_info[WI_MAP_SIZE])
+		if(current.getY() == prev_y)
 		{
-			current.setY(0);
+			current.set(0,0);
 			cycled = true;
 		}
 	}
