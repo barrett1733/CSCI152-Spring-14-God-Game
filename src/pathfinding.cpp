@@ -18,7 +18,7 @@ Direction Pathfinding::direction(Position cur, Position neighbor)
 	return direction;
 }
 
-Direction* parseDirection(Direction direction)
+Direction* Pathfinding::parseDirection(Direction direction)
 {
 	Direction directionArray[2];
 	directionArray[0] = directionArray[1] = 0;
@@ -130,4 +130,5 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 			}
 		}
 	}
+	return &closedList;
 }
