@@ -112,24 +112,28 @@ double Position::direction(const Position & position)
 	return atan(y/x) + (x < 0 ? 3.14159265359 : 0);
 }
 
-void Position::move(Direction direction)
+void Position::moveUnchecked(Direction direction)
 {
 	if(direction & D_UP)    y--;
 	if(direction & D_RIGHT) x++;
 	if(direction & D_DOWN)  y++;
 	if(direction & D_LEFT)  x--;
-
-
-	//worldgen.getnextentity needs this
-	forceSanity();
 }
 
-void Position::move(Direction direction, int distance)
+void Position::moveUnchecked(Direction direction, int distance)
 {
 	if(direction & D_UP)    y -= distance;
 	if(direction & D_RIGHT) x += distance;
 	if(direction & D_DOWN)  y += distance;
 	if(direction & D_LEFT)  x -= distance;
-
+}
+void Position::move(Direction direction)
+{
+	moveUnchecked(direction);
+	forceSanity();
+}
+void Position::move(Direction direction, int distance)
+{
+	moveUnchecked(direction, distance);
 	forceSanity();
 }
