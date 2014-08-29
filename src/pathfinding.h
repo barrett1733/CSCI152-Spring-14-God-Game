@@ -1,5 +1,16 @@
 #ifndef PATHFINDING_H_
 #define PATHFINDING_H_
+/*
+Jump Point Search Code:
+https://code.google.com/p/ddh/
+
+Jump Point Search Paper:
+http://www.aaai.org/ocs/index.php/AAAI/AAAI11/paper/viewFile/3761/4007
+
+Jump Point Search Explaination:
+http://harablog.wordpress.com/2011/09/07/jump-point-search/
+
+*/
 
 #include <iostream>
 #include <math.h>
