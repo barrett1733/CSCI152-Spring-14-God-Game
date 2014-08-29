@@ -1,13 +1,5 @@
 #include "pathfinding.h"
 
-bool Pathfinding::exists(NodeList* nodeList, Node* node)
-{
-	for (Node* i : *nodeList)
-		if (i == node)
-			return true;
-	return false;
-}
-
 Direction Pathfinding::direction(Position cur, Position neighbor)
 {
 	int direction = 0;
@@ -60,11 +52,11 @@ NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position en
 {
 	NodeList successors;
 	NodeList neighbors;
-	neighbors.push_back(cur);
+	neighbors.insert(cur);
 	for (Node* i : neighbors)
 	{
 		i = jump(cur, direction(cur->pos, i->pos), start, end);
-		successors.push_back(i);
+		successors.insert(i);
 	}
 	return &successors;
 }
@@ -97,7 +89,7 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 	goalReached = false;
 
 	Node startNode(start, NULL, calcHeuristicCost(start, goal));
-	openList.push_back(&startNode);
+	openList.insert(&startNode);
 
 	Node* currentNode = NULL;
 
@@ -110,7 +102,7 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 			break;
 		}
 
-		closedList.push_back(currentNode);
+		closedList.insert(currentNode);
 
 		if (currentNode->pos == goal)
 		{
@@ -118,15 +110,24 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 		}
 		else
 		{
-			openList.erase(std::find(openList.begin(), openList.end(), currentNode));
+			openList.erase(openList.find(currentNode));
 			//find Neighbors
+			// find neighbor(direction travelled from, currentNode->pos)
 			Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHeuristicCost(currentNode->pos, goal));
-			if (!exists(&closedList, &neighborNode))
+			if (closedList.find(&neighborNode) == closedList.end())
 			{
+				//ignore
+			}
+			else if (openList.find(&neighborNode) != openList.end())
+			{
+				//exact cost needs to be fixed
 				neighborNode.parentNode = currentNode;
 				neighborNode.exactCost++;
 				neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
-				openList.push_back(&neighborNode);
+			}
+			else
+			{
+				openList.insert(&neighborNode);
 			}
 		}
 	}
