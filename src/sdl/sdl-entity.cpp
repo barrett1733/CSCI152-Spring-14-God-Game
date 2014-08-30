@@ -98,22 +98,20 @@ SdlEntity::SdlEntity(const Entity & entity) :
 	boundingBox.w = size * scale;
 	boundingBox.h = size * scale;
 
-	updatePosition();
+	erase();
 
 	state = WS_HIDDEN;
 }
 
-void SdlEntity::updatePosition()
+void SdlEntity::erase()
 {
 	mapView->clear(boundingBox);
-
 	boundingBox.x = (entity->getPosition().getX() - (scale - 1)/2) * size;
 	boundingBox.y = (entity->getPosition().getY() - (scale - 1)/2) * size;
-
-	mapView->draw(surface, boundingBox);
 }
+
 
 void SdlEntity::update()
 {
-	updatePosition();
+	mapView->draw(surface, boundingBox);
 }

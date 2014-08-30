@@ -8,6 +8,11 @@ struct EntityRecord
 	Entity * entity;
 	SdlEntityReference widget;
 
+	void erase()
+	{
+		if (widget) widget->erase();
+	}
+
 	void update(ObstructionMapReference obstructionMap)
 	{
 		if (entity) entity->update(obstructionMap);

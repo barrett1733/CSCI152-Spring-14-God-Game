@@ -32,8 +32,8 @@ class SdlEntity : public SdlWidget
 public:
 	SdlEntity(const Entity&);
 
+	void erase();
 	void update();
-	void updatePosition();
 
 	static int worldSize;
 	static SdlMapView * mapView;

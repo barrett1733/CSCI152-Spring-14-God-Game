@@ -41,6 +41,10 @@ void EntityManager::createRecord(const EntityReference entity)
 void EntityManager::update(ObstructionMapReference obstructionMap)
 {
 	std::map<EntityGroup, EntityRecord*>::iterator it;
+
+	for (it = recordMap.begin(); it != recordMap.end(); ++it)
+		it->second->erase();
+
 	for (it = recordMap.begin(); it != recordMap.end(); ++it)
 		it->second->update(obstructionMap);
 }
