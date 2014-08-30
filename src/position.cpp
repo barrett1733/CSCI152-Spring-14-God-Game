@@ -114,10 +114,7 @@ double Position::direction(const Position & position)
 
 void Position::moveUnchecked(Direction direction)
 {
-	if(direction & D_UP)    y--;
-	if(direction & D_RIGHT) x++;
-	if(direction & D_DOWN)  y++;
-	if(direction & D_LEFT)  x--;
+	return moveUnchecked(direction, 1);
 }
 
 void Position::moveUnchecked(Direction direction, int distance)
@@ -129,8 +126,7 @@ void Position::moveUnchecked(Direction direction, int distance)
 }
 void Position::move(Direction direction)
 {
-	moveUnchecked(direction);
-	forceSanity();
+	return move(direction, 1);
 }
 void Position::move(Direction direction, int distance)
 {
