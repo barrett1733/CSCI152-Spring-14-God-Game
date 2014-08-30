@@ -189,6 +189,7 @@ public:
 	void setHealth(int health);
 
 	virtual void update(ObstructionMapReference obstructionMap) {}
+	virtual void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap) {}
 
 	bool operator==(EntityType type) { return this->type == type; }
 
