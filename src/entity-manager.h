@@ -1,6 +1,6 @@
 #pragma once
 #include "entity.h"
-#include "sdl\sdl-entity.h"
+#include "sdl/sdl-entity.h"
 
 
 struct EntityRecord
