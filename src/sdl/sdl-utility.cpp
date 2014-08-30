@@ -223,27 +223,27 @@ ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 	Uint32 outer = getColor(image, C_BLACK);
 
 	double m = 2.0 * height / width;
-	int mid = width/2;
+	double mid = (width - 1) / 2.0;
 
 	int y,x;
 
-	for(y = 0; y < height; y++)
+	for(y = 0; y < height-1; y++)
 	{
-		for(x = mid - y / m; x <= mid; x ++)
+		// Paint the interior.
+		for(x = mid - y / m; x < mid; x ++)
 		{
 			set_pixel(image, x, y, inner);
-			set_pixel(image, width - x, y, inner);
+			set_pixel(image, width - x - 1.5, y, inner);
 		}
 
-
+		// Draw the left and right edges.
 		set_pixel(image, mid - y / m, y, outer);
-		set_pixel(image, width - mid + y / m, y, outer);
+		set_pixel(image, width - mid + y / m - 0.5, y, outer);
 	}
-	for(x = 0; x <= mid; x ++)
-	{
-		set_pixel(image, x, height-1, outer);
-		set_pixel(image, width - x, height-1, outer);
-	}
+
+	// Draw the bottom edge.
+	for(x = 0; x < width; x ++)
+		set_pixel(image, x, height - 1, outer);
 
 	return image;
 }
