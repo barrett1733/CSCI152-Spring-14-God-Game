@@ -170,6 +170,7 @@ void GameManager::miracle(SDL_Event & event, WidgetReference widget)
 			Position position = origin;
 
 			EntityReference entity = new MiracleEntity(type, 1, position, faction);
+			#pragma unused (entity)
 			//self->createRecord(entity);
 		}
 		else
