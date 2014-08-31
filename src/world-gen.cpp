@@ -264,7 +264,7 @@ EntityReference WorldGeneration::getNextEntity()
 				case ET_TREE:
 				case ET_STONE:
 				case ET_IRON:
-					to_return->setFaction(F_STATIC);
+					to_return->setFaction(F_RESOURCE);
 					to_return->setGroup(EG_RESOURCE);
 					break;
 				//passive animals

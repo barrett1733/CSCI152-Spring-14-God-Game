@@ -27,7 +27,7 @@ typedef Task * TaskReference;
 
 enum Faction {
 	F_NONE,
-	F_STATIC, // TODO: Rename F_RESOURCE. -CH
+	F_RESOURCE,
 	F_ANIMAL_DOMESTIC, // Should not exist. Domistics belong to a village faction. -CH
 	F_ANIMAL_PASSIVE,
 	F_ANIMAL_HOSTILE,
