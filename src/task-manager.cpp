@@ -15,7 +15,7 @@ std::map<TaskType, ResourceGroup> TaskManager::taskResourceGroupMap
     { TASK_GATHER_STONE, RG_STONE }
 };
 
-void TaskManager::assign(MobileEntityVec & villagerList, EntityVec & resourceList)
+void TaskManager::assign(MobileEntityList & villagerList, EntityList & resourceList)
 {
 	//pop from unassignedTaskList
 	//pop a villager
@@ -85,7 +85,7 @@ TaskQueue TaskManager::getUnassignedTaskQueue()
 }
 
 
-Position TaskManager::getNearestResource(MobileEntityReference villager, EntityVec & resourceList, TaskType taskType)
+Position TaskManager::getNearestResource(MobileEntityReference villager, EntityList & resourceList, TaskType taskType)
 {
 	EntityReference nearestTarget = nullptr;
 	double min = DBL_MAX;
@@ -130,7 +130,7 @@ ResourceGroup TaskManager::getResourceGroup(EntityType type)
     return RG_NONE;
 }
 
-void TaskManager::cleanTaskList(MobileEntityVec & villagerList)
+void TaskManager::cleanTaskList(MobileEntityList & villagerList)
 {
 	for (TaskIter iter = inProgressTaskList.begin(); iter != inProgressTaskList.end();)
 	{

@@ -32,11 +32,11 @@
 //extern std::vector<Entity *> stoneEntities;
 //extern std::vector<Entity *> woodEntities;
 
-typedef std::vector<MobileEntityReference> MobileEntityVec;
-typedef MobileEntityVec ::iterator MobileEntityIter;
+typedef std::vector<MobileEntityReference> MobileEntityList;
+typedef MobileEntityList ::iterator MobileEntityIter;
 
-typedef std::vector<EntityReference> EntityVec;
-typedef EntityVec ::iterator EntityIter;
+typedef std::vector<EntityReference> EntityList;
+typedef EntityList ::iterator EntityIter;
 
 typedef std::vector<TaskReference> TaskVec;
 typedef TaskVec::iterator TaskIter;
@@ -73,23 +73,23 @@ class TaskManager
 private:
 	TaskQueue unassignedTaskQueue;
 	TaskVec inProgressTaskList;
-	//EntityVec availableVillagers;
+	//EntityList availableVillagers;
     static std::map<TaskType, ResourceGroup> taskResourceGroupMap;
 
 public:
-	void assign(MobileEntityVec & villagerList, EntityVec & resourceList);
+	void assign(MobileEntityList & villagerList, EntityList & resourceList);
 	void updateProgress();
 	void registerTask(TaskReference task);
 
-    Position getNearestResource(MobileEntityReference villager, EntityVec & resourceList, TaskType taskType);
-//	Entity * getNearestResource(Entity * villager, EntityVec ev);
+    Position getNearestResource(MobileEntityReference villager, EntityList & resourceList, TaskType taskType);
+//	Entity * getNearestResource(Entity * villager, EntityList ev);
 //	Entity * findResource(Entity *, TaskType);
 
 	TaskVec getInProgressTaskList();
 	TaskQueue getUnassignedTaskQueue();
     TaskGroup getTaskGroup(TaskType type);
     ResourceGroup getResourceGroup(EntityType type);
-	void cleanTaskList(MobileEntityVec & villagerList);
+	void cleanTaskList(MobileEntityList & villagerList);
 };
 #endif
 

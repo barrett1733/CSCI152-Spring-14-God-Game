@@ -64,8 +64,8 @@ public:
 };
 
 typedef Village * VillageReference;
-typedef std::vector<EntityReference> EntityVec;
-typedef EntityVec::iterator EntityIter;
+typedef std::vector<EntityReference> EntityList;
+typedef EntityList::iterator EntityIter;
 
 
 #endif

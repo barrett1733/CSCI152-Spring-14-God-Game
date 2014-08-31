@@ -58,7 +58,7 @@ JobList JobManager:: getJobList()
 	return this->jobList;
 }
 
-void JobManager::update(MobileEntityVec & villagerList, EntityVec & resourceList)
+void JobManager::update(MobileEntityList & villagerList, EntityList & resourceList)
 {
     taskManager->assign(villagerList, resourceList);
     taskManager->updateProgress();

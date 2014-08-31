@@ -55,7 +55,7 @@ public:
 
 	JobList getJobList();
 
-    void update(MobileEntityVec & villagerList, EntityVec & resourceList);
+    void update(MobileEntityList & villagerList, EntityList & resourceList);
 
 	TaskManager * getTaskManager();
 
