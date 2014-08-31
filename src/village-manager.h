@@ -31,7 +31,7 @@ public:
 
 	void show();
 	void hide();
-	void update();
+	void update(ObstructionMapReference);
 };
 
 #endif

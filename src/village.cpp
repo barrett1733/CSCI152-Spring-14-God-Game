@@ -50,7 +50,7 @@ void Village::importEntity(EntityReference entity)
 	}
 }
 
-void Village::update()
+void Village::update(ObstructionMapReference obstructionMap)
 {
 	// decideAction();
 

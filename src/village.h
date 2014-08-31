@@ -54,7 +54,7 @@ public:
 
 	void importEntity(EntityReference);
 
-	void update();
+	void update(ObstructionMapReference);
 
 	EntityReference getTownCenter();
 

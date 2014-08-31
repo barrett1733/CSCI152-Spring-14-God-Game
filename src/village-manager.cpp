@@ -39,7 +39,7 @@ void VillageManager::hide()
 	visible = false;
 }
 
-void VillageManager::update()
+void VillageManager::update(ObstructionMapReference obstructionMap)
 {
 	show();
 	// TODO: Clean out dead entities from resource list.
@@ -47,6 +47,6 @@ void VillageManager::update()
 	std::map<Faction, VillageReference>::iterator it;
 	for (it = villageMap.begin(); it != villageMap.end(); ++it)
 	{
-		it->second->update();
+			it->second->update(obstructionMap);
 	}
 }

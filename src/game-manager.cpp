@@ -71,7 +71,7 @@ void GameManager::update()
 {
 	if(!visible) show();
 
-	villageManager.update();
+	villageManager.update(obstructionMap);
 
 	entityManager.update(obstructionMap);
 
