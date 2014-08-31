@@ -21,7 +21,6 @@ SdlManager sdl;
 SdlManager::SdlManager() :
 	window(0),
 	renderer(0),
-	texture(0),
 	next_time(0)
 {
 	std::cout << "SdlManager::SdlManager() - SDL_Init()" << std::endl;
@@ -62,7 +61,6 @@ SdlManager::~SdlManager()
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
-	if(texture)  SDL_DestroyTexture(texture);
 
 	IMG_Quit();
 	SDL_Quit();
@@ -171,11 +169,6 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 	std::cout << "SDL_CreateRenderer()" << std::endl;
 	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE ) ) )
 		throw "SDL_CreateRenderer";
-
-	// Create texture for renderer
-	std::cout << "SDL_CreateTexture()" << std::endl;
-	if (!(texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, width, height)))
-		throw "SDL_CreateTexture";
 
 	// Initialize renderer color
 	std::cout << "SDL_SetRenderDrawColor()" << std::endl;
