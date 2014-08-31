@@ -54,6 +54,7 @@ public:
     JobGroup getJobGroup(JobType type);
 
 	JobList getJobList();
+	int getJobCount();
 
     void update(MobileEntityList & villagerList, EntityList & resourceList);
 

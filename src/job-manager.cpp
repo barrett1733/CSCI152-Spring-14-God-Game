@@ -91,6 +91,11 @@ JobGroup JobManager::getJobGroup(JobType type)
     else return JG_MILITARY;
 }
 
+int JobManager::getJobCount()
+{
+    return jobList.size();
+}
+
 TaskManager * JobManager::getTaskManager()
 {
 	return this->taskManager;
