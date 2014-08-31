@@ -12,7 +12,7 @@ EntityManager::~EntityManager()
 
 void EntityManager::deleteRecord(){}
 
-void EntityManager::createRecord(const Entity & entity)
+EntityReference EntityManager::createRecord(const Entity & entity)
 {
 	Faction faction = entity.getFaction();
 	EntityGroup group = entity.getGroup();
@@ -31,11 +31,13 @@ void EntityManager::createRecord(const Entity & entity)
 	recordMap.insert(EntityRecordPair(record->entity->getGroup(), record));
 
 	factionMap[faction].push_back(record);
+
+	return record->entity;
 }
 
-void EntityManager::createRecord(const EntityReference entity)
+EntityReference EntityManager::createRecord(const EntityReference entity)
 {
-	createRecord(*entity);
+	return createRecord(*entity);
 }
 
 void EntityManager::update(ObstructionMapReference obstructionMap)

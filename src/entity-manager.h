@@ -30,8 +30,8 @@ class EntityManager
 
 
 public:
-	void createRecord(const EntityReference);
-	void createRecord(const Entity&);
+	EntityReference createRecord(const EntityReference);
+	EntityReference createRecord(const Entity&);
 	void deleteRecord(); // removes entity from all applicable lists
 	void update(ObstructionMapReference);
 
