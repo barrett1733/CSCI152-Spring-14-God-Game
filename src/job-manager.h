@@ -19,8 +19,8 @@
 #include "job.h"
 #include "world-gen.h"
 
-typedef std::vector<JobReference> JobVec;
-typedef JobVec::iterator JobIter;
+typedef std::vector<JobReference> JobList;
+typedef JobList::iterator JobIter;
 
 class EntityManager; // Forward Declaration
 
@@ -35,7 +35,7 @@ enum JobGroup
 
 class JobManager
 {
-	JobVec jobList;
+	JobList jobList;
 	TaskManager * taskManager;
 
 public:
@@ -53,7 +53,7 @@ public:
 
     JobGroup getJobGroup(JobType type);
 
-	JobVec getJobList();
+	JobList getJobList();
 
     void update(MobileEntityVec & villagerList, EntityVec & resourceList);
 

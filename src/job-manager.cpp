@@ -53,7 +53,7 @@ void JobManager::cleanJobList()
 	}
 }
 
-std::vector<JobReference> JobManager:: getJobList()
+JobList JobManager:: getJobList()
 {
 	return this->jobList;
 }
