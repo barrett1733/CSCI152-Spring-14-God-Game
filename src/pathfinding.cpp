@@ -16,10 +16,13 @@ Direction Pathfinding::direction(Position cur, Position neighbor)
 	//  Y-axis: up and down.
 	// You might also mean to use '&=' instead of just '&'.
 	// -CH, 2014.08.30
-	if (cur.getX() > neighbor.getX()) direction & D_DOWN;
-	if (cur.getX() < neighbor.getX()) direction & D_UP;
-	if (cur.getY() > neighbor.getY()) direction & D_RIGHT;
-	if (cur.getY() < neighbor.getY()) direction & D_LEFT;
+	
+	// Lol. Oops.
+	// -SB, 2014.08.31
+	if (cur.getX() > neighbor.getX()) direction &= D_LEFT;
+	if (cur.getX() < neighbor.getX()) direction &= D_RIGHT;
+	if (cur.getY() > neighbor.getY()) direction &= D_DOWN;
+	if (cur.getY() < neighbor.getY()) direction &= D_UP;
 	return direction;
 }
 
