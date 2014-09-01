@@ -24,7 +24,7 @@ void VillageManager::addVillage(Faction faction)
 
 VillageReference VillageManager::getVillage(Faction faction)
 {
-	return villageMap.at(faction);
+	return villageMap.count(faction) ? villageMap.at(faction) : 0;
 }
 
 void VillageManager::show()
