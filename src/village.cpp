@@ -97,29 +97,6 @@ void Village::villageStart()
 
 void Village::decideAction(ObstructionMapReference obstructionMap)
 {
-	//  MAGIC: All these numbers should be loaded from a script file.
-	// Also, to build a certain buildings at a certain population level is probably incorrect.
-	// I.E.:
-	// Population size reaches 12, so a foundary is built.
-	// Someone dies, so population goes back to 11.
-	// Then someone is born, so population goes back to 12,
-	// so another foundary is built.
-	// lololfoundarieseverywhere.
-	// -CH
-	if (!villageStarted)
-		villageStart();
-	if (villagerList.size() % 6 == 0)
-		build(JOB_BUILD_FARM);
-	if (villagerList.size() == populationCap)
-		build(JOB_BUILD_HOUSE);
-	if (getBuildingCount(ET_HOUSE) % 8 == 0)
-		build(JOB_BUILD_STONEWORKS);
-	if (getBuildingCount(ET_HOUSE) % 6 == 0)
-		build(JOB_BUILD_LUMBERMILL);
-	if (villagerList.size() % 15 == 0)
-		build(JOB_BUILD_WEAPONSMITH);
-	if (villagerList.size() % 25 == 0)
-		build(JOB_BUILD_ARMORSMITH);
 
 }
 int Village::getBuildingCount(EntityType entityType)
