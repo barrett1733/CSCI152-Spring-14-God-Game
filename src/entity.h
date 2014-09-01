@@ -195,7 +195,7 @@ public:
 
 	friend std::ostream& operator<< (std::ostream & os, const Entity & entity)
 	{
-		os << entity.name << " ";
+		if(entity.name.length()) os << entity.name << " ";
 		os << entity.type << " ";
 		os << entity.faction << " ";
 		os << entity.position << " ";
