@@ -94,7 +94,8 @@ void Village::villageStart()
 	// -CH
 	// 3 house start
 }
-void Village::decideAction()
+
+void Village::decideAction(ObstructionMapReference obstructionMap)
 {
 	//  MAGIC: All these numbers should be loaded from a script file.
 	// Also, to build a certain buildings at a certain population level is probably incorrect.
@@ -202,10 +203,11 @@ void Village::setPopulationCap()
 	setBeginningPopCap = true;
 	populationCap = villagerList.size();
 }
-void Village::build(JobType job)
+
+void Village::build(JobType job, ObstructionMapReference obstructionMap)
 {
 	// House populationCap += 3; //  MAGIC: why three? Config file, imo. -CH
-	std::cout << "Village::build()" << std::endl;
+	std::cout << "Village::build(" << job << ")" << std::endl;
 	// ResourceCost = jobManager.getResourceCost(job);
 	// if(resourceManager.reserve(ResourceCost))
     //  target = getAvailableArea();

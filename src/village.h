@@ -44,7 +44,7 @@ class Village
 
 	void villageStart();
 
-	void decideAction();
+	void decideAction(ObstructionMapReference);
 
 	int getBuildingCount(EntityType);
 	void setPopulationCap();
@@ -60,7 +60,7 @@ public:
 
 	EntityReference getTownCenter();
 
-	void build(JobType);
+	void build(JobType, ObstructionMapReference);
 
 	Faction getFaction() { return faction; }
 };
