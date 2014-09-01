@@ -32,6 +32,8 @@ public:
 	void show();
 	void hide();
 	void update(ObstructionMapReference);
+
+	void import(EntityReference);
 };
 
 #endif

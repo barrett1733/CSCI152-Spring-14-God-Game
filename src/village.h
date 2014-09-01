@@ -40,6 +40,8 @@ class Village
 	int populationCap;
 	bool setBeginningPopCap;
 
+	int availableHousing;
+
 	void villageStart();
 
 	void decideAction();
@@ -52,7 +54,7 @@ class Village
 public:
 	Village(Faction);
 
-	void importEntity(EntityReference);
+	void import(EntityReference);
 
 	void update(ObstructionMapReference);
 

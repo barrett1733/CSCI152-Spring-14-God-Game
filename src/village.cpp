@@ -12,23 +12,32 @@
 
 #include "village.h"
 
+const int POP_PER_HOUSE = 5;
+
 typedef MobileEntityReference VillagerReference;
 
 Village::Village(Faction faction) :
 	townCenter(0),
-faction(faction), villageStarted(false), setBeginningPopCap(false)
+	faction(faction),
+	villageStarted(false),
+	setBeginningPopCap(false),
+	availableHousing(0)
 { }
 
-void Village::importEntity(EntityReference entity)
+void Village::import(EntityReference entity)
 {
 	Faction faction = entity->getFaction();
 	EntityGroup group = entity->getGroup();
+	EntityType type = entity->getEntityType();
+
 	if(faction == this->faction)
 	{
 		switch(group)
 		{
 		case EG_VILLAGER:
 			villagerList.push_back((MobileEntityReference)entity);
+
+			availableHousing --;
 			break;
 
 		case EG_DOMESTIC:
@@ -37,11 +46,24 @@ void Village::importEntity(EntityReference entity)
 
 		case EG_BUILDING:
 			buildingList.push_back(entity);
-			if(*entity == ET_TOWN_CENTER)
+
+			switch(type)
 			{
-				if(townCenter)
-					std::cerr << "A second town center? How fancy!" << std::endl;
-				townCenter = entity;
+				case ET_TOWN_CENTER:
+					if(townCenter)
+						std::cerr << "A second town center? How fancy!" << std::endl;
+					townCenter = entity;
+				break;
+
+				case ET_HOUSE:
+					availableHousing += POP_PER_HOUSE;
+					break;
+
+				case ET_TEMPLE:
+					break;
+
+				default:
+					break;
 			}
 			break;
 

@@ -50,3 +50,11 @@ void VillageManager::update(ObstructionMapReference obstructionMap)
 			it->second->update(obstructionMap);
 	}
 }
+
+void VillageManager::import(EntityReference entity)
+{
+	Faction faction = entity -> getFaction();
+	VillageReference village = getVillage(faction);
+	if(village)
+		village->import(entity);
+}

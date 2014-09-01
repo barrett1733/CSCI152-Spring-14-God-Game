@@ -55,14 +55,16 @@ void GameManager::setup()
 	obstructionMap = new ObstructionMap(worldSize);
 
 
-	EntityReference entity = world.getNextEntity();
-	while (entity && entity->getType() != ET_NONE)
+	EntityReference tempEntity = world.getNextEntity();
+	EntityReference storedEntity;
+	while (tempEntity && tempEntity->getType() != ET_NONE)
 	{
-		entityManager.createRecord(entity);
+		storedEntity = entityManager.createRecord(tempEntity);
+		villageManager.import(storedEntity);
 
 		// Get next entity for next loop iteration.
-		delete entity;
-		entity = world.getNextEntity();
+		delete tempEntity;
+		tempEntity = world.getNextEntity();
 	}
 }
 
