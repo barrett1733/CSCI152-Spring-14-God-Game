@@ -24,6 +24,10 @@ enum
 	D_RIGHT = 0x02,
 	D_DOWN  = 0x04,
 	D_LEFT  = 0x08,
+	D_UP_LEFT	= 0x16,
+	D_UP_RIGHT	= 0x32,
+	D_DOWN_LEFT	= 0x64,
+	D_DOWN_RIGHT = 0x128
 };
 enum
 {
