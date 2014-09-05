@@ -33,8 +33,8 @@ struct Node {
 
 typedef std::vector<Node*> NodeList;
 typedef std::vector<Node*>::iterator NodeListIter;
-#define standardNeighbor 5
-#define diagonalNeighbor 7
+#define cardinalNeighbor 5
+#define intercardinalNeighbor 7
 
 
 class Pathfinding
