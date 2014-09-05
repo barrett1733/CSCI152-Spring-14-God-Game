@@ -89,7 +89,6 @@ bool Position::setY(int y)
 	return set(x, y);
 }
 
-
 int Position::getX()
 {
 	return x;
@@ -119,10 +118,11 @@ void Position::moveUnchecked(Direction direction)
 
 void Position::moveUnchecked(Direction direction, int distance)
 {
-	if(direction & D_UP)    y -= distance;
-	if(direction & D_RIGHT) x += distance;
-	if(direction & D_DOWN)  y += distance;
-	if(direction & D_LEFT)  x -= distance;
+	if (direction & D_UP    || direction & D_UP_LEFT   || direction & D_UP_RIGHT)	y -= distance;
+	if (direction & D_RIGHT || direction & D_UP_RIGHT  || direction & D_DOWN_RIGHT)	x += distance;
+	if (direction & D_DOWN  || direction & D_DOWN_LEFT || direction & D_DOWN_RIGHT) y += distance;
+	if (direction & D_LEFT  || direction & D_UP_LEFT   || direction & D_DOWN_LEFT)	x -= distance;
+
 }
 void Position::move(Direction direction)
 {
