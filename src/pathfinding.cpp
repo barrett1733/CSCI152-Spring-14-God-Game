@@ -11,64 +11,31 @@ bool Pathfinding::exists(NodeList* nodeList, Node* node)
 Direction Pathfinding::direction(Position cur, Position neighbor)
 {
 	int direction = 0;
-	if (cur.getX() == neighbor.getX()) // x1 == x2
-	{
-		if (cur.getY() > neighbor.getY()) // y1 > y2
-			direction = D_DOWN;
-		else							// y1 < y2
-			direction = D_UP;
-	}
-	else if (cur.getX() > neighbor.getX()) // x1 > x2
-	{
-		if (cur.getY() == neighbor.getY()) // y1 == y2
-			direction = D_LEFT;
-		else if (cur.getY() > neighbor.getY()) // y1 > y2
-			direction = D_DOWN_LEFT;
-		else								// y1 < y2
-			direction = D_UP_LEFT;
-	}
-	else								// x1 < x2
-	{
-		if (cur.getY() == neighbor.getY()) // y1 == y2
-			direction = D_RIGHT;
-		else if (cur.getY() > neighbor.getY()) // y1 > y2
-			direction = D_DOWN_RIGHT;
-		else								// y1 < y2
-			direction = D_UP_RIGHT;
-	}
+	// Your orientations might be backwards.
+	//  X-axis: left and right,
+	//  Y-axis: up and down.
+	// You might also mean to use '&=' instead of just '&'.
+	// -CH, 2014.08.30
+	
+	// Lol. Oops.
+	// -SB, 2014.08.31
+	if (cur.getX() > neighbor.getX()) direction &= D_LEFT;
+	if (cur.getX() < neighbor.getX()) direction &= D_RIGHT;
+	if (cur.getY() > neighbor.getY()) direction &= D_DOWN;
+	if (cur.getY() < neighbor.getY()) direction &= D_UP;
 	return direction;
 }
 
-Direction Pathfinding::jumpDirections(Direction direction)
+Direction* Pathfinding::parseDirection(Direction direction)
 {
-	int jumpDirections = 0;
-	switch (direction)
-	{
-	case D_UP_LEFT:
-		jumpDirections |= D_UP;
-		jumpDirections |= D_LEFT;
-		jumpDirections |= D_UP_LEFT;
-		break;
-	case D_UP_RIGHT:
-		jumpDirections |= D_UP;
-		jumpDirections |= D_LEFT;
-		jumpDirections |= D_UP_LEFT;
-		break;
-	case D_DOWN_LEFT:
-		jumpDirections |= D_UP;
-		jumpDirections |= D_LEFT;
-		jumpDirections |= D_UP_LEFT;
-		break;
-	case D_DOWN_RIGHT:
-		jumpDirections |= D_UP;
-		jumpDirections |= D_LEFT;
-		jumpDirections |= D_UP_LEFT;
-		break;
-	default:
-		jumpDirections = direction;
-		break;
-	}
-	return jumpDirections;
+	Direction directionArray[2];
+	directionArray[0] = directionArray[1] = 0;
+	int i = 0;
+	if (direction & D_UP) { directionArray[i] = D_UP; i++; }
+	if (direction & D_DOWN) { directionArray[i] = D_DOWN; i++; }
+	if (direction & D_LEFT) { directionArray[i] = D_LEFT; i++; }
+	if (direction & D_RIGHT) { directionArray[i] = D_RIGHT; i++; }
+	return directionArray;
 }
 
 Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)

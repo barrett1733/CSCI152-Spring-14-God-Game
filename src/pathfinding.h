@@ -50,7 +50,7 @@ private:
 	
 	bool exists(NodeList*, Node*);
 	Direction direction(Position, Position);
-	Direction jumpDirections(Direction);
+	Direction* parseDirection(Direction);
 	Node* findLowestFCostNode(NodeList* nodeList);
 	double calcHeuristicCost(Position start, Position goal);
 	Position getNeighbor(Position,Direction);
