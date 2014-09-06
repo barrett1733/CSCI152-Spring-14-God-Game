@@ -10,6 +10,9 @@ http://www.aaai.org/ocs/index.php/AAAI/AAAI11/paper/viewFile/3761/4007
 Jump Point Search Explaination:
 http://harablog.wordpress.com/2011/09/07/jump-point-search/
 
+Jump Point Search Demo (Other searches included):
+http://qiao.github.io/PathFinding.js/visual/
+
 */
 
 #include <iostream>
