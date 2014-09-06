@@ -11,18 +11,10 @@ bool Pathfinding::exists(NodeList* nodeList, Node* node)
 Direction Pathfinding::direction(Position cur, Position neighbor)
 {
 	int direction = 0;
-	// Your orientations might be backwards.
-	//  X-axis: left and right,
-	//  Y-axis: up and down.
-	// You might also mean to use '&=' instead of just '&'.
-	// -CH, 2014.08.30
-	
-	// Lol. Oops.
-	// -SB, 2014.08.31
-	if (cur.getX() > neighbor.getX()) direction &= D_LEFT;
-	if (cur.getX() < neighbor.getX()) direction &= D_RIGHT;
-	if (cur.getY() > neighbor.getY()) direction &= D_DOWN;
-	if (cur.getY() < neighbor.getY()) direction &= D_UP;
+	if (cur.getX() > neighbor.getX()) direction |= D_LEFT;
+	if (cur.getX() < neighbor.getX()) direction |= D_RIGHT;
+	if (cur.getY() > neighbor.getY()) direction |= D_DOWN;
+	if (cur.getY() < neighbor.getY()) direction |= D_UP;
 	return direction;
 }
 
