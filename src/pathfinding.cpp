@@ -91,7 +91,6 @@ Node* Pathfinding::jump(Node* cur, Direction direction, Position start, Position
 	return jump(cur, direction, start, end);
 }
 
-
 NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
 {
 	goalReached = false;
@@ -119,7 +118,18 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 		else
 		{
 			openList.erase(std::find(openList.begin(), openList.end(), currentNode));
-			//find Neighbors
+			// Need to use identifySuccessors. 
+			// Start node needs to add all directions to search.
+			// - Push all directions at beginning or determine from NULL parent
+			//
+			// Need to finish if statements below from A*. 
+			// exactCost needs to be fixed.
+			// -? Remove entirely from here and 
+			//      move to subfunction dealing with neighbors
+			// -? Make grid dealing with all costs
+			// -? exactCost = distance using vectors
+			//
+			// -SB, 2014.09.05
 			Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHeuristicCost(currentNode->pos, goal));
 			if (!exists(&closedList, &neighborNode))
 			{
