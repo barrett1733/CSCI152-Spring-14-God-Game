@@ -34,10 +34,9 @@ Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 {
 	if (!nodeList->empty())
 	{
-		Node* lowestNode = nodeList->at(0);
-		for (Node* i : *nodeList)
-		if (i->finalCost < lowestNode->finalCost)
-			lowestNode = i;
+		std::sort(nodeList->begin(), nodeList->end());
+		Node* lowestNode = *nodeList->begin();
+		nodeList->erase(nodeList->begin());
 		return lowestNode;
 	}
 	return NULL;
@@ -52,7 +51,7 @@ double Pathfinding::calcHeuristicCost(Position start, Position goal)
 Position Pathfinding::getNeighbor(Position pos, Direction direction)
 {
 	Position neighbor(pos);
-	neighbor.move(direction);
+	neighbor.moveUnchecked(direction);
 	return neighbor;
 }
 
@@ -91,7 +90,7 @@ Node* Pathfinding::jump(Node* cur, Direction direction, Position start, Position
 	return jump(cur, direction, start, end);
 }
 
-NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
+PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
 {
 	goalReached = false;
 
@@ -135,14 +134,20 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 			// Will refactor
 			Position curPos = currentNode->pos;
 			NodeList neighborList;
-			neighborList.push_back(&Node(getNeighbor(curPos, D_UP), currentNode, calcHeuristicCost(curPos, goal)));
-			neighborList.push_back(&Node(getNeighbor(curPos, D_DOWN), currentNode, calcHeuristicCost(curPos, goal)));
-			neighborList.push_back(&Node(getNeighbor(curPos, D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
-			neighborList.push_back(&Node(getNeighbor(curPos, D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
-			neighborList.push_back(&Node(getNeighbor(curPos, D_UP & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
-			neighborList.push_back(&Node(getNeighbor(curPos, D_UP & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
-			neighborList.push_back(&Node(getNeighbor(curPos, D_DOWN & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
-			neighborList.push_back(&Node(getNeighbor(curPos, D_DOWN & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
+			Node* nodelist[8];
+			nodelist[0] = &Node(getNeighbor(curPos, D_UP), currentNode, calcHeuristicCost(curPos, goal));
+			nodelist[1] = (&Node(getNeighbor(curPos, D_DOWN), currentNode, calcHeuristicCost(curPos, goal)));
+			nodelist[2] = (&Node(getNeighbor(curPos, D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
+			nodelist[3] = (&Node(getNeighbor(curPos, D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
+			nodelist[4] = (&Node(getNeighbor(curPos, D_UP & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
+			nodelist[5] = (&Node(getNeighbor(curPos, D_UP & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
+			nodelist[6] = (&Node(getNeighbor(curPos, D_DOWN & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
+			nodelist[7] = (&Node(getNeighbor(curPos, D_DOWN & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
+			for (int i = 0; i < 8; i++)
+			{
+				if (nodelist[i]->pos.checkSanity())
+					neighborList.push_back(nodelist[i]);
+			}
 
 			for (Node* neighbor : neighborList)
 			{
@@ -172,13 +177,14 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 			*/
 		}
 	}
-	return &closedList;
+	return constructPath(currentNode);
 }
 
-PositionList Pathfinding::constructPath(Node* goal)
+PositionList* Pathfinding::constructPath(Node* goal)
 {
 	Node* node = goal;
 	PositionList path;
+	std::cout << "(" << node->pos.getX() << ", " << node->pos.getY() << "), ";
 	while (node->parentNode != NULL)
 	{
 		//
@@ -188,5 +194,5 @@ PositionList Pathfinding::constructPath(Node* goal)
 		path.push_back(node->pos);
 	}
 	std::reverse(path.begin(), path.end());
-	return path;
+	return &path;
 }
