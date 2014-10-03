@@ -32,6 +32,10 @@ struct Node {
 		heuristicCost(hCost),
 		finalCost(0)
 	{}
+	bool operator < (const double key) const
+	{
+		return (key < finalCost);
+	}
 };
 
 typedef std::vector<Node*> NodeList;
@@ -43,10 +47,6 @@ typedef std::vector<Position> PositionList;
 
 class Pathfinding
 {
-	NodeList* findPath(Position start, Position goal, ObstructionMap obstructionMap);
-
-private:
-
 	NodeList openList;
 	NodeList closedList;
 	bool goalReached;
@@ -58,10 +58,14 @@ private:
 	Node* findLowestFCostNode(NodeList* nodeList);
 	double calcHeuristicCost(Position start, Position goal);
 	Position getNeighbor(Position,Direction);
-	PositionList constructPath(Node*);
+	PositionList* constructPath(Node*);
 
 	NodeList* identifySuccessors(Node* cur, Position start, Position end);
 	Node* jump(Node* cur, Direction direction, Position start, Position end);
+
+public:
+	PositionList* findPath(Position start, Position goal, ObstructionMap obstructionMap);
+
 };
 
 
