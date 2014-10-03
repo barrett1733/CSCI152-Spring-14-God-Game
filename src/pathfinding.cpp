@@ -45,8 +45,8 @@ Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
 
 double Pathfinding::calcHeuristicCost(Position start, Position goal)
 {
-	//Eucildian calculation
-	return sqrt(pow((start.getX() - goal.getX()), 2) + pow((start.getY() - goal.getY()), 2));
+	//Manhatten calculation
+	return abs(start.getX() - goal.getX()) + abs(start.getY() - goal.getY());
 }
 
 Position Pathfinding::getNeighbor(Position pos, Direction direction)
@@ -130,15 +130,63 @@ NodeList* Pathfinding::findPath(Position start, Position goal, ObstructionMap ob
 			// -? exactCost = distance using vectors
 			//
 			// -SB, 2014.09.05
-			Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHeuristicCost(currentNode->pos, goal));
-			if (!exists(&closedList, &neighborNode))
+
+			// use or and and
+			// Will refactor
+			Position curPos = currentNode->pos;
+			NodeList neighborList;
+			neighborList.push_back(&Node(getNeighbor(curPos, D_UP), currentNode, calcHeuristicCost(curPos, goal)));
+			neighborList.push_back(&Node(getNeighbor(curPos, D_DOWN), currentNode, calcHeuristicCost(curPos, goal)));
+			neighborList.push_back(&Node(getNeighbor(curPos, D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
+			neighborList.push_back(&Node(getNeighbor(curPos, D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
+			neighborList.push_back(&Node(getNeighbor(curPos, D_UP & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
+			neighborList.push_back(&Node(getNeighbor(curPos, D_UP & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
+			neighborList.push_back(&Node(getNeighbor(curPos, D_DOWN & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
+			neighborList.push_back(&Node(getNeighbor(curPos, D_DOWN & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
+
+			for (Node* neighbor : neighborList)
 			{
-				neighborNode.parentNode = currentNode;
-				neighborNode.exactCost++;
-				neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
-				openList.push_back(&neighborNode);
+				if (!exists(&closedList, neighbor))
+				{
+					neighbor->parentNode = currentNode;
+					neighbor->exactCost++;
+					neighbor->finalCost = neighbor->exactCost + neighbor->heuristicCost;
+					openList.push_back(neighbor);
+				}
 			}
+
+			// Testing A* for now
+			/*
+			NodeList* succList = identifySuccessors(currentNode, start, goal);
+			for (Node* succ : *succList)
+			{
+				Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHeuristicCost(currentNode->pos, goal));
+				if (!exists(&closedList, &neighborNode))
+				{
+					neighborNode.parentNode = currentNode;
+					neighborNode.exactCost++;
+					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
+					openList.push_back(&neighborNode);
+				}
+			}
+			*/
 		}
 	}
 	return &closedList;
+}
+
+PositionList Pathfinding::constructPath(Node* goal)
+{
+	Node* node = goal;
+	PositionList path;
+	while (node->parentNode != NULL)
+	{
+		//
+		// ? Include orginal position
+		//
+
+		path.push_back(node->pos);
+	}
+	std::reverse(path.begin(), path.end());
+	return path;
 }

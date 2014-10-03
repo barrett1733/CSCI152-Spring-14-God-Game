@@ -36,6 +36,7 @@ struct Node {
 
 typedef std::vector<Node*> NodeList;
 typedef std::vector<Node*>::iterator NodeListIter;
+typedef std::vector<Position> PositionList;
 #define cardinalNeighbor 5
 #define intercardinalNeighbor 7
 
@@ -57,6 +58,8 @@ private:
 	Node* findLowestFCostNode(NodeList* nodeList);
 	double calcHeuristicCost(Position start, Position goal);
 	Position getNeighbor(Position,Direction);
+	PositionList constructPath(Node*);
+
 	NodeList* identifySuccessors(Node* cur, Position start, Position end);
 	Node* jump(Node* cur, Direction direction, Position start, Position end);
 };
