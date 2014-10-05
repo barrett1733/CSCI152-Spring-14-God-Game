@@ -19,19 +19,37 @@ http://qiao.github.io/PathFinding.js/visual/
 #include <math.h>
 #include <vector>
 #include <algorithm>
+#include <map>
 #include "obstruction-map.h"
 
 struct Node {
 	Position pos;
 	Node* parentNode;
-	double exactCost, heuristicCost, finalCost;
-	Node(Position pos, Node* parent, double hCost) :
+	double gcost, hcost, fcost;
+	Node(Position pos, Node* parent, double g, double h) :
 		pos(pos),
 		parentNode(parent),
-		exactCost(0),
-		heuristicCost(hCost),
-		finalCost(0)
+		gcost(g),
+		hcost(h),
+		fcost(g+h)
 	{}
+	bool operator== (Node &a) const
+	{
+		return (pos == a.pos &&
+			parentNode == a.parentNode &&
+			gcost == a.gcost &&
+			hcost == a.hcost &&
+			fcost == a.fcost);
+	}
+	Node& operator= (Node& a)
+	{
+		pos = a.pos;
+		parentNode = a.parentNode;
+		gcost = a.gcost;
+		hcost = a.hcost;
+		fcost = a.fcost;
+		return *this;
+	}
 };
 
 typedef std::vector<Node*> NodeList;
@@ -40,28 +58,36 @@ typedef std::vector<Position> PositionList;
 #define cardinalNeighbor 5
 #define intercardinalNeighbor 7
 
-
 class Pathfinding
 {
-	NodeList* findPath(Position start, Position goal, ObstructionMap obstructionMap);
-
-private:
+	typedef bool(Pathfinding::*compareNodeFn) (Node*, Node*);
 
 	NodeList openList;
-	NodeList closedList;
 	bool goalReached;
 
-	
 	bool exists(NodeList*, Node*);
 	Direction direction(Position, Position);
 	Direction* parseDirection(Direction);
-	Node* findLowestFCostNode(NodeList* nodeList);
-	double calcHeuristicCost(Position start, Position goal);
-	Position getNeighbor(Position,Direction);
-	PositionList constructPath(Node*);
+
+	bool remove(Node*);
+	Node* find(compareNodeFn,Node*);
+
+	double calcHCost(Position start, Position goal);
+	Position getNeighbor(Position, Direction);
+	PositionList* constructPath(Node*);
 
 	NodeList* identifySuccessors(Node* cur, Position start, Position end);
 	Node* jump(Node* cur, Direction direction, Position start, Position end);
+
+
+	bool lessThanGcost(Node* a, Node* b) { return a->gcost < b->gcost; }
+	bool equals(Node*a, Node* b) { return *a == *b; }
+	bool equalsPos(Node*a, Node* b) { return a->pos == b->pos; }
+
+
+public:
+	PositionList* findPath(Position start, Position goal, ObstructionMap obstructionMap);
+
 };
 
 

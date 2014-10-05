@@ -23,14 +23,14 @@ Position::Position(int x, int y) :
 	x(x),
 	y(y)
 {
-	forceSanity();
+	//forceSanity();
 }
 
 Position::Position(const Position & position) :
 	x(position.x),
 	y(position.y)
 {
-	forceSanity();
+	//forceSanity();
 }
 
 bool Position::checkSanity(int x, int y)
@@ -60,7 +60,7 @@ Position& Position::operator= (const Position & position)
 	x = position.x;
 	y = position.y;
 
-	forceSanity();
+	//forceSanity();
 
 	return *this;
 }

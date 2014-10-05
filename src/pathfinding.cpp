@@ -3,7 +3,7 @@
 bool Pathfinding::exists(NodeList* nodeList, Node* node)
 {
 	for (Node* i : *nodeList)
-		if (i == node)
+		if (*i == *node)
 			return true;
 	return false;
 }
@@ -30,19 +30,37 @@ Direction* Pathfinding::parseDirection(Direction direction)
 	return directionArray;
 }
 
-Node* Pathfinding::findLowestFCostNode(NodeList* nodeList)
+bool Pathfinding::remove(Node* node)
 {
-	if (!nodeList->empty())
+	if (!openList.empty())
 	{
-		std::sort(nodeList->begin(), nodeList->end());
-		Node* lowestNode = *nodeList->begin();
-		nodeList->erase(nodeList->begin());
-		return lowestNode;
+		Node* match = *openList.begin();
+		int i = 0;
+		for (Node* node : openList)
+		{
+			if (*match == *node)
+				openList.erase(openList.begin()+i);
+			i++;
+		}
+		return true;
+	}
+	return false;
+}
+
+Node* Pathfinding::find(compareNodeFn compare, Node* a)
+{
+	if (!openList.empty())
+	{
+		Node* match = a;
+		for (Node* node : openList)
+			if ((this->*compare)(match, node))
+				match = node;
+		return match;
 	}
 	return NULL;
 }
 
-double Pathfinding::calcHeuristicCost(Position start, Position goal)
+double Pathfinding::calcHCost(Position start, Position goal)
 {
 	//Manhatten calculation
 	return abs(start.getX() - goal.getX()) + abs(start.getY() - goal.getY());
@@ -50,9 +68,8 @@ double Pathfinding::calcHeuristicCost(Position start, Position goal)
 
 Position Pathfinding::getNeighbor(Position pos, Direction direction)
 {
-	Position neighbor(pos);
-	neighbor.moveUnchecked(direction);
-	return neighbor;
+	pos.moveUnchecked(direction);
+	return pos;
 }
 
 NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position end)
@@ -94,29 +111,31 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 {
 	goalReached = false;
 
-	Node startNode(start, NULL, calcHeuristicCost(start, goal));
+	Node startNode(start, NULL, 0, calcHCost(start, goal));
 	openList.push_back(&startNode);
 
-	Node* currentNode = NULL;
+	Node* curNode = NULL;
 
 	while (!goalReached)
 	{
-		currentNode = findLowestFCostNode(&openList);
-		if (currentNode == NULL)
+		//currentNode points to itself
+		curNode = find(lessThanGcost);
+		
+		if (curNode == NULL)
 		{
 			std::cout << "Pathfinding error" << std::endl;
 			break;
 		}
 
-		closedList.push_back(currentNode);
-
-		if (currentNode->pos == goal)
+		if (curNode->pos == goal)
 		{
 			goalReached = true;
 		}
 		else
 		{
-			openList.erase(std::find(openList.begin(), openList.end(), currentNode));
+			// object removed in findlowest fcost
+			//openList.erase(std::find(openList.begin(), openList.end(), currentNode));
+
 			// Need to use identifySuccessors. 
 			// Start node needs to add all directions to search.
 			// - Push all directions at beginning or determine from NULL parent
@@ -130,34 +149,36 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			//
 			// -SB, 2014.09.05
 
-			// use or and and
-			// Will refactor
-			Position curPos = currentNode->pos;
+			// Will refactor to for loop
+
 			NodeList neighborList;
 			Node* nodelist[8];
-			nodelist[0] = &Node(getNeighbor(curPos, D_UP), currentNode, calcHeuristicCost(curPos, goal));
-			nodelist[1] = (&Node(getNeighbor(curPos, D_DOWN), currentNode, calcHeuristicCost(curPos, goal)));
-			nodelist[2] = (&Node(getNeighbor(curPos, D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
-			nodelist[3] = (&Node(getNeighbor(curPos, D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
-			nodelist[4] = (&Node(getNeighbor(curPos, D_UP & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
-			nodelist[5] = (&Node(getNeighbor(curPos, D_UP & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
-			nodelist[6] = (&Node(getNeighbor(curPos, D_DOWN & D_LEFT), currentNode, calcHeuristicCost(curPos, goal)));
-			nodelist[7] = (&Node(getNeighbor(curPos, D_DOWN & D_RIGHT), currentNode, calcHeuristicCost(curPos, goal)));
-			for (int i = 0; i < 8; i++)
-			{
-				if (nodelist[i]->pos.checkSanity())
-					neighborList.push_back(nodelist[i]);
-			}
+			nodelist[0] = &Node(getNeighbor(curNode->pos, D_UP), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
+			nodelist[1] = &Node(getNeighbor(curNode->pos, D_DOWN), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
+			nodelist[2] = &Node(getNeighbor(curNode->pos, D_LEFT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
+			nodelist[3] = &Node(getNeighbor(curNode->pos, D_RIGHT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
 
-			for (Node* neighbor : neighborList)
+			// diagonals need to be handled differently
+			nodelist[4] = &Node(getNeighbor(curNode->pos, D_UP | D_LEFT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
+			nodelist[5] = &Node(getNeighbor(curNode->pos, D_UP | D_RIGHT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
+			nodelist[6] = &Node(getNeighbor(curNode->pos, D_DOWN | D_LEFT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
+			nodelist[7] = &Node(getNeighbor(curNode->pos, D_DOWN | D_RIGHT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
+
+			for (int i = 0; i < 4; i++) // diagonal searching removed for now
 			{
-				if (!exists(&closedList, neighbor))
-				{
-					neighbor->parentNode = currentNode;
-					neighbor->exactCost++;
-					neighbor->finalCost = neighbor->exactCost + neighbor->heuristicCost;
-					openList.push_back(neighbor);
-				}
+				Position pos = nodelist[i]->pos;
+				//if (pos.getX() >= 0 && pos.getY() >= 0 && pos.getX() <= 10 && pos.getY() <= 10)
+				if (pos.checkSanity())
+					if (!exists(&openList, nodelist[i]))
+					{
+						openList.push_back(nodelist[i]);
+					}
+					else if (exists(&openList, nodelist[i]) && find(equals) )
+					{
+						Node* existingNode = find(equalsPos);
+						if (existingNode->gcost > nodelist[i]->gcost)
+							*existingNode = *nodelist[i];
+					}
 			}
 
 			// Testing A* for now
@@ -165,7 +186,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			NodeList* succList = identifySuccessors(currentNode, start, goal);
 			for (Node* succ : *succList)
 			{
-				Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHeuristicCost(currentNode->pos, goal));
+				Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHCost(currentNode->pos, goal));
 				if (!exists(&closedList, &neighborNode))
 				{
 					neighborNode.parentNode = currentNode;
@@ -177,7 +198,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			*/
 		}
 	}
-	return constructPath(currentNode);
+	return constructPath(curNode);
 }
 
 PositionList* Pathfinding::constructPath(Node* goal)
