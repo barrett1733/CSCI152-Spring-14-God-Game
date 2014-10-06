@@ -30,15 +30,14 @@ Direction* Pathfinding::parseDirection(Direction direction)
 	return directionArray;
 }
 
-bool Pathfinding::remove(Node* node)
+bool Pathfinding::remove(Node* a)
 {
 	if (!openList.empty())
-	{
-		Node* match = *openList.begin();
+	{	
 		int i = 0;
-		for (Node* node : openList)
+		while (i < openList.size())
 		{
-			if (*match == *node)
+			if (*a == *openList[i])
 				openList.erase(openList.begin()+i);
 			i++;
 		}
@@ -139,6 +138,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			std::cout << "Pathfinding error" << std::endl;
 			break;
 		}
+		remove(curNode);
 
 		if (curNode->pos == goal)
 		{
@@ -188,9 +188,11 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 					}
 					else if (exists(nodelist[i]))
 					{
+						//something wrong here - maybe not
 						Node* existingNode = find(&Pathfinding::equalPos, nodelist[i]);
 						if (existingNode->gcost > nodelist[i]->gcost)
 							*existingNode = *nodelist[i];
+							//openList.push_back(nodelist[i]);
 					}
 			}
 
