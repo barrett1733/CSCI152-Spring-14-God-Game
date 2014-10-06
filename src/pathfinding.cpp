@@ -2,10 +2,10 @@
 
 bool Pathfinding::exists(NodeList* nodeList, Node* node)
 {
-	for (Node* i : *nodeList)
-		if (*i == *node)
-			return true;
-	return false;
+	if (find(equals, node) != NULL)
+		return true;
+	else
+		return false;
 }
 
 Direction Pathfinding::direction(Position cur, Position neighbor)
