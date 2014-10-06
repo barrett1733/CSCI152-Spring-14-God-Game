@@ -65,7 +65,7 @@ class Pathfinding
 	NodeList openList;
 	bool goalReached;
 
-	bool exists(NodeList*, Node*);
+	bool exists(Node*);
 	Direction direction(Position, Position);
 	Direction* parseDirection(Direction);
 
@@ -82,8 +82,8 @@ class Pathfinding
 
 
 	bool lessThanGcost(Node* a, Node* b) { return a->gcost < b->gcost; }
-	bool equals(Node*a, Node* b) { return *a == *b; }
-	bool equalsPos(Node*a, Node* b) { return a->pos == b->pos; }
+	bool equalNode(Node*a, Node* b) { return *a == *b; }
+	bool equalPos(Node*a, Node* b) { return a->pos == b->pos; }
 
 
 public:

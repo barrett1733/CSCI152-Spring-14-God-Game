@@ -1,8 +1,8 @@
 #include "pathfinding.h"
 
-bool Pathfinding::exists(NodeList* nodeList, Node* node)
+bool Pathfinding::exists(Node* node)
 {
-	if (find(equals, node) != NULL)
+	if (find(&Pathfinding::equalNode, node) != NULL)
 		return true;
 	else
 		return false;
@@ -51,7 +51,7 @@ Node* Pathfinding::compareNodes(compareNodeFn compare)
 {
 	if (!openList.empty())
 	{
-		Node* match = NULL;
+		Node* match = *openList.begin();
 		for (Node* node : openList)
 		if ((this->*compare)(match, node))
 			match = node;
@@ -64,7 +64,7 @@ Node* Pathfinding::find(compareNodeFn compare, Node* a)
 {
 	if (!openList.empty())
 	{
-		Node* match = NULL;
+		Node* match = *openList.begin();
 		for (Node* node : openList)
 		if ((this->*compare)(a, node))
 			match = node;
@@ -132,7 +132,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 	while (!goalReached)
 	{
 		//currentNode points to itself
-		curNode = find(lessThanGcost);
+		curNode = compareNodes(&Pathfinding::lessThanGcost);
 		
 		if (curNode == NULL)
 		{
@@ -182,13 +182,13 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 				Position pos = nodelist[i]->pos;
 				//if (pos.getX() >= 0 && pos.getY() >= 0 && pos.getX() <= 10 && pos.getY() <= 10)
 				if (pos.checkSanity())
-					if (!exists(&openList, nodelist[i]))
+					if (!exists(nodelist[i]))
 					{
 						openList.push_back(nodelist[i]);
 					}
-					else if (exists(&openList, nodelist[i]) && find(equals) )
+					else if (exists(nodelist[i]))
 					{
-						Node* existingNode = find(equalsPos);
+						Node* existingNode = find(&Pathfinding::equalPos, nodelist[i]);
 						if (existingNode->gcost > nodelist[i]->gcost)
 							*existingNode = *nodelist[i];
 					}
