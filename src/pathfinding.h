@@ -70,7 +70,8 @@ class Pathfinding
 	Direction* parseDirection(Direction);
 
 	bool remove(Node*);
-	Node* find(compareNodeFn,Node*);
+	Node* compareNodes(compareNodeFn);
+	Node* find(compareNodeFn, Node*);
 
 	double calcHCost(Position start, Position goal);
 	Position getNeighbor(Position, Direction);

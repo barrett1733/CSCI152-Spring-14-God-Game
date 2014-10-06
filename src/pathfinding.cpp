@@ -47,14 +47,27 @@ bool Pathfinding::remove(Node* node)
 	return false;
 }
 
+Node* Pathfinding::compareNodes(compareNodeFn compare)
+{
+	if (!openList.empty())
+	{
+		Node* match = NULL;
+		for (Node* node : openList)
+		if ((this->*compare)(match, node))
+			match = node;
+		return match;
+	}
+	return NULL;
+}
+
 Node* Pathfinding::find(compareNodeFn compare, Node* a)
 {
 	if (!openList.empty())
 	{
-		Node* match = a;
+		Node* match = NULL;
 		for (Node* node : openList)
-			if ((this->*compare)(match, node))
-				match = node;
+		if ((this->*compare)(a, node))
+			match = node;
 		return match;
 	}
 	return NULL;
