@@ -22,35 +22,6 @@ http://qiao.github.io/PathFinding.js/visual/
 #include <map>
 #include "obstruction-map.h"
 
-struct Node {
-	Position pos;
-	Node* parentNode;
-	double gcost, hcost, fcost;
-	Node(Position pos, Node* parent, double g, double h) :
-		pos(pos),
-		parentNode(parent),
-		gcost(g),
-		hcost(h),
-		fcost(g+h)
-	{}
-	bool operator== (Node &a) const
-	{
-		return (pos == a.pos &&
-			parentNode == a.parentNode &&
-			gcost == a.gcost &&
-			hcost == a.hcost &&
-			fcost == a.fcost);
-	}
-	Node& operator= (Node& a)
-	{
-		pos = a.pos;
-		parentNode = a.parentNode;
-		gcost = a.gcost;
-		hcost = a.hcost;
-		fcost = a.fcost;
-		return *this;
-	}
-};
 
 typedef std::vector<Node*> NodeList;
 typedef std::vector<Node*>::iterator NodeListIter;
