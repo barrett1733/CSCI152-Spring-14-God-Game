@@ -1,12 +1,5 @@
 #include "pathfinding.h"
 
-bool Pathfinding::exists(Node* node)
-{
-	if (find(&Pathfinding::equalNode, node) != NULL)
-		return true;
-	else
-		return false;
-}
 
 Direction Pathfinding::direction(Position cur, Position neighbor)
 {
@@ -30,47 +23,6 @@ Direction* Pathfinding::parseDirection(Direction direction)
 	return directionArray;
 }
 
-bool Pathfinding::remove(Node* a)
-{
-	if (!openList.empty())
-	{	
-		int i = 0;
-		while (i < openList.size())
-		{
-			if (*a == *openList[i])
-				openList.erase(openList.begin()+i);
-			i++;
-		}
-		return true;
-	}
-	return false;
-}
-
-Node* Pathfinding::compareNodes(compareNodeFn compare)
-{
-	if (!openList.empty())
-	{
-		Node* match = *openList.begin();
-		for (Node* node : openList)
-		if ((this->*compare)(match, node))
-			match = node;
-		return match;
-	}
-	return NULL;
-}
-
-Node* Pathfinding::find(compareNodeFn compare, Node* a)
-{
-	if (!openList.empty())
-	{
-		Node* match = *openList.begin();
-		for (Node* node : openList)
-		if ((this->*compare)(a, node))
-			match = node;
-		return match;
-	}
-	return NULL;
-}
 
 double Pathfinding::calcHCost(Position start, Position goal)
 {
@@ -131,14 +83,14 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 	while (!goalReached)
 	{
 		//currentNode points to itself
-		curNode = compareNodes(&Pathfinding::lessThanGcost);
+		curNode = openList.compareNodes(&Pathfinding::lessThanGcost);
 		
 		if (curNode == NULL)
 		{
 			std::cout << "Pathfinding error" << std::endl;
 			break;
 		}
-		remove(curNode);
+		openList.remove(curNode);
 
 		if (curNode->pos == goal)
 		{
@@ -182,14 +134,14 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 				Position pos = nodelist[i]->pos;
 				//if (pos.getX() >= 0 && pos.getY() >= 0 && pos.getX() <= 10 && pos.getY() <= 10)
 				if (pos.checkSanity())
-					if (!exists(nodelist[i]))
+					if (!openList.exists(nodelist[i]))
 					{
 						openList.push_back(nodelist[i]);
 					}
-					else if (exists(nodelist[i]))
+					else if (openList.exists(nodelist[i]))
 					{
 						//something wrong here - maybe not
-						Node* existingNode = find(&Pathfinding::equalPos, nodelist[i]);
+						Node* existingNode = openList.find(&NodeList::equalPos, nodelist[i]);
 						if (existingNode->gcost > nodelist[i]->gcost)
 							*existingNode = *nodelist[i];
 							//openList.push_back(nodelist[i]);
