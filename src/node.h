@@ -2,6 +2,7 @@
 #define NODE_H_
 
 #include "position.h"
+#include <iostream>
 
 struct Node {
 	Position pos;
@@ -37,6 +38,11 @@ struct Node {
 		hcost = a.hcost;
 		fcost = a.fcost;
 		return *this;
+	}
+	friend std::ostream& operator<<(std::ostream& os, const Node& node)
+	{
+		os << node.pos << " | " << node.gcost << " | " << node.hcost << " | " << node.fcost;
+		return os;
 	}
 };
 

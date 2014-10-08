@@ -7,7 +7,6 @@
 class NodeList : public std::vector<Node*>
 {
 	typedef bool(NodeList::*compareNodeFn) (Node*, Node*);
-	Node* find(compareNodeFn, Node*);
 	bool lessThanGcost(Node* a, Node* b) { return a->gcost < b->gcost; }
 	bool equalNode(Node*a, Node* b) { return *a == *b; }
 	bool equalPos(Node*a, Node* b) { return a->pos == b->pos; }
@@ -15,8 +14,15 @@ class NodeList : public std::vector<Node*>
 public:
 	bool exists(Node*);
 	void push(Node*);
-	Node* pop();
+	Node pop();
 	Node* findByPos(Node*);
+	Node* find(Node*);
+	friend std::ostream& operator<<(std::ostream& os, const NodeList& list)
+	{
+		for (Node* a : list)
+			os << "- " << *a << std::endl;
+		return os;
+	}
 
 };
 

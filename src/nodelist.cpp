@@ -13,7 +13,7 @@ void NodeList::push(Node* a)
 	this->push_back(a);
 }
 
-Node* NodeList::pop()
+Node NodeList::pop()
 {
 	Node lowest = *this->front();
 	int index = 0;
@@ -24,7 +24,7 @@ Node* NodeList::pop()
 			index = i;
 		}
 	this->erase(this->begin() + index);
-	return &lowest;
+	return lowest;
 }
 
 Node* NodeList::findByPos(Node* a)
@@ -36,11 +36,11 @@ Node* NodeList::findByPos(Node* a)
 	return match;
 }
 
-Node* NodeList::find(compareNodeFn compare, Node* a)
+Node* NodeList::find(Node* a)
 {
 	Node* match = NULL;
 	for (int i = 0; i < this->size(); i++)
-		if ((this->*compare)(a, (*this)[i]))
+		if (a == (*this)[i])
 			match = (*this)[i];
 	return match;
 }
