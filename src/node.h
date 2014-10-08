@@ -9,7 +9,7 @@ struct Node {
 	Node* parentNode;
 	double gcost, hcost, fcost;
 	Node() :
-		pos(Position(0,0)),
+		pos(Position(0, 0)),
 		parentNode(NULL),
 		gcost(0),
 		hcost(0),
@@ -21,6 +21,13 @@ struct Node {
 		gcost(g),
 		hcost(h),
 		fcost(g + h)
+	{}
+	Node(Node* a) :
+		pos(a->pos),
+		parentNode(a->parentNode),
+		gcost(a->gcost),
+		hcost(a->hcost),
+		fcost(a->fcost)
 	{}
 	bool operator== (Node &a) const
 	{

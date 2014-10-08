@@ -3,7 +3,7 @@
 bool NodeList::exists(Node* a)
 {
 	for (Node* node : *this)
-		if (*a == *node)
+		if (a->pos == node->pos)
 			return true;
 	return false;
 }
@@ -36,6 +36,7 @@ Node* NodeList::findByPos(Node* a)
 	return match;
 }
 
+// Returns a pointer to the matching Node in the list
 Node* NodeList::find(Node* a)
 {
 	Node* match = NULL;
