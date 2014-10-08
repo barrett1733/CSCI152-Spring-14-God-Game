@@ -7,6 +7,13 @@ struct Node {
 	Position pos;
 	Node* parentNode;
 	double gcost, hcost, fcost;
+	Node() :
+		pos(Position(0,0)),
+		parentNode(NULL),
+		gcost(0),
+		hcost(0),
+		fcost(0)
+	{}
 	Node(Position pos, Node* parent, double g, double h) :
 		pos(pos),
 		parentNode(parent),
