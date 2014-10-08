@@ -1,13 +1,26 @@
 #include "nodelist.h"
 
-bool NodeList::exists(Node* node)
+bool NodeList::exists(Node* a)
 {
-	if (find(&NodeList::equalNode, node) != NULL)
-		return true;
-	else
-		return false;
+	for (Node* node : *this)
+		if (*a == *node)
+			return true;
+	return false;
 }
 
+void NodeList::push(Node* a)
+{
+	this->push_back(a);
+	std::sort(this->begin(), this->end(), lessThanGcost);
+}
+
+Node* NodeList::pop()
+{
+	Node a = *this->front();
+	this->erase(this->begin());
+	return &a;
+}
+/*
 bool NodeList::remove(Node* a)
 {
 	if (!nodelist.empty())
@@ -49,3 +62,4 @@ Node* NodeList::find(compareNodeFn compare, Node* a)
 	}
 	return NULL;
 }
+*/

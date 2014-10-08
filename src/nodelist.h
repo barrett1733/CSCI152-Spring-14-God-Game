@@ -3,19 +3,23 @@
 
 #include "node.h"
 #include <vector>
+#include <algorithm>
 
-class NodeList
+class NodeList : public std::vector<Node*>
 {
-	std::vector<Node*> nodelist;
+	typedef std::vector<Node*> NodeVector;
 	typedef bool(NodeList::*compareNodeFn) (Node*, Node*);
+	NodeVector nodelist;
 
 public:
 	bool exists(Node*);
+	void push(Node*);
+	Node* pop();
+
+	// depreciated
 	bool remove(Node*);
 	Node* compareNodes(compareNodeFn);
 	Node* find(compareNodeFn, Node*);
-	void push(Node*);
-	Node* pop();
 
 	bool lessThanGcost(Node* a, Node* b) { return a->gcost < b->gcost; }
 	bool equalNode(Node*a, Node* b) { return *a == *b; }
