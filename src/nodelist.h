@@ -3,7 +3,6 @@
 
 #include "node.h"
 #include <vector>
-#include <algorithm>
 
 class NodeList : public std::vector<Node*>
 {

@@ -11,19 +11,29 @@ bool NodeList::exists(Node* a)
 void NodeList::push(Node* a)
 {
 	this->push_back(a);
-	std::sort(this->begin(), this->end(), lessThanGcost);
 }
 
 Node* NodeList::pop()
 {
-	Node a = *this->front();
-	this->erase(this->begin());
-	return &a;
+	Node lowest = *this->front();
+	int index = 0;
+	for (int i = 0; i < this->size(); i++)
+		if ((*this)[i]->fcost < lowest.fcost)
+		{
+			lowest = *(*this)[i];
+			index = i;
+		}
+	this->erase(this->begin() + index);
+	return &lowest;
 }
 
 Node* NodeList::findByPos(Node* a)
 {
-	return find(equalPos, a);
+	Node* match = NULL;
+	for (int i = 0; i < this->size(); i++)
+		if (a->pos == (*this)[i]->pos)
+			match = (*this)[i];
+	return match;
 }
 
 Node* NodeList::find(compareNodeFn compare, Node* a)
