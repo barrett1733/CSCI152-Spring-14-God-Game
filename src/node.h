@@ -41,7 +41,7 @@ struct Node {
 	}
 	friend std::ostream& operator<<(std::ostream& os, const Node& node)
 	{
-		os << node.pos << " | " << node.gcost << " | " << node.hcost << " | " << node.fcost;
+		os << node.pos << " G:" << node.gcost << " H:" << node.hcost << " F:" << node.fcost;
 		return os;
 	}
 };

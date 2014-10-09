@@ -25,13 +25,13 @@ http://qiao.github.io/PathFinding.js/visual/
 
 
 typedef std::vector<Position> PositionList;
-#define cardinalNeighbor 5
-#define intercardinalNeighbor 7
+#define cardinalNeighbor 1
+#define intercardinalNeighbor 1.4
 
 class Pathfinding
 {
 
-	NodeList openList;
+	NodeList searchList, indexList;
 	bool goalReached;
 
 	Direction direction(Position, Position);

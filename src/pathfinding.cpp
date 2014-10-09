@@ -27,13 +27,15 @@ Direction* Pathfinding::parseDirection(Direction direction)
 double Pathfinding::calcHCost(Position start, Position goal)
 {
 	//Manhatten calculation
-	return abs(start.getX() - goal.getX()) + abs(start.getY() - goal.getY());
+	double cost = abs(start.getX() - goal.getX()) + abs(start.getY() - goal.getY());
+	return cost;
 }
 
 Position Pathfinding::getNeighbor(Position pos, Direction direction)
 {
-	pos.moveUnchecked(direction);
-	return pos;
+	Position newpos(pos);
+	newpos.moveUnchecked(direction);
+	return newpos;
 }
 
 NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position end)
@@ -75,22 +77,24 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 {
 	goalReached = false;
 
-	Node startNode(start, NULL, 0, calcHCost(start, goal));
-	openList.push_back(&startNode);
+	Node* startNode = new Node(start, NULL, 0, calcHCost(start, goal));
+	searchList.push_back(startNode);
+	indexList.push_back(startNode);
 
 	Node* curNode = NULL;
 
 	while (!goalReached)
 	{
-		//currentNode points to itself
-		curNode = openList.compareNodes(&Pathfinding::lessThanGcost);
-		
+		std::cout << std::endl;
+		curNode = searchList.pop();
+
 		if (curNode == NULL)
 		{
-			std::cout << "Pathfinding error" << std::endl;
+			std::cout << "Pathfinding Error - curNode == NULL" << std::endl;
 			break;
 		}
-		openList.remove(curNode);
+		
+		std::cout << "- " << *curNode << std::endl;
 
 		if (curNode->pos == goal)
 		{
@@ -98,71 +102,53 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 		}
 		else
 		{
-			// object removed in findlowest fcost
-			//openList.erase(std::find(openList.begin(), openList.end(), currentNode));
+			typedef std::pair<Position, double> neighborTuple;
+			neighborTuple neighborPos[8]; // Should never be anymore than 8 neighbors
+			neighborPos[0] = neighborTuple(getNeighbor(curNode->pos, D_UP), cardinalNeighbor);
+			neighborPos[1] = neighborTuple(getNeighbor(curNode->pos, D_DOWN), cardinalNeighbor);
+			neighborPos[2] = neighborTuple(getNeighbor(curNode->pos, D_LEFT), cardinalNeighbor);
+			neighborPos[3] = neighborTuple(getNeighbor(curNode->pos, D_RIGHT), cardinalNeighbor);
+			neighborPos[4] = neighborTuple(getNeighbor(curNode->pos, D_UP | D_LEFT), intercardinalNeighbor);
+			neighborPos[5] = neighborTuple(getNeighbor(curNode->pos, D_UP | D_RIGHT), intercardinalNeighbor);
+			neighborPos[6] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_LEFT), intercardinalNeighbor);
+			neighborPos[7] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_RIGHT), intercardinalNeighbor);
 
-			// Need to use identifySuccessors. 
-			// Start node needs to add all directions to search.
-			// - Push all directions at beginning or determine from NULL parent
-			//
-			// Need to finish if statements below from A*. 
-			// exactCost needs to be fixed.
-			// -? Remove entirely from here and 
-			//      move to subfunction dealing with neighbors
-			// -? Make grid dealing with all costs
-			// -? exactCost = distance using vectors
-			//
-			// -SB, 2014.09.05
-
-			// Will refactor to for loop
-
-			NodeList neighborList;
-			Node* nodelist[8];
-			nodelist[0] = &Node(getNeighbor(curNode->pos, D_UP), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-			nodelist[1] = &Node(getNeighbor(curNode->pos, D_DOWN), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-			nodelist[2] = &Node(getNeighbor(curNode->pos, D_LEFT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-			nodelist[3] = &Node(getNeighbor(curNode->pos, D_RIGHT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-
-			// diagonals need to be handled differently
-			nodelist[4] = &Node(getNeighbor(curNode->pos, D_UP | D_LEFT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-			nodelist[5] = &Node(getNeighbor(curNode->pos, D_UP | D_RIGHT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-			nodelist[6] = &Node(getNeighbor(curNode->pos, D_DOWN | D_LEFT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-			nodelist[7] = &Node(getNeighbor(curNode->pos, D_DOWN | D_RIGHT), curNode, curNode->gcost+1, calcHCost(curNode->pos, goal));
-
-			for (int i = 0; i < 4; i++) // diagonal searching removed for now
+			for (int i = 0; i < 8; i++) // diagonal searching removed for now
 			{
-				Position pos = nodelist[i]->pos;
-				//if (pos.getX() >= 0 && pos.getY() >= 0 && pos.getX() <= 10 && pos.getY() <= 10)
-				if (pos.checkSanity())
-					if (!openList.exists(nodelist[i]))
-					{
-						openList.push_back(nodelist[i]);
-					}
-					else if (openList.exists(nodelist[i]))
-					{
-						//something wrong here - maybe not
-						Node* existingNode = openList.find(&NodeList::equalPos, nodelist[i]);
-						if (existingNode->gcost > nodelist[i]->gcost)
-							*existingNode = *nodelist[i];
-							//openList.push_back(nodelist[i]);
-					}
-			}
-
-			// Testing A* for now
-			/*
-			NodeList* succList = identifySuccessors(currentNode, start, goal);
-			for (Node* succ : *succList)
-			{
-				Node neighborNode(getNeighbor(currentNode->pos, (D_UP & D_RIGHT)), currentNode, calcHCost(currentNode->pos, goal));
-				if (!exists(&closedList, &neighborNode))
+				//if (neighborPos[i].first.checkSanity()) test change for now
+				if (neighborPos[i].first.getX() >= 0 &&
+					neighborPos[i].first.getY() >= 0 &&
+					neighborPos[i].first.getX() <= 5 &&
+					neighborPos[i].first.getY() <= 5)
 				{
-					neighborNode.parentNode = currentNode;
-					neighborNode.exactCost++;
-					neighborNode.finalCost = neighborNode.exactCost + neighborNode.heuristicCost;
-					openList.push_back(&neighborNode);
+
+					if (indexList.exists(neighborPos[i].first))
+					{
+						// need to recalculate f cost as well
+						/*
+						Node* temp = indexList.find(neighborPos[i].first);
+						if (curNode->gcost < temp->gcost)
+						{
+							std::cout << "> " << neighborPos[i].first << " G:" << temp->gcost << " | " << curNode->gcost << std::endl;
+							temp->gcost = curNode->gcost;
+							temp->fcost = temp->gcost + temp->hcost;
+							temp->parentNode = curNode;
+						}*/
+					}
+					else if (!searchList.exists(neighborPos[i].first))
+					{
+						Node* newNeighbor = new Node(
+							neighborPos[i].first, 
+							curNode, 
+							curNode->gcost + neighborPos[i].second, 
+							calcHCost(neighborPos[i].first, goal)
+							);
+						std::cout << "+ " << *newNeighbor << std::endl;
+						searchList.push_back(newNeighbor);
+						indexList.push_back(newNeighbor);
+					}
 				}
 			}
-			*/
 		}
 	}
 	return constructPath(curNode);
@@ -172,15 +158,16 @@ PositionList* Pathfinding::constructPath(Node* goal)
 {
 	Node* node = goal;
 	PositionList path;
-	std::cout << "(" << node->pos.getX() << ", " << node->pos.getY() << "), ";
 	while (node->parentNode != NULL)
 	{
 		//
 		// ? Include orginal position
 		//
-
 		path.push_back(node->pos);
+		node = node->parentNode;
+		std::cout << node->pos;
 	}
 	std::reverse(path.begin(), path.end());
+	indexList.destroy();
 	return &path;
 }
