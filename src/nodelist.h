@@ -14,7 +14,7 @@ class NodeList : public std::vector<Node*>
 public:
 	bool exists(Node*);
 	Node* pop();
-	Node* findByPos(Node*);
+	Node* find(Position);
 	Node* find(Node*);
 	friend std::ostream& operator<<(std::ostream& os, const NodeList& list)
 	{

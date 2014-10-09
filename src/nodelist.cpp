@@ -22,11 +22,11 @@ Node* NodeList::pop()
 	return lowest;
 }
 
-Node* NodeList::findByPos(Node* a)
+Node* NodeList::find(Position pos)
 {
 	Node* match = NULL;
 	for (int i = 0; i < this->size(); i++)
-		if (a->pos == (*this)[i]->pos)
+		if (pos == (*this)[i]->pos)
 			match = (*this)[i];
 	return match;
 }
