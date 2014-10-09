@@ -3,8 +3,16 @@
 bool NodeList::exists(Node* a)
 {
 	for (Node* node : *this)
-		if (a->pos == node->pos)
-			return true;
+	if (*a == *node)
+		return true;
+	return false;
+}
+
+bool NodeList::exists(Position pos)
+{
+	for (Node* node : *this)
+	if (pos == node->pos)
+		return true;
 	return false;
 }
 
