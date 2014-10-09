@@ -8,19 +8,14 @@ bool NodeList::exists(Node* a)
 	return false;
 }
 
-void NodeList::push(Node* a)
+Node* NodeList::pop()
 {
-	this->push_back(a);
-}
-
-Node NodeList::pop()
-{
-	Node lowest = *this->front();
+	Node* lowest = this->front();
 	int index = 0;
 	for (int i = 0; i < this->size(); i++)
-		if ((*this)[i]->fcost < lowest.fcost)
+		if ((*this)[i]->fcost < lowest->fcost)
 		{
-			lowest = *(*this)[i];
+			lowest = (*this)[i];
 			index = i;
 		}
 	this->erase(this->begin() + index);

@@ -22,13 +22,6 @@ struct Node {
 		hcost(h),
 		fcost(g + h)
 	{}
-	Node(Node* a) :
-		pos(a->pos),
-		parentNode(a->parentNode),
-		gcost(a->gcost),
-		hcost(a->hcost),
-		fcost(a->fcost)
-	{}
 	bool operator== (Node &a) const
 	{
 		return (pos == a.pos &&
