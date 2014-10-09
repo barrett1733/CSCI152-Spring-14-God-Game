@@ -94,7 +94,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			break;
 		}
 		
-		std::cout << "- " << *curNode << std::endl;
+		//std::cout << "- " << *curNode << std::endl;
 
 		if (curNode->pos == goal)
 		{
@@ -115,16 +115,12 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 
 			for (int i = 0; i < 8; i++) // diagonal searching removed for now
 			{
-				//if (neighborPos[i].first.checkSanity()) test change for now
-				if (neighborPos[i].first.getX() >= 0 &&
-					neighborPos[i].first.getY() >= 0 &&
-					neighborPos[i].first.getX() <= 5 &&
-					neighborPos[i].first.getY() <= 5)
+				if (neighborPos[i].first.checkSanity() && !obstructionMap.isOpen(neighborPos[i].first))
 				{
 
 					if (indexList.exists(neighborPos[i].first))
 					{
-						// need to recalculate f cost as well
+						// needs to recalculate f cost as well
 						/*
 						Node* temp = indexList.find(neighborPos[i].first);
 						if (curNode->gcost < temp->gcost)
@@ -143,7 +139,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 							curNode->gcost + neighborPos[i].second, 
 							calcHCost(neighborPos[i].first, goal)
 							);
-						std::cout << "+ " << *newNeighbor << std::endl;
+						//std::cout << "+ " << *newNeighbor << std::endl;
 						searchList.push_back(newNeighbor);
 						indexList.push_back(newNeighbor);
 					}
@@ -165,7 +161,7 @@ PositionList* Pathfinding::constructPath(Node* goal)
 		//
 		path.push_back(node->pos);
 		node = node->parentNode;
-		std::cout << node->pos;
+		std::cout << node->pos << ", ";
 	}
 	std::reverse(path.begin(), path.end());
 	indexList.destroy();
