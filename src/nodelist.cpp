@@ -48,3 +48,13 @@ Node* NodeList::find(Node* a)
 			match = (*this)[i];
 	return match;
 }
+
+void NodeList::destroy()
+{
+	for (Node* n : *this)
+	{
+		delete n;
+		n = NULL;
+	}
+	this->clear();
+}

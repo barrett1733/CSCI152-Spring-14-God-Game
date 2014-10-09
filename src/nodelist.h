@@ -12,6 +12,7 @@ public:
 	Node* pop();
 	Node* find(Position);
 	Node* find(Node*);
+	void destroy();
 	friend std::ostream& operator<<(std::ostream& os, const NodeList& list)
 	{
 		for (Node* a : list)
