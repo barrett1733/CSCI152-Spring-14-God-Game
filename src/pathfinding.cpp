@@ -113,9 +113,9 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			neighborPos[6] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_LEFT), intercardinalNeighbor);
 			neighborPos[7] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_RIGHT), intercardinalNeighbor);
 
-			for (int i = 0; i < 8; i++) // diagonal searching removed for now
+			for (int i = 0; i < 8; i++)
 			{
-				if (neighborPos[i].first.checkSanity() && !obstructionMap.isOpen(neighborPos[i].first))
+				if (neighborPos[i].first.checkSanity() && obstructionMap.isOpen(neighborPos[i].first))
 				{
 
 					if (indexList.exists(neighborPos[i].first))
