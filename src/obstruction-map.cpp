@@ -24,7 +24,7 @@ ObstructionMap::ObstructionMap(int size) :
 
 ObstructionMap::~ObstructionMap()
 {
-	for (int y = 0; y < size; y++)
+	for (int y = 0; y < sizeof(occupied); y++)
 	{
 		delete[] occupied[y];
 		occupied[y] = NULL;
