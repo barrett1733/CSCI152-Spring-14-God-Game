@@ -29,6 +29,7 @@ class ObstructionMap
 
 public:
 	ObstructionMap(int size);
+	~ObstructionMap();
 
 	void set(Position, ObstructionType);
 	bool isObstructed(Position);

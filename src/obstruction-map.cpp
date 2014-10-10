@@ -22,6 +22,17 @@ ObstructionMap::ObstructionMap(int size) :
 	}
 }
 
+ObstructionMap::~ObstructionMap()
+{
+	for (int y = 0; y < sizeof(occupied); y++)
+	{
+		delete[] occupied[y];
+		occupied[y] = NULL;
+	}
+	delete[] occupied;
+	occupied = NULL;
+}
+
 void ObstructionMap::set(Position position, ObstructionType value)
 {
 	int x = position.getX();
