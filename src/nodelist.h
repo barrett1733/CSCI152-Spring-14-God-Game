@@ -11,8 +11,9 @@ public:
 	bool exists(Position);
 	Node* pop();
 	Node* find(Position);
-	Node* find(Node*);
+	NodeList::iterator find(Node*);
 	void destroy();
+	void destroy(Node*);
 	friend std::ostream& operator<<(std::ostream& os, const NodeList& list)
 	{
 		for (Node* a : list)

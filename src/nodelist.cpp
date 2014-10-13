@@ -18,6 +18,11 @@ bool NodeList::exists(Position pos)
 
 Node* NodeList::pop()
 {
+	if (this->empty())
+	{
+		std::cout << "Pathfinding error - Pop call on empty list" << std::endl;
+		return NULL;
+	}
 	Node* lowest = this->front();
 	int index = 0;
 	for (int i = 0; i < this->size(); i++)
@@ -32,21 +37,18 @@ Node* NodeList::pop()
 
 Node* NodeList::find(Position pos)
 {
-	Node* match = NULL;
-	for (int i = 0; i < this->size(); i++)
-		if (pos == (*this)[i]->pos)
-			match = (*this)[i];
-	return match;
+	for (NodeList::iterator match = this->begin(); match != this->end(); ++match)
+	if (pos == (*match)->pos)
+		return *match;
+	return NULL;
 }
 
-// Returns a pointer to the matching Node in the list
-Node* NodeList::find(Node* a)
+NodeList::iterator NodeList::find(Node* a)
 {
-	Node* match = NULL;
-	for (int i = 0; i < this->size(); i++)
-		if (a == (*this)[i])
-			match = (*this)[i];
-	return match;
+	for (NodeList::iterator match = this->begin(); match != this->end(); ++match)
+	if (*a == **match)
+		return match;
+	return this->end();
 }
 
 void NodeList::destroy()
@@ -57,4 +59,11 @@ void NodeList::destroy()
 		n = NULL;
 	}
 	this->clear();
+}
+
+void NodeList::destroy(Node* n)
+{
+	NodeList::iterator badNode = this->find(n);
+	delete *(badNode);
+	this->erase(badNode);
 }

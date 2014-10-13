@@ -85,7 +85,10 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 
 	while (!goalReached)
 	{
-		std::cout << std::endl;
+		if (searchList.empty())
+			return constructPath(startNode);
+
+		//std::cout << std::endl;
 		curNode = searchList.pop();
 
 		if (curNode == NULL)
@@ -117,21 +120,18 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			{
 				if (neighborPos[i].first.checkSanity() && obstructionMap.isOpen(neighborPos[i].first))
 				{
-
 					if (indexList.exists(neighborPos[i].first))
 					{
-						// needs to recalculate f cost as well
-						/*
 						Node* temp = indexList.find(neighborPos[i].first);
 						if (curNode->gcost < temp->gcost)
 						{
-							std::cout << "> " << neighborPos[i].first << " G:" << temp->gcost << " | " << curNode->gcost << std::endl;
+							//std::cout << "> " << neighborPos[i].first << " G:" << temp->gcost << " | " << curNode->gcost << std::endl;
 							temp->gcost = curNode->gcost;
 							temp->fcost = temp->gcost + temp->hcost;
 							temp->parentNode = curNode;
-						}*/
+						}
 					}
-					else if (!searchList.exists(neighborPos[i].first))
+					else if (!indexList.exists(neighborPos[i].first))
 					{
 						Node* newNeighbor = new Node(
 							neighborPos[i].first, 
@@ -150,20 +150,21 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 	return constructPath(curNode);
 }
 
+// Does not include original position
 PositionList* Pathfinding::constructPath(Node* goal)
 {
 	Node* node = goal;
 	PositionList path;
 	while (node->parentNode != NULL)
 	{
-		//
-		// ? Include orginal position
-		//
 		path.push_back(node->pos);
 		node = node->parentNode;
-		std::cout << node->pos << ", ";
+		//std::cout << node->pos << ", ";
 	}
 	std::reverse(path.begin(), path.end());
+	for (Position pos : path)
+		std::cout << pos << ", ";
+	std::cout << std::endl;
 	indexList.destroy();
 	return &path;
 }

@@ -31,7 +31,7 @@ typedef std::vector<Position> PositionList;
 class Pathfinding
 {
 
-	NodeList searchList, indexList;
+	NodeList searchList, indexList, closedList;
 	bool goalReached;
 
 	Direction direction(Position, Position);
