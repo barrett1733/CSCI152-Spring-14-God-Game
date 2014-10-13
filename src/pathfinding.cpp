@@ -23,7 +23,6 @@ Direction* Pathfinding::parseDirection(Direction direction)
 	return directionArray;
 }
 
-
 double Pathfinding::calcHCost(Position start, Position goal)
 {
 	//Manhatten calculation
@@ -73,7 +72,7 @@ Node* Pathfinding::jump(Node* cur, Direction direction, Position start, Position
 	return jump(cur, direction, start, end);
 }
 
-PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMap obstructionMap)
+PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMapReference obstructionMap)
 {
 	goalReached = false;
 
@@ -118,7 +117,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 
 			for (int i = 0; i < 8; i++)
 			{
-				if (neighborPos[i].first.checkSanity() && obstructionMap.isOpen(neighborPos[i].first))
+				if (neighborPos[i].first.checkSanity() && obstructionMap->isOpen(neighborPos[i].first))
 				{
 					if (indexList.exists(neighborPos[i].first))
 					{
@@ -162,9 +161,9 @@ PositionList* Pathfinding::constructPath(Node* goal)
 		//std::cout << node->pos << ", ";
 	}
 	std::reverse(path.begin(), path.end());
-	for (Position pos : path)
-		std::cout << pos << ", ";
-	std::cout << std::endl;
+	//for (Position pos : path)
+	//	std::cout << pos << ", ";
+	//std::cout << std::endl;
 	indexList.destroy();
 	return &path;
 }

@@ -31,7 +31,7 @@ typedef std::vector<Position> PositionList;
 class Pathfinding
 {
 
-	NodeList searchList, indexList, closedList;
+	NodeList searchList, indexList;
 	bool goalReached;
 
 	Direction direction(Position, Position);
@@ -45,7 +45,7 @@ class Pathfinding
 	Node* jump(Node* cur, Direction direction, Position start, Position end);
 
 public:
-	PositionList* findPath(Position start, Position goal, ObstructionMap obstructionMap);
+	PositionList* findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
 
 };
 
