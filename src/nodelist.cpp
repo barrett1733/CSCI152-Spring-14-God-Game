@@ -2,16 +2,16 @@
 
 bool NodeList::exists(Node* a)
 {
-	for (Node* node : *this)
-	if (*a == *node)
+	for (int i = 0; i < this->size(); i++)
+	if (*a == *(*this)[i])
 		return true;
 	return false;
 }
 
 bool NodeList::exists(Position pos)
 {
-	for (Node* node : *this)
-	if (pos == node->pos)
+	for (int i = 0; i < this->size(); i++)
+	if (pos == (*this)[i]->pos)
 		return true;
 	return false;
 }
@@ -37,26 +37,26 @@ Node* NodeList::pop()
 
 Node* NodeList::find(Position pos)
 {
-	for (NodeList::iterator match = this->begin(); match != this->end(); ++match)
-	if (pos == (*match)->pos)
-		return *match;
+	for (int i = 0; i < this->size(); i++)
+	if (pos == (*this)[i]->pos)
+		return (*this)[i];
 	return NULL;
 }
 
 NodeList::iterator NodeList::find(Node* a)
 {
-	for (NodeList::iterator match = this->begin(); match != this->end(); ++match)
-	if (*a == **match)
-		return match;
+	for (int i = 0; i < this->size(); i++)
+	if (*a == *(*this)[i])
+		return this->begin() + i;
 	return this->end();
 }
 
 void NodeList::destroy()
 {
-	for (Node* n : *this)
+	for (int i = 0; i < this->size(); i++)
 	{
-		delete n;
-		n = NULL;
+		delete (*this)[i];
+		(*this)[i] = NULL;
 	}
 	this->clear();
 }
