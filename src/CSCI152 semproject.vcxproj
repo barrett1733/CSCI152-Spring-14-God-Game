@@ -10,6 +10,75 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="config.cpp" />
+    <ClCompile Include="creature.cpp" />
+    <ClCompile Include="entity-manager.cpp" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="game-manager.cpp" />
+    <ClCompile Include="game-state-manager.cpp" />
+    <ClCompile Include="job-manager.cpp" />
+    <ClCompile Include="job.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="miracle-entity.cpp" />
+    <ClCompile Include="miracle-manager.cpp" />
+    <ClCompile Include="nodegraph.cpp" />
+    <ClCompile Include="nodelist.cpp" />
+    <ClCompile Include="obstruction-map.cpp" />
+    <ClCompile Include="pathfinding.cpp" />
+    <ClCompile Include="position.cpp" />
+    <ClCompile Include="resource-manager.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="task-manager.cpp" />
+    <ClCompile Include="task.cpp" />
+    <ClCompile Include="village-manager.cpp" />
+    <ClCompile Include="village.cpp" />
+    <ClCompile Include="world-gen.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="config.h" />
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="game-state-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="miracle-entity.h" />
+    <ClInclude Include="miracle-manager.h" />
+    <ClInclude Include="node.h" />
+    <ClInclude Include="nodegraph.h" />
+    <ClInclude Include="nodelist.h" />
+    <ClInclude Include="obstruction-map.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="sdl\sdl-button.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A7179CAD-4C6E-4C19-A619-16843BAD40F9}</ProjectGuid>
     <RootNamespace>CSCI152semproject</RootNamespace>
@@ -77,54 +146,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="game-state-manager.h" />
-    <ClInclude Include="node.h" />
-    <ClInclude Include="nodegraph.h" />
-    <ClInclude Include="nodelist.h" />
-    <ClInclude Include="sdl\*.h" />
-    <ClInclude Include="config.h" />
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="miracle-entity.h" />
-    <ClInclude Include="miracle-manager.h" />
-    <ClInclude Include="obstruction-map.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClCompile Include="entity-manager.cpp" />
-    <ClCompile Include="game-state-manager.cpp" />
-    <ClCompile Include="nodegraph.cpp" />
-    <ClCompile Include="nodelist.cpp" />
-    <ClCompile Include="sdl\*.cpp" />
-    <ClCompile Include="config.cpp" />
-    <ClCompile Include="creature.cpp" />
-    <ClCompile Include="game-manager.cpp" />
-    <ClCompile Include="entity.cpp" />
-    <ClCompile Include="job-manager.cpp" />
-    <ClCompile Include="job.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="miracle-entity.cpp" />
-    <ClCompile Include="miracle-manager.cpp" />
-    <ClCompile Include="obstruction-map.cpp" />
-    <ClCompile Include="pathfinding.cpp" />
-    <ClCompile Include="position.cpp" />
-    <ClCompile Include="resource-manager.cpp" />
-    <ClCompile Include="task-manager.cpp" />
-    <ClCompile Include="task.cpp" />
-    <ClCompile Include="village-manager.cpp" />
-    <ClCompile Include="village.cpp" />
-    <ClCompile Include="world-gen.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
