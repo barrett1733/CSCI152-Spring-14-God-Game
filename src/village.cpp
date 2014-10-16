@@ -80,11 +80,6 @@ void Village::update(ObstructionMap* obstructionMap)
 	PositionList* toMove;
 	int i = 0;
 	Position goal = obstructionMap->findOpenPosition(Position(0, 0));
-	/*
-	toMove = test.findPath(goal, villagerList.at(0)->getPosition(), obstructionMap);
-	if (!toMove->empty())
-		villagerList.at(0)->setPosition(toMove->at(0));
-		*/
 	
 	for (Entity* villager : villagerList)
 	{

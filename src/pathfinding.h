@@ -49,8 +49,6 @@ class Pathfinding
 public:
 	Pathfinding();
 	PositionList findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
-	PositionList findPath2(Position start, Position goal, ObstructionMapReference obstructionMap);
-	void findShorestPath(Position start, Position goal, ObstructionMapReference obstructionMap);
 
 };
 
