@@ -9,8 +9,8 @@
 #ifndef TASK_H_
 #define TASK_H_
 
-#include "entity.h"
-#include "position.h"
+#include "../entity.h"
+#include "../movement/position.h"
 #include "map"
 
 enum TaskType

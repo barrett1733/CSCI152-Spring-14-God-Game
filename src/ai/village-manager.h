@@ -15,7 +15,7 @@
 #include <map>
 
 #include "village.h"
-#include "entity.h"
+#include "../entity.h"
 
 class VillageManager
 {

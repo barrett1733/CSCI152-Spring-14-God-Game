@@ -22,11 +22,11 @@
 #include "config.h"
 #include "entity.h"
 #include "miracle-entity.h"
-#include "village-manager.h"
+#include "ai/village-manager.h"
 #include "sdl/sdl-entity.h"
 #include "sdl/sdl-map-view.h"
 #include "sdl/sdl-widget-container.h"
-#include "obstruction-map.h"
+#include "movement/obstruction-map.h"
 #include "entity-manager.h"
 
 

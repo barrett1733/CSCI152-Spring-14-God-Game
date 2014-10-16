@@ -10,7 +10,7 @@
 #ifndef CREATURE_H_
 #define CREATURE_H_
 
-#include "entity.h"
+#include "../entity.h"
 #include <vector>
 
 class Creature

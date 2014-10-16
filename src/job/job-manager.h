@@ -17,7 +17,7 @@
 
 //#include "job-factory.h"
 #include "job.h"
-#include "world-gen.h"
+#include "../world-gen.h"
 
 typedef std::vector<JobReference> JobList;
 typedef JobList::iterator JobIter;

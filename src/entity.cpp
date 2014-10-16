@@ -10,8 +10,8 @@
 //
 
 #include "entity.h"
-#include "task.h"
-#include "pathfinding.h"
+#include "job/task.h"
+#include "movement/pathfinding.h"
 
 Entity::Entity(EntityType type, int health, Position position, Faction faction) :
 	type(type),

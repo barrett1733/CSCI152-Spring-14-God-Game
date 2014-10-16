@@ -19,8 +19,8 @@
 
 #include <string>
 #include <vector>
-#include "position.h"
-#include "obstruction-map.h"
+#include "movement/position.h"
+#include "movement/obstruction-map.h"
 
 class Task; // forward declaration of Task class.
 typedef Task * TaskReference;

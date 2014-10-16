@@ -12,9 +12,9 @@
 
 #include <vector>
 
-#include "resource-manager.h"
-#include "job-manager.h"
-#include "world-gen.h"
+#include "../job/resource-manager.h"
+#include "../job/job-manager.h"
+#include "../world-gen.h"
 
 #ifndef VILLAGE_H_
 #define VILLAGE_H_

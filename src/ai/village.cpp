@@ -11,7 +11,7 @@
 #include <iostream>
 
 #include "village.h"
-#include "pathfinding.h"
+#include "../movement/pathfinding.h"
 
 const int POP_PER_HOUSE = 5;
 
@@ -83,7 +83,7 @@ void Village::update(ObstructionMap* obstructionMap)
 	
 	for (Entity* villager : villagerList)
 	{
-		toMove = &test.findPath2(goal, villager->getPosition(), obstructionMap);
+		toMove = &test.findPath(goal, villager->getPosition(), obstructionMap);
 		if (!toMove->empty())
 			villager->setPosition(toMove->at(0));
 		//std::cout << i << std::endl;

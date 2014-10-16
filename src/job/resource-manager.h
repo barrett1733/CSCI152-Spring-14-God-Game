@@ -6,7 +6,7 @@
 //
 //  Handles the resources for a village
 //
-#include "entity.h"
+#include "../entity.h"
 
 #ifndef RESOURCE_MANAGER_H_
 #define RESOURCE_MANAGER_H_
