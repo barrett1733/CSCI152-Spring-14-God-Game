@@ -53,15 +53,18 @@ Thumbs.db
 ####################
 *.opensdf
 *.sdf
-*.sln
-*.vcxproj
-*.vcxproj.filters
 *.tlog
 *.lastbuildstate
 *.unsuccessfulbuild
 *.idb
 *.psess
 *.vsp
+**/ipch
+**/Debug
+**/Release
+**/bin
+**/obj
+**/UnitTest1
 
 # Utility files #
 #################
