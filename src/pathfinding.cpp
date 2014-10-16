@@ -1,5 +1,5 @@
 #include "pathfinding.h"
-
+#include <ctime>
 
 Direction Pathfinding::direction(Position cur, Position neighbor)
 {
@@ -72,8 +72,11 @@ Node* Pathfinding::jump(Node* cur, Direction direction, Position start, Position
 	return jump(cur, direction, start, end);
 }
 
-PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMapReference obstructionMap)
+PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMapReference obstructionMap)
 {
+	clock_t timer,t;
+	timer = clock();
+
 	goalReached = false;
 
 	Node* startNode = new Node(start, NULL, 0, calcHCost(start, goal));
@@ -104,8 +107,6 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 		}
 		else
 		{
-			typedef std::pair<Position, double> neighborTuple;
-			neighborTuple neighborPos[8]; // Should never be anymore than 8 neighbors
 			neighborPos[0] = neighborTuple(getNeighbor(curNode->pos, D_UP), cardinalNeighbor);
 			neighborPos[1] = neighborTuple(getNeighbor(curNode->pos, D_DOWN), cardinalNeighbor);
 			neighborPos[2] = neighborTuple(getNeighbor(curNode->pos, D_LEFT), cardinalNeighbor);
@@ -115,6 +116,8 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			neighborPos[6] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_LEFT), intercardinalNeighbor);
 			neighborPos[7] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_RIGHT), intercardinalNeighbor);
 
+			// openmp here
+			// openmp all the NodeList functions  
 			for (int i = 0; i < 8; i++)
 			{
 				if (neighborPos[i].first.checkSanity() && obstructionMap->isOpen(neighborPos[i].first))
@@ -130,7 +133,7 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 							temp->parentNode = curNode;
 						}
 					}
-					else if (!indexList.exists(neighborPos[i].first))
+					else
 					{
 						Node* newNeighbor = new Node(
 							neighborPos[i].first, 
@@ -146,11 +149,12 @@ PositionList* Pathfinding::findPath(Position start, Position goal, ObstructionMa
 			}
 		}
 	}
+	std::cout <<"f "<< clock() - timer << std::endl;
 	return constructPath(curNode);
 }
 
 // Does not include original position
-PositionList* Pathfinding::constructPath(Node* goal)
+PositionList Pathfinding::constructPath(Node* goal)
 {
 	Node* node = goal;
 	PositionList path;
@@ -165,5 +169,5 @@ PositionList* Pathfinding::constructPath(Node* goal)
 	//	std::cout << pos << ", ";
 	//std::cout << std::endl;
 	indexList.destroy();
-	return &path;
+	return path;
 }

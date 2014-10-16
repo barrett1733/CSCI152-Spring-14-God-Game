@@ -11,6 +11,7 @@
 
 #include "entity.h"
 #include "task.h"
+#include "pathfinding.h"
 
 Entity::Entity(EntityType type, int health, Position position, Faction faction) :
 	type(type),
@@ -212,7 +213,13 @@ void MobileEntity::setTask(TaskReference task)
 }
 
 void MobileEntity::update(ObstructionMapReference obstructionMap)
-{
+{/*
+	Pathfinding test;
+	PositionList* toMove;
+	toMove = test.findPath(Position(0, 0), this->getPosition(), obstructionMap);
+	if (!toMove->empty())
+		this->setPosition(toMove->at(0));
+	
 	if(target)
 	{
 		Direction direction = D_NONE;
@@ -260,5 +267,5 @@ void MobileEntity::update(ObstructionMapReference obstructionMap)
 				position.move(D_LEFT);
 				break;
 		}
-	}
+	}*/
 }

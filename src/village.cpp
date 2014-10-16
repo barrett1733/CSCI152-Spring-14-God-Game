@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "village.h"
+#include "pathfinding.h"
 
 const int POP_PER_HOUSE = 5;
 
@@ -74,6 +75,26 @@ void Village::import(EntityReference entity)
 
 void Village::update(ObstructionMapReference obstructionMap)
 {
+	// Testing pathfinding on villagers
+	Pathfinding test;
+	PositionList* toMove;
+	int i = 0;
+	Position goal = obstructionMap->findOpenPosition(Position(0, 0));
+	/*
+	toMove = test.findPath(goal, villagerList.at(0)->getPosition(), obstructionMap);
+	if (!toMove->empty())
+		villagerList.at(0)->setPosition(toMove->at(0));
+		*/
+	
+	for (Entity* villager : villagerList)
+	{
+		toMove = &test.findPath(goal, villager->getPosition(), obstructionMap);
+		if (!toMove->empty())
+			villager->setPosition(toMove->at(0));
+		std::cout << i << std::endl;
+		i++;
+	}
+
 	// decideAction();
 
 	//if (!setBeginningPopCap)
