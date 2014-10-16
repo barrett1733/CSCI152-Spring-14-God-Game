@@ -1,39 +1,44 @@
-
-#ifndef ENTITY_MANAGER_H_
-#define ENTITY_MANAGER_H_
-
-#include <vector>
-
-#include "sdl/sdl-entity.h"
+#pragma once
 #include "entity.h"
+#include "sdl/sdl-entity.h"
 
-struct EM_Record
+
+struct EntityRecord
 {
 	Entity * entity;
-	WidgetReference widget;
+	SdlEntityReference widget;
+
+	void erase()
+	{
+		if (widget) widget->erase();
+	}
+
+	void update(ObstructionMapReference obstructionMap)
+	{
+		if (entity) entity->update(obstructionMap);
+		if (widget) widget->update();
+	}
 };
+
+typedef std::pair<EntityGroup, EntityRecord*> EntityRecordPair;
 
 class EntityManager
 {
-	std::vector<WidgetReference> widgetList;
-	std::vector<Entity*> entityList; // list of all current entities on map
-	// these lists are sub-catagories of the entitylist, should still be the same reference //
-	std::vector<Entity*> villagerList;
-	std::vector<Entity*> peacefulMobList;
-	std::vector<Entity*> enemyList;
-	std::vector<Entity*> buildingList;
-	
-public:
-	void createEntity();
-	void deleteEntity(); // removes entity from all applicable lists
-	
-	void getEntityType(); 
-	// needs a return of some kind, this will define what lists 
-	//   the entity is added to or removed from.
+	std::multimap<EntityGroup, EntityRecord*> recordMap;
 
-	void update();
-	void show();
-	void hide();
+	std::map<Faction, std::vector<EntityRecord*> > factionMap;
+
+
+public:
+	EntityReference createRecord(const EntityReference);
+	EntityReference createRecord(const Entity&);
+	void deleteRecord(); // removes entity from all applicable lists
+	void update(ObstructionMapReference);
+
+	void getEntityType();
+	// needs a return of some kind, this will define what lists
+	//   the entity is added to or removed from.
+	EntityManager();
+	~EntityManager();
 };
 
-#endif

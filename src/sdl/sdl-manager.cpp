@@ -1,7 +1,20 @@
+//
+//  File: sdl-manager.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Manager Implementation
+//
+
 #include <ctime>
 #include "sdl-manager.h"
 #include <iostream>
 #include <sstream>
+
+int SdlManager::FRAME_RATE = 30;
+unsigned int SdlManager::frameDuration = 1000/SdlManager::FRAME_RATE;
 
 SdlManager sdl;
 
@@ -10,7 +23,7 @@ SdlManager::SdlManager() :
 	renderer(0),
 	next_time(0)
 {
-	std::cout << "SDL_Init()" << std::endl;
+	std::cout << "SdlManager::SdlManager() - SDL_Init()" << std::endl;
 
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -24,7 +37,7 @@ SdlManager::SdlManager() :
 	SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	// Initialize PNG loading
-	std::cout << "IMG_Init()" << std::endl;
+	std::cout << "SdlManager::SdlManager() - IMG_Init()" << std::endl;
 	int imgFlags = IMG_INIT_PNG;
 	if( ! ( IMG_Init( imgFlags ) & imgFlags ) )
 	{
@@ -32,16 +45,19 @@ SdlManager::SdlManager() :
 		throw "IMG_Init()";
 	}
 
-	std::cout << "Initializing Frame Counter" << std::endl;
+	std::cout << "SdlManager::SdlManager() - Initializing Frame Counter" << std::endl;
 	timer = time(0);
 	frameCount = 0;
+
+	std::cout << "SdlManager::SdlManager() - Loading config" << std::endl;
+	load("res/sdl.cfg");
 
 	std::cout << "Ready." << std::endl;
 }
 
 SdlManager::~SdlManager()
 {
-	std::cout << "sdl.destructor()" << std::endl;
+	std::cout << "SdlManager::~SdlManager()" << std::endl;
 
 	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
@@ -51,20 +67,35 @@ SdlManager::~SdlManager()
 }
 
 ////////
+//  CONFIG
+////////
+
+bool SdlManager::setProperty(std::string property, int value)
+{
+	if(property == "frame_rate")
+	{
+		FRAME_RATE = value;
+		frameDuration = 1000/FRAME_RATE;
+		return true;
+	}
+	return false;
+}
+
+////////
 
 void SdlManager::update()
 {
 	SDL_Event event;
 
-	int subscriberCount = subscriberList.size();
+	unsigned long subscriberCount = subscriberList.size();
 
 	//Handle events on queue
 	while(SDL_PollEvent(&event) != 0)
 	{
-		for(int subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
+		for(unsigned long subscriberIndex = 0; subscriberIndex < subscriberCount; subscriberIndex++)
 			subscriberList[subscriberIndex]->handleEvent(event);
 
-		for(int widgetIndex = 0; widgetIndex < widgetCount[WL_INTERACTIVE]; ++widgetIndex)
+		for(unsigned long widgetIndex = 0; widgetIndex < widgetCount[WL_INTERACTIVE]; ++widgetIndex)
 			widgetList[WL_INTERACTIVE][widgetIndex]->handleEvent(event);
 	} // end event handler loop
 
@@ -73,12 +104,12 @@ void SdlManager::update()
 	SDL_RenderClear( renderer );
 	SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
 
-	// Render everything
+	// Render everything to renderTexture
 	for(int layerIndex = 0; layerIndex < WL_COUNT; layerIndex ++)
 		for(int widgetIndex = 0; widgetIndex < widgetCount[layerIndex]; ++widgetIndex)
 			renderWidget(widgetList[layerIndex][widgetIndex]);
 
-	// Update screen
+	// Copy render texture and update screen
 	SDL_RenderPresent( renderer );
 
 	// Update frame rate display
@@ -101,26 +132,22 @@ void SdlManager::update()
 void SdlManager::renderWidget(SdlWidget * widget)
 {
 	return widget->render(renderer);
-	SDL_Surface * surface = widget->getSurface();
-	if(!surface) return;
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, surface);
-	const SDL_Rect * rect = widget->getBoundingBox();
-	if(rect->w == 0 || rect->h == 0) return;
-	SDL_RenderCopy(renderer, texture, widget->getClipping(), rect);
-	SDL_DestroyTexture(texture);
+}
+
+unsigned int SdlManager::getRemainingFrameTime()
+{
+	unsigned int now = SDL_GetTicks();
+	unsigned int time_left = 0;
+	if(next_time > now)
+		time_left = next_time - now;
+	return time_left;
 }
 
 void SdlManager::wait()
 {
-	unsigned long now = SDL_GetTicks();
-	unsigned long time_left = 0;
-	if(next_time > now)
-		time_left = next_time - now;
-	if(time_left > TICK_INTERVAL) time_left = TICK_INTERVAL;
+	unsigned int time_left = getRemainingFrameTime();
+	next_time = SDL_GetTicks() + frameDuration;
 	SDL_Delay(time_left);
-	if(now > next_time)
-		next_time = now;
-	next_time += TICK_INTERVAL;
 }
 
 ////////
@@ -129,7 +156,7 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 {
 	if(window) throw "Window exists.";
 
-	std::cout << "sdl.launchWindow() starting" << std::endl;
+	std::cout << "SdlManager::launchWindow() - starting" << std::endl;
 
 	next_time = 0;
 
@@ -140,18 +167,40 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 
 	// Create renderer for window
 	std::cout << "SDL_CreateRenderer()" << std::endl;
-	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED ) ) )
+	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE ) ) )
 		throw "SDL_CreateRenderer";
 
 	// Initialize renderer color
 	std::cout << "SDL_SetRenderDrawColor()" << std::endl;
 	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
-	fpsCounter = new SdlTextDisplay(740, 580, 60, 20);
+	fpsCounter = new SdlTextDisplay(2, 2, 60, 20);
 	fpsCounter->setText("00 FPS");
 	addWidget(fpsCounter, WL_NON_INTERACTIVE);
 
-	std::cout << "sdl.launchWindow() finished" << std::endl;
+	std::cout << "SdlManager::launchWindow() - Finished" << std::endl;
+}
+
+////////
+
+bool SdlManager::removeWidget(WidgetReference widget, int layer)
+{
+	for(unsigned long widgetIndex = 0; widgetIndex < widgetCount[layer]; ++widgetIndex)
+		if(widgetList[layer][widgetIndex] == widget)
+		{
+			widgetList[layer].erase(widgetList[layer].begin()+widgetIndex);
+			widgetCount[layer] = widgetList[layer].size();
+			return true;
+		}
+	return false;
+}
+
+bool SdlManager::removeWidget(WidgetReference widget)
+{
+	for(int layer = 0; layer < WL_COUNT; layer++)
+		if(removeWidget(widget, layer))
+			return true;
+	return false;
 }
 
 ////////
@@ -170,119 +219,3 @@ SubscriptionReference SdlManager::subscribeToEvent(void (*callback)(SDL_Event&),
 
 	return subscriber;
 }
-
-////////
-//  TEXT WIDGET METHODS
-////////
-
-WidgetReference SdlManager::createTextWidget(const char * text, int xPos, int yPos)
-{
-	SDL_Surface * surface = sdlUtility.createTextSurface(text);
-	SDL_Rect rect = {xPos, yPos, surface->w, surface->h};
-
-	SdlWidget * widget = new SdlWidget(surface, rect);
-	addWidget(widget, WL_NON_INTERACTIVE);
-	return widget;
-}
-
-TextDisplayReference SdlManager::createTextDisplay(std::string text, int xPos, int yPos)
-{
-	std::cout << "SdlManager::createTextDisplay()" << std::endl;
-
-	int width = 256;
-	int height = 32;
-
-	SDL_Surface * surface = sdlUtility.createSurface(width, 4*height);
-
-	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
-	SdlTextDisplay * textDisplay = new SdlTextDisplay(surface, rect, text);
-	addWidget(textDisplay, WL_NON_INTERACTIVE);
-
-	std::cout << "SdlManager::createTextDisplay() finished" << std::endl;
-	return textDisplay;
-}
-
-////////
-//  IMAGE METHODS
-////////
-
-SDL_Texture * SdlManager::loadImage(const char * file)
-{
-	SDL_Texture * texture = 0;
-
-	SDL_Surface * surface = IMG_Load(file);
-	if( ! surface)
-		throw "IMG_Load";
-
-	texture = SDL_CreateTextureFromSurface( renderer, surface );
-
-	if( ! texture)
-		throw "SDL_CreateTextureFromSurface";
-
-	SDL_FreeSurface(surface);
-
-	return texture;
-}
-
-void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos, int width, int height)
-{
-	SDL_Rect boundingBox = {xPos, yPos, width, height};
-
-	SDL_RenderCopy(renderer, image, NULL, &boundingBox);
-}
-
-void SdlManager::renderImage(SDL_Texture *image, int xPos, int yPos)
-{
-	int width, height;
-
-	//Query the image to get its width and height to use
-	SDL_QueryTexture(image, NULL, NULL, &width, &height);
-
-	return renderImage(image, xPos, yPos, width, height);
-}
-
-////////
-//  BUTTON WIDGET METHODS
-////////
-
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * labelText, int xPos, int yPos)
-{
-	return createButton(callback, background, labelText, xPos, yPos, 128, 32);
-}
-ButtonReference SdlManager::createButton(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, const char * text, int xPos, int yPos, int width, int height)
-{
-	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
-	SdlButton * button = new SdlButton(text, rect, callback);
-	addWidget(button, WL_INTERACTIVE);
-	return button;
-}
-
-void SdlManager::destroyButton(ButtonReference & buttonRef)
-{
-	int widgetCount = widgetList[WL_INTERACTIVE].size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; ++widgetIndex)
-		if(widgetList[WL_INTERACTIVE][widgetIndex] == buttonRef)
-			widgetList[WL_INTERACTIVE].erase(widgetList[WL_INTERACTIVE].begin()+widgetIndex);
-	delete buttonRef;
-}
-
-////////
-
-SliderReference SdlManager::createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos)
-{
-	return createSlider(callback, background, xPos, yPos, 256, 32);
-}
-SliderReference SdlManager::createSlider(void (*callback)(SDL_Event&, WidgetReference), SDL_Surface * background, int xPos, int yPos, int width, int height)
-{
-	std::cout << "SdlManager::createSlider()" << std::endl;
-
-
-	SDL_Rect rect = sdlUtility.createRect(xPos, yPos, width, height);
-	SdlSlider * slider = new SdlSlider(rect, callback);
-	addWidget(slider, WL_INTERACTIVE);
-
-	std::cout << "createSlider() finished" << std::endl;
-	return slider;
-}
-
-////////

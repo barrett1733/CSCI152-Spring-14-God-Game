@@ -1,212 +1,195 @@
+//
+//  File: entity-manager.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Entity Manager Implementation
+//
+
+#include <iostream>
 
 #include "game-manager.h"
-#include "sdl/sdl-triangle-slider.h"
-#include "sdl/sdl-map-view.h"
 
 GameManager * GameManager::self = 0;
-GameMode GameManager::mode_ = GM_ERROR;
+std::map<std::string, void (*)(SDL_Event&, WidgetReference)> GameManager::callbackMap;
+bool GameManager::callbackMapInitialized = false;
+VillageManager GameManager::villageManager;
+EntityManager GameManager::entityManager;
+WidgetContainerReference GameManager::buttonContainer = 0;
 
-void doNothing(SDL_Event & event, WidgetReference widget) {}
-
-GameManager::GameManager()
+GameManager::GameManager() :
+	worldSize(0),
+	visible(false)
 {
 	if(self)
-		throw "GameManager already initialized";
-
+	{
+		std::cerr << "\033[31m GameManager already exists!\033[m" << std::endl;
+		return;
+	}
 	self = this;
-	mode_ = GM_MENU;
 
-	callbackMap["none"]                     = doNothing;
-	callbackMap["newGame()"]                = newGame;
-	callbackMap["pauseGame()"]              = pauseGame;
-	callbackMap["showCredits()"]            = showCredits;
-	callbackMap["quitGame()"]               = quitGame;
+}
+
+void GameManager::setup()
+{
+	WorldGeneration world(time(0));
+	worldSize = world.getWorldSize();
+
+	initializeCallbackMap();
+	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
+
+	mapView = new SdlMapView();
+	mapView->hide();
+
+	SdlEntity::mapView = mapView;
+	SdlEntity::worldSize = worldSize;
+
+	//  Village Manager
+	villageManager.show();
+	villageManager.addVillage(F_PLAYER_1);
+	villageManager.addVillage(F_PLAYER_2);
+	hide();
+
+	obstructionMap = new ObstructionMap(worldSize);
+
+
+	EntityReference tempEntity = world.getNextEntity();
+	EntityReference storedEntity;
+	while (tempEntity && tempEntity->getType() != ET_NONE)
+	{
+		storedEntity = entityManager.createRecord(tempEntity);
+		villageManager.import(storedEntity);
+
+		// Get next entity for next loop iteration.
+		delete tempEntity;
+		tempEntity = world.getNextEntity();
+	}
+}
+
+
+void GameManager::update()
+{
+	if(!visible) show();
+
+	villageManager.update(obstructionMap);
+
+	entityManager.update(obstructionMap);
+
+	// ...
+}
+
+void GameManager::show()
+{
+	if(visible) return;
+	std::cout << "GameManager::show()" << std::endl;
+	visible = true;
+	villageManager.show();
+	mapView->show();
+	buttonContainer->show();
+	// unsigned long count = widgetList.size();
+	// for(int index = 0; index < count; index ++)
+	// 	widgetList[index]->show();
+}
+
+void GameManager::hide()
+{
+	villageManager.hide();
+	if(!visible) return;
+	std::cout << "GameManager::hide()" << std::endl;
+	visible = false;
+	mapView->hide();
+	buttonContainer->hide();
+}
+
+
+//
+
+void GameManager::initializeCallbackMap()
+{
+	if(callbackMapInitialized) return;
+	callbackMapInitialized = true;
+
+	callbackMap["build()"] = build;
+	callbackMap["miracle()"] = miracle;
+
 	callbackMap["triangleSliderCallback()"] = triangleSliderCallback;
-	callbackMap["sliderCallback()"]         = sliderCallback;
-
-	modeMap["loading"] = GM_MENU;
-	modeMap["playing"] = GM_PLAYING;
-	modeMap["pausing"] = GM_PAUSING;
-
-	callbackName = "";
-	buttonConfig = 0;
-
-	load("res/main-menu.cfg");
-
-	sdl.launchWindow("Window Title!", 800, 600);
-	sdl.subscribeToEvent(quitGame, SDL_QUIT);
-	sdl.subscribeToEvent(quitGame, SDL_KEYDOWN, '\033');
+	callbackMap["sliderCallback()"] = sliderCallback;
 }
 
-void GameManager::newGame(SDL_Event & event, WidgetReference widget)
+//
+
+void GameManager::build(SDL_Event & event, WidgetReference widget)
 {
-	std::cout << "New Game" << std::endl;
-
-	switch(mode_)
+	std::cout << "GameManager::build(" << widget->id << ")" << std::endl;
+	if(self)
 	{
-		case GM_MENU:
-			((ButtonReference) widget)->setText("Continue");
-			break;
+		Faction faction = F_PLAYER_1;
+		EntityType type = (EntityType) widget->id;
+		VillageReference village = villageManager.getVillage(faction);
+		EntityReference townCenter = village->getTownCenter();
 
-		case GM_PAUSING:
-			break;
-
-		default:
-			std::cerr << "\033[33m Invalid transition to 'playing' from mode " << mode_ << "\033[m" << std::endl;
-			break;
-
-	}
-
-	mode_ = GM_PLAYING;
-
-	int widgetCount = self->widgetList.size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
-	{
-		if(self->widgetList[widgetIndex]->mode & mode_)
-			self->widgetList[widgetIndex]->widget->show();
+		if(!townCenter)
+			std::cerr << "No town center." << std::endl;
 		else
-			self->widgetList[widgetIndex]->widget->hide();
+		{
+			Position origin = townCenter->getPosition();
+			Position position = self->obstructionMap->findOpenPosition(origin);
+
+			EntityReference entity = new Entity(type, 1, position, faction);
+			entityManager.createRecord(entity);
+
+			//self->obstructionMap->set(position, OT_CONSIDERED);
+
+			//std::cout << (*(self->obstructionMap)) << std::endl;
+		}
+
+		//self->villageManager.buildHouse();
 	}
+	else
+		std::cerr << "GameManager not initialized." << std::endl;
 }
 
-void GameManager::pauseGame(SDL_Event & event, WidgetReference widget)
+void GameManager::miracle(SDL_Event & event, WidgetReference widget)
 {
-	std::cout << "Pause Game" << std::endl;
-
-	mode_ = GM_PAUSING;
-
-	int widgetCount = self->widgetList.size();
-	for(int widgetIndex = 0; widgetIndex < widgetCount; widgetIndex ++)
+	std::cout << "GameManager::miracle(" << widget->id << ")" << std::endl;
+	if(self)
 	{
-		if(self->widgetList[widgetIndex]->mode & mode_)
-			self->widgetList[widgetIndex]->widget->show();
+		//  NOTE: widget->id is the MiracleType (needs to be cast).
+		Faction faction = F_PLAYER_1;
+		EntityType type = (EntityType) widget->id;
+		VillageReference village = villageManager.getVillage(faction);
+		EntityReference townCenter = village->getTownCenter();
+
+		if(!townCenter)
+			std::cout << "No town center." << std::endl;
+		else if(!type)
+			std::cout << "No type." << std::endl;
+		else if(0)
+		{
+			Position origin = townCenter->getPosition();
+			Position position = origin;
+
+			EntityReference entity = new MiracleEntity(type, 1, position, faction);
+			#pragma unused (entity)
+			//self->createRecord(entity);
+		}
 		else
-			self->widgetList[widgetIndex]->widget->hide();
+			std::cout << "Type: " << type << ", but not implemented." << std::endl;
+
 	}
-}
-
-void GameManager::showCredits(SDL_Event & event, WidgetReference widget)
-{
-	std::cout << "Show Credits (NOT IMPLEMENTED - QUITING)" << std:: endl;
-	mode_ = GM_QUITING;
-}
-
-void GameManager::quitGame(SDL_Event & event, WidgetReference widget)
-{
-	std::cout << "Quit Game (from button)" << std::endl;
-	mode_ = GM_QUITING;
-}
-
-void GameManager::quitGame(SDL_Event & event)
-{
-	std::cout << "Quit Game" << std::endl;
-	mode_ = GM_QUITING;
+	else
+		std::cerr << "GameManager not initialized." << std::endl;
 }
 
 void GameManager::sliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	double value = ((SliderReference) widget) -> getValue();
-	std::cout << "Slider Update: " << value << std::endl;
+
 }
 
 void GameManager::triangleSliderCallback(SDL_Event & event, WidgetReference widget)
 {
-	double valueA = ((TriangleSliderReference) widget)-> getValueA();
-	double valueB = ((TriangleSliderReference) widget)-> getValueB();
-	double valueC = ((TriangleSliderReference) widget)-> getValueC();
-	std::cout << "Triangle Update: " << valueA << ", " << valueB << ", " << valueC << std::endl;
+
 }
 
-// From Config
-bool GameManager::setProperty(std::string property, std::string value)
-{
-
-	if(property == "label")
-	{
-		buttonLabel = value;
-		buttonConfig |= BCFG_LABEL;
-	}
-
-	else if(property == "callback")
-	{
-		if(!callbackMap[value])
-			return false;
-		callbackName = value;
-		buttonConfig |= BCFG_CALLBACK;
-	}
-
-	else if(property == "create")
-	{
-		if( ! (buttonConfig & BCFG_VALID))
-		{
-			std::cerr << "\033[33m Invalid Button Configuration: " << buttonConfig << " != " << BCFG_VALID << "\033[m" << std::endl;
-			if( ! (buttonConfig & BCFG_LABEL)) std::cerr << "Missing label." << std::endl;
-			if( ! (buttonConfig & BCFG_CALLBACK)) std::cerr << "Missing callback." << std::endl;
-			return false;
-		}
-
-		WidgetReference widget;
-		int layer = WL_INTERACTIVE;
-
-		if(value == "button")
-			widget = new SdlButton(buttonLabel.c_str(), rect, callbackMap[callbackName]);
-
-		else if(value == "slider")
-			widget = new SdlSlider(rect, callbackMap[callbackName]);
-
-		else if(value == "triangle-slider")
-			widget = new SdlTriangleSlider(rect, callbackMap[callbackName]);
-
-		else if(value == "map-view")
-		{
-			widget = new SdlMapView(rect.x, rect.y, rect.w, rect.h);
-			layer = WL_BACKGROUND;
-		}
-
-		else return false;
-
-		sdl.addWidget(widget, layer);
-		widgetList.push_back(new GM_Widget(widget, buttonLabel));
-		buttonConfig = 0;
-	}
-
-	else if(property == "initially")
-	{
-		if(value == "hidden")
-			widgetList.back()->widget->hide();
-	}
-
-	else if(property == "show_when")
-	{
-		if(!modeMap[value])
-			return false;
-		widgetList.back()->mode |= modeMap[value];
-	}
-
-	else return false;
-
-	return true;
-}
-
-bool GameManager::setProperty(std::string property, int value)
-{
-	std::cout << "GameManager::SetProperty() : " << property << " = " << value << std::endl;
-	return false;
-}
-
-bool GameManager::setProperty(std::string property, int value1, int value2)
-{
-	if(property == "position")
-	{
-		rect.x = value1;
-		rect.y = value2;
-		return true;
-	}
-	else if(property == "size")
-	{
-		rect.w = value1;
-		rect.h = value2;
-		return true;
-	}
-	return false;
-}

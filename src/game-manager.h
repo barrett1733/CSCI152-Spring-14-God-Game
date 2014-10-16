@@ -1,74 +1,81 @@
+//
+//  File: entity-manager.h
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Entity Manager Definition
+// Implements the Config interface.
+// Maintains a list of all game Entities.
+// Provides subsets of this list to the Village Manager.
+// Maintains the sidebar interface.
+//
 
 #ifndef GAME_MANAGER_H_
 #define GAME_MANAGER_H_
 
 #include <vector>
 #include <map>
+#include <ctime>
 
 #include "config.h"
-#include "sdl/sdl-manager.h"
+#include "entity.h"
+#include "miracle-entity.h"
+#include "village-manager.h"
+#include "sdl/sdl-entity.h"
+#include "sdl/sdl-map-view.h"
+#include "sdl/sdl-widget-container.h"
+#include "obstruction-map.h"
+#include "entity-manager.h"
 
-enum GameMode {
-	GM_ERROR   = 0x00,
-	GM_MENU    = 0x01,
-	GM_PLAYING = 0x02,
-	GM_PAUSING = 0x04,
-	GM_QUITING = 0x08,
-};
-
-enum {
-	BCFG_LABEL = 0x01,
-	BCFG_CALLBACK = 0x02,
-
-	BCFG_VALID = BCFG_LABEL | BCFG_CALLBACK,
-};
-
-struct GM_Widget
-{
-	WidgetReference widget;
-	std::string name;
-	int mode;
-
-	GM_Widget(WidgetReference reference, std::string label)
-	{
-		widget = reference;
-		name = label;
-		mode = 0;
-	}
-};
 
 class GameManager : public Config
 {
+	bool visible;
+
+	// data to pair up Entity Type and Health
+	std::map<EntityType, int> entityHealthMap;
+
+	SdlMapView * mapView;
+	int worldSize;
+
+	ObstructionMapReference obstructionMap;
+
 	static GameManager * self;
-	static GameMode mode_;
+	static VillageManager villageManager;
+	static EntityManager entityManager;
+	static bool callbackMapInitialized;
+	static std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
+	static WidgetContainerReference buttonContainer;
 
-	std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
-	std::map<std::string, GameMode> modeMap;
-
-	std::vector<GM_Widget*> widgetList;
-
-	SDL_Rect rect;
-	std::string buttonLabel;
-	std::string callbackName;
-	int buttonConfig;
-
-	static void newGame(SDL_Event & event, WidgetReference);
-	static void pauseGame(SDL_Event & event, WidgetReference);
-	static void showCredits(SDL_Event & event, WidgetReference);
-	static void quitGame(SDL_Event & event);
-	static void quitGame(SDL_Event & event, WidgetReference);
-	static void sliderCallback(SDL_Event & event, WidgetReference widget);
-	static void triangleSliderCallback(SDL_Event & event, WidgetReference widget);
-
-	// From Config
-	bool setProperty(std::string property, std::string value);
-	bool setProperty(std::string property, int value);
-	bool setProperty(std::string property, int value1, int value2);
 
 public:
 	GameManager();
+	void setup();
+	void update();
+	void show();
+	void hide();
 
-	GameMode mode() { return mode_; }
+
+	static void initializeCallbackMap();
+
+	static void build(SDL_Event&, WidgetReference);
+	static void miracle(SDL_Event&, WidgetReference);
+
+	static void sliderCallback(SDL_Event&, WidgetReference);
+	static void triangleSliderCallback(SDL_Event&, WidgetReference);
+	// From Config, we use this to pull from a config file
+/*	friend std::ostream & operator<<(std::ostream & os, const GameManager & manager)
+	{
+		long entityCount = manager.entityList.size();
+		for(long entityIndex = 0; entityIndex < entityCount; entityIndex ++)
+		{
+			EntityReference entity = manager.entityList[entityIndex];
+			os << *entity << std::endl;
+		}
+		return os;
+	}*/
 };
 
 #endif

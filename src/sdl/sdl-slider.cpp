@@ -1,3 +1,12 @@
+//
+//  File: sdl-slider.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Slider Widget Implementation
+//
 
 #include "sdl-slider.h"
 
@@ -57,7 +66,6 @@ void SdlSlider::handleEvent(SDL_Event & event)
 		if(percent > 1) percent = 1;
 
 		clipping.x = (clipping.w - handleWidth) * (1-percent);
-		texture = 0;
 
 		if(percent != previous && liveCallback)
 			liveCallback(event, this);
@@ -86,8 +94,8 @@ ImageReference SdlSlider::createSliderBackground()
 	SDL_Surface * handle = sdlUtility.createSurface(handleWidth, height);
 	SDL_FillRect(handle, NULL, SDL_MapRGBA(handle->format, 64, 64, 64, 255));
 
-	SDL_Rect clip = sdlUtility.createRect(width - handleWidth, 0, handleWidth, height);
-	SDL_BlitSurface(handle, NULL, background, &clip);
+	SDL_Rect rect = sdlUtility.createRect(width - handleWidth, 0, handleWidth, height);
+	SDL_BlitSurface(handle, NULL, background, &rect);
 	SDL_FreeSurface(handle);
 
 	return background;

@@ -1,3 +1,12 @@
+//
+//  File: sdl-triangle-slider.cpp
+//  Author: Chad Hatcher
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  SDL Triangle Slider Widget Implementation
+//
 
 #include <iostream>
 
@@ -209,5 +218,6 @@ void SdlTriangleSlider::renderTriangleSliderSurface()
 	clip = sdlUtility.createRect(xPos,yPos,16,16);
 	SDL_BlitSurface(handle, NULL, surface, &clip);
 
+	if(texture) SDL_DestroyTexture(texture);
 	texture = 0;
 }

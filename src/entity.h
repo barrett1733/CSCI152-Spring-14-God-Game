@@ -1,34 +1,68 @@
 //
-//  CSCI 152, Spring 2014, God Game
+//  File: entity.h
+//  Author: Chad Hatcher, Steven Barrett
+//  CSci 152
+//  Spring 2014
+//  Instructor: Alex Liu
+//
+//  Entity Class Definition
+// Maintains a collection of Entity properties.
+//
+//  Mobile Entity Class Defintion
+// Extends Entity class.
+// Maintains a collection of MobileEntity properties.
+// Invokes pathfinding when it has a task.
 //
 
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
-#include "position.h"
 #include <string>
+#include <vector>
+#include "position.h"
+#include "obstruction-map.h"
 
-enum FactionType {
-	FT_NONE,
-	FT_STATIC,
-	FT_ANIMAL_DOMESTIC,
-	FT_ANIMAL_PASSIVE,
-	FT_ANIMAL_HOSTILE,
-	FT_PLAYER_1,
-	FT_PLAYER_2,
-	FT_PLAYER_3,
-	FT_PLAYER_4,
-	FT_PLAYER_5,
-	FT_PLAYER_6,
-	FT_PLAYER_7,
-	FT_PLAYER_8
+class Task; // forward declaration of Task class.
+typedef Task * TaskReference;
+
+enum Faction {
+	F_NONE,
+	F_RESOURCE,
+	F_ANIMAL_DOMESTIC, // Should not exist. Domistics belong to a village faction. -CH
+	F_ANIMAL_PASSIVE,
+	F_ANIMAL_HOSTILE,
+	F_PLAYER_1,
+	F_PLAYER_2,
+	F_PLAYER_3,
+	F_PLAYER_4,
+	F_PLAYER_5,
+	F_PLAYER_6,
+	F_PLAYER_7,
+	F_PLAYER_8,
+
+	F_COUNT
+};
+
+enum EntityGroup {
+	EG_NONE,
+	EG_RESOURCE,
+	EG_BUILDING,
+	EG_MIRACLE,
+
+	EG_MOBILE, // if entity.group < EG_MOBILE, then entity isn't mobile
+
+	EG_VILLAGER,
+	EG_DOMESTIC,
+	EG_PASSIVE,
+	EG_HOSTILE,
 };
 
 enum EntityType {
 	ET_NONE = 0x00,
 
 	// RESOURCES
-	ET_TREE = 0x000001,
+	ET_RESOURCE = 0x00000001, // NOTE: Marker. Do not change.
+	ET_TREE,
 	ET_TREE_2,
 	ET_SHRUB_1,
 	ET_SHRUB_2,
@@ -40,12 +74,13 @@ enum EntityType {
 	ET_COPPER,
 
 	// VILLAGERS
-	ET_VILLAGER = 0x000100,
+	ET_VILLAGER = 0x00000100,
 
 	ET_ELDER_VILLAGER,
 	ET_CHILD_VILLAGER,
 
 	// DOMESTIC ANIMALS
+	ET_DOMESTIC = 0x00000200, // NOTE: Marker. Do not change.
 	ET_COW,
 
 	ET_SHEEP,
@@ -53,11 +88,13 @@ enum EntityType {
 	ET_CHICKEN,
 	ET_PIG,
 	ET_FISH,
-	endofdmestics,
+
 	// PASSIVE
+	ET_PASSIVE = 0x00000300, // NOTE: Marker. Do not change.
 	ET_DEER,
 
 	// HOSTILE
+	ET_HOSTILE = 0x00000400, // NOTE: Marker. Do not change.
 	ET_WOLF,
 	ET_OGRE,
 
@@ -73,50 +110,98 @@ enum EntityType {
 	ET_CYCLOPS,
 
 	// BUILDINGS
-	ET_FOUNDATION = 0x010000,
+	ET_BUILDING = 0x00010000, // NOTE: Marker. Do not change.
+
+	// In-Game buildings
 	ET_TOWN_CENTER,
+	ET_TEMPLE,
+	ET_HOUSE = 0x00020001, //  NOTE: Do not change.
+	ET_MILL, //  NOTE: Do not change.
+	ET_MASONRY, //  NOTE: Do not change.
+	ET_FOUNDARY, //  NOTE: Do not change.
+	ET_SMITH, //  NOTE: Do not change.
+	ET_ARMORY, //  NOTE: Do not change.
+
+	ET_FOUNDATION,
 	ET_STOREHOUSE,
-	ET_HOUSE,
 	ET_STONEWORKS,
 	ET_LUMBERMILL,
 	ET_SMELTER,
 	ET_WEAPONSMITH,
 	ET_ARMORSMITH,
 	ET_FARM,
-	ET_TEMPLE,
-
 	ET_HOVEL,
 	ET_MANSION,
 	ET_QUARRY,
 	ET_WATCHTOWER,
-	ET_MINES
+	ET_MINES,
+
+	//Miracles
+	ET_MIRACLE = 0x00100000, // NOTE: Marker. Do not change.
+	ET_MIRACLE_HEAL = 0x00100001, //  NOTE: Do note change.
+	ET_MIRACLE_SUMMONCOW, //  NOTE: Do note change.
+	ET_MIRACLE_STATBOOST, //  NOTE: Do note change.
+	ET_MIRACLE_LIGTNING, //  NOTE: Do note change.
+	ET_MIRACLE_EARTHQUAKE, //  NOTE: Do note change.
+	ET_MIRACLE_METEOR
 };
 
 class Entity
 {
 private:
+	std::string name;
+	EntityGroup group;
 	EntityType type;
-	Position position;
+	Faction faction;
 	int maxHealth;
 	int currentHealth;
-	FactionType faction;
-	std::string name;
-public:
-	Entity(EntityType, int health, Position, FactionType);
-	Entity(EntityType, int health, int xPos, int yPos, FactionType);
 
-	std::string getName();
-	Position getPosition();
+protected:
+	Position position;
+
+public:
+	Entity(EntityType, int health, Position, Faction);
+	Entity(EntityType, Position, Faction);
+	Entity(Position);
+	Entity(const Entity&);
+
+	virtual ~Entity();
+
+	Entity& operator= (const Entity&);
+
+	std::string getName() const;
+	EntityGroup getGroup() const;
+	EntityType getEntityType() const;
+	EntityType getType() const;
+	Faction getFaction() const;
+	Position getPosition() const;
 	int getMaxHealth();
 	int getCurrentHealth();
-	FactionType getFactionType();
-	EntityType getEntityType();
+	int getHealth() const;
+
 	void setName(std::string);
-	void setPosition(Position);
+	void setGroup(EntityGroup);
+	void setEntityType(EntityType);
+	void setFaction(Faction);
 	void setMaxHealth(int);
 	void setCurrentHealth(int);
-	void setEntityType(EntityType);
-	void setFactionType(FactionType);
+	void setPosition(Position);
+	void setHealth(int health);
+
+	virtual void update(ObstructionMapReference obstructionMap) {}
+	virtual void update(std::vector<Entity*>& entityList, ObstructionMapReference obstructionMap) {}
+
+	bool operator==(EntityType type) { return this->type == type; }
+
+	friend std::ostream& operator<< (std::ostream & os, const Entity & entity)
+	{
+		if(entity.name.length()) os << entity.name << " ";
+		os << entity.type << " ";
+		os << entity.faction << " ";
+		os << entity.position << " ";
+		os << entity.currentHealth << "/" << entity.maxHealth;
+		return os;
+	}
 };
 
 class MobileEntity : public Entity
@@ -125,17 +210,25 @@ private:
 	int hunger;
 	int strength;
 	int defense;
+
+	TaskReference task;
+	Entity * target;
 public:
-	MobileEntity(EntityType, int health, Position, FactionType, int hunger, int strength, int defense);
-	MobileEntity(EntityType, int health, int xPos, int yPos, FactionType, int hunger, int strength, int defense);
+	MobileEntity(const Entity&);
 	int getHunger();
 	int getStrength();
 	int getDefense();
 	void setHunger(int);
 	void setStrength(int);
 	void setDefense(int);
+
+	void update(ObstructionMapReference obstructionMap);
+
+	bool hasTask();
+	void setTask(TaskReference);
 };
 
-//extern Entity * EntityList;
-
 #endif
+
+typedef Entity * EntityReference;
+typedef MobileEntity * MobileEntityReference;

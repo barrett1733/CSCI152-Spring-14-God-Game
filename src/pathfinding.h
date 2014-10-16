@@ -1,32 +1,53 @@
+#ifndef PATHFINDING_H_
+#define PATHFINDING_H_
+/*
+Jump Point Search Code:
+https://code.google.com/p/ddh/
+
+Jump Point Search Paper:
+http://www.aaai.org/ocs/index.php/AAAI/AAAI11/paper/viewFile/3761/4007
+
+Jump Point Search Explaination:
+http://harablog.wordpress.com/2011/09/07/jump-point-search/
+
+Jump Point Search Demo (Other searches included):
+http://qiao.github.io/PathFinding.js/visual/
+
+*/
+
 #include <iostream>
 #include <math.h>
 #include <vector>
-#include <ctime>
-#include "Node.h"
+#include <algorithm>
+#include <map>
+#include "obstruction-map.h"
+#include "nodelist.h"
 
-using namespace std;
 
-bool operator< (const Node& a, const Node& b){
+typedef std::vector<Position> PositionList;
+#define cardinalNeighbor 1
+#define intercardinalNeighbor 1.4
 
-	return a.getPriority() > b.getPriority();
+class Pathfinding
+{
 
-}
+	NodeList searchList, indexList;
+	bool goalReached;
 
-class Pathfinding{
+	Direction direction(Position, Position);
+	Direction* parseDirection(Direction);
 
-	const int n = 60;
-	const int m = 60;
-	const int dir = 8;
+	double calcHCost(Position start, Position goal);
+	Position getNeighbor(Position, Direction);
+	PositionList* constructPath(Node*);
 
-	static int map[n][m];
-	static int closed_map[n][m];
-	static int open_map[n][m];
-	static int dir_map[n][m];
-	
-	static int dx[dir] = { 1, 1, 0, -1, -1, -1, 0, 1 };
-	static int dy[dir] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+	NodeList* identifySuccessors(Node* cur, Position start, Position end);
+	Node* jump(Node* cur, Direction direction, Position start, Position end);
 
 public:
-	
+	PositionList* findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
+
 };
 
+
+#endif

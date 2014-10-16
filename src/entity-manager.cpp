@@ -1,33 +1,52 @@
-
 #include "entity-manager.h"
-#include "sdl/sdl-manager.h"
-#include <iostream>
 
-void EntityManager::createEntity()
-{
-	std::cout << "EntityManager::createEntity()" << std::endl;
-	WidgetReference testWidget = new SdlEntity(C_BLUE, 16);
-	testWidget->enable();
-	sdl.addWidget(testWidget);
 
-	widgetList.push_back(testWidget);
-}
-
-void EntityManager::update()
+EntityManager::EntityManager()
 {
 }
 
-void EntityManager::show()
+
+EntityManager::~EntityManager()
 {
-	int count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-		widgetList[index]->show();
 }
 
-void EntityManager::hide()
-{
-	int count = widgetList.size();
-	for(int index = 0; index < count; index ++)
-		widgetList[index]->hide();
+void EntityManager::deleteRecord(){}
 
+EntityReference EntityManager::createRecord(const Entity & entity)
+{
+	Faction faction = entity.getFaction();
+	EntityGroup group = entity.getGroup();
+
+	EntityRecord *record = new EntityRecord();
+	if (group < EG_MOBILE)
+	{
+		record->entity = new Entity(entity);
+		//obstructionMap->set(record->entity->getPosition(), OT_OBSTRUCTED);
+	}
+	else
+		record->entity = new MobileEntity(entity);
+
+	record->widget = new SdlEntity(*record->entity);
+
+	recordMap.insert(EntityRecordPair(record->entity->getGroup(), record));
+
+	factionMap[faction].push_back(record);
+
+	return record->entity;
+}
+
+EntityReference EntityManager::createRecord(const EntityReference entity)
+{
+	return createRecord(*entity);
+}
+
+void EntityManager::update(ObstructionMapReference obstructionMap)
+{
+	std::map<EntityGroup, EntityRecord*>::iterator it;
+
+	for (it = recordMap.begin(); it != recordMap.end(); ++it)
+		it->second->erase();
+
+	for (it = recordMap.begin(); it != recordMap.end(); ++it)
+		it->second->update(obstructionMap);
 }
