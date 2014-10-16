@@ -22,7 +22,7 @@ http://qiao.github.io/PathFinding.js/visual/
 #include <map>
 #include "obstruction-map.h"
 #include "nodelist.h"
-
+#include "nodegraph.h"
 
 typedef std::vector<Position> PositionList;
 #define cardinalNeighbor 1
@@ -30,8 +30,8 @@ typedef std::vector<Position> PositionList;
 
 class Pathfinding
 {
-
 	NodeList searchList, indexList;
+	NodeGraph indexGraph;
 	bool goalReached;
 	typedef std::pair<Position, double> neighborTuple;
 	neighborTuple neighborPos[8]; // Should never be anymore than 8 neighbors
@@ -47,7 +47,9 @@ class Pathfinding
 	Node* jump(Node* cur, Direction direction, Position start, Position end);
 
 public:
+	Pathfinding();
 	PositionList findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
+	PositionList findPath2(Position start, Position goal, ObstructionMapReference obstructionMap);
 	void findShorestPath(Position start, Position goal, ObstructionMapReference obstructionMap);
 
 };

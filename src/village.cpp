@@ -73,7 +73,7 @@ void Village::import(EntityReference entity)
 	}
 }
 
-void Village::update(ObstructionMapReference obstructionMap)
+void Village::update(ObstructionMap* obstructionMap)
 {
 	// Testing pathfinding on villagers
 	Pathfinding test;
@@ -88,10 +88,10 @@ void Village::update(ObstructionMapReference obstructionMap)
 	
 	for (Entity* villager : villagerList)
 	{
-		toMove = &test.findPath(goal, villager->getPosition(), obstructionMap);
+		toMove = &test.findPath2(goal, villager->getPosition(), obstructionMap);
 		if (!toMove->empty())
 			villager->setPosition(toMove->at(0));
-		std::cout << i << std::endl;
+		//std::cout << i << std::endl;
 		i++;
 	}
 

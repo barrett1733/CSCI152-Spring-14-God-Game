@@ -81,13 +81,13 @@
     <ClInclude Include="entity-manager.h" />
     <ClInclude Include="game-state-manager.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="nodegraph.h" />
     <ClInclude Include="nodelist.h" />
     <ClInclude Include="sdl\*.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="game-manager.h" />
     <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
     <ClInclude Include="job-manager.h" />
     <ClInclude Include="job.h" />
     <ClInclude Include="miracle-entity.h" />
@@ -103,6 +103,7 @@
     <ClInclude Include="world-gen.h" />
     <ClCompile Include="entity-manager.cpp" />
     <ClCompile Include="game-state-manager.cpp" />
+    <ClCompile Include="nodegraph.cpp" />
     <ClCompile Include="nodelist.cpp" />
     <ClCompile Include="sdl\*.cpp" />
     <ClCompile Include="config.cpp" />
@@ -123,9 +124,6 @@
     <ClCompile Include="village-manager.cpp" />
     <ClCompile Include="village.cpp" />
     <ClCompile Include="world-gen.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

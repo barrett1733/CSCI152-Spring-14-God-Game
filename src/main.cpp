@@ -18,18 +18,22 @@
 
 int main(int argc, char **argv)
 {
-	bool debug = true;
+	bool debug = false;
 	if (debug)
 	{
-
+		//std::cin.ignore();
 		Pathfinding test;
-		ObstructionMap testmap1(150);
-		testmap1.set(Position(3, 0), OT_OBSTRUCTED);
-		testmap1.set(Position(3, 1), OT_OBSTRUCTED);
-		testmap1.set(Position(3, 2), OT_OBSTRUCTED);
-		testmap1.set(Position(3, 3), OT_OBSTRUCTED);
-		std::cout << "Test 1" << std::endl;
-		test.findPath(Position(0, 0), Position(5, 0), &testmap1);
+
+		if (false)
+		{
+			ObstructionMap testmap1(150);
+			testmap1.set(Position(3, 0), OT_OBSTRUCTED);
+			testmap1.set(Position(3, 1), OT_OBSTRUCTED);
+			testmap1.set(Position(3, 2), OT_OBSTRUCTED);
+			testmap1.set(Position(3, 3), OT_OBSTRUCTED);
+			std::cout << "Test 1" << std::endl;
+			test.findPath2(Position(0, 0), Position(140, 0), &testmap1);
+		}
 
 		ObstructionMap testmap2(150);
 		testmap2.set(Position(2, 1), OT_OBSTRUCTED);
@@ -38,7 +42,7 @@ int main(int argc, char **argv)
 		testmap2.set(Position(2, 3), OT_OBSTRUCTED);
 		testmap2.set(Position(3, 3), OT_OBSTRUCTED);
 		std::cout << "Test 2" << std::endl;
-		test.findPath(Position(0, 2), Position(4, 2), &testmap2);
+		test.findPath2(Position(0, 2), Position(4, 2), &testmap2);
 
 		ObstructionMap testmap3(150);
 		testmap3.set(Position(2, 0), OT_OBSTRUCTED);
@@ -47,11 +51,11 @@ int main(int argc, char **argv)
 		testmap3.set(Position(1, 2), OT_OBSTRUCTED);
 		testmap3.set(Position(0, 2), OT_OBSTRUCTED);
 		std::cout << "Test 3" << std::endl;
-		test.findPath(Position(0, 0), Position(4, 2), &testmap3);
+		test.findPath2(Position(0, 0), Position(4, 2), &testmap3);
 
 		ObstructionMap testmap4(150);
 		std::cout << "Test 4" << std::endl;
-		test.findPath(Position(0, 0), Position(4, 2), &testmap4);
+		test.findPath2(Position(0, 0), Position(4, 2), &testmap4);
 
 		std::cin.ignore();
 	}

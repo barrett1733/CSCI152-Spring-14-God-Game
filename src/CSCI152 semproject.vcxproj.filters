@@ -1,38 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="SDL">
+      <UniqueIdentifier>{61488a6f-4780-49ae-a2bd-cd2f6cd99c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movement">
+      <UniqueIdentifier>{26d9d8f6-6702-49a9-9d9f-2e6ca533cbd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movement\Header Files">
+      <UniqueIdentifier>{cd970e5c-984a-4601-aeb4-9c75a1781ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movement\Source Files">
+      <UniqueIdentifier>{f9f42e05-af38-4faa-8ec8-7b57fcb80f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL\Header Files">
+      <UniqueIdentifier>{c12e5d65-63a8-45a4-91b4-9f9765c7c523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL\Source Files">
+      <UniqueIdentifier>{784f70f4-a6a4-478d-898f-0deee09a1d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{191e3055-9829-452c-a339-d8a8538ce98e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Header Files">
+      <UniqueIdentifier>{af78f698-ae8e-4aff-b75e-671e5d37e469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Source Files">
+      <UniqueIdentifier>{56b16837-af78-4481-9e27-9a7beb45ff31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs and Tasks">
+      <UniqueIdentifier>{7020c6f5-ce3c-4e6a-8cdb-1a196f02bc0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs and Tasks\Header Files">
+      <UniqueIdentifier>{e40bb162-2901-44a2-aae5-22ab692418a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs and Tasks\Source Files">
+      <UniqueIdentifier>{21fb9eb3-8177-4bea-b9a0-de69ed921ad0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{ba840ad5-f6ae-4233-918a-24cd6d21d0fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other\Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
+    <Filter Include="Other\Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Other\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="creature.cpp" />
-    <ClCompile Include="entity-manager.cpp" />
-    <ClCompile Include="entity.cpp" />
-    <ClCompile Include="game-manager.cpp" />
-    <ClCompile Include="job-manager.cpp" />
-    <ClCompile Include="job.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pathfinding.cpp" />
-    <ClCompile Include="position.cpp" />
-    <ClCompile Include="resource-manager.cpp" />
-    <ClCompile Include="task-manager.cpp" />
-    <ClCompile Include="task.cpp" />
-    <ClCompile Include="village-manager.cpp" />
-    <ClCompile Include="village.cpp" />
-    <ClCompile Include="world-gen.cpp" />
     <ClCompile Include="config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,15 +126,6 @@
     <ClCompile Include="sdl\sdl-utility.cpp" />
     <ClCompile Include="sdl\sdl-widget-container.cpp" />
     <ClCompile Include="sdl\sdl-widget.cpp" />
-    <ClCompile Include="sdl\sdl-entity.cpp" />
-    <ClCompile Include="sdl\sdl-manager.cpp" />
-    <ClCompile Include="sdl\sdl-map-view.cpp" />
-    <ClCompile Include="sdl\sdl-slider.cpp" />
-    <ClCompile Include="sdl\sdl-text-display.cpp" />
-    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
-    <ClCompile Include="sdl\sdl-utility.cpp" />
-    <ClCompile Include="sdl\sdl-widget-container.cpp" />
-    <ClCompile Include="sdl\sdl-widget.cpp" />
     <ClCompile Include="config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,7 +141,6 @@
     <ClCompile Include="resource-manager.cpp" />
     <ClCompile Include="task-manager.cpp" />
     <ClCompile Include="task.cpp" />
-    <ClCompile Include="village-computer.cpp" />
     <ClCompile Include="village-manager.cpp" />
     <ClCompile Include="village.cpp" />
     <ClCompile Include="world-gen.cpp" />
@@ -500,9 +511,6 @@
     <ClCompile Include="sdl\sdl-utility.cpp" />
     <ClCompile Include="sdl\sdl-widget-container.cpp" />
     <ClCompile Include="sdl\sdl-widget.cpp" />
-    <ClCompile Include="sdl\sdl-button.cpp">
-      <Filter>Source Files\sdl</Filter>
-    </ClCompile>
     <ClCompile Include="sdl\sdl-entity.cpp" />
     <ClCompile Include="sdl\sdl-manager.cpp" />
     <ClCompile Include="sdl\sdl-map-view.cpp" />
@@ -1275,7 +1283,6 @@
     <ClCompile Include="job-manager.cpp" />
     <ClCompile Include="job.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="map.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="resource-manager.cpp" />
@@ -1951,9 +1958,6 @@
     <ClCompile Include="job-manager.cpp" />
     <ClCompile Include="job.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="miracle-entity.cpp" />
-    <ClCompile Include="miracle-manager.cpp" />
-    <ClCompile Include="obstruction-map.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="resource-manager.cpp" />
@@ -3021,7 +3025,6 @@
     <ClCompile Include="obstruction-map.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="position.cpp" />
-    <ClCompile Include="random-pathfinding.cpp" />
     <ClCompile Include="resource-manager.cpp" />
     <ClCompile Include="task-manager.cpp" />
     <ClCompile Include="task.cpp" />
@@ -6327,7 +6330,7 @@
     <ClCompile Include="village.cpp" />
     <ClCompile Include="world-gen.cpp" />
     <ClCompile Include="game-state-manager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Other\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game-manager.cpp">
       <Filter>Source Files</Filter>
@@ -6575,7 +6578,6 @@
     <ClCompile Include="sdl\sdl-utility.cpp" />
     <ClCompile Include="sdl\sdl-widget-container.cpp" />
     <ClCompile Include="sdl\sdl-widget.cpp" />
-    <ClCompile Include="nodelist.cpp" />
     <ClCompile Include="sdl\sdl-button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -6816,25 +6818,367 @@
     <ClCompile Include="sdl\sdl-utility.cpp" />
     <ClCompile Include="sdl\sdl-widget-container.cpp" />
     <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="entity.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entity-manager.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game-manager.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="miracle-entity.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="miracle-manager.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resource-manager.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="world-gen.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nodegraph.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nodelist.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obstruction-map.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pathfinding.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="position.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="sdl\sdl-button.cpp">
+      <Filter>SDL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\sdl-entity.cpp" />
+    <ClCompile Include="sdl\sdl-manager.cpp" />
+    <ClCompile Include="sdl\sdl-map-view.cpp" />
+    <ClCompile Include="sdl\sdl-slider.cpp" />
+    <ClCompile Include="sdl\sdl-text-display.cpp" />
+    <ClCompile Include="sdl\sdl-triangle-slider.cpp" />
+    <ClCompile Include="sdl\sdl-utility.cpp" />
+    <ClCompile Include="sdl\sdl-widget-container.cpp" />
+    <ClCompile Include="sdl\sdl-widget.cpp" />
+    <ClCompile Include="creature.cpp">
+      <Filter>AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="village.cpp">
+      <Filter>AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="job.cpp">
+      <Filter>Jobs and Tasks\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="job-manager.cpp">
+      <Filter>Jobs and Tasks\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="task.cpp">
+      <Filter>Jobs and Tasks\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="task-manager.cpp">
+      <Filter>Jobs and Tasks\Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="village-manager.cpp">
+      <Filter>AI\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
     <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
+      <Filter>Other\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="creature.h" />
     <ClInclude Include="entity-manager.h" />
@@ -6861,7 +7205,6 @@
     <ClInclude Include="game-manager.h" />
     <ClInclude Include="job-manager.h" />
     <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="resource-manager.h" />
@@ -6905,8 +7248,6 @@
     <ClInclude Include="resource-manager.h" />
     <ClInclude Include="task-manager.h" />
     <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
     <ClInclude Include="village-manager.h" />
     <ClInclude Include="village.h" />
     <ClInclude Include="world-gen.h" />
@@ -7081,6 +7422,405 @@
     <ClInclude Include="sdl\sdl-utility.h" />
     <ClInclude Include="sdl\sdl-widget-container.h" />
     <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-computer.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
     <ClInclude Include="sdl\sdl-entity.h" />
     <ClInclude Include="sdl\sdl-event-subscriber.h" />
     <ClInclude Include="sdl\sdl-manager.h" />
@@ -7091,405 +7831,6 @@
     <ClInclude Include="sdl\sdl-utility.h" />
     <ClInclude Include="sdl\sdl-widget-container.h" />
     <ClInclude Include="sdl\sdl-widget.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
     <ClInclude Include="sdl\sdl-entity.h" />
     <ClInclude Include="sdl\sdl-event-subscriber.h" />
     <ClInclude Include="sdl\sdl-manager.h" />
@@ -7603,19 +7944,6 @@
     <ClInclude Include="sdl\sdl-widget-container.h" />
     <ClInclude Include="sdl\sdl-widget.h" />
     <ClInclude Include="sdl\sdl-button.h">
-      <Filter>Header Files\sdl</Filter>
-    </ClInclude>
-    <ClInclude Include="sdl\sdl-entity.h" />
-    <ClInclude Include="sdl\sdl-event-subscriber.h" />
-    <ClInclude Include="sdl\sdl-manager.h" />
-    <ClInclude Include="sdl\sdl-map-view.h" />
-    <ClInclude Include="sdl\sdl-slider.h" />
-    <ClInclude Include="sdl\sdl-text-display.h" />
-    <ClInclude Include="sdl\sdl-triangle-slider.h" />
-    <ClInclude Include="sdl\sdl-utility.h" />
-    <ClInclude Include="sdl\sdl-widget-container.h" />
-    <ClInclude Include="sdl\sdl-widget.h" />
-    <ClInclude Include="sdl\sdl-button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sdl\sdl-entity.h" />
@@ -8357,6 +8685,25 @@
     <ClInclude Include="village-manager.h" />
     <ClInclude Include="village.h" />
     <ClInclude Include="world-gen.h" />
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="fHeap.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="job-manager.h" />
+    <ClInclude Include="job.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="pathfinding.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="resource-manager.h" />
+    <ClInclude Include="task-manager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="village-manager.h" />
+    <ClInclude Include="village.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="entity-manager.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="fHeap.h" />
@@ -8547,26 +8894,6 @@
     <ClInclude Include="village-manager.h" />
     <ClInclude Include="village.h" />
     <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="map.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
     <ClInclude Include="sdl\sdl-button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -9346,10 +9673,7 @@
     <ClInclude Include="game-manager.h" />
     <ClInclude Include="job-manager.h" />
     <ClInclude Include="job.h" />
-    <ClInclude Include="miracle-entity.h" />
-    <ClInclude Include="miracle-manager.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="obstruction-map.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="resource-manager.h" />
@@ -10635,7 +10959,6 @@
     <ClInclude Include="obstruction-map.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
-    <ClInclude Include="random-pathfinding.h" />
     <ClInclude Include="resource-manager.h" />
     <ClInclude Include="task-manager.h" />
     <ClInclude Include="task.h" />
@@ -14648,7 +14971,7 @@
     <ClInclude Include="village.h" />
     <ClInclude Include="world-gen.h" />
     <ClInclude Include="game-state-manager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Other\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game-manager.h">
       <Filter>Header Files</Filter>
@@ -14946,7 +15269,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="node.h" />
-    <ClInclude Include="nodelist.h" />
     <ClInclude Include="sdl\sdl-button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -15233,8 +15555,428 @@
     <ClInclude Include="sdl\sdl-utility.h" />
     <ClInclude Include="sdl\sdl-widget-container.h" />
     <ClInclude Include="sdl\sdl-widget.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="entity.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entity-manager.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game-manager.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="miracle-entity.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="world-gen.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="miracle-manager.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource-manager.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nodegraph.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nodelist.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pathfinding.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obstruction-map.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="position.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="sdl\sdl-button.h">
+      <Filter>SDL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\sdl-entity.h" />
+    <ClInclude Include="sdl\sdl-event-subscriber.h" />
+    <ClInclude Include="sdl\sdl-manager.h" />
+    <ClInclude Include="sdl\sdl-map-view.h" />
+    <ClInclude Include="sdl\sdl-slider.h" />
+    <ClInclude Include="sdl\sdl-text-display.h" />
+    <ClInclude Include="sdl\sdl-triangle-slider.h" />
+    <ClInclude Include="sdl\sdl-utility.h" />
+    <ClInclude Include="sdl\sdl-widget-container.h" />
+    <ClInclude Include="sdl\sdl-widget.h" />
+    <ClInclude Include="creature.h">
+      <Filter>AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="village.h">
+      <Filter>AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="village-manager.h">
+      <Filter>AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="task.h">
+      <Filter>Jobs and Tasks\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="task-manager.h">
+      <Filter>Jobs and Tasks\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="job-manager.h">
+      <Filter>Jobs and Tasks\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="job.h">
+      <Filter>Jobs and Tasks\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 struct Node {
 	Position pos;
 	Node* parentNode;
+	bool visited = false;
 	double gcost, hcost, fcost;
 	Node() :
 		pos(Position(0, 0)),
@@ -28,7 +29,8 @@ struct Node {
 			parentNode == a.parentNode &&
 			gcost == a.gcost &&
 			hcost == a.hcost &&
-			fcost == a.fcost);
+			fcost == a.fcost &&
+			visited == a.visited);
 	}
 	Node& operator= (Node& a)
 	{
@@ -37,6 +39,7 @@ struct Node {
 		gcost = a.gcost;
 		hcost = a.hcost;
 		fcost = a.fcost;
+		visited = a.visited;
 		return *this;
 	}
 	friend std::ostream& operator<<(std::ostream& os, const Node& node)

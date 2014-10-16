@@ -59,6 +59,7 @@ Thumbs.db
 *.idb
 *.psess
 *.vsp
+*.vspx
 **/ipch
 **/Debug
 **/Release
