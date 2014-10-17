@@ -18,13 +18,12 @@
 
 int main(int argc, char **argv)
 {
-	bool debug = false;
 	if (debug)
 	{
 		//std::cin.ignore();
 		Pathfinding test;
 
-		if (false)
+		if (true)
 		{
 			ObstructionMap testmap1(150);
 			testmap1.set(Position(3, 0), OT_OBSTRUCTED);

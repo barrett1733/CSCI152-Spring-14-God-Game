@@ -4,12 +4,12 @@ NodeGraph::NodeGraph() {}
 
 NodeGraph::NodeGraph(int size) : size(size)
 {
-	this->setup(size);
+	setup(size);
 }
 
-void NodeGraph::setup(int size)
+void NodeGraph::setup(int size_)
 {
-	this->size = size;
+	size = size_;
 	graph = new Node**[size];
 	for (int i = 0; i < size; i++)
 	{
