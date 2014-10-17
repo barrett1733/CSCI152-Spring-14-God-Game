@@ -1,69 +1,123 @@
 #include "nodelist.h"
 
-bool NodeList::exists(Node* a)
+NodeList::NodeList() :head(NULL), tail(NULL), cur(NULL), lowest(0), size(0)
+{}
+
+NodeList::~NodeList()
 {
-	for (int i = 0; i < this->size(); i++)
-	if (*a == *(*this)[i])
-		return true;
-	return false;
+	this->clear();
+}
+
+bool NodeList::empty()
+{
+	return (size == 0);
+}
+
+bool NodeList::exists(Node* n)
+{
+	return (find(n) == NULL) ? false : true;
 }
 
 bool NodeList::exists(Position pos)
 {
-	for (int i = 0; i < this->size(); i++)
-	if (pos == (*this)[i]->pos)
-		return true;
-	return false;
-}
-
-Node* NodeList::pop()
-{
-	if (this->empty())
-	{
-		std::cout << "Pathfinding error - Pop call on empty list" << std::endl;
-		return NULL;
-	}
-	Node* lowest = this->front();
-	int index = 0;
-	for (int i = 0; i < this->size(); i++)
-		if ((*this)[i]->fcost < lowest->fcost)
-		{
-			lowest = (*this)[i];
-			index = i;
-		}
-	this->erase(this->begin() + index);
-	return lowest;
+	return (find(pos) == NULL) ? false : true;
 }
 
 Node* NodeList::find(Position pos)
 {
-	for (int i = 0; i < this->size(); i++)
-	if (pos == (*this)[i]->pos)
-		return (*this)[i];
+	if (empty())
+	{
+		cur = head;
+		while (cur != tail->next)
+		if (pos == cur->data->pos)
+			return cur->data;
+	}
 	return NULL;
 }
 
-NodeList::iterator NodeList::find(Node* a)
+Node* NodeList::find(Node* n)
 {
-	for (int i = 0; i < this->size(); i++)
-	if (*a == *(*this)[i])
-		return this->begin() + i;
-	return this->end();
-}
-
-void NodeList::destroy()
-{
-	for (int i = 0; i < this->size(); i++)
+	if (empty())
 	{
-		delete (*this)[i];
-		(*this)[i] = NULL;
+		cur = head;
+		while (cur != tail->next)
+		if (*n == *cur->data)
+			return cur->data;
 	}
-	this->clear();
+	return NULL;
 }
 
-void NodeList::destroy(Node* n)
+void NodeList::push(Node* newNode)
 {
-	NodeList::iterator badNode = this->find(n);
-	delete *(badNode);
-	this->erase(badNode);
+	size++;
+	cur = new Element(NULL, newNode, head);
+	if (head != NULL)
+		head->prev = cur;
+	head = cur;
+	if (size == 1)
+		tail = head;
+}
+
+Node* NodeList::pop()
+{
+	// Clear lowest
+	clear(lowest);
+
+	// Find lowest
+	findLowest();
+
+	// Remove lowest from list
+	cur = lowest;
+	remove(cur);
+
+	size--;
+	return lowest->data;
+}
+
+void NodeList::findLowest()
+{
+	lowest = head;
+	cur = head;
+	while (cur != NULL)
+	{
+		if (cur->data->fcost < lowest->data->fcost)
+			lowest = cur;
+		cur = cur->next;
+	}
+}
+
+void NodeList::remove(Element* e)
+{
+	if (e->prev == NULL)
+		head = e->next;
+	else
+		e->prev->next = e->next;
+
+	if (e->next == NULL)
+		tail = e->next;
+	else
+		e->next->prev = e->prev;
+
+	e->next = e->prev = NULL;
+}
+
+void NodeList::clear(Element* e)
+{
+	if (e != NULL)
+		e->data = NULL;
+	delete e;
+	e = NULL;
+}
+
+void NodeList::clear()
+{
+	cur = head;
+	while (cur != NULL)
+	{
+		remove(cur);
+		clear(cur);
+		cur = head;
+		size--;
+	}
+	head = tail = cur = lowest = NULL;
 }

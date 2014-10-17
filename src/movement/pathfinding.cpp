@@ -44,15 +44,17 @@ Position Pathfinding::getNeighbor(Position pos, Direction direction)
 
 NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position end)
 {
+	/*
 	NodeList successors;
 	NodeList neighbors;
 	neighbors.push_back(cur);
 	for (Node* i : neighbors)
 	{
 		i = jump(cur, direction(cur->pos, i->pos), start, end);
-		successors.push_back(i);
+		successors.push(i);
 	}
-	return &successors;
+	return &successors;*/
+	return NULL;
 }
 
 Node* Pathfinding::jump(Node* cur, Direction direction, Position start, Position end)
@@ -85,7 +87,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 	goalReached = false;
 
 	Node* startNode = new Node(start, NULL, 0, calcHCost(start, goal));
-	searchList.push_back(startNode);
+	searchList.push(startNode);
 	indexGraph.assign(startNode);
 
 	Node* curNode = NULL;
@@ -134,14 +136,14 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 							curNode->gcost + neighborPos[i].second,
 							calcHCost(neighborPos[i].first, goal)
 							);
-						searchList.push_back(newNeighbor);
+						searchList.push(newNeighbor);
 						indexGraph.assign(newNeighbor);
 					}
 				}
 			}
 		}
 	}
-	//std::cout << "f " << clock() - timer << std::endl;
+	if(debug) std::cout << "f " << clock() - timer << std::endl;
 	return constructPath(curNode);
 }
 
@@ -164,7 +166,6 @@ PositionList Pathfinding::constructPath(Node* goal)
 		std::cout << std::endl;
 	}
 	searchList.clear();
-	indexList.destroy();
 	indexGraph.clear();
 	return path;
 }
