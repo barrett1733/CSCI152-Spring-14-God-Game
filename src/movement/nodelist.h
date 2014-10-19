@@ -5,6 +5,18 @@
 
 // First in, lowest F value out
 
+/////////////////////////////////////////////////////
+// Interesting things to note and try
+// 
+// Vectors are slightly slower than arrays when used 
+// correctly. push_back is guranteed to be slower.
+// Reserving memory space before hand and using
+// using subscript ([]) operator speed up access
+// greatly.
+// 
+//	- SB - 10.18.2014
+/////////////////////////////////////////////////////
+
 class NodeList
 {
 	struct Element
