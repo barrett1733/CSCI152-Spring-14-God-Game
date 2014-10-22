@@ -21,20 +21,10 @@
     <ClCompile Include="config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="creature.cpp" />
     <ClCompile Include="entity-manager.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game-manager.cpp" />
-    <ClCompile Include="job-manager.cpp" />
-    <ClCompile Include="job.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pathfinding.cpp" />
-    <ClCompile Include="position.cpp" />
-    <ClCompile Include="resource-manager.cpp" />
-    <ClCompile Include="task-manager.cpp" />
-    <ClCompile Include="task.cpp" />
-    <ClCompile Include="village-manager.cpp" />
-    <ClCompile Include="village.cpp" />
     <ClCompile Include="world-gen.cpp" />
     <ClCompile Include="config.cpp">
       <Filter>Source Files</Filter>
@@ -123,7 +113,6 @@
     <ClCompile Include="resource-manager.cpp" />
     <ClCompile Include="task-manager.cpp" />
     <ClCompile Include="task.cpp" />
-    <ClCompile Include="village-computer.cpp" />
     <ClCompile Include="village-manager.cpp" />
     <ClCompile Include="village.cpp" />
     <ClCompile Include="world-gen.cpp" />
@@ -1909,7 +1898,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miracle-entity.cpp" />
     <ClCompile Include="miracle-manager.cpp" />
-    <ClCompile Include="obstruction-map.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="resource-manager.cpp" />
@@ -2993,7 +2981,6 @@
     <ClCompile Include="obstruction-map.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="position.cpp" />
-    <ClCompile Include="random-pathfinding.cpp" />
     <ClCompile Include="resource-manager.cpp" />
     <ClCompile Include="task-manager.cpp" />
     <ClCompile Include="task.cpp" />
@@ -7216,12 +7203,6 @@
     </ClCompile>
     <ClCompile Include="movement\pathfinding.cpp" />
     <ClCompile Include="movement\obstruction-map.cpp" />
-    <ClCompile Include="movement\nodelist.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="movement\nodegraph.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="movement\position.cpp" />
     <ClCompile Include="job\job.cpp" />
     <ClCompile Include="job\job-manager.cpp" />
@@ -7231,25 +7212,21 @@
     <ClCompile Include="ai\village-manager.cpp" />
     <ClCompile Include="job\task-manager.cpp" />
     <ClCompile Include="job\task.cpp" />
+    <ClCompile Include="movement\nodelist.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="movement\nodevector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entity-manager.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game-manager.h" />
     <ClInclude Include="world-gen.h" />
-    <ClInclude Include="creature.h" />
     <ClInclude Include="entity-manager.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
     <ClInclude Include="world-gen.h" />
     <ClInclude Include="config.h">
       <Filter>Header Files</Filter>
@@ -7257,7 +7234,6 @@
     <ClInclude Include="creature.h" />
     <ClInclude Include="entity-manager.h" />
     <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
     <ClInclude Include="game-manager.h" />
     <ClInclude Include="job-manager.h" />
     <ClInclude Include="job.h" />
@@ -7409,7 +7385,6 @@
     <ClInclude Include="game-manager.h" />
     <ClInclude Include="job-manager.h" />
     <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="resource-manager.h" />
@@ -7472,8 +7447,6 @@
     <ClInclude Include="resource-manager.h" />
     <ClInclude Include="task-manager.h" />
     <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
     <ClInclude Include="village-manager.h" />
     <ClInclude Include="village.h" />
     <ClInclude Include="world-gen.h" />
@@ -9714,7 +9687,6 @@
     <ClInclude Include="miracle-entity.h" />
     <ClInclude Include="miracle-manager.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="obstruction-map.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="resource-manager.h" />
@@ -11018,7 +10990,6 @@
     <ClInclude Include="obstruction-map.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
-    <ClInclude Include="random-pathfinding.h" />
     <ClInclude Include="resource-manager.h" />
     <ClInclude Include="task-manager.h" />
     <ClInclude Include="task.h" />
@@ -16111,12 +16082,6 @@
     </ClInclude>
     <ClInclude Include="movement\pathfinding.h" />
     <ClInclude Include="movement\obstruction-map.h" />
-    <ClInclude Include="movement\nodelist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="movement\nodegraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="movement\node.h" />
     <ClInclude Include="movement\position.h" />
     <ClInclude Include="job\job.h" />
@@ -16127,5 +16092,14 @@
     <ClInclude Include="ai\village-manager.h" />
     <ClInclude Include="job\task.h" />
     <ClInclude Include="job\task-manager.h" />
+    <ClInclude Include="movement\nodelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="movement\nodevector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="movement\pointergraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
