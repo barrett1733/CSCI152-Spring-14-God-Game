@@ -37,18 +37,12 @@ class Pathfinding
 	NodeList searchList, indexList;
 	PointerGraph<Node> indexGraph;
 	bool goalReached;
+
 	typedef std::pair<Position, double> neighborTuple;
 	neighborTuple neighborPos[8]; // Should never be anymore than 8 neighbors
 
-	Direction direction(Position, Position);
-	Direction* parseDirection(Direction);
-
 	double calcHCost(Position start, Position goal);
-	Position getNeighbor(Position, Direction);
 	PositionList constructPath(Node*);
-
-	NodeList* identifySuccessors(Node* cur, Position start, Position end);
-	Node* jump(Node* cur, Direction direction, Position start, Position end);
 
 public:
 	Pathfinding();

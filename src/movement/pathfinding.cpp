@@ -6,28 +6,6 @@ Pathfinding::Pathfinding()
 	indexGraph.setup(150);
 }
 
-Direction Pathfinding::direction(Position cur, Position neighbor)
-{
-	int direction = 0;
-	if (cur.getX() > neighbor.getX()) direction |= D_LEFT;
-	if (cur.getX() < neighbor.getX()) direction |= D_RIGHT;
-	if (cur.getY() > neighbor.getY()) direction |= D_DOWN;
-	if (cur.getY() < neighbor.getY()) direction |= D_UP;
-	return direction;
-}
-
-Direction* Pathfinding::parseDirection(Direction direction)
-{
-	Direction directionArray[2];
-	directionArray[0] = directionArray[1] = 0;
-	int i = 0;
-	if (direction & D_UP) { directionArray[i] = D_UP; i++; }
-	if (direction & D_DOWN) { directionArray[i] = D_DOWN; i++; }
-	if (direction & D_LEFT) { directionArray[i] = D_LEFT; i++; }
-	if (direction & D_RIGHT) { directionArray[i] = D_RIGHT; i++; }
-	return directionArray;
-}
-
 double Pathfinding::calcHCost(Position start, Position goal)
 {
 	//Manhatten calculation
@@ -40,43 +18,6 @@ Position Pathfinding::getNeighbor(Position pos, Direction direction)
 	Position newpos(pos);
 	newpos.moveUnchecked(direction);
 	return newpos;
-}
-
-NodeList* Pathfinding::identifySuccessors(Node* cur, Position start, Position end)
-{
-	/*
-	NodeList successors;
-	NodeList neighbors;
-	neighbors.push_back(cur);
-	for (Node* i : neighbors)
-	{
-		i = jump(cur, direction(cur->pos, i->pos), start, end);
-		successors.push(i);
-	}
-	return &successors;*/
-	return NULL;
-}
-
-Node* Pathfinding::jump(Node* cur, Direction direction, Position start, Position end)
-{
-	Node neighbor(*cur);
-	neighbor.pos.move(direction);
-	if (!neighbor.pos.checkSanity()) // check obstruction
-		return NULL;
-	if (neighbor.pos == end)
-		return &neighbor;
-	if (direction != D_UP &&
-		direction != D_DOWN &&
-		direction != D_LEFT &&
-		direction != D_RIGHT &&
-		direction != D_NONE) //direction is diagonal
-	{
-		Direction* directions = parseDirection(direction);
-		for (int i = 0; i < sizeof(directions); i++)
-			if (jump(cur, directions[i], start, end) != NULL)
-				return &neighbor;
-	}
-	return jump(cur, direction, start, end);
 }
 
 PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap* obstructionMap)
