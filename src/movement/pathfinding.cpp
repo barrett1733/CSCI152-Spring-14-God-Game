@@ -87,7 +87,12 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 	goalReached = false;
 
 	Node* startNode = new Node(start, NULL, 0, calcHCost(start, goal));
-	searchList.push(startNode);
+
+	if (vector)
+		searchVector.push(startNode);
+	else
+		searchList.push(startNode);
+	
 	indexGraph.assign(startNode);
 
 	Node* curNode = NULL;
@@ -97,7 +102,10 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 		if (searchList.empty())
 			return constructPath(startNode);
 
-		curNode = searchList.pop();
+		if (vector)
+			curNode = searchVector.pop();
+		else
+			curNode = searchList.pop();
 
 		if (curNode->pos == goal)
 		{
@@ -136,7 +144,10 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 							curNode->gcost + neighborPos[i].second,
 							calcHCost(neighborPos[i].first, goal)
 							);
-						searchList.push(newNeighbor);
+						if (vector)
+							searchVector.push(newNeighbor);
+						else
+							searchList.push(newNeighbor);
 						indexGraph.assign(newNeighbor);
 					}
 				}
@@ -166,6 +177,7 @@ PositionList Pathfinding::constructPath(Node* goal)
 		std::cout << std::endl;
 	}
 	searchList.clear();
+	searchVector.clear();
 	indexGraph.clear();
 	return path;
 }

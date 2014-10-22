@@ -22,14 +22,18 @@ http://qiao.github.io/PathFinding.js/visual/
 #include <map>
 #include "obstruction-map.h"
 #include "nodelist.h"
+#include "nodevector.h"
 #include "pointergraph.h"
 
 typedef std::vector<Position> PositionList;
 #define cardinalNeighbor 1
 #define intercardinalNeighbor 1.4
 
+#define vector true
+
 class Pathfinding
 {
+	NodeVector searchVector;
 	NodeList searchList, indexList;
 	PointerGraph<Node> indexGraph;
 	bool goalReached;

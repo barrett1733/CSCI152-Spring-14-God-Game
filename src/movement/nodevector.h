@@ -4,19 +4,24 @@
 #include <vector>
 #include "node.h"
 
-class NodeVector : std::vector<Node*>
+class NodeVector : public std::vector<Node*>
 {
+	typedef std::vector<std::vector<bool>> VectorGrid;
+	VectorGrid existsGrid;
 
 public:
-	NodeVector();
-	~NodeVector();
-	/*
-	bool empty();
+	NodeVector() {};
+	NodeVector(int size);
+	~NodeVector() {};
+	void setup(int size);
 	bool exists(Node*);
 	bool exists(Position);
-	Node* find(Node*);
+	void push(Node*);
+	Node* pop();
 	Node* find(Position);
-	void clear();*/
+	NodeVector::iterator find(Node*);
+	void destroy();
+	void destroy(Node*);
 };
 
 #endif
