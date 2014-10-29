@@ -4,8 +4,6 @@
 #include "position.h"
 #include <iostream>
 
-#define debug false
-
 struct Node {
 	Position pos;
 	Node* parentNode;

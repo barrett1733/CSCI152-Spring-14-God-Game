@@ -20,10 +20,8 @@ http://qiao.github.io/PathFinding.js/visual/
 #include <vector>
 #include <algorithm>
 #include <map>
-#include <chrono>
 #include "obstruction-map.h"
 #include "nodelist.h"
-#include "nodevector.h"
 #include "nodemap.h"
 
 typedef std::vector<Position> PositionList;
@@ -31,13 +29,10 @@ typedef std::pair<Position, double> Neighbor; // pair (position, gcost)
 #define cardinalNeighbor 1
 #define intercardinalNeighbor 1.4
 
-#define vector false
-
 class Pathfinding
 {
 	int worldSize;
-	//NodeVector searchVector;
-	NodeList searchList;// , indexList;
+	NodeList searchList;
 	NodeMap indexGraph;
 	bool goalReached;
 	Neighbor neighborArray[8]; // Should never be anymore than 8 neighbors
