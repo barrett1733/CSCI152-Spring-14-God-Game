@@ -1,22 +1,18 @@
-#ifndef NODEGRAPH_H_
-#define NODEGRAPH_H_
+#ifndef NODEMAP_H_
+#define NODEMAP_H_
 
 #include "node.h"
 
-class NodeGraph
+class NodeMap
 {
 	int size;
 	Node*** graph;
 public:
-	NodeGraph() {};
-	NodeGraph(int size);
-	~NodeGraph();
-	void setup(int size);
+	NodeMap(int size);
+	~NodeMap();
 	void clear();
-	void destroy();
 	Node& operator[] (Position);
-	Node* access(Position);
-	void assign(Node*);
+	Node& operator[] (Node*);
 };
 
 

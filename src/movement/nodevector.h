@@ -3,16 +3,16 @@
 
 #include <vector>
 #include "node.h"
+#include "nodemap.h"
+#include "boolmap.h"
 
 class NodeVector : public std::vector<Node*>
 {
-	typedef std::vector<std::vector<bool>> VectorGrid;
-	VectorGrid existsGrid;
+	BoolMap existsGrid;
 
 public:
-	NodeVector() {};
 	NodeVector(int size);
-	~NodeVector() {};
+	~NodeVector();
 	void setup(int size);
 	bool exists(Node*);
 	bool exists(Position);
@@ -20,7 +20,6 @@ public:
 	Node* pop();
 	Node* find(Position);
 	NodeVector::iterator find(Node*);
-	void destroy();
 	void destroy(Node*);
 };
 

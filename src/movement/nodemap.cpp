@@ -1,18 +1,7 @@
-#include "nodegraph.h"
+#include "nodemap.h"
 
-NodeGraph::NodeGraph(int size) : size(size)
+NodeMap::NodeMap(int size) : size(size)
 {
-	setup(size);
-}
-
-NodeGraph::~NodeGraph()
-{
-	destroy();
-}
-
-void NodeGraph::setup(int size_)
-{
-	size = size_;
 	graph = new Node**[size];
 	for (int i = 0; i < size; i++)
 	{
@@ -22,17 +11,7 @@ void NodeGraph::setup(int size_)
 	}
 }
 
-void NodeGraph::clear()
-{
-	for (int i = 0; i < size; i++)
-	for (int j = 0; j < size; j++)
-	{
-		delete graph[i][j];
-		graph[i][j] = NULL;
-	}
-}
-
-void NodeGraph::destroy()
+NodeMap::~NodeMap()
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -48,19 +27,22 @@ void NodeGraph::destroy()
 	graph = NULL;
 }
 
-Node& NodeGraph::operator[] (Position pos)
+void NodeMap::clear()
+{
+	for (int i = 0; i < size; i++)
+	for (int j = 0; j < size; j++)
+	{
+		delete graph[i][j];
+		graph[i][j] = NULL;
+	}
+}
+
+Node& NodeMap::operator[] (Position pos)
 {
 	return *graph[pos.getX()][pos.getY()];
 }
 
-Node* NodeGraph::access(Position pos)
+Node& NodeMap::operator[] (Node* node)
 {
-	Node* temp = graph[pos.getX()][pos.getY()];
-	return temp;
-}
-
-
-void NodeGraph::assign(Node* n)
-{
-	graph[n->pos.getX()][n->pos.getY()] = n;
+	return *graph[node->pos.getX()][node->pos.getY()];
 }

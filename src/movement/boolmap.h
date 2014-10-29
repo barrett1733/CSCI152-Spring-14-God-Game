@@ -9,12 +9,9 @@ class BoolMap
 	int size;
 
 public:
-	BoolMap() {};
 	BoolMap(int size);
 	~BoolMap();
-	void setup(int size);
 	void clear();
-	void destroy();
 	bool& operator[] (Position);
 };
 

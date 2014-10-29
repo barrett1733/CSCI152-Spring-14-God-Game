@@ -1,21 +1,19 @@
 #include "nodevector.h"
 
 
-NodeVector::NodeVector(int size)
-{
-	setup(size);
-}
-
-void NodeVector::setup(int size)
+NodeVector::NodeVector(int size) : existsGrid(size)
 {
 	reserve(size * size);
-	existsGrid.resize(size);
-	for (int i = 0; i < size; i++)
+}
+
+NodeVector::~NodeVector()
+{
+	for (int i = 0; i < size(); i++)
 	{
-		existsGrid.resize(size);
-		for (int j = 0; j < size; j++)
-			existsGrid[i][j] = 0;
+		delete (*this)[i];
+		(*this)[i] = NULL;
 	}
+	clear();
 }
 
 bool NodeVector::exists(Node* a)
@@ -25,13 +23,16 @@ bool NodeVector::exists(Node* a)
 
 bool NodeVector::exists(Position pos)
 {
-	return existsGrid[pos.getX()][pos.getY()];
+	return existsGrid[pos];
 }
 
 void NodeVector::push(Node* n)
 {
-	existsGrid[n->pos.getX()][n->pos.getY()] = true;
-	(*this)[size()] = n;
+	//issue here
+	existsGrid[n->pos] = true;
+	//int endOfList = size();
+	push_back(n);
+	//(*this)[endOfList] = n;
 }
 
 Node* NodeVector::pop()
@@ -50,6 +51,7 @@ Node* NodeVector::pop()
 			index = i;
 		}
 	erase(begin() + index);
+	existsGrid[lowest->pos] = true;
 	return lowest;
 }
 
@@ -67,16 +69,6 @@ NodeVector::iterator NodeVector::find(Node* a)
 		if (*a == *(*this)[i])
 			return begin() + i;
 	return end();
-}
-
-void NodeVector::destroy()
-{
-	for (int i = 0; i < size(); i++)
-	{
-		delete (*this)[i];
-		(*this)[i] = NULL;
-	}
-	clear();
 }
 
 void NodeVector::destroy(Node* n)

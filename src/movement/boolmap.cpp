@@ -2,17 +2,6 @@
 
 BoolMap::BoolMap(int size) : size(size)
 {
-	setup(size);
-}
-
-BoolMap::~BoolMap()
-{
-	destroy();
-}
-
-void BoolMap::setup(int size_)
-{
-	size = size_;
 	boolmap = new bool*[size];
 	for (int i = 0; i < size; i++)
 	{
@@ -22,16 +11,7 @@ void BoolMap::setup(int size_)
 	}
 }
 
-void BoolMap::clear()
-{
-	for (int i = 0; i < size; i++)
-	for (int j = 0; j < size; j++)
-	{
-		boolmap[i][j] = false;
-	}
-}
-
-void BoolMap::destroy()
+BoolMap::~BoolMap()
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -40,6 +20,15 @@ void BoolMap::destroy()
 	}
 	delete[] boolmap;
 	boolmap = NULL;
+}
+
+void BoolMap::clear()
+{
+	for (int i = 0; i < size; i++)
+	for (int j = 0; j < size; j++)
+	{
+		boolmap[i][j] = false;
+	}
 }
 
 bool& BoolMap::operator[] (Position pos)
