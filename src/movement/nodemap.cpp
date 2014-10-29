@@ -37,6 +37,11 @@ void NodeMap::clear()
 	}
 }
 
+void NodeMap::assign(Node* node)
+{
+	graph[node->pos.getX()][node->pos.getY()] = node;
+}
+
 Node& NodeMap::operator[] (Position pos)
 {
 	return *graph[pos.getX()][pos.getY()];

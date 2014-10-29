@@ -1,10 +1,7 @@
 #include "pathfinding.h"
-#include <ctime>
 
-Pathfinding::Pathfinding()
-{
-	indexGraph.setup(150);
-}
+Pathfinding::Pathfinding(int worldSize) : worldSize(worldSize), indexGraph(worldSize)
+{ }
 
 double Pathfinding::calcHCost(Position start, Position goal)
 {
@@ -20,21 +17,27 @@ Position Pathfinding::getNeighbor(Position pos, Direction direction)
 	return newpos;
 }
 
+void Pathfinding::neighbors(Position pos)
+{
+	neighborArray[0] = Neighbor(getNeighbor(pos, D_UP), cardinalNeighbor);
+	neighborArray[1] = Neighbor(getNeighbor(pos, D_DOWN), cardinalNeighbor);
+	neighborArray[2] = Neighbor(getNeighbor(pos, D_LEFT), cardinalNeighbor);
+	neighborArray[3] = Neighbor(getNeighbor(pos, D_RIGHT), cardinalNeighbor);
+	neighborArray[4] = Neighbor(getNeighbor(pos, D_UP | D_LEFT), intercardinalNeighbor);
+	neighborArray[5] = Neighbor(getNeighbor(pos, D_UP | D_RIGHT), intercardinalNeighbor);
+	neighborArray[6] = Neighbor(getNeighbor(pos, D_DOWN | D_LEFT), intercardinalNeighbor);
+	neighborArray[7] = Neighbor(getNeighbor(pos, D_DOWN | D_RIGHT), intercardinalNeighbor);
+}
+
 PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap* obstructionMap)
 {
-	clock_t timer, t;
-	timer = clock();
-
 	goalReached = false;
 
 	Node* startNode = new Node(start, NULL, 0, calcHCost(start, goal));
 
-	if (vector)
-		searchVector.push(startNode);
-	else
-		searchList.push(startNode);
+	searchList.push(startNode);
 	
-	indexGraph.assign(startNode);
+	indexGraph[startNode->pos];
 
 	Node* curNode = NULL;
 
@@ -43,10 +46,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 		if (searchList.empty())
 			return constructPath(startNode);
 
-		if (vector)
-			curNode = searchVector.pop();
-		else
-			curNode = searchList.pop();
+		curNode = searchList.pop();
 
 		if (curNode->pos == goal)
 		{
@@ -54,22 +54,14 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 		}
 		else
 		{
-			neighborPos[0] = neighborTuple(getNeighbor(curNode->pos, D_UP), cardinalNeighbor);
-			neighborPos[1] = neighborTuple(getNeighbor(curNode->pos, D_DOWN), cardinalNeighbor);
-			neighborPos[2] = neighborTuple(getNeighbor(curNode->pos, D_LEFT), cardinalNeighbor);
-			neighborPos[3] = neighborTuple(getNeighbor(curNode->pos, D_RIGHT), cardinalNeighbor);
-			neighborPos[4] = neighborTuple(getNeighbor(curNode->pos, D_UP | D_LEFT), intercardinalNeighbor);
-			neighborPos[5] = neighborTuple(getNeighbor(curNode->pos, D_UP | D_RIGHT), intercardinalNeighbor);
-			neighborPos[6] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_LEFT), intercardinalNeighbor);
-			neighborPos[7] = neighborTuple(getNeighbor(curNode->pos, D_DOWN | D_RIGHT), intercardinalNeighbor);
-
 			for (int i = 0; i < 8; i++)
 			{
-				if (neighborPos[i].first.checkSanity() && obstructionMap->isOpen(neighborPos[i].first))
+				neighbors(curNode->pos);
+				if (neighborArray[i].first.checkSanity() && obstructionMap->isOpen(neighborArray[i].first))
 				{
-					if (indexGraph.access(neighborPos[i].first) != NULL)
+					if (&indexGraph[neighborArray[i].first] != NULL)
 					{
-						Node* temp = indexGraph.access(neighborPos[i].first);
+						Node* temp = &indexGraph[neighborArray[i].first];
 						if (curNode->gcost < temp->gcost)
 						{
 							temp->gcost = curNode->gcost;
@@ -80,22 +72,18 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 					else
 					{
 						Node* newNeighbor = new Node(
-							neighborPos[i].first,
+							neighborArray[i].first,
 							curNode,
-							curNode->gcost + neighborPos[i].second,
-							calcHCost(neighborPos[i].first, goal)
+							curNode->gcost + neighborArray[i].second,
+							calcHCost(neighborArray[i].first, goal)
 							);
-						if (vector)
-							searchVector.push(newNeighbor);
-						else
-							searchList.push(newNeighbor);
+						searchList.push(newNeighbor);
 						indexGraph.assign(newNeighbor);
 					}
 				}
 			}
 		}
 	}
-	if(debug) std::cout << "f " << clock() - timer << std::endl;
 	return constructPath(curNode);
 }
 
@@ -104,21 +92,15 @@ PositionList Pathfinding::constructPath(Node* goal)
 {
 	Node* node = goal;
 	PositionList path;
+	path.reserve(worldSize*worldSize);
 	while (node->parentNode != NULL)
 	{
 		path.push_back(node->pos);
 		node = node->parentNode;
-		//std::cout << node->pos << ", ";
 	}
 	std::reverse(path.begin(), path.end());
-	if (false)
-	{
-		for (Position pos : path)
-			std::cout << pos << ", ";
-		std::cout << std::endl;
-	}
+
 	searchList.clear();
-	searchVector.clear();
 	indexGraph.clear();
 	return path;
 }

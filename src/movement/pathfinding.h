@@ -20,32 +20,36 @@ http://qiao.github.io/PathFinding.js/visual/
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <chrono>
 #include "obstruction-map.h"
 #include "nodelist.h"
 #include "nodevector.h"
-#include "pointergraph.h"
+#include "nodemap.h"
 
 typedef std::vector<Position> PositionList;
+typedef std::pair<Position, double> Neighbor; // pair (position, gcost)
 #define cardinalNeighbor 1
 #define intercardinalNeighbor 1.4
 
-#define vector true
+#define vector false
 
 class Pathfinding
 {
-	NodeVector searchVector;
-	NodeList searchList, indexList;
-	PointerGraph<Node> indexGraph;
+	int worldSize;
+	//NodeVector searchVector;
+	NodeList searchList;// , indexList;
+	NodeMap indexGraph;
 	bool goalReached;
+	Neighbor neighborArray[8]; // Should never be anymore than 8 neighbors
 
-	typedef std::pair<Position, double> neighborTuple;
-	neighborTuple neighborPos[8]; // Should never be anymore than 8 neighbors
+	void neighbors(Position);
 
 	double calcHCost(Position start, Position goal);
+	Position getNeighbor(Position, Direction);
 	PositionList constructPath(Node*);
 
 public:
-	Pathfinding();
+	Pathfinding(int worldSize);
 	PositionList findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
 
 };

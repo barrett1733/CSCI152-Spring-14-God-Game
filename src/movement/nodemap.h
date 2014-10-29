@@ -11,6 +11,7 @@ public:
 	NodeMap(int size);
 	~NodeMap();
 	void clear();
+	void assign(Node*);
 	Node& operator[] (Position);
 	Node& operator[] (Node*);
 };

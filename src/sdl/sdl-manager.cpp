@@ -126,7 +126,8 @@ void SdlManager::update()
 	}
 
 	// Waste time until the next frame starts
-	wait();
+	// Disabling wait for more fps - SB 10.29.14
+	//wait();
 }
 
 void SdlManager::renderWidget(SdlWidget * widget)

@@ -20,41 +20,90 @@ int main(int argc, char **argv)
 {
 	if (debug)
 	{
-		//std::cin.ignore();
-		Pathfinding test;
+		std::cout << "Press enter to start" << std::endl;
+		std::cin.ignore();
+
+		int amtRun = 100;
+		int mapSize = 150;
+		float timetotal = 0;
+		std::chrono::time_point<std::chrono::high_resolution_clock> timerStart, timerEnd;
+
+		Pathfinding test(mapSize);
 
 		if (true)
 		{
-			ObstructionMap testmap1(150);
+			ObstructionMap testmap1(mapSize);
 			testmap1.set(Position(3, 0), OT_OBSTRUCTED);
 			testmap1.set(Position(3, 1), OT_OBSTRUCTED);
 			testmap1.set(Position(3, 2), OT_OBSTRUCTED);
 			testmap1.set(Position(3, 3), OT_OBSTRUCTED);
 			std::cout << "Test 1" << std::endl;
-			test.findPath(Position(0, 0), Position(140, 0), &testmap1);
+			for (int i = 0; i < amtRun; i++)
+			{
+				timerStart = std::chrono::high_resolution_clock::now();
+
+				test.findPath(Position(0, 0), Position(140, 0), &testmap1);
+
+				timerEnd = std::chrono::high_resolution_clock::now();
+				timetotal += std::chrono::duration_cast<std::chrono::microseconds>(timerEnd - timerStart).count();
+			}
+			std::cout << timetotal/amtRun << std::endl;
+			timetotal = 0;
 		}
 
-		ObstructionMap testmap2(150);
+		ObstructionMap testmap2(mapSize);
 		testmap2.set(Position(2, 1), OT_OBSTRUCTED);
 		testmap2.set(Position(3, 1), OT_OBSTRUCTED);
 		testmap2.set(Position(3, 2), OT_OBSTRUCTED);
 		testmap2.set(Position(2, 3), OT_OBSTRUCTED);
 		testmap2.set(Position(3, 3), OT_OBSTRUCTED);
 		std::cout << "Test 2" << std::endl;
-		test.findPath(Position(0, 2), Position(4, 2), &testmap2);
 
-		ObstructionMap testmap3(150);
+		for (int i = 0; i < amtRun; i++)
+		{
+			timerStart = std::chrono::high_resolution_clock::now();
+
+			test.findPath(Position(0, 2), Position(4, 2), &testmap2);
+
+			timerEnd = std::chrono::high_resolution_clock::now();
+			timetotal += std::chrono::duration_cast<std::chrono::microseconds>(timerEnd - timerStart).count();
+		}
+		std::cout << timetotal / amtRun << std::endl;
+		timetotal = 0;
+
+		ObstructionMap testmap3(mapSize);
 		testmap3.set(Position(2, 0), OT_OBSTRUCTED);
 		testmap3.set(Position(2, 1), OT_OBSTRUCTED);
 		testmap3.set(Position(2, 2), OT_OBSTRUCTED);
 		testmap3.set(Position(1, 2), OT_OBSTRUCTED);
 		testmap3.set(Position(0, 2), OT_OBSTRUCTED);
 		std::cout << "Test 3" << std::endl;
-		test.findPath(Position(0, 0), Position(4, 2), &testmap3);
 
-		ObstructionMap testmap4(150);
+		for (int i = 0; i < amtRun; i++)
+		{
+			timerStart = std::chrono::high_resolution_clock::now();
+
+			test.findPath(Position(0, 0), Position(4, 2), &testmap3);
+
+			timerEnd = std::chrono::high_resolution_clock::now();
+			timetotal += std::chrono::duration_cast<std::chrono::microseconds>(timerEnd - timerStart).count();
+		}
+		std::cout << timetotal / amtRun << std::endl;
+		timetotal = 0;
+
+		ObstructionMap testmap4(mapSize);
 		std::cout << "Test 4" << std::endl;
-		test.findPath(Position(0, 0), Position(4, 2), &testmap4);
+		for (int i = 0; i < amtRun; i++)
+		{
+			timerStart = std::chrono::high_resolution_clock::now();
+
+			test.findPath(Position(0, 0), Position(4, 2), &testmap4);
+
+			timerEnd = std::chrono::high_resolution_clock::now();
+			timetotal += std::chrono::duration_cast<std::chrono::microseconds>(timerEnd - timerStart).count();
+		}
+		std::cout << timetotal / amtRun << std::endl;
+		timetotal = 0;
 
 		std::cin.ignore();
 	}
