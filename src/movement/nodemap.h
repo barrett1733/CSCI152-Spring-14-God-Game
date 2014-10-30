@@ -5,10 +5,10 @@
 
 class NodeMap
 {
-	int size;
+	int x_size, y_size;
 	Node*** graph;
 public:
-	NodeMap(int size);
+	NodeMap(int x_size, int y_size);
 	~NodeMap();
 	void clear();
 	void assign(Node*);
