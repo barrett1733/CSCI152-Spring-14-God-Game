@@ -31,21 +31,20 @@ typedef std::pair<Position, double> Neighbor; // pair (position, gcost)
 
 class Pathfinding
 {
-	int worldSize;
 	NodeList searchList;
 	NodeMap indexGraph;
 	bool goalReached;
 	Neighbor neighborArray[8]; // Should never be anymore than 8 neighbors
 
-	void neighbors(Position);
+	void populateNeighbors(Position);
 
 	double calcHCost(Position start, Position goal);
 	Position getNeighbor(Position, Direction);
 	PositionList constructPath(Node*);
 
 public:
-	Pathfinding(int worldSize);
 	PositionList findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
+	Position findNextPosition(Position start, Position goal, ObstructionMapReference obstructionMap);
 
 };
 

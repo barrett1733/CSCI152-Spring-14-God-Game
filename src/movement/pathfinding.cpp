@@ -1,8 +1,5 @@
 #include "pathfinding.h"
 
-Pathfinding::Pathfinding(int worldSize) : worldSize(worldSize), indexGraph(worldSize)
-{ }
-
 double Pathfinding::calcHCost(Position start, Position goal)
 {
 	//Manhatten calculation
@@ -17,7 +14,7 @@ Position Pathfinding::getNeighbor(Position pos, Direction direction)
 	return newpos;
 }
 
-void Pathfinding::neighbors(Position pos)
+void Pathfinding::populateNeighbors(Position pos)
 {
 	neighborArray[0] = Neighbor(getNeighbor(pos, D_UP), cardinalNeighbor);
 	neighborArray[1] = Neighbor(getNeighbor(pos, D_DOWN), cardinalNeighbor);
@@ -37,7 +34,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 
 	searchList.push(startNode);
 	
-	indexGraph[startNode->pos];
+	indexGraph.assign(startNode);
 
 	Node* curNode = NULL;
 
@@ -56,7 +53,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				neighbors(curNode->pos);
+				populateNeighbors(curNode->pos);
 				if (neighborArray[i].first.checkSanity() && obstructionMap->isOpen(neighborArray[i].first))
 				{
 					if (&indexGraph[neighborArray[i].first] != NULL)
@@ -92,7 +89,7 @@ PositionList Pathfinding::constructPath(Node* goal)
 {
 	Node* node = goal;
 	PositionList path;
-	path.reserve(worldSize*worldSize);
+	path.reserve(Position::max_x * Position::max_y);
 	while (node->parentNode != NULL)
 	{
 		path.push_back(node->pos);
@@ -103,4 +100,9 @@ PositionList Pathfinding::constructPath(Node* goal)
 	searchList.clear();
 	indexGraph.clear();
 	return path;
+}
+
+Position Pathfinding::findNextPosition(Position start, Position goal, ObstructionMapReference obstructionMap)
+{
+	return findPath(start, goal, obstructionMap)[0];
 }
