@@ -43,6 +43,7 @@ class Pathfinding
 	PositionList constructPath(Node*);
 
 public:
+	Pathfinding() : indexGraph(Position::max_x, Position::max_y) {};
 	PositionList findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
 	Position findNextPosition(Position start, Position goal, ObstructionMapReference obstructionMap);
 

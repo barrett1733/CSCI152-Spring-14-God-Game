@@ -76,17 +76,15 @@ void Village::import(EntityReference entity)
 void Village::update(ObstructionMap* obstructionMap)
 {
 	// Testing pathfinding on villagers
-	Pathfinding test(Position::max_x);
-	PositionList* toMove;
+	Pathfinding pfVillage;
+	Position nextPosition;
 	int i = 0;
-	Position goal = obstructionMap->findOpenPosition(Position(0, 0));
+	Position goal = obstructionMap->findOpenPosition(Position(Position::max_x/2, Position::max_y/2));
 	
 	for (Entity* villager : villagerList)
 	{
-		toMove = &test.findPath(goal, villager->getPosition(), obstructionMap);
-		if (!toMove->empty())
-			villager->setPosition(toMove->at(0));
-		//std::cout << i << std::endl;
+		nextPosition = pfVillage.findNextPosition(goal, villager->getPosition(), obstructionMap);
+		villager->setPosition(nextPosition);
 		i++;
 	}
 
