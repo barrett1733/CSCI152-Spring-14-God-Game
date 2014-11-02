@@ -3,20 +3,20 @@
 BoolMap::BoolMap(int size) : size(size)
 {
 	boolmap = new bool*[size];
-	for (int i = 0; i < size; i++)
+	for (int y = 0; y < size; y++)
 	{
-		boolmap[i] = new bool[size];
-		for (int j = 0; j < size; j++)
-			boolmap[i][j] = false;
+		boolmap[y] = new bool[size];
+		for (int x = 0; x < size; x++)
+			boolmap[y][x] = false;
 	}
 }
 
 BoolMap::~BoolMap()
 {
-	for (int i = 0; i < size; i++)
+	for (int y = 0; y < size; y++)
 	{
-		delete[] boolmap[i];
-		boolmap[i] = NULL;
+		delete[] boolmap[y];
+		boolmap[y] = NULL;
 	}
 	delete[] boolmap;
 	boolmap = NULL;
@@ -24,14 +24,14 @@ BoolMap::~BoolMap()
 
 void BoolMap::clear()
 {
-	for (int i = 0; i < size; i++)
-	for (int j = 0; j < size; j++)
+	for (int y = 0; y < size; y++)
+	for (int x = 0; x < size; x++)
 	{
-		boolmap[i][j] = false;
+		boolmap[y][x] = false;
 	}
 }
 
 bool& BoolMap::operator[] (Position pos)
 {
-	return boolmap[pos.getX()][pos.getY()];
+	return boolmap[pos.getY()][pos.getX()];
 }
