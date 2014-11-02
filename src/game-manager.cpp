@@ -62,6 +62,8 @@ void GameManager::setup()
 		storedEntity = entityManager.createRecord(tempEntity);
 		villageManager.import(storedEntity);
 
+		obstructionMap->set(tempEntity->getPosition(), OT_OBSTRUCTED);
+
 		// Get next entity for next loop iteration.
 		delete tempEntity;
 		tempEntity = world.getNextEntity();
@@ -140,7 +142,7 @@ void GameManager::build(SDL_Event & event, WidgetReference widget)
 			EntityReference entity = new Entity(type, 1, position, faction);
 			entityManager.createRecord(entity);
 
-			//self->obstructionMap->set(position, OT_CONSIDERED);
+			self->obstructionMap->set(position, OT_OBSTRUCTED);
 
 			//std::cout << (*(self->obstructionMap)) << std::endl;
 		}
