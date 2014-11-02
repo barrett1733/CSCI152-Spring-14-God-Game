@@ -90,6 +90,13 @@ PositionList Pathfinding::constructPath(Node* goal)
 	Node* node = goal;
 	PositionList path;
 	path.reserve(Position::max_x * Position::max_y);
+
+	if (node->parentNode == NULL)
+	{
+		path.push_back(node->pos);
+		return path;
+	}
+
 	while (node->parentNode != NULL)
 	{
 		path.push_back(node->pos);

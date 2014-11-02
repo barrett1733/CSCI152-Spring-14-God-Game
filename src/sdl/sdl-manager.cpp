@@ -13,7 +13,7 @@
 #include <iostream>
 #include <sstream>
 
-int SdlManager::FRAME_RATE = 30;
+int SdlManager::FRAME_RATE = 60;
 unsigned int SdlManager::frameDuration = 1000/SdlManager::FRAME_RATE;
 
 SdlManager sdl;
@@ -127,7 +127,7 @@ void SdlManager::update()
 
 	// Waste time until the next frame starts
 	// Disabling wait for more fps - SB 10.29.14
-	//wait();
+	wait();
 }
 
 void SdlManager::renderWidget(SdlWidget * widget)

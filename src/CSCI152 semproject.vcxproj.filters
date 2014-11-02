@@ -37,20 +37,10 @@
     <ClCompile Include="config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="creature.cpp" />
     <ClCompile Include="entity-manager.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game-manager.cpp" />
-    <ClCompile Include="job-manager.cpp" />
-    <ClCompile Include="job.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pathfinding.cpp" />
-    <ClCompile Include="position.cpp" />
-    <ClCompile Include="resource-manager.cpp" />
-    <ClCompile Include="task-manager.cpp" />
-    <ClCompile Include="task.cpp" />
-    <ClCompile Include="village-manager.cpp" />
-    <ClCompile Include="village.cpp" />
     <ClCompile Include="world-gen.cpp" />
     <ClCompile Include="config.cpp">
       <Filter>Source Files</Filter>
@@ -139,7 +129,6 @@
     <ClCompile Include="resource-manager.cpp" />
     <ClCompile Include="task-manager.cpp" />
     <ClCompile Include="task.cpp" />
-    <ClCompile Include="village-computer.cpp" />
     <ClCompile Include="village-manager.cpp" />
     <ClCompile Include="village.cpp" />
     <ClCompile Include="world-gen.cpp" />
@@ -1927,7 +1916,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miracle-entity.cpp" />
     <ClCompile Include="miracle-manager.cpp" />
-    <ClCompile Include="obstruction-map.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="resource-manager.cpp" />
@@ -3009,7 +2997,6 @@
     <ClCompile Include="obstruction-map.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="position.cpp" />
-    <ClCompile Include="random-pathfinding.cpp" />
     <ClCompile Include="resource-manager.cpp" />
     <ClCompile Include="task-manager.cpp" />
     <ClCompile Include="task.cpp" />
@@ -7361,6 +7348,13 @@
     <ClInclude Include="config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="entity-manager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="game-manager.h" />
+    <ClInclude Include="world-gen.h" />
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="creature.h" />
     <ClInclude Include="entity-manager.h" />
     <ClInclude Include="entity.h" />
@@ -7447,27 +7441,6 @@
     <ClInclude Include="resource-manager.h" />
     <ClInclude Include="task-manager.h" />
     <ClInclude Include="task.h" />
-    <ClInclude Include="village-manager.h" />
-    <ClInclude Include="village.h" />
-    <ClInclude Include="world-gen.h" />
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="entity-manager.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="fHeap.h" />
-    <ClInclude Include="game-manager.h" />
-    <ClInclude Include="job-manager.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="pathfinding.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="resource-manager.h" />
-    <ClInclude Include="task-manager.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="village-computer.h" />
     <ClInclude Include="village-manager.h" />
     <ClInclude Include="village.h" />
     <ClInclude Include="world-gen.h" />
@@ -9710,7 +9683,6 @@
     <ClInclude Include="miracle-entity.h" />
     <ClInclude Include="miracle-manager.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="obstruction-map.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="resource-manager.h" />
@@ -11012,7 +10984,6 @@
     <ClInclude Include="obstruction-map.h" />
     <ClInclude Include="pathfinding.h" />
     <ClInclude Include="position.h" />
-    <ClInclude Include="random-pathfinding.h" />
     <ClInclude Include="resource-manager.h" />
     <ClInclude Include="task-manager.h" />
     <ClInclude Include="task.h" />
