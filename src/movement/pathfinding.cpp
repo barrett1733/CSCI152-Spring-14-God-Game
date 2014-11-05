@@ -12,40 +12,12 @@ double Pathfinding::euclideanDistance(Position start, Position goal)
 	return cost;
 }
 
-Position Pathfinding::generateNeighbor(Position pos, int index)
+double Pathfinding::pathCost(Direction dir)
 {
-	Position newpos(pos);
-	switch (index)
-	{
-	case 0: newpos.moveUnchecked(D_UP); break;
-	case 1: newpos.moveUnchecked(D_DOWN); break;
-	case 2: newpos.moveUnchecked(D_LEFT); break;
-	case 3: newpos.moveUnchecked(D_RIGHT); break;
-	case 4: newpos.moveUnchecked(D_UP | D_LEFT); break;
-	case 5: newpos.moveUnchecked(D_UP | D_RIGHT); break;
-	case 6: newpos.moveUnchecked(D_DOWN | D_LEFT); break;
-	case 7: newpos.moveUnchecked(D_DOWN | D_RIGHT); break;
-	}
-	return newpos;
-}
-
-Position Pathfinding::getNeighbor(Position pos, Direction dir)
-{
-	Position newPos(pos);
-	newPos.moveUnchecked(dir);
-	return newPos;
-}
-
-void Pathfinding::populateNeighbors(Position pos)
-{
-	neighborArray[0] = getNeighbor(pos, D_UP);
-	neighborArray[1] = getNeighbor(pos, D_DOWN);
-	neighborArray[2] = getNeighbor(pos, D_LEFT);
-	neighborArray[3] = getNeighbor(pos, D_RIGHT);
-	neighborArray[4] = getNeighbor(pos, D_UP | D_LEFT);
-	neighborArray[5] = getNeighbor(pos, D_UP | D_RIGHT);
-	neighborArray[6] = getNeighbor(pos, D_DOWN | D_LEFT);
-	neighborArray[7] = getNeighbor(pos, D_DOWN | D_RIGHT);
+	if (dir >= D_NORTH_EAST)
+		return intercardinalNeighbor;
+	else
+		return cardinalNeighbor;
 }
 
 PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap* obstructionMap)
@@ -53,13 +25,11 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 	goalReached = false;
 	searchCounter = 0;
 
-	startNode = new Node(start, NULL, 0, manhattanDistance(start, goal));
+	indexGraph.set(start, NULL, 0, manhattanDistance(neighborPos, goal));
 
-	searchList.push(startNode);
-	
-	indexGraph.assign(startNode);
+	searchList.push(&indexGraph[start]);
 
-	closestToGoalNode = startNode;
+	closestToGoalNode = &indexGraph[start];
 	curNode = NULL;
 
 	while (!goalReached && searchCounter <= searchMax)
@@ -71,6 +41,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 
 		curNode = searchList.pop();
 
+		// this is questionable
 		if (curNode->hcost < closestToGoalNode->hcost)
 			closestToGoalNode = curNode;
 
@@ -80,34 +51,30 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 		}
 		else
 		{
-			for (int i = 0; i < 8; i++)
+			for (int dir = D_NORTH; dir < D_COUNT; dir++)
 			{
-				// neighbors should equal the amount of of availble neighbors
-				// have neighbor function return a pos
-				// 
-				populateNeighbors(curNode->pos);
-				if (neighborArray[i].checkSanity() && obstructionMap->isOpen(neighborArray[i]))
+				neighborPos = curNode->pos;
+				neighborPos.moveUnchecked(dir);
+				if (neighborPos.checkSanity() && obstructionMap->isOpen(neighborPos))
 				{
-					if (&indexGraph[neighborArray[i]] != NULL)
+					if (indexGraph.exists(neighborPos))
 					{
-						temp = &indexGraph[neighborArray[i]];
-						if (curNode->gcost < temp->gcost)
+						if (curNode->gcost < indexGraph[neighborPos].gcost)
 						{
-							temp->gcost = curNode->gcost;
-							temp->fcost = temp->gcost + temp->hcost;
-							temp->parentNode = curNode;
+							indexGraph[neighborPos].gcost = curNode->gcost;
+							indexGraph[neighborPos].fcost = indexGraph[neighborPos].gcost + indexGraph[neighborPos].hcost;
+							indexGraph[neighborPos].parentNode = curNode;
 						}
 					}
 					else
 					{
-						newNeighbor = new Node(
-							neighborArray[i],
+						indexGraph.set(
+							neighborPos,
 							curNode,
-							curNode->gcost + i<4?cardinalNeighbor:intercardinalNeighbor,
-							manhattanDistance(neighborArray[i], goal)
+							curNode->gcost + pathCost(dir),
+							manhattanDistance(neighborPos, goal)
 							);
-						searchList.push(newNeighbor);
-						indexGraph.assign(newNeighbor);
+						searchList.push(&indexGraph[neighborPos]);
 					}
 				}
 			}
