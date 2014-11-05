@@ -1,49 +1,78 @@
 #include "pathfinding.h"
 
-double Pathfinding::calcHCost(Position start, Position goal)
+double Pathfinding::manhattanDistance(Position start, Position goal)
 {
-	//Manhatten calculation
 	double cost = abs(start.getX() - goal.getX()) + abs(start.getY() - goal.getY());
 	return cost;
 }
 
-Position Pathfinding::getNeighbor(Position pos, Direction direction)
+double Pathfinding::euclideanDistance(Position start, Position goal)
+{
+	double cost = sqrt(pow((goal.getX() - start.getX()), 2) + pow((goal.getY() - start.getY()), 2));
+	return cost;
+}
+
+Position Pathfinding::generateNeighbor(Position pos, int index)
 {
 	Position newpos(pos);
-	newpos.moveUnchecked(direction);
+	switch (index)
+	{
+	case 0: newpos.moveUnchecked(D_UP); break;
+	case 1: newpos.moveUnchecked(D_DOWN); break;
+	case 2: newpos.moveUnchecked(D_LEFT); break;
+	case 3: newpos.moveUnchecked(D_RIGHT); break;
+	case 4: newpos.moveUnchecked(D_UP | D_LEFT); break;
+	case 5: newpos.moveUnchecked(D_UP | D_RIGHT); break;
+	case 6: newpos.moveUnchecked(D_DOWN | D_LEFT); break;
+	case 7: newpos.moveUnchecked(D_DOWN | D_RIGHT); break;
+	}
 	return newpos;
+}
+
+Position Pathfinding::getNeighbor(Position pos, Direction dir)
+{
+	Position newPos(pos);
+	newPos.moveUnchecked(dir);
+	return newPos;
 }
 
 void Pathfinding::populateNeighbors(Position pos)
 {
-	neighborArray[0] = Neighbor(getNeighbor(pos, D_UP), cardinalNeighbor);
-	neighborArray[1] = Neighbor(getNeighbor(pos, D_DOWN), cardinalNeighbor);
-	neighborArray[2] = Neighbor(getNeighbor(pos, D_LEFT), cardinalNeighbor);
-	neighborArray[3] = Neighbor(getNeighbor(pos, D_RIGHT), cardinalNeighbor);
-	neighborArray[4] = Neighbor(getNeighbor(pos, D_UP | D_LEFT), intercardinalNeighbor);
-	neighborArray[5] = Neighbor(getNeighbor(pos, D_UP | D_RIGHT), intercardinalNeighbor);
-	neighborArray[6] = Neighbor(getNeighbor(pos, D_DOWN | D_LEFT), intercardinalNeighbor);
-	neighborArray[7] = Neighbor(getNeighbor(pos, D_DOWN | D_RIGHT), intercardinalNeighbor);
+	neighborArray[0] = getNeighbor(pos, D_UP);
+	neighborArray[1] = getNeighbor(pos, D_DOWN);
+	neighborArray[2] = getNeighbor(pos, D_LEFT);
+	neighborArray[3] = getNeighbor(pos, D_RIGHT);
+	neighborArray[4] = getNeighbor(pos, D_UP | D_LEFT);
+	neighborArray[5] = getNeighbor(pos, D_UP | D_RIGHT);
+	neighborArray[6] = getNeighbor(pos, D_DOWN | D_LEFT);
+	neighborArray[7] = getNeighbor(pos, D_DOWN | D_RIGHT);
 }
 
 PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap* obstructionMap)
 {
 	goalReached = false;
+	searchCounter = 0;
 
-	Node* startNode = new Node(start, NULL, 0, calcHCost(start, goal));
+	startNode = new Node(start, NULL, 0, manhattanDistance(start, goal));
 
 	searchList.push(startNode);
 	
 	indexGraph.assign(startNode);
 
-	Node* curNode = NULL;
+	closestToGoalNode = startNode;
+	curNode = NULL;
 
-	while (!goalReached)
+	while (!goalReached && searchCounter <= searchMax)
 	{
+		searchCounter++;
+
 		if (searchList.empty())
-			return constructPath(startNode);
+			return constructPath(closestToGoalNode);
 
 		curNode = searchList.pop();
+
+		if (curNode->hcost < closestToGoalNode->hcost)
+			closestToGoalNode = curNode;
 
 		if (curNode->pos == goal)
 		{
@@ -53,12 +82,15 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 		{
 			for (int i = 0; i < 8; i++)
 			{
+				// neighbors should equal the amount of of availble neighbors
+				// have neighbor function return a pos
+				// 
 				populateNeighbors(curNode->pos);
-				if (neighborArray[i].first.checkSanity() && obstructionMap->isOpen(neighborArray[i].first))
+				if (neighborArray[i].checkSanity() && obstructionMap->isOpen(neighborArray[i]))
 				{
-					if (&indexGraph[neighborArray[i].first] != NULL)
+					if (&indexGraph[neighborArray[i]] != NULL)
 					{
-						Node* temp = &indexGraph[neighborArray[i].first];
+						temp = &indexGraph[neighborArray[i]];
 						if (curNode->gcost < temp->gcost)
 						{
 							temp->gcost = curNode->gcost;
@@ -68,11 +100,11 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 					}
 					else
 					{
-						Node* newNeighbor = new Node(
-							neighborArray[i].first,
+						newNeighbor = new Node(
+							neighborArray[i],
 							curNode,
-							curNode->gcost + neighborArray[i].second,
-							calcHCost(neighborArray[i].first, goal)
+							curNode->gcost + i<4?cardinalNeighbor:intercardinalNeighbor,
+							manhattanDistance(neighborArray[i], goal)
 							);
 						searchList.push(newNeighbor);
 						indexGraph.assign(newNeighbor);

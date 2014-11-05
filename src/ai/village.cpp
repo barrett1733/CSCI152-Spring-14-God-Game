@@ -78,16 +78,15 @@ void Village::update(ObstructionMap* obstructionMap)
 	// Testing pathfinding on villagers
 	Pathfinding pfVillage;
 	Position nextPosition;
-	int i = 0;
-	Position goal = Position(Position::max_x/2, Position::max_y/2);
-	
+	Position goal = Position(Position::max_x/2,Position::max_y/2);
+	//Position goal = obstructionMap->findOpenPosition(Position(Position::max_x / 2, Position::max_y / 2));
+
 	for (Entity* villager : villagerList)
 	{
 		nextPosition = pfVillage.findNextPosition(villager->getPosition(), goal, obstructionMap);
 		obstructionMap->set(villager->getPosition(), OT_EMPTY);
 		villager->setPosition(nextPosition);
 		obstructionMap->set(villager->getPosition(), OT_OBSTRUCTED);
-		i++;
 	}
 
 	// decideAction();
