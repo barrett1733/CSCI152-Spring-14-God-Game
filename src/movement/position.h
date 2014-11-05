@@ -27,10 +27,15 @@ enum
 };
 enum
 {
-	D_NORTH    = 0x01,
-	D_EAST = 0x02,
-	D_SOUTH  = 0x04,
-	D_WEST  = 0x08,
+	D_NORTH = 100,
+	D_EAST,
+	D_SOUTH,
+	D_WEST,
+	D_NORTH_EAST,
+	D_SOUTH_EAST,
+	D_NORTH_WEST,
+	D_SOUTH_WEST,
+	D_COUNT,
 };
 typedef int Direction;
 

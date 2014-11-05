@@ -114,15 +114,32 @@ double Position::direction(const Position & position)
 
 void Position::moveUnchecked(Direction direction)
 {
-	return moveUnchecked(direction, 1);
+	moveUnchecked(direction, 1);
 }
 
 void Position::moveUnchecked(Direction direction, int distance)
 {
-	if(direction & D_UP)    y -= distance;
-	if(direction & D_RIGHT) x += distance;
-	if(direction & D_DOWN)  y += distance;
-	if(direction & D_LEFT)  x -= distance;
+	if (direction < D_NORTH || direction > D_COUNT)
+	{
+		if (direction & D_UP)    y -= distance;
+		if (direction & D_RIGHT) x += distance;
+		if (direction & D_DOWN)  y += distance;
+		if (direction & D_LEFT)  x -= distance;
+	}
+	else
+	{
+		switch (direction)
+		{
+		case D_NORTH:	y -= distance; break;
+		case D_EAST:	x += distance; break;
+		case D_SOUTH:	y += distance; break;
+		case D_WEST:	x -= distance; break;
+		case D_NORTH_EAST: y -= distance; x += distance; break;
+		case D_SOUTH_EAST: y += distance; x += distance; break;
+		case D_SOUTH_WEST: y += distance; x -= distance; break;
+		case D_NORTH_WEST: y -= distance; x -= distance; break;
+		}
+	}
 }
 void Position::move(Direction direction)
 {
