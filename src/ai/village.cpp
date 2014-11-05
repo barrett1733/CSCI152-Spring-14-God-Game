@@ -76,7 +76,7 @@ void Village::import(EntityReference entity)
 void Village::update(ObstructionMap* obstructionMap)
 {
 	// Testing pathfinding on villagers
-	Pathfinding pfVillage;
+	Pathfinding pfVillage(Position::max_x+1, Position::max_y+1);
 	Position nextPosition;
 	Position goal = Position(Position::max_x/2,Position::max_y/2);
 	//Position goal = obstructionMap->findOpenPosition(Position(Position::max_x / 2, Position::max_y / 2));

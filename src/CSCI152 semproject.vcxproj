@@ -29,7 +29,6 @@
     <ClCompile Include="movement\pathfinding.cpp" />
     <ClCompile Include="movement\position.cpp" />
     <ClCompile Include="job\resource-manager.cpp" />
-    <ClCompile Include="movement\nodevector.cpp" />
     <ClCompile Include="sdl\sdl-button.cpp" />
     <ClCompile Include="sdl\sdl-entity.cpp" />
     <ClCompile Include="sdl\sdl-manager.cpp" />
@@ -65,7 +64,6 @@
     <ClInclude Include="movement\pathfinding.h" />
     <ClInclude Include="movement\position.h" />
     <ClInclude Include="job\resource-manager.h" />
-    <ClInclude Include="movement\nodevector.h" />
     <ClInclude Include="sdl\sdl-button.h" />
     <ClInclude Include="sdl\sdl-entity.h" />
     <ClInclude Include="sdl\sdl-event-subscriber.h" />
