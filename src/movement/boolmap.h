@@ -6,10 +6,10 @@
 class BoolMap
 {
 	bool** boolmap;
-	int size;
+	int size_x, size_y;
 
 public:
-	BoolMap(int size);
+	BoolMap(int size_x, int size_y);
 	~BoolMap();
 	void clear();
 	bool& operator[] (Position);
