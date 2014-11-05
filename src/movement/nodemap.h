@@ -5,13 +5,19 @@
 
 class NodeMap
 {
+	struct NodeMapMemory
+	{
+		Node node;
+		bool exists = false;
+	};
 	int x_size, y_size;
-	Node*** graph;
+	NodeMapMemory** graph;
 public:
 	NodeMap(int x_size, int y_size);
 	~NodeMap();
 	void clear();
-	void assign(Node*);
+	bool exists(Position);
+	void set(Position, Node*, double g, double h);
 	Node& operator[] (Position);
 	Node& operator[] (Node*);
 };
