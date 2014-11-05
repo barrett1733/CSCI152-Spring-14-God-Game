@@ -23,6 +23,14 @@ struct Node {
 		hcost(h),
 		fcost(g + h)
 	{}
+	void set(Position pos_, Node* par, double g, double h)
+	{
+		pos = pos_;
+		parentNode = par;
+		gcost = g;
+		hcost = h;
+		fcost = g + h;
+	}
 	bool operator== (Node &a) const
 	{
 		return (pos == a.pos &&
@@ -44,7 +52,10 @@ struct Node {
 	}
 	friend std::ostream& operator<<(std::ostream& os, const Node& node)
 	{
-		os << node.pos << " G:" << node.gcost << " H:" << node.hcost << " F:" << node.fcost;
+		if (node.parentNode != NULL)
+			os << node.pos << " " << node.parentNode->pos << " G:" << node.gcost << " H:" << node.hcost << " F:" << node.fcost;
+		else
+			os << node.pos << " (N,N)" << " G:" << node.gcost << " H:" << node.hcost << " F:" << node.fcost;
 		return os;
 	}
 };
