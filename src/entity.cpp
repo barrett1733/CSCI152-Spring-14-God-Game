@@ -85,41 +85,39 @@ Entity& Entity::operator= (const Entity& entity)
 
 std::string Entity::getName() const
 {
-	return name;
+	return this->name;
 }
 
 EntityGroup Entity::getGroup() const
 {
-	return group;
+	return this->group;
 }
 
 EntityType Entity::getEntityType() const
 {
-	return type;
+	return this->type;
 }
 
 EntityType Entity::getType() const
 {
-	return type;
+	return this->type;
 }
 
 Position Entity::getPosition() const
 {
-	return position;
+	return this->position;
 }
 
 Faction Entity::getFaction() const
 {
-	return faction;
+	return this->faction;
 }
 
-int Entity::getMaxHealth() 
-{
-	return maxHealth;
+int Entity::getMaxHealth() {
+	return this->maxHealth;
 }
-int Entity::getCurrentHealth() 
-{
-	return currentHealth;
+int Entity::getCurrentHealth() {
+	return this->currentHealth;
 }
 int Entity::getHealth() const
 {
@@ -127,29 +125,29 @@ int Entity::getHealth() const
 }
 
 
-void Entity::setName(std::string name_)
+void Entity::setName(std::string name)
 {
-	name = name_;
+	this->name = name;
 }
-void Entity::setGroup(EntityGroup group_)
+void Entity::setGroup(EntityGroup group)
 {
-	group = group_;
+	this->group = group;
 }
-void Entity::setEntityType(EntityType type_)
+void Entity::setEntityType(EntityType type)
 {
-	type = type_;
+	this->type = type;
 }
-void Entity::setFaction(Faction faction_)
+void Entity::setFaction(Faction faction)
 {
-	faction = faction_;
+	this->faction = faction;
 }
-void Entity::setMaxHealth(int maxHealth_)
+void Entity::setMaxHealth(int maxHealth)
 {
-	maxHealth = maxHealth_;
+	this->maxHealth = maxHealth;
 }
-void Entity::setCurrentHealth(int currentHealth_)
+void Entity::setCurrentHealth(int currentHealth)
 {
-	currentHealth = currentHealth_;
+	this->currentHealth = currentHealth;
 }
 void Entity::setHealth(int health)
 {
@@ -159,7 +157,115 @@ void Entity::setHealth(int health)
 	if(currentHealth > maxHealth)
 		currentHealth = maxHealth;
 }
-void Entity::setPosition(Position position_)
+void Entity::setPosition(Position position)
 {
-	position = position;
+	this->position = position;
+}
+
+////////
+//  MOBILE ENTITY
+////////
+
+MobileEntity::MobileEntity(const Entity & entity) :
+	Entity(entity),
+	task(0),
+	target(0)
+{}
+
+int MobileEntity::getHunger() {
+	return this->hunger;
+}
+int MobileEntity::getStrength() {
+	return this->strength;
+}
+int MobileEntity::getDefense() {
+	return this->defense;
+}
+
+void MobileEntity::setHunger(int hunger) {
+	this->hunger = hunger;
+}
+void MobileEntity::setStrength(int strength) {
+	this->strength = strength;
+}
+void MobileEntity::setDefense(int defense) {
+	this->defense = defense;
+}
+
+bool MobileEntity::hasTask()
+{
+	return task ? true : false;
+}
+
+void MobileEntity::setTask(TaskReference task)
+{
+	if(task)
+	{
+		this->task = task;
+		this->target = task->getTarget();
+	}
+	else
+	{
+		this->task = 0;
+		this->target = 0;
+		// worship or wander?
+	}
+}
+
+void MobileEntity::update(ObstructionMapReference obstructionMap)
+{/*
+	Pathfinding test;
+	PositionList* toMove;
+	toMove = test.findPath(Position(0, 0), this->getPosition(), obstructionMap);
+	if (!toMove->empty())
+		this->setPosition(toMove->at(0));
+	
+	if(target)
+	{
+		Direction direction = D_NONE;
+		int targetX = target->getPosition().getX();
+		int targetY = target->getPosition().getY();
+		int sourceX = position.getX();
+		int sourceY = position.getY();
+
+		if(targetX < sourceX)
+			direction |= D_LEFT;
+		else if(targetX > sourceX)
+			direction |= D_RIGHT;
+
+		if(targetY < sourceY)
+			direction |= D_UP;
+		else if(targetY > sourceY)
+			direction |= D_DOWN;
+
+		if(direction == D_NONE && task)
+			;//task->work();
+
+		// TODO: if(!canMove(direction)) adjust(direction);
+		//
+
+		position.move(direction);
+	}
+	else
+	{
+		int r = rand();
+		switch(r % 4)
+		{
+			case 0:
+				position.move(D_UP);
+				break;
+
+			case 1:
+				position.move(D_RIGHT);
+				break;
+
+			case 2:
+				position.move(D_DOWN);
+				break;
+
+			case 3:
+				position.move(D_LEFT);
+				break;
+		}
+	}*/
 }

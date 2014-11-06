@@ -146,8 +146,6 @@ enum EntityType {
 	ET_MIRACLE_METEOR
 };
 
-typedef Entity * EntityReference;
-
 class Entity
 {
 private:
@@ -205,5 +203,32 @@ public:
 		return os;
 	}
 };
+
+class MobileEntity : public Entity
+{
+private:
+	int hunger;
+	int strength;
+	int defense;
+
+	TaskReference task;
+	Entity * target;
+public:
+	MobileEntity(const Entity&);
+	int getHunger();
+	int getStrength();
+	int getDefense();
+	void setHunger(int);
+	void setStrength(int);
+	void setDefense(int);
+
+	void update(ObstructionMapReference obstructionMap);
+
+	bool hasTask();
+	void setTask(TaskReference);
+};
+
 #endif
 
+typedef Entity * EntityReference;
+typedef MobileEntity * MobileEntityReference;
