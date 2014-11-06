@@ -5,13 +5,9 @@
 
 class NodeMap
 {
-	struct NodeMapMemory
-	{
-		Node node;
-		bool exists = false;
-	};
 	int x_size, y_size;
-	NodeMapMemory** graph;
+	Node** graph;
+	bool** existsGraph;
 public:
 	NodeMap(int x_size, int y_size);
 	~NodeMap();

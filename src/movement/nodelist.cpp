@@ -5,7 +5,7 @@ NodeList::NodeList() :head(NULL), tail(NULL), cur(NULL), lowest(0), size(0)
 
 NodeList::~NodeList()
 {
-	this->clear();
+	clear();
 }
 
 bool NodeList::empty()
