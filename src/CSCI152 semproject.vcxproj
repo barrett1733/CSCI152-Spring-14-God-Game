@@ -22,7 +22,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miracle-entity.cpp" />
     <ClCompile Include="miracle-manager.cpp" />
-    <ClCompile Include="movement\boolmap.cpp" />
     <ClCompile Include="movement\nodemap.cpp" />
     <ClCompile Include="movement\nodelist.cpp" />
     <ClCompile Include="movement\obstruction-map.cpp" />
@@ -56,7 +55,6 @@
     <ClInclude Include="job\job.h" />
     <ClInclude Include="miracle-entity.h" />
     <ClInclude Include="miracle-manager.h" />
-    <ClInclude Include="movement\boolmap.h" />
     <ClInclude Include="movement\node.h" />
     <ClInclude Include="movement\nodemap.h" />
     <ClInclude Include="movement\nodelist.h" />
