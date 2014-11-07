@@ -32,6 +32,7 @@ class Pathfinding
 	const double cardinalNeighbor = 1.0;
 	const double intercardinalNeighbor = 1.4;
 	int size_x, size_y;
+	bool searchLimiter;
 	
 	NodeList searchList;
 	NodeMap indexGraph;
@@ -48,8 +49,9 @@ class Pathfinding
 public:
 	Pathfinding(int x, int y) : 
 		size_x(x), size_y(y),
+		searchLimiter(false),
 		indexGraph(x, y),
-		searchMax((x + y) / 8)
+		searchMax((x + y) / 2)
 	{};
 	PositionList findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
 	Position findNextPosition(Position start, Position goal, ObstructionMapReference obstructionMap);
