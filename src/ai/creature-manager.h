@@ -1,16 +1,18 @@
 #pragma once
 #include <vector>
-#include "../entity-mobile.h"
+#include "../entity.h"
 
 class CreatureManager
 {
-	std::vector<MobileEntityReference> creatureList; // list of creatures
+	std::vector<MobileEntity*> creatureList; // list of creatures
 
 public:
 	CreatureManager();
-	~CreatureManager();
-	void importEntity(EntityReference);
-	MobileEntityReference getACreature();
-	void update();
+	void import(Entity*);
+	void decideAction();
+	void wander(MobileEntity*);
+	void attack(MobileEntity*);
+	void flee(MobileEntity*);
+	void update(ObstructionMap*);
 };
 

@@ -17,6 +17,7 @@ std::map<std::string, void (*)(SDL_Event&, WidgetReference)> GameManager::callba
 bool GameManager::callbackMapInitialized = false;
 VillageManager GameManager::villageManager;
 EntityManager GameManager::entityManager;
+CreatureManager GameManager::creatureManager;
 WidgetContainerReference GameManager::buttonContainer = 0;
 
 GameManager::GameManager() :
@@ -61,6 +62,7 @@ void GameManager::setup()
 	{
 		storedEntity = entityManager.createRecord(tempEntity);
 		villageManager.import(storedEntity);
+		creatureManager.import(storedEntity);
 
 		obstructionMap->set(tempEntity->getPosition(), OT_OBSTRUCTED);
 
@@ -78,6 +80,8 @@ void GameManager::update()
 	villageManager.update(obstructionMap);
 
 	entityManager.update(obstructionMap);
+
+	creatureManager.update(obstructionMap);
 
 	// ...
 }

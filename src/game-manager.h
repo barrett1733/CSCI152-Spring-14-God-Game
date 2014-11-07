@@ -23,6 +23,7 @@
 #include "entity.h"
 #include "miracle-entity.h"
 #include "ai/village-manager.h"
+#include "ai/creature-manager.h"
 #include "sdl/sdl-entity.h"
 #include "sdl/sdl-map-view.h"
 #include "sdl/sdl-widget-container.h"
@@ -45,6 +46,7 @@ class GameManager : public Config
 	static GameManager * self;
 	static VillageManager villageManager;
 	static EntityManager entityManager;
+	static CreatureManager creatureManager;
 	static bool callbackMapInitialized;
 	static std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap;
 	static WidgetContainerReference buttonContainer;

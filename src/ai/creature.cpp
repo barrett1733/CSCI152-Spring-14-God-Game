@@ -11,7 +11,7 @@
 
 Creature::Creature()
 { }
-
+/*
 void Creature::importEntity(EntityReference entity)
 {
 	EntityGroup group = entity->getGroup();
@@ -34,12 +34,12 @@ void Creature::wander(MobileEntityReference mobileEntity)
 {
 	// Entity wander rand() direction for rand() distance?
 	// -SB
-	/*
+	
 	Position pos = mobileEntity->getPosition();
 	std::vector<Direction> openDirections = checkArea(mobileEntity->getPosition());
 	pos.move(openDirections.at(rand() % openDirections.size()));
 	mobileEntity->setPosition(pos);
-	*/
+	
 }
 void Creature::attack()
 {
@@ -64,3 +64,4 @@ MobileEntityReference Creature::getACreature()
 	// Redundant function - will remove
 	return creatureList.at(0);
 }
+*/
