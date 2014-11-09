@@ -96,7 +96,6 @@ ImageReference SdlSlider::createSliderBackground()
 
 	SDL_Rect rect = sdlUtility.createRect(width - handleWidth, 0, handleWidth, height);
 	SDL_BlitSurface(handle, NULL, background, &rect);
-	SDL_FreeSurface(handle);
 
 	return background;
 }

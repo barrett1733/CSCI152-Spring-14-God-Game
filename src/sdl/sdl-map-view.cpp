@@ -45,14 +45,14 @@ void SdlMapView::clear(SDL_Rect & rect)
 	SDL_Rect clip = sdlUtility.createRect(0, 0, rect.w, rect.h);
 	SDL_BlitSurface(clearSurface, &clip, surface, &rect);
 
-	if(texture) SDL_DestroyTexture(texture);
-	texture = 0;
+	//if(texture) SDL_DestroyTexture(texture);
+	//texture = 0;
 }
 
 void SdlMapView::draw(ImageReference entitySurface, SDL_Rect & rect)
 {
 	SDL_BlitSurface(entitySurface, NULL, surface, &rect);
 
-	if(texture) SDL_DestroyTexture(texture);
-	texture = 0;
+	//if(texture) SDL_DestroyTexture(texture);
+	//texture = 0;
 }

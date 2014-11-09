@@ -66,6 +66,7 @@ public:
 	virtual const SDL_Rect * getClipping();
 	virtual const SDL_Rect * getBoundingBox();
 	void render(SDL_Renderer * renderer);
+	void render(SDL_Surface * screenSurface);
 	void render(SDL_Texture * windowTexture);
 
 	virtual void handleEvent(SDL_Event&);
