@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ai\creature-manager.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="ai\creature.cpp" />
     <ClCompile Include="entity-manager.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="world-gen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ai\creature-manager.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="ai\creature.h" />
     <ClInclude Include="entity-manager.h" />

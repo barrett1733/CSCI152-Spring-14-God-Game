@@ -32,7 +32,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 	closestToGoalNode = &indexGraph[start];
 	curNode = NULL;
 
-	while (!goalReached && (searchLimiter || searchCounter <= searchMax))
+	while (!goalReached && (!searchLimiter || searchCounter <= searchMax))
 	{
 		searchCounter++;
 

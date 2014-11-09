@@ -51,6 +51,7 @@ Thumbs.db
 
 # Visual C++ files #
 ####################
+*.filters
 *.opensdf
 *.sdf
 *.tlog
