@@ -20,7 +20,7 @@ SdlManager sdl;
 
 SdlManager::SdlManager() :
 	window(0),
-	//renderer(0),
+	renderer(0),
 	next_time(0)
 {
 	std::cout << "SdlManager::SdlManager() - SDL_Init()" << std::endl;
@@ -59,7 +59,7 @@ SdlManager::~SdlManager()
 {
 	std::cout << "SdlManager::~SdlManager()" << std::endl;
 
-	//if(renderer) SDL_DestroyRenderer(renderer);
+	if(renderer) SDL_DestroyRenderer(renderer);
 	if(window)   SDL_DestroyWindow(window);
 
 	IMG_Quit();
@@ -100,10 +100,9 @@ void SdlManager::update()
 	} // end event handler loop
 
 	// Clear screen
-	//SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-	//SDL_RenderClear( renderer );
-	//SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
-	SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 255, 255, 255));
+	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_RenderClear( renderer );
+	SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
 
 	// Render everything to renderTexture
 	for(int layerIndex = 0; layerIndex < WL_COUNT; layerIndex ++)
@@ -111,8 +110,7 @@ void SdlManager::update()
 			renderWidget(widgetList[layerIndex][widgetIndex]);
 
 	// Copy render texture and update screen
-	//SDL_RenderPresent( renderer );
-	SDL_UpdateWindowSurface(window);
+	SDL_RenderPresent( renderer );
 
 	// Update frame rate display
 	frameCount ++;
@@ -134,8 +132,7 @@ void SdlManager::update()
 
 void SdlManager::renderWidget(SdlWidget * widget)
 {
-	widget->render(screenSurface);
-	//widget->render(renderer);
+	return widget->render(renderer);
 }
 
 unsigned int SdlManager::getRemainingFrameTime()
@@ -169,17 +166,14 @@ void SdlManager::launchWindow(const char * title, int width, int height)
 	if ( ! ( window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN) ) )
 		throw "SDL_CreateWindow";
 
-	// Set Screen Surface to window surface
-	screenSurface = SDL_GetWindowSurface(window);
-
 	// Create renderer for window
-	//std::cout << "SDL_CreateRenderer()" << std::endl;
-	//if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE ) ) )
-	//	throw "SDL_CreateRenderer";
+	std::cout << "SDL_CreateRenderer()" << std::endl;
+	if ( ! ( renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE ) ) )
+		throw "SDL_CreateRenderer";
 
 	// Initialize renderer color
-	//std::cout << "SDL_SetRenderDrawColor()" << std::endl;
-	//SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	std::cout << "SDL_SetRenderDrawColor()" << std::endl;
+	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
 	fpsCounter = new SdlTextDisplay(2, 2, 60, 20);
 	fpsCounter->setText("00 FPS");

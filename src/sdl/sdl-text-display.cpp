@@ -83,6 +83,6 @@ void SdlTextDisplay::buildSurface()
 		SDL_FreeSurface(textSurface);
 	}
 
-	//if(texture) SDL_DestroyTexture(texture);
-	//texture = 0;
+	if(texture) SDL_DestroyTexture(texture);
+	texture = 0;
 }

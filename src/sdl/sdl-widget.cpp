@@ -70,8 +70,8 @@ SdlWidget::SdlWidget(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback
 
 SdlWidget::~SdlWidget()
 {
-	//if(surface) SDL_FreeSurface(surface);
-	//if(texture) SDL_DestroyTexture(texture);
+	if(surface) SDL_FreeSurface(surface);
+	if(texture) SDL_DestroyTexture(texture);
 
 	setClipping(emptyRect);
 	setBoundingBox(emptyRect);
@@ -144,29 +144,20 @@ void SdlWidget::render(SDL_Renderer * renderer)
 	if(!surface) return;
 	if(boundingBox.w == 0 || boundingBox.h == 0) return;
 
-	//if(!texture)
-	//	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	if(!texture)
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
 
-	//if(texture)
-	//	SDL_RenderCopy(renderer, texture, &clipping, &boundingBox);
+	if(texture)
+		SDL_RenderCopy(renderer, texture, &clipping, &boundingBox);
 }
 
 void SdlWidget::render(SDL_Texture * windowTexture)
 {
-	if (state == WS_HIDDEN) return;
-	if (!surface) return;
-	if (boundingBox.w == 0 || boundingBox.h == 0) return;
+	if(state == WS_HIDDEN) return;
+	if(!surface) return;
+	if(boundingBox.w == 0 || boundingBox.h == 0) return;
 
-	//SDL_UpdateTexture(windowTexture, &boundingBox, surface->pixels, surface->pitch);
-}
-
-void SdlWidget::render(SDL_Surface * screenSurface)
-{
-	if (state == WS_HIDDEN) return;
-	if (!surface) return;
-	if (boundingBox.w == 0 || boundingBox.h == 0) return;
-
-	SDL_BlitSurface(surface, &clipping, screenSurface, &boundingBox);
+	SDL_UpdateTexture(windowTexture, &boundingBox, surface->pixels, surface->pitch);
 }
 
 void SdlWidget::updateState(SDL_Event & event)

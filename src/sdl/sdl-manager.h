@@ -35,8 +35,7 @@ class SdlManager : public Config
 	static unsigned int frameDuration;
 
 	SDL_Window * window;
-	SDL_Surface * screenSurface;
-	//SDL_Renderer * renderer;
+	SDL_Renderer * renderer;
 
 	TextDisplayReference fpsCounter;
 	long timer;

@@ -81,7 +81,7 @@ ImageReference SdlButton::createButtonBackground(SDL_Rect & rect)
 		clip = sdlUtility.createRect(1, 1 + i*height, width-2, height-2);
 		SDL_BlitSurface(buttonFill, &rect, image, &clip);
 	}
-	//SDL_FreeSurface(buttonFill);
+	SDL_FreeSurface(buttonFill);
 
 	return image;
 }
@@ -109,6 +109,6 @@ void SdlButton::setText(const char * text)
 	}
 	SDL_FreeSurface(textSurface);
 
-	//if(texture) SDL_DestroyTexture(texture);
-	//texture = 0;
+	if(texture) SDL_DestroyTexture(texture);
+	texture = 0;
 }
