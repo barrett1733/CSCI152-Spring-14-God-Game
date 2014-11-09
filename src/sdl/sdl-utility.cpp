@@ -31,6 +31,11 @@ SdlUtility::SdlUtility()
 
 SdlUtility::~SdlUtility()
 {
+	for (int i = 0; i < surfaces.size(); i++)
+	{
+		SDL_FreeSurface(surfaces[i].surface);
+		surfaces[i].surface = NULL;
+	}
 	if(font)
 		TTF_CloseFont(font);
 	TTF_Quit();
@@ -71,11 +76,18 @@ ImageReference SdlUtility::createSurface(int width, int height)
 	result = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
 	return result;
 }
+
 ImageReference SdlUtility::createSurface(int width, int height, Color color)
 {
-	SDL_Surface * result = createSurface(width, height);
-	SDL_FillRect(result, NULL, sdlUtility.getColor(result, C_BEIGE));
-	return result;
+	ImageReference result = checkExistingSurfaces(width, height, color, ST_DEFAULT);
+	if (result != NULL)
+		return result;
+
+	SDL_Surface * image = createSurface(width, height);
+	SDL_FillRect(image, NULL, sdlUtility.getColor(image, C_BEIGE));
+
+	surfaces.push_back(SurfaceData(width, height, color, ST_DEFAULT, image));
+	return image;
 }
 
 ImageReference SdlUtility::createTextSurface(const char * text, FontSize fontSize)
@@ -123,7 +135,11 @@ void SdlUtility::set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 ImageReference SdlUtility::createCircle(Color color, int size)
 {
-	ImageReference image = createSurface(size,size);
+	ImageReference result = checkExistingSurfaces(size, size, color, ST_CIRCLE);
+	if (result != NULL)
+		return result;
+
+	ImageReference image = createSurface(size, size);
 
 	double cx = size / 2;
 	double cy = size / 2;
@@ -196,17 +212,23 @@ ImageReference SdlUtility::createCircle(Color color, int size)
 		}
 	}
 
+	surfaces.push_back(SurfaceData(size, size, color, ST_CIRCLE, image));
+
 	return image;
 }
 
 ImageReference SdlUtility::createSquare(Color color, int size)
 {
+	ImageReference result = checkExistingSurfaces(size, size, color, ST_SQUARE);
+	if (result != NULL)
+		return result;
 	ImageReference image = createSurface(size, size);
 	SDL_FillRect(image, NULL, getColor(image, C_BLACK));
 	ImageReference interior = createSurface(size-2, size-2);
 	SDL_FillRect(interior, NULL, getColor(image, color));
 	SDL_Rect clip = createRect(1, 1, size-2, size-2);
 	SDL_BlitSurface(interior, NULL, image, &clip);
+	surfaces.push_back(SurfaceData(size, size, color, ST_SQUARE, image));
 	return image;
 }
 
@@ -217,6 +239,10 @@ ImageReference SdlUtility::createTriangle(Color color, int size)
 
 ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 {
+	ImageReference result = checkExistingSurfaces(width, height, color, ST_TRIANGLE);
+	if (result != NULL)
+		return result;
+
 	ImageReference image = createSurface(width, height);;
 
 	Uint32 inner = getColor(image, color);
@@ -245,5 +271,15 @@ ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 	for(x = 0; x < width; x ++)
 		set_pixel(image, x, height - 1, outer);
 
+	surfaces.push_back(SurfaceData(width, height, color, ST_TRIANGLE, image));
 	return image;
+}
+
+ImageReference SdlUtility::checkExistingSurfaces(int width, int height, Color color, SdlSurfaceType type)
+{
+	SurfaceData test(width, height, color, type, NULL);
+	for (int i = 0; i < surfaces.size(); i++)
+		if (surfaces[i] == test)
+			return surfaces[i].surface;
+	return NULL;
 }
