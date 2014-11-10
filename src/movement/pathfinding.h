@@ -49,7 +49,7 @@ class Pathfinding
 public:
 	Pathfinding(int x, int y) : 
 		size_x(x), size_y(y),
-		searchLimiter(false),
+		searchLimiter(true),
 		indexGraph(x, y),
 		searchMax((x + y) / 2)
 	{};

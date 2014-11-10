@@ -25,7 +25,7 @@ SdlUtility::SdlUtility()
 		std::cerr << TTF_GetError() << std::endl;
 		throw "TTF_Init()";
 	}
-
+	surfaces.reserve(100);
 	std::cerr << "SdlUtility::SdlUtility() finished." << std::endl;
 }
 
@@ -58,7 +58,12 @@ SDL_Rect SdlUtility::createRect(int x, int y, int w, int h)
 
 ImageReference SdlUtility::createSurface(int width, int height)
 {
-	SDL_Surface * result;
+	return createSurface(width, height, C_WHITE);
+}
+
+ImageReference SdlUtility::createSurface(int width, int height, Color color)
+{
+	SDL_Surface * image;
 	unsigned int rmask, gmask, bmask, amask;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -73,20 +78,26 @@ ImageReference SdlUtility::createSurface(int width, int height)
 	amask = 0xff000000;
 #endif
 
-	result = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
-	return result;
+	image = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
+	if (color != C_DEFAULT)
+		SDL_FillRect(image, NULL, sdlUtility.getColor(image, color));
+	return image;
 }
 
-ImageReference SdlUtility::createSurface(int width, int height, Color color)
+ImageReference SdlUtility::createContainedSurface(int width, int height)
 {
-	ImageReference result = checkExistingSurfaces(width, height, color, ST_DEFAULT);
+	return createSurface(width, height, C_WHITE);
+}
+
+ImageReference SdlUtility::createContainedSurface(int width, int height, Color color)
+{
+	ImageReference result = checkExistingSurfaces(width, height, color);
 	if (result != NULL)
 		return result;
 
-	SDL_Surface * image = createSurface(width, height);
-	SDL_FillRect(image, NULL, sdlUtility.getColor(image, C_BEIGE));
+	ImageReference image = createSurface(width, height, color);
 
-	surfaces.push_back(SurfaceData(width, height, color, ST_DEFAULT, image));
+	surfaces.push_back(SurfaceData(image, color, ST_DEFAULT));
 	return image;
 }
 
@@ -103,11 +114,11 @@ ImageReference SdlUtility::createTextSurface(const char * text, FontSize fontSiz
 	surface = TTF_RenderText_Blended(fontList[fontSize], text, textColor);
 	return surface;
 }
+
 ImageReference SdlUtility::createTextSurface(const char * text)
 {
 	return createTextSurface(text, 16);
 }
-
 
 Uint32 SdlUtility::getColor(ImageReference image, Color color)
 {
@@ -139,7 +150,7 @@ ImageReference SdlUtility::createCircle(Color color, int size)
 	if (result != NULL)
 		return result;
 
-	ImageReference image = createSurface(size, size);
+	ImageReference image = createContainedSurface(size, size);
 
 	double cx = size / 2;
 	double cy = size / 2;
@@ -212,7 +223,7 @@ ImageReference SdlUtility::createCircle(Color color, int size)
 		}
 	}
 
-	surfaces.push_back(SurfaceData(size, size, color, ST_CIRCLE, image));
+	surfaces.push_back(SurfaceData(image, color, ST_CIRCLE));
 
 	return image;
 }
@@ -222,13 +233,16 @@ ImageReference SdlUtility::createSquare(Color color, int size)
 	ImageReference result = checkExistingSurfaces(size, size, color, ST_SQUARE);
 	if (result != NULL)
 		return result;
-	ImageReference image = createSurface(size, size);
+	ImageReference image = createContainedSurface(size, size);
 	SDL_FillRect(image, NULL, getColor(image, C_BLACK));
-	ImageReference interior = createSurface(size-2, size-2);
+
+	ImageReference interior = createContainedSurface(size - 2, size - 2);
 	SDL_FillRect(interior, NULL, getColor(image, color));
+
 	SDL_Rect clip = createRect(1, 1, size-2, size-2);
+
 	SDL_BlitSurface(interior, NULL, image, &clip);
-	surfaces.push_back(SurfaceData(size, size, color, ST_SQUARE, image));
+	surfaces.push_back(SurfaceData(image, color, ST_SQUARE));
 	return image;
 }
 
@@ -271,15 +285,17 @@ ImageReference SdlUtility::createTriangle(Color color, int width, int height)
 	for(x = 0; x < width; x ++)
 		set_pixel(image, x, height - 1, outer);
 
-	surfaces.push_back(SurfaceData(width, height, color, ST_TRIANGLE, image));
+	surfaces.push_back(SurfaceData(image, color, ST_TRIANGLE));
 	return image;
 }
 
 ImageReference SdlUtility::checkExistingSurfaces(int width, int height, Color color, SdlSurfaceType type)
 {
-	SurfaceData test(width, height, color, type, NULL);
 	for (int i = 0; i < surfaces.size(); i++)
-		if (surfaces[i] == test)
+		if (surfaces[i].surface->w == width && 
+			surfaces[i].surface->h == height && 
+			surfaces[i].color == color &&
+			surfaces[i].type == type)
 			return surfaces[i].surface;
 	return NULL;
 }

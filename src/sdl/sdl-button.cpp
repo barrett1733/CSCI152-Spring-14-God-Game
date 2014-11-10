@@ -67,8 +67,7 @@ ImageReference SdlButton::createButtonBackground(SDL_Rect & rect)
 	int height = rect.h;
 	SDL_Rect clip;
 
-	ImageReference image = sdlUtility.createSurface(width, WS_COUNT * height);
-	SDL_FillRect(image, NULL, sdlUtility.getColor(image,C_BLACK));
+	ImageReference image = sdlUtility.createSurface(width, WS_COUNT * height, C_BLACK);
 
 	ImageReference buttonFill = sdlUtility.createSurface(width, height);
 	SDL_PixelFormat * pixelFormat = buttonFill->format;
