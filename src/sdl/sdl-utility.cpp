@@ -91,7 +91,7 @@ ImageReference SdlUtility::createContainedSurface(int width, int height)
 
 ImageReference SdlUtility::createContainedSurface(int width, int height, Color color)
 {
-	ImageReference result = checkExistingSurfaces(width, height, color);
+	ImageReference result = checkExistingSurfaces(width, height, color, ST_DEFAULT);
 	if (result != NULL)
 		return result;
 

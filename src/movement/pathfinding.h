@@ -49,9 +49,9 @@ class Pathfinding
 public:
 	Pathfinding(int x, int y) : 
 		size_x(x), size_y(y),
-		searchLimiter(true),
+		searchLimiter(false),
 		indexGraph(x, y),
-		searchMax((x + y) / 2)
+		searchMax((x * y) / 8)
 	{};
 	PositionList findPath(Position start, Position goal, ObstructionMapReference obstructionMap);
 	Position findNextPosition(Position start, Position goal, ObstructionMapReference obstructionMap);
