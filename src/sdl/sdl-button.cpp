@@ -12,14 +12,24 @@
 
 SdlButton::SdlButton(SDL_Surface * surface_arg, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
 	SdlWidget(surface_arg, rect, callback_arg),
-	fontSize(16)
+	fontSize(16),
+	colorBackground()
 {
 	SDL_BlitSurface(surface, NULL, background, NULL);
 }
 
-SdlButton::SdlButton(const char * text, SDL_Rect & rect, void (*callback_arg)(SDL_Event&, WidgetReference)) :
-	SdlWidget(0, rect, callback_arg),
-	fontSize(16)
+SdlButton::SdlButton(const char * text, SDL_Rect & rect, void(*callback_arg)(SDL_Event&, WidgetReference)) :
+SdlWidget(0, rect, callback_arg),
+fontSize(16)
+{
+	surface = sdlUtility.createSurface(rect.w, WS_COUNT * rect.h);
+	background = createButtonBackground(rect);
+	setText(text);
+}
+
+SdlButton::SdlButton(const char * text, SDL_Rect & rect, Color color, void(*callback_arg)(SDL_Event&, WidgetReference)) :
+SdlWidget(0, rect, callback_arg),
+fontSize(16)
 {
 	surface = sdlUtility.createSurface(rect.w, WS_COUNT * rect.h);
 	background = createButtonBackground(rect);

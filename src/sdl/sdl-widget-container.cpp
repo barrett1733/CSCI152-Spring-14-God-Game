@@ -32,7 +32,9 @@ SdlWidgetContainer::SdlWidgetContainer(std::map<std::string, void (*)(SDL_Event&
 	callbackName(""),
 	buttonLabel(""),
 	buttonId(0),
-	buttonConfig(0)
+	buttonConfig(0),
+	buttonColor(C_DEFAULT),
+	fontSize(16)
 {
 	this->callbackMap["nothing"] = SdlWidgetContainer_doNothing;
 	load(fileName);
@@ -82,6 +84,21 @@ bool SdlWidgetContainer::setProperty(std::string property, std::string value)
 		buttonConfig |= BCFG_CALLBACK;
 	}
 
+	else if (property == "color")
+	{
+		if( value == "white") buttonColor = C_WHITE;
+		if( value == "gray") buttonColor = C_GRAY;
+		if( value == "black") buttonColor = C_BLACK;
+		if( value == "red") buttonColor = C_RED;
+		if( value == "green") buttonColor = C_GREEN;
+		if( value == "blue") buttonColor = C_BLUE;
+		if( value == "cyan") buttonColor = C_CYAN;
+		if( value == "magenta") buttonColor = C_MAGENTA;
+		if( value == "yellow") buttonColor = C_YELLOW;
+		if (value == "beige") buttonColor = C_BEIGE;
+		if (value == "none") buttonColor = C_DEFAULT;
+	}
+
 	else if(property == "create")
 	{
 		if( ! (buttonConfig & BCFG_VALID))
@@ -95,7 +112,7 @@ bool SdlWidgetContainer::setProperty(std::string property, std::string value)
 		WidgetReference widget;
 
 		if(value == "text")
-			widget = new SdlTextDisplay(buttonLabel.c_str(), rect);
+			widget = new SdlTextDisplay(buttonLabel.c_str(), rect, buttonColor, fontSize);
 
 		else if(value == "button")
 			widget = new SdlButton(buttonLabel.c_str(), rect, callbackMap[callbackName]);
@@ -124,6 +141,12 @@ bool SdlWidgetContainer::setProperty(std::string property, int value)
 	if(property == "id")
 	{
 		buttonId = value;
+		return true;
+	}
+	
+	else if (property == "fontsize")
+	{
+		fontSize = value;
 		return true;
 	}
 	return false;

@@ -28,9 +28,11 @@ class SdlWidgetContainer : public SdlWidget, public Config
 
 	std::string callbackName;
 	std::string buttonLabel;
+	Color buttonColor;
 	int buttonId;
 	SDL_Rect rect;
 	int buttonConfig;
+	FontSize fontSize;
 
 public:
 	SdlWidgetContainer(std::map<std::string, void (*)(SDL_Event&, WidgetReference)> callbackMap, const char * loadFileName);

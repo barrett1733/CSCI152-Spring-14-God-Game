@@ -23,13 +23,16 @@ class SdlTextDisplay : public SdlWidget
 {
 	TTF_Font * font;
 	SDL_Color color;
+	Color backgroundColor;
 	std::string text;
+	FontSize fontSize;
 
 	void buildSurface();
 
 public:
 	SdlTextDisplay(SDL_Surface * surface_arg, SDL_Rect & rect, std::string text_arg);
 	SdlTextDisplay(std::string text_arg, SDL_Rect & rect);
+	SdlTextDisplay(std::string text_arg, SDL_Rect & rect, Color colorBackground, FontSize fontSize);
 	SdlTextDisplay(int xPos, int yPos, int width, int height);
 	~SdlTextDisplay();
 

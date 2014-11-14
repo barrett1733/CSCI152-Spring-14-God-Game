@@ -79,14 +79,13 @@ ImageReference SdlUtility::createSurface(int width, int height, Color color)
 #endif
 
 	image = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
-	if (color != C_DEFAULT)
-		SDL_FillRect(image, NULL, sdlUtility.getColor(image, color));
+	SDL_FillRect(image, NULL, sdlUtility.getColor(image, color));
 	return image;
 }
 
 ImageReference SdlUtility::createContainedSurface(int width, int height)
 {
-	return createSurface(width, height, C_WHITE);
+	return createSurface(width, height, C_DEFAULT);
 }
 
 ImageReference SdlUtility::createContainedSurface(int width, int height, Color color)
@@ -135,6 +134,7 @@ Uint32 SdlUtility::getColor(ImageReference image, Color color)
 	case C_YELLOW:  return SDL_MapRGBA(image->format, 255, 255,   0, 255); break;
 
 	case C_BEIGE:   return SDL_MapRGBA(image->format, 255, 255, 191, 255); break;
+	case C_DEFAULT:	return SDL_MapRGBA(image->format,   0,   0,   0,   0); break;
 	}
 }
 

@@ -21,20 +21,40 @@ SdlTextDisplay::SdlTextDisplay(SDL_Surface * surface_arg, SDL_Rect & rect, std::
 	color.g = 0;
 	color.b = 0;
 	color.a = 255;
+	backgroundColor = C_DEFAULT;
+	fontSize = 16;
 
 	buildSurface();
 }
 
 SdlTextDisplay::SdlTextDisplay(std::string text_arg, SDL_Rect & rect) :
-	SdlWidget(0, rect, 0)
+SdlWidget(0, rect, 0)
 {
 	surface = sdlUtility.createSurface(rect.w, rect.h);
 	text = text_arg;
-	font = TTF_OpenFont( "res/arial.ttf", 16 );
+	font = TTF_OpenFont("res/arial.ttf", 16);
 	color.r = 0;
 	color.g = 0;
 	color.b = 0;
 	color.a = 0;
+	backgroundColor = C_DEFAULT;
+	fontSize = 16;
+
+	buildSurface();
+}
+
+SdlTextDisplay::SdlTextDisplay(std::string text_arg, SDL_Rect & rect, Color background, FontSize size) :
+SdlWidget(0, rect, 0)
+{
+	surface = sdlUtility.createSurface(rect.w, rect.h);
+	text = text_arg;
+	font = TTF_OpenFont("res/arial.ttf", size);
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	color.a = 0;
+	backgroundColor = background;
+	fontSize = size;
 
 	buildSurface();
 }
@@ -53,6 +73,8 @@ SdlTextDisplay::SdlTextDisplay(int xPos, int yPos, int width, int height) :
 	color.g = 0;
 	color.b = 0;
 	color.a = 0;
+	backgroundColor = C_DEFAULT;
+	fontSize = 16;
 
 	buildSurface();
 }
@@ -71,12 +93,13 @@ void SdlTextDisplay::setText(std::string text_arg)
 void SdlTextDisplay::buildSurface()
 {
 	// Clear the existing surface.
-	SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, 255, 255, 255, 0));
+	SDL_FillRect(surface, NULL, sdlUtility.getColor(surface, backgroundColor));
 
 	if(text.length())
 	{
 		// Create a new text surface.
-		SDL_Surface * textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
+		SDL_Surface * textSurface = sdlUtility.createTextSurface(text.c_str(), fontSize);
+		//SDL_Surface * textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
 
 		// Blit the text surface onto the background and free the text surface
 		SDL_BlitSurface(textSurface, NULL, surface, NULL);
