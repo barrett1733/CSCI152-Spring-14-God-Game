@@ -95,8 +95,8 @@ bool SdlWidgetContainer::setProperty(std::string property, std::string value)
 		if( value == "cyan") buttonColor = C_CYAN;
 		if( value == "magenta") buttonColor = C_MAGENTA;
 		if( value == "yellow") buttonColor = C_YELLOW;
-		if (value == "beige") buttonColor = C_BEIGE;
-		if (value == "none") buttonColor = C_DEFAULT;
+		if( value == "beige") buttonColor = C_BEIGE;
+		if( value == "none") buttonColor = C_DEFAULT;
 	}
 
 	else if(property == "create")

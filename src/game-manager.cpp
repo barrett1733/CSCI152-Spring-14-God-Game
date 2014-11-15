@@ -39,7 +39,7 @@ void GameManager::setup()
 	worldSize = world.getWorldSize();
 
 	initializeCallbackMap();
-	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar.cfg");
+	buttonContainer = new SdlWidgetContainer(callbackMap, "res/sidebar-files.cfg");
 
 	mapView = new SdlMapView();
 	mapView->hide();
