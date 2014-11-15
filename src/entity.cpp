@@ -66,6 +66,15 @@ Entity::Entity(const Entity & entity) :
 	position(entity.position)
 { }
 
+Entity::Entity() :
+	group(EG_NONE),
+	type(ET_NONE),
+	faction(F_NONE),
+	maxHealth(0),
+	currentHealth(0),
+	position()
+{ }
+
 Entity::~Entity()
 {
 }
@@ -165,6 +174,12 @@ void Entity::setPosition(Position position)
 ////////
 //  MOBILE ENTITY
 ////////
+
+MobileEntity::MobileEntity() :
+	Entity(),
+	task(0),
+	target(0)
+{}
 
 MobileEntity::MobileEntity(const Entity & entity) :
 	Entity(entity),

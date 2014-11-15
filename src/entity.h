@@ -164,6 +164,7 @@ public:
 	Entity(EntityType, Position, Faction);
 	Entity(Position);
 	Entity(const Entity&);
+	Entity();
 
 	virtual ~Entity();
 
@@ -214,6 +215,7 @@ private:
 	TaskReference task;
 	Entity * target;
 public:
+	MobileEntity();
 	MobileEntity(const Entity&);
 	int getHunger();
 	int getStrength();
