@@ -26,6 +26,7 @@ enum ConfigType {
 	CT_INT_PAIR,
 	CT_INT_TRIPLE,
 	CT_HEX,
+	CT_FILE,
 };
 
 class Config

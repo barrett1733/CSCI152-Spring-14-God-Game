@@ -43,6 +43,12 @@ void Config::load(std::string file)
 	{
 		typeString = "";
 
+		valueNumber[0] = 0;
+		valueNumber[1] = 0;
+		valueNumber[2] = 0;
+		valueDecimal = 0.0;
+		valueString = "";
+
 		fin >> property;
 		fin >> typeString;
 		type = CT_ERROR;
@@ -55,6 +61,7 @@ void Config::load(std::string file)
 		else if(typeString == "INT_PAIR") type = CT_INT_PAIR;
 		else if(typeString == "INT_TRIPLE") type = CT_INT_TRIPLE;
 		else if(typeString == "HEX") type = CT_HEX;
+		else if (typeString == "FILE") type = CT_FILE;
 
 		switch(type)
 		{
@@ -92,6 +99,10 @@ void Config::load(std::string file)
 			case CT_HEX:
 				fin >> std::hex >> valueNumber[0] >> std::dec;
 				accepted = setProperty(property, valueNumber[0]);
+				break;
+
+			case CT_FILE:
+				load(property);
 				break;
 
 			default:
