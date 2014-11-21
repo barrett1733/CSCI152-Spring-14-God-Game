@@ -150,3 +150,9 @@ void Position::move(Direction direction, int distance)
 	moveUnchecked(direction, distance);
 	forceSanity();
 }
+Position Position::getNeighbor(Direction dir)
+{
+	Position pos = *this;
+	pos.moveUnchecked(dir);
+	return pos;
+}

@@ -1,25 +1,11 @@
-#pragma once
+#ifndef DISTANCE_H_
+#define DISTANCE_H_
 
 #include "position.h"
 #include <algorithm>
 
-double ManhattanDistance(Position node, Position goal)
-{
-	double dx = abs(node.getX() - goal.getX());
-	double dy = abs(node.getY() - goal.getY());
-	return dx + dy;
-}
+double ManhattanDistance(Position node, Position goal);
+double DiagonalDistance(Position node, Position goal);
+double EuclideanDistance(Position node, Position goal);
 
-double DiagonalDistance(Position node, Position goal)
-{
-	double dx = abs(node.getX() - goal.getX());
-	double dy = abs(node.getY() - goal.getY());
-	return std::max(dx, dy);
-}
-
-double EuclideanDistance(Position node, Position goal)
-{
-	double dx = abs(node.getX() - goal.getX());
-	double dy = abs(node.getY() - goal.getY());
-	return sqrt(dx * dx + dy * dy);
-}
+#endif

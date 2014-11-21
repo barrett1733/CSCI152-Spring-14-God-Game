@@ -62,10 +62,12 @@ public:
 	double direction(const Position &);
 
 	void moveUnchecked(Direction); // move without forceSanity()
-	void moveUnchecked(Direction,int distance);
+	void moveUnchecked(Direction, int distance);
 
 	void move(Direction);
 	void move(Direction, int distance);
+
+	Position getNeighbor(Direction);
 
 	bool setX(int x);
 	bool setY(int y);

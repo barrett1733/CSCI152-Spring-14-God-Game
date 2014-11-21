@@ -23,6 +23,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miracle-entity.cpp" />
     <ClCompile Include="miracle-manager.cpp" />
+    <ClCompile Include="movement\distance.cpp" />
     <ClCompile Include="movement\nodemap.cpp" />
     <ClCompile Include="movement\nodelist.cpp" />
     <ClCompile Include="movement\obstruction-map.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="job\task.cpp" />
     <ClCompile Include="ai\village-manager.cpp" />
     <ClCompile Include="ai\village.cpp" />
+    <ClCompile Include="movement\path-searching.cpp" />
     <ClCompile Include="world-gen.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +59,7 @@
     <ClInclude Include="job\job.h" />
     <ClInclude Include="miracle-entity.h" />
     <ClInclude Include="miracle-manager.h" />
+    <ClInclude Include="movement\distance.h" />
     <ClInclude Include="movement\node.h" />
     <ClInclude Include="movement\nodemap.h" />
     <ClInclude Include="movement\nodelist.h" />
@@ -79,6 +82,7 @@
     <ClInclude Include="job\task.h" />
     <ClInclude Include="ai\village-manager.h" />
     <ClInclude Include="ai\village.h" />
+    <ClInclude Include="movement\path-searching.h" />
     <ClInclude Include="world-gen.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
