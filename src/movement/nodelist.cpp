@@ -29,8 +29,11 @@ Node* NodeList::find(Position pos)
 	{
 		cur = head;
 		while (cur != tail->next)
-		if (pos == cur->data->pos)
-			return cur->data;
+		{
+			if (pos == cur->data->pos)
+				return cur->data;
+			cur = cur->next;
+		}
 	}
 	return NULL;
 }
@@ -41,8 +44,11 @@ Node* NodeList::find(Node* n)
 	{
 		cur = head;
 		while (cur != tail->next)
-		if (*n == *cur->data)
-			return cur->data;
+		{
+			if (*n == *cur->data)
+				return cur->data;
+			cur = cur->next;
+		}
 	}
 	return NULL;
 }
