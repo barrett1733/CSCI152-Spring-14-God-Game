@@ -25,7 +25,7 @@ bool NodeList::exists(Position pos)
 
 Node* NodeList::find(Position pos)
 {
-	if (empty())
+	if (!empty())
 	{
 		cur = head;
 		while (cur != tail->next)
@@ -37,7 +37,7 @@ Node* NodeList::find(Position pos)
 
 Node* NodeList::find(Node* n)
 {
-	if (empty())
+	if (!empty())
 	{
 		cur = head;
 		while (cur != tail->next)
