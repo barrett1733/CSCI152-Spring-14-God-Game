@@ -196,6 +196,12 @@ int MobileEntity::getStrength() {
 int MobileEntity::getDefense() {
 	return this->defense;
 }
+double MobileEntity::getSightRange() {
+	return this->sightRange;
+}
+Entity* MobileEntity::getTarget() {
+	return this->target;
+}
 
 void MobileEntity::setHunger(int hunger) {
 	this->hunger = hunger;
@@ -205,6 +211,12 @@ void MobileEntity::setStrength(int strength) {
 }
 void MobileEntity::setDefense(int defense) {
 	this->defense = defense;
+}
+void MobileEntity::setSightRange(double range) {
+	this->sightRange = range;
+}
+void MobileEntity::setTarget(Entity* target) {
+	this->target = target;
 }
 
 bool MobileEntity::hasTask()

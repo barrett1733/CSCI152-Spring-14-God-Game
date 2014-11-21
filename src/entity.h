@@ -211,6 +211,7 @@ private:
 	int hunger;
 	int strength;
 	int defense;
+	double sightRange;
 
 	TaskReference task;
 	Entity * target;
@@ -220,9 +221,13 @@ public:
 	int getHunger();
 	int getStrength();
 	int getDefense();
+	double getSightRange();
+	Entity* getTarget();
 	void setHunger(int);
 	void setStrength(int);
 	void setDefense(int);
+	void setSightRange(double);
+	void setTarget(Entity*);
 
 	void update(ObstructionMapReference obstructionMap);
 

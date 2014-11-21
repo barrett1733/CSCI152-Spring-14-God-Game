@@ -102,7 +102,7 @@ void Config::load(std::string file)
 				break;
 
 			case CT_FILE:
-				load(property);
+				load("res/"+property);
 				break;
 
 			default:
