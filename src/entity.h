@@ -21,6 +21,7 @@
 #include <vector>
 #include "movement/position.h"
 #include "movement/obstruction-map.h"
+#include "movement/PathMemory.h"
 
 class Task; // forward declaration of Task class.
 typedef Task * TaskReference;
@@ -205,7 +206,7 @@ public:
 	}
 };
 
-class MobileEntity : public Entity
+class MobileEntity : public Entity, public PathMemory
 {
 private:
 	int hunger;

@@ -18,11 +18,11 @@ http://qiao.github.io/PathFinding.js/visual/
 #include <iostream>
 #include <math.h>
 #include <vector>
-#include <algorithm>
 #include <map>
 #include "obstruction-map.h"
 #include "nodelist.h"
 #include "nodemap.h"
+#include "distance.h"
 
 typedef std::vector<Position> PositionList;
 
@@ -41,8 +41,6 @@ class Pathfinding
 	NodeRef curNode, closestToGoalNode, temp;
 	Position neighborPos;
 
-	double manhattanDistance(Position start, Position goal);
-	double euclideanDistance(Position start, Position goal);
 	double pathCost(Direction);
 	PositionList constructPath(Node*);
 

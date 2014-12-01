@@ -54,7 +54,6 @@ void NodeMap::set(Position pos, Node* par, double g, double h)
 		graph[y][x].pos = pos;
 		graph[y][x].parentNode = par;
 		graph[y][x].gcost = g;
-		graph[y][x].hcost = h;
 		graph[y][x].fcost = g + h;
 	}
 }

@@ -178,13 +178,15 @@ void Entity::setPosition(Position position)
 MobileEntity::MobileEntity() :
 	Entity(),
 	task(0),
-	target(0)
+	target(0),
+	PathMemory()
 {}
 
 MobileEntity::MobileEntity(const Entity & entity) :
 	Entity(entity),
 	task(0),
-	target(0)
+	target(0),
+	PathMemory()
 {}
 
 int MobileEntity::getHunger() {

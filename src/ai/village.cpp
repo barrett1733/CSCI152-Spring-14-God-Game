@@ -11,7 +11,6 @@
 #include <iostream>
 
 #include "village.h"
-#include "../movement/pathfinding.h"
 
 const int POP_PER_HOUSE = 5;
 
@@ -76,17 +75,24 @@ void Village::import(EntityReference entity)
 void Village::update(ObstructionMap* obstructionMap)
 {
 	// Testing pathfinding on villagers
-	Pathfinding pfVillage(Position::max_x+1, Position::max_y+1);
 	Position nextPosition;
-	Position goal = Position(Position::max_x/2,Position::max_y/2);
-	//Position goal = obstructionMap->findOpenPosition(Position(Position::max_x / 2, Position::max_y / 2));
-	
-	for (Entity* villager : villagerList)
+	Position goal;
+	for (int i = 0; i < villagerList.size(); i++)
 	{
-		nextPosition = pfVillage.findNextPosition(villager->getPosition(), goal, obstructionMap);
-		obstructionMap->set(villager->getPosition(), OT_EMPTY);
-		villager->setPosition(nextPosition);
-		obstructionMap->set(villager->getPosition(), OT_OBSTRUCTED);
+		Position currentPos = villagerList[i]->getPosition();
+
+		Entity target(Position(0, 0));
+
+		villagerList[i]->setTarget(&target);
+
+		nextPosition = Movement::moveTowardsTarget(villagerList[i], obstructionMap);
+
+		obstructionMap->set(currentPos, OT_EMPTY);
+
+		if (!obstructionMap->isConsidered(nextPosition))
+			villagerList[i]->setPosition(villagerList[i]->moveOnPath(currentPos, nextPosition, goal));
+
+		obstructionMap->set(currentPos, OT_CONSIDERED);
 	}
 	
 	// decideAction();

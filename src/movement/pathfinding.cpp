@@ -1,17 +1,5 @@
 #include "pathfinding.h"
 
-double Pathfinding::manhattanDistance(Position start, Position goal)
-{
-	double cost = abs(start.getX() - goal.getX()) + abs(start.getY() - goal.getY());
-	return cost;
-}
-
-double Pathfinding::euclideanDistance(Position start, Position goal)
-{
-	double cost = sqrt(pow((goal.getX() - start.getX()), 2) + pow((goal.getY() - start.getY()), 2));
-	return cost;
-}
-
 double Pathfinding::pathCost(Direction dir)
 {
 	if (dir >= D_NORTH_EAST)
@@ -25,7 +13,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 	goalReached = false;
 	searchCounter = 0;
 
-	indexGraph.set(start, NULL, 0, manhattanDistance(neighborPos, goal));
+	indexGraph.set(start, NULL, 0, DiagonalDistance(neighborPos, goal));
 
 	searchList.push(&indexGraph[start]);
 
@@ -62,7 +50,7 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 						if (curNode->gcost < indexGraph[neighborPos].gcost)
 						{
 							indexGraph[neighborPos].gcost = curNode->gcost;
-							indexGraph[neighborPos].fcost = indexGraph[neighborPos].gcost + indexGraph[neighborPos].hcost;
+							indexGraph[neighborPos].fcost = indexGraph[neighborPos].gcost + DiagonalDistance(neighborPos, goal);
 							indexGraph[neighborPos].parentNode = curNode;
 						}
 					}
@@ -71,8 +59,8 @@ PositionList Pathfinding::findPath(Position start, Position goal, ObstructionMap
 						indexGraph.set(
 							neighborPos,
 							curNode,
-							curNode->gcost + pathCost(dir),
-							manhattanDistance(neighborPos, goal)
+							curNode->gcost + EuclideanDistance(curNode->pos, neighborPos),
+							curNode->gcost + EuclideanDistance(curNode->pos, neighborPos) + DiagonalDistance(neighborPos, goal)
 							);
 						searchList.push(&indexGraph[neighborPos]);
 					}

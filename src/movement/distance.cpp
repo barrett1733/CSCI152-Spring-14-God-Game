@@ -1,6 +1,6 @@
 #include "distance.h"
 
-double ManhattanDistance(Position node, Position goal)
+double DiManhattanDistance(Position node, Position goal)
 {
 	double dx = abs(node.getX() - goal.getX());
 	double dy = abs(node.getY() - goal.getY());

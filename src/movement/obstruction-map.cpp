@@ -37,8 +37,19 @@ bool ObstructionMap::isObstructed(Position position)
 	int x = position.getX();
 	int y = position.getY();
 
-	if(x >= 0 && x < size && y >= 0 && y < size)
+	if (x >= 0 && x < size && y >= 0 && y < size)
 		return occupied[y][x] == OT_OBSTRUCTED;
+
+	return false;
+}
+
+bool ObstructionMap::isConsidered(Position position)
+{
+	int x = position.getX();
+	int y = position.getY();
+
+	if (x >= 0 && x < size && y >= 0 && y < size)
+		return occupied[y][x] == OT_CONSIDERED;
 
 	return false;
 }
@@ -56,7 +67,7 @@ bool ObstructionMap::isOpen(Position position)
 }
 
 Position ObstructionMap::findOpenPosition(Position origin)
-{
+{/*
 	Position position = origin;
 	Direction direction = D_NORTH;
 	int rangeLimit = 1;
@@ -84,4 +95,24 @@ Position ObstructionMap::findOpenPosition(Position origin)
 
 
 	return origin;
+	*/
+	Position position = origin;
+	Direction directionArray[D_COUNT - D_NORTH];
+	int amtDirections = 0;
+	for (int i = 0; i < D_COUNT - D_NORTH; i++)
+		directionArray[i] = 0;
+	for (int i = D_NORTH; i < D_COUNT; i++)
+	{
+		Position newpos = origin;
+		newpos.moveUnchecked(i);
+		if (isOpen(newpos))
+		{
+			directionArray[amtDirections] = i;
+			amtDirections++;
+		}
+	}
+	if (amtDirections > 0)
+		position.move(directionArray[rand() % amtDirections]);
+	return position;
+	
 }

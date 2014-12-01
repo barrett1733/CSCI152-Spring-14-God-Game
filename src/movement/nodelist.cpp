@@ -66,18 +66,15 @@ void NodeList::push(Node* newNode)
 
 Node* NodeList::pop()
 {
-	// Clear lowest
-	clear(lowest);
-
 	// Find lowest
 	findLowest();
 
 	// Remove lowest from list
-	cur = lowest;
-	remove(cur);
+	Node* n = lowest->data;
+	remove(lowest);
 
 	size--;
-	return lowest->data;
+	return  n;
 }
 
 void NodeList::findLowest()
@@ -100,17 +97,21 @@ void NodeList::remove(Element* e)
 		e->prev->next = e->next;
 
 	if (e->next == NULL)
-		tail = e->next;
+		tail = e->prev;
 	else
 		e->next->prev = e->prev;
 
-	e->next = e->prev = NULL;
+	clear(e);
 }
 
 void NodeList::clear(Element* e)
 {
 	if (e != NULL)
+	{
+		e->next = e->prev = NULL;
 		e->data = NULL;
+	}
+
 	delete e;
 	e = NULL;
 }
@@ -121,7 +122,6 @@ void NodeList::clear()
 	while (cur != NULL)
 	{
 		remove(cur);
-		clear(cur);
 		cur = head;
 		size--;
 	}

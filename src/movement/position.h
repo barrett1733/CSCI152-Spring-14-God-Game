@@ -58,14 +58,13 @@ public:
 
 	bool checkSanity();
 
-	double distance(const Position &);
-	double direction(const Position &);
-
 	void moveUnchecked(Direction); // move without forceSanity()
 	void moveUnchecked(Direction, int distance);
 
 	void move(Direction);
 	void move(Direction, int distance);
+
+	double distance(const Position&);
 
 	Position getNeighbor(Direction);
 
@@ -81,6 +80,17 @@ public:
 		if ((a.x == b.x) && (a.y == b.y))
 			return true;
 		return false;
+	}
+
+	friend bool operator<(const Position& a, const Position& b)
+	{
+		if ((a.x < b.x) && (a.y < b.y))
+			return true;
+		return false;
+	}
+	friend bool operator>(const Position& a, const Position& b)
+	{
+		return !(a < b);
 	}
 
 	friend bool operator!=(const Position& a, const Position& b)

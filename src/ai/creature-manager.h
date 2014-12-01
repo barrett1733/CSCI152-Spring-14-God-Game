@@ -5,6 +5,10 @@
 class CreatureManager
 {
 	std::vector<MobileEntity*> creatureList; // list of creatures
+	std::vector<MobileEntity*> villagerList; // list of creatures
+	ObstructionMap* obstructionMap;
+	int evaluateFleeDirection(MobileEntity* creature, MobileEntity* enemy, Direction);
+	bool inRange(Position origin, Position enemy, double sightrange);
 
 public:
 	CreatureManager();
@@ -12,7 +16,7 @@ public:
 	void decideAction();
 	void wander(MobileEntity*);
 	void attack(MobileEntity*);
-	void flee(MobileEntity*);
+	Direction flee(MobileEntity*);
 	void update(ObstructionMap*);
 };
 

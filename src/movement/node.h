@@ -8,35 +8,31 @@ struct Node {
 	Position pos;
 	Node* parentNode;
 	bool visited = false;
-	double gcost, hcost, fcost;
+	double gcost, fcost;
 	Node() :
 		pos(Position(0, 0)),
 		parentNode(NULL),
 		gcost(0),
-		hcost(0),
 		fcost(0)
 	{}
-	Node(Position pos, Node* parent, double g, double h) :
+	Node(Position pos, Node* parent, double g, double f) :
 		pos(pos),
 		parentNode(parent),
 		gcost(g),
-		hcost(h),
-		fcost(g + h)
+		fcost(f)
 	{}
-	void set(Position pos_, Node* par, double g, double h)
+	void set(Position pos_, Node* par, double g, double f)
 	{
 		pos = pos_;
 		parentNode = par;
 		gcost = g;
-		hcost = h;
-		fcost = g + h;
+		fcost = f;
 	}
 	bool operator== (Node &a) const
 	{
 		return (pos == a.pos &&
 			parentNode == a.parentNode &&
 			gcost == a.gcost &&
-			hcost == a.hcost &&
 			fcost == a.fcost &&
 			visited == a.visited);
 	}
@@ -45,7 +41,6 @@ struct Node {
 		pos = a.pos;
 		parentNode = a.parentNode;
 		gcost = a.gcost;
-		hcost = a.hcost;
 		fcost = a.fcost;
 		visited = a.visited;
 		return *this;
@@ -53,9 +48,9 @@ struct Node {
 	friend std::ostream& operator<<(std::ostream& os, const Node& node)
 	{
 		if (node.parentNode != NULL)
-			os << node.pos << " " << node.parentNode->pos << " G:" << node.gcost << " H:" << node.hcost << " F:" << node.fcost;
+			os << node.pos << " " << node.parentNode->pos << " G:" << node.gcost << " F:" << node.fcost;
 		else
-			os << node.pos << " (N,N)" << " G:" << node.gcost << " H:" << node.hcost << " F:" << node.fcost;
+			os << node.pos << " (N,N)" << " G:" << node.gcost << " F:" << node.fcost;
 		return os;
 	}
 };

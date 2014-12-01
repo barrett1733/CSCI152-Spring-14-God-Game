@@ -15,6 +15,7 @@
 #include "../job/resource-manager.h"
 #include "../job/job-manager.h"
 #include "../world-gen.h"
+#include "../movement/Movement.h"
 
 #ifndef VILLAGE_H_
 #define VILLAGE_H_
@@ -29,6 +30,7 @@ class Village
 	std::vector<MobileEntityReference> villagerList; // list of employable villagers
 	std::vector<MobileEntityReference> domesticList; // list of domestic things (cows)
 	std::vector<EntityReference> buildingList; // list of buildings
+
 	// Should resources be 'discovered' instead of all known immediately?
 	//
 	// TODO: Villager creation every 30 secs

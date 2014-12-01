@@ -58,18 +58,23 @@ void GameManager::setup()
 
 	EntityReference tempEntity = world.getNextEntity();
 	EntityReference storedEntity;
+	int count = 0;
 	while (tempEntity && tempEntity->getType() != ET_NONE)
 	{
 		storedEntity = entityManager.createRecord(tempEntity);
 		villageManager.import(storedEntity);
 		creatureManager.import(storedEntity);
-
-		obstructionMap->set(tempEntity->getPosition(), OT_OBSTRUCTED);
+		if (tempEntity->getGroup() >= EG_MOBILE)
+			obstructionMap->set(tempEntity->getPosition(), OT_CONSIDERED);
+		else
+			obstructionMap->set(tempEntity->getPosition(), OT_OBSTRUCTED);
 
 		// Get next entity for next loop iteration.
 		delete tempEntity;
 		tempEntity = world.getNextEntity();
+		count++;
 	}
+	std::cout << count << std::endl;
 }
 
 

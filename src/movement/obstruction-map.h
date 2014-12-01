@@ -32,6 +32,7 @@ public:
 
 	void set(Position, ObstructionType);
 	bool isObstructed(Position);
+	bool isConsidered(Position);
 	bool isOpen(Position);
 
 	Position findOpenPosition(Position origin);

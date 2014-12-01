@@ -24,12 +24,15 @@
     <ClCompile Include="miracle-entity.cpp" />
     <ClCompile Include="miracle-manager.cpp" />
     <ClCompile Include="movement\distance.cpp" />
+    <ClCompile Include="movement\grid.cpp" />
+    <ClCompile Include="movement\Movement.cpp" />
     <ClCompile Include="movement\nodemap.cpp" />
     <ClCompile Include="movement\nodelist.cpp" />
     <ClCompile Include="movement\obstruction-map.cpp" />
     <ClCompile Include="movement\pathfinding.cpp" />
     <ClCompile Include="movement\position.cpp" />
     <ClCompile Include="job\resource-manager.cpp" />
+    <ClCompile Include="movement\PathMemory.cpp" />
     <ClCompile Include="sdl\sdl-button.cpp" />
     <ClCompile Include="sdl\sdl-entity.cpp" />
     <ClCompile Include="sdl\sdl-manager.cpp" />
@@ -44,7 +47,6 @@
     <ClCompile Include="job\task.cpp" />
     <ClCompile Include="ai\village-manager.cpp" />
     <ClCompile Include="ai\village.cpp" />
-    <ClCompile Include="movement\path-searching.cpp" />
     <ClCompile Include="world-gen.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +62,8 @@
     <ClInclude Include="miracle-entity.h" />
     <ClInclude Include="miracle-manager.h" />
     <ClInclude Include="movement\distance.h" />
+    <ClInclude Include="movement\grid.h" />
+    <ClInclude Include="movement\Movement.h" />
     <ClInclude Include="movement\node.h" />
     <ClInclude Include="movement\nodemap.h" />
     <ClInclude Include="movement\nodelist.h" />
@@ -67,6 +71,7 @@
     <ClInclude Include="movement\pathfinding.h" />
     <ClInclude Include="movement\position.h" />
     <ClInclude Include="job\resource-manager.h" />
+    <ClInclude Include="movement\PathMemory.h" />
     <ClInclude Include="sdl\sdl-button.h" />
     <ClInclude Include="sdl\sdl-entity.h" />
     <ClInclude Include="sdl\sdl-event-subscriber.h" />
@@ -82,7 +87,6 @@
     <ClInclude Include="job\task.h" />
     <ClInclude Include="ai\village-manager.h" />
     <ClInclude Include="ai\village.h" />
-    <ClInclude Include="movement\path-searching.h" />
     <ClInclude Include="world-gen.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

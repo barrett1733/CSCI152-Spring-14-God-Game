@@ -28,6 +28,13 @@ class NodeList
 		Element(Element* prev, Node* data, Element* next) :
 			next(next), data(data), prev(prev)
 		{}
+		Element& operator= (Element& a)
+		{
+			next = a.next;
+			prev = a.prev;
+			data = a.data;
+			return *this;
+		}
 	};
 	// Head points to the first element
 	// Tail points to the last element

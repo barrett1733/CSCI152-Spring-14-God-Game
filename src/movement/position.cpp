@@ -76,14 +76,17 @@ bool Position::set(int x, int y)
 	else
 		return false;
 }
+
 bool Position::set(Position pos)
 {
 	return set(pos.x, pos.y);
 }
+
 bool Position::setX(int x)
 {
 	return set(x, y);
 }
+
 bool Position::setY(int y)
 {
 	return set(x, y);
@@ -105,11 +108,6 @@ double Position::distance(const Position & position)
 	int a = x - position.x;
 	int b = y - position.y;
 	return sqrt(a * a + b * b);
-}
-
-double Position::direction(const Position & position)
-{
-	return atan(y/x) + (x < 0 ? 3.14159265359 : 0);
 }
 
 void Position::moveUnchecked(Direction direction)
@@ -141,15 +139,18 @@ void Position::moveUnchecked(Direction direction, int distance)
 		}
 	}
 }
+
 void Position::move(Direction direction)
 {
 	return move(direction, 1);
 }
+
 void Position::move(Direction direction, int distance)
 {
 	moveUnchecked(direction, distance);
 	forceSanity();
 }
+
 Position Position::getNeighbor(Direction dir)
 {
 	Position pos = *this;
