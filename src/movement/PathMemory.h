@@ -7,12 +7,6 @@
 
 typedef std::vector<Position> Path;
 
-//
-// This entire class should be on its own rather than
-// inherited by MobileEntity
-// - SB
-//
-
 class PathMemory
 {
 public:
@@ -22,13 +16,14 @@ public:
 	void shareMemories(PathMemory*, PathMemory*);
 	Position moveOnPath(Position current, Position next, Position end);
 	bool goalReached(Position goal);
+	bool onPath();
 	Grid<PathMapState> pathMap; // Should not be public
 
 private:
 	struct Memory{
 		Position target;
 		Position start;
-		Path path; // first element is closest to the start
+		Path path; // contains start and target positions
 		bool pathComplete;
 	};
 	std::vector<Memory*> pathMemories;
@@ -39,7 +34,7 @@ private:
 	void startPath(Position start, Position target);
 	Memory* getMemory(Position start, Position target);
 	bool existsPath(Position start, Position target);
-	Position getNextPosition(Position);
+	Position getPrevPosition();
 };
 
 #endif

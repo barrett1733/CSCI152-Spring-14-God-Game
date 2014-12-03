@@ -4,6 +4,9 @@
 PathMemory::PathMemory() : currentPath(NULL), pathMap(Position::max_x+1)
 {
 	pathMemories.reserve(Position::max_x * Position::max_y);
+	for (int i = 0; i < Position::max_x + 1; i++)
+		for (int j = 0; j < Position::max_x + 1; j++)
+			pathMap[Position(i,j)] = UNKNOWN;
 }
 
 PathMemory::~PathMemory()
@@ -63,13 +66,19 @@ void PathMemory::startPath(Position start, Position target)
 	currentPath->start = start;
 	currentPath->target = target;
 	currentPath->pathComplete = false;
+	currentPath->path.push_back(start);
+	pathMemories.push_back(currentPath);
 }
 
-Position PathMemory::getNextPosition(Position pos)
+Position PathMemory::getPrevPosition()
 {
-	for (int i = 0; i < currentPath->path.size(); i++)
-		if (currentPath->path.at(i) == pos && i > 0)
-			return currentPath->path[i - 1];
+	if (!currentPath->path.empty())
+		return *(currentPath->path.end() - 1);
+}
+
+bool PathMemory::onPath()
+{
+	return currentPath;
 }
 
 Position PathMemory::moveOnPath(Position current, Position next, Position end)
@@ -84,21 +93,26 @@ Position PathMemory::moveOnPath(Position current, Position next, Position end)
 		{
 			startPath(current, end);
 		}
-		return next;
 	}
 	else
 	{
 		if (current == end)
+		{
+			currentPath->path.push_back(current);
 			currentPath->pathComplete = true;
+			currentPath = NULL;
+			return current;
+		}
 		if (currentPath->pathComplete)
 		{
-			return getNextPosition(current);
+			return getPrevPosition();
 		}
 		else if (pathMap[next] == VISITED)
 		{
+			pathMap[current] = VISITED;
 			if (currentPath->path.size() >= 2)
 			{
-				Position pos = *(currentPath->path.end() - 2);
+				Position pos = *(currentPath->path.end() - 1);
 				currentPath->path.erase(currentPath->path.end() - 1);
 				return pos;
 			}
@@ -111,4 +125,5 @@ Position PathMemory::moveOnPath(Position current, Position next, Position end)
 			return next;
 		}
 	}
+	return next;
 }

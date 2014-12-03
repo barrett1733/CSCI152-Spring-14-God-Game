@@ -15,17 +15,28 @@ void Movement::moveMobileEntity(MobileEntity* entity, ObstructionMap* obsMap)
 	// ^ need access to entity list
 
 	Position currentPos = entity->getPosition();
-	Position targetPos = entity->getTarget()->getPosition();
-	Position nextPos = Movement::moveTowardsTarget(entity, obsMap);
-	Position newPos = entity->moveOnPath(currentPos, nextPos, targetPos);
+	Position newPos;
 
-	obsMap->set(currentPos, OT_EMPTY);
+	if (entity->getTarget())
+	{
+		Position nextPos = Movement::moveTowardsTarget(entity, obsMap);
+		Position targetPos = entity->getTarget()->getPosition();
+		newPos = entity->moveOnPath(currentPos, nextPos, targetPos);
 
-	if (!obsMap->isConsidered(nextPos))
+		if (!entity->onPath())
+			entity->setTarget(NULL);
+	}
+	else
+	{
+		newPos = wander(currentPos, obsMap);
+	}
+
+	if (!obsMap->isConsidered(newPos))
+	{
+		obsMap->set(currentPos, OT_EMPTY);
 		entity->setPosition(newPos);
-
-	obsMap->set(currentPos, OT_CONSIDERED);
-
+		obsMap->set(newPos, OT_CONSIDERED);
+	}
 }
 
 double Movement::evaluateScore(MobileEntity* entity, Position nextPos, ObstructionMap* obsMap)
@@ -33,7 +44,7 @@ double Movement::evaluateScore(MobileEntity* entity, Position nextPos, Obstructi
 	double score = 0;
 	Position pos = entity->getPosition();
 	Position target = entity->getTarget()->getPosition();
-	/*
+	
 	switch (entity->pathMap[nextPos])
 	{
 	case PathMemory::PathMapState::VISITED:
@@ -45,7 +56,7 @@ double Movement::evaluateScore(MobileEntity* entity, Position nextPos, Obstructi
 	case PathMemory::PathMapState::OBSERVED:
 		score += 1;
 		break;
-	}*/
+	}
 	score += EuclideanDistance(pos, target) - EuclideanDistance(nextPos, target);
 	return score;
 }
@@ -58,6 +69,7 @@ Position Movement::moveTowardsTarget(MobileEntity* entity, ObstructionMap* obsMa
 	Direction bestDir = D_NONE;
 	Position start = entity->getPosition();
 	Position neighbor;
+
 	for (int dir = D_NORTH; dir < D_COUNT; dir++)
 	{
 		neighbor = start.getNeighbor(dir);
@@ -92,3 +104,14 @@ Position Movement::moveAwayFromTarget(MobileEntity* entity, ObstructionMap* obsM
 	return start.getNeighbor(bestDir);
 }
 
+Position Movement::wander(Position pos, ObstructionMap* obsMap)
+{
+	std::vector<Position> openPositions;
+	for (int dir = D_NORTH; dir < D_COUNT; dir++)
+	{
+		Position neighbor = pos.getNeighbor(dir);
+		if (obsMap->isOpen(neighbor))
+			openPositions.push_back(neighbor);
+	}
+	return openPositions[rand() % openPositions.size()];
+}

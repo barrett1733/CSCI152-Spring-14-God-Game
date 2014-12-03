@@ -12,6 +12,7 @@ public:
 	static Position moveTowardsTarget(MobileEntity* entity, ObstructionMap* obsMap);
 	static Position moveAwayFromTarget(MobileEntity* entity, ObstructionMap* obsMap);
 	static double evaluateScore(MobileEntity* entity, Position nextPos, ObstructionMap* obsMap);
+	static Position wander(Position pos, ObstructionMap* obsMap);
 
 };
 
