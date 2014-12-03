@@ -85,6 +85,19 @@ void Village::update(ObstructionMap* obstructionMap)
 
 		villagerList[i]->setTarget(&target);
 
+		// Find by position 
+		// ^ rewrite findpath to work in steps
+		// ^ depth first search might be better
+		// ^ a* jumps around - need traversal backwards and forwards
+		// ^ heuristic might not be needed beyond distance to target
+		//
+		// 
+		// Find by entity type (ie. tree, stone, deer, etc)
+		// ^ questionable
+		// ^ pair position and entity pointer
+		// ^ need access to entity list
+
+
 		nextPosition = Movement::moveTowardsTarget(villagerList[i], obstructionMap);
 
 		obstructionMap->set(currentPos, OT_EMPTY);
@@ -153,7 +166,7 @@ Position Village::getAvaiableArea(Position p)
 	// -CH
 	//
 
-	WorldGeneration world(0);
+	WorldGeneration world;
     std::queue<Position> que;
     Position current, temp;
     if (world.world_positions[p.getY()][p.getX()] != ET_NONE)

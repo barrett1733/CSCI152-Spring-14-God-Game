@@ -19,10 +19,10 @@ using namespace std;
 
 WorldGeneration::~WorldGeneration(){}
 
-WorldGeneration::WorldGeneration(int seed) :
+WorldGeneration::WorldGeneration() :
 	current(0,0)
 {
-	srand(seed);
+	srand(world_info[WI_SEED]);
 
 	entityCount = 0;
 	cycled = false;
@@ -543,7 +543,15 @@ int WorldGeneration::getWorldSize()
 
 bool WorldGeneration::setProperty(string property, int value)
 {
-	if (property == "map_size")
+	if (property == "seed")
+	{
+		if (value >= 0)
+			world_info[WI_SEED] = value;
+		else
+			world_info[WI_SEED] = time(0);
+		return true;
+	}
+	else if (property == "map_size")
 	{
 		world_info[WI_MAP_SIZE] = value;
 		return true;

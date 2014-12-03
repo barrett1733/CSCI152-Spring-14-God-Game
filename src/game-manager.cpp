@@ -35,7 +35,7 @@ GameManager::GameManager() :
 
 void GameManager::setup()
 {
-	WorldGeneration world(time(0));
+	WorldGeneration world;
 	worldSize = world.getWorldSize();
 
 	initializeCallbackMap();

@@ -39,7 +39,8 @@ config file in place, will have to change setProperty if other creatures are add
 
 enum WorldInfo
 {
-	WI_MAP_SIZE = 0x00,
+	WI_SEED = 0,
+	WI_MAP_SIZE,
 	WI_DIFFICULTY,
 	WI_NUM_OF_VILLAGERS,
 	//domestic animals
@@ -65,7 +66,7 @@ enum WorldInfo
 class WorldGeneration : public Config
 {
 public:
-	WorldGeneration(int);
+	WorldGeneration();
 	~WorldGeneration();
 
 	void PlaceResource(int, int, EntityType);
