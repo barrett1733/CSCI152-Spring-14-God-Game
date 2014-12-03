@@ -22,7 +22,6 @@ WorldGeneration::~WorldGeneration(){}
 WorldGeneration::WorldGeneration() :
 	current(0,0)
 {
-	srand(world_info[WI_SEED]);
 
 	entityCount = 0;
 	cycled = false;
@@ -32,6 +31,8 @@ WorldGeneration::WorldGeneration() :
 	******config******
 	*****************/
 	load("res/world-info.cfg");
+
+	srand(world_info[WI_SEED]);
 
 	if (world_info[WI_MAP_SIZE] < 40) world_info[WI_MAP_SIZE] = 40;
 
