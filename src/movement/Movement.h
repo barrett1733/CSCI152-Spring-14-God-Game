@@ -8,8 +8,7 @@ class Movement
 {
 const static int inf = 999999;
 public:
-	Movement();
-	~Movement();
+	static void moveMobileEntity(MobileEntity* entity, ObstructionMap* obsMap);
 	static Position moveTowardsTarget(MobileEntity* entity, ObstructionMap* obsMap);
 	static Position moveAwayFromTarget(MobileEntity* entity, ObstructionMap* obsMap);
 	static double evaluateScore(MobileEntity* entity, Position nextPos, ObstructionMap* obsMap);

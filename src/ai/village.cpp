@@ -75,36 +75,14 @@ void Village::import(EntityReference entity)
 void Village::update(ObstructionMap* obstructionMap)
 {
 	// Testing pathfinding on villagers
-	Position nextPosition;
 	for (int i = 0; i < villagerList.size(); i++)
 	{
-		Position currentPos = villagerList[i]->getPosition();
-
 		Entity target(Position(40, 10));
 
 		villagerList[i]->setTarget(&target);
 
-		// Find by position 
-		// ^ rewrite findpath to work in steps
-		// ^ depth first search might be better
-		// ^ a* jumps around - need traversal backwards and forwards
-		// ^ heuristic might not be needed beyond distance to target
-		//
-		// 
-		// Find by entity type (ie. tree, stone, deer, etc)
-		// ^ questionable
-		// ^ pair position and entity pointer
-		// ^ need access to entity list
+		Movement::moveMobileEntity(villagerList[i], obstructionMap);
 
-
-		nextPosition = Movement::moveTowardsTarget(villagerList[i], obstructionMap);
-
-		obstructionMap->set(currentPos, OT_EMPTY);
-
-		if (!obstructionMap->isConsidered(nextPosition))
-			villagerList[i]->setPosition(villagerList[i]->moveOnPath(currentPos, nextPosition, villagerList[i]->getTarget()->getPosition()));
-
-		obstructionMap->set(currentPos, OT_CONSIDERED);
 	}
 	
 	// decideAction();

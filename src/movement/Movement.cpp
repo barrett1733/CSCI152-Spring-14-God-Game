@@ -1,5 +1,33 @@
 #include "Movement.h"
 
+void Movement::moveMobileEntity(MobileEntity* entity, ObstructionMap* obsMap)
+{
+	// Find by position 
+	// ^ rewrite findpath to work in steps
+	// ^ depth first search might be better
+	// ^ a* jumps around - need traversal backwards and forwards
+	// ^ heuristic might not be needed beyond distance to target
+	//
+	// 
+	// Find by entity type (ie. tree, stone, deer, etc)
+	// ^ questionable
+	// ^ pair position and entity pointer
+	// ^ need access to entity list
+
+	Position currentPos = entity->getPosition();
+	Position targetPos = entity->getTarget()->getPosition();
+	Position nextPos = Movement::moveTowardsTarget(entity, obsMap);
+	Position newPos = entity->moveOnPath(currentPos, nextPos, targetPos);
+
+	obsMap->set(currentPos, OT_EMPTY);
+
+	if (!obsMap->isConsidered(nextPos))
+		entity->setPosition(newPos);
+
+	obsMap->set(currentPos, OT_CONSIDERED);
+
+}
+
 double Movement::evaluateScore(MobileEntity* entity, Position nextPos, ObstructionMap* obsMap)
 {
 	double score = 0;
