@@ -77,12 +77,7 @@ void Village::update(ObstructionMap* obstructionMap)
 	// Testing pathfinding on villagers
 	for (int i = 0; i < villagerList.size(); i++)
 	{
-		Entity target(Position(40, 10));
-
-		villagerList[i]->setTarget(&target);
-
 		Movement::moveMobileEntity(villagerList[i], obstructionMap);
-
 	}
 	
 	// decideAction();

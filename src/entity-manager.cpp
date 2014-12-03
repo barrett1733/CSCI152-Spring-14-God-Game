@@ -28,7 +28,13 @@ EntityReference EntityManager::createRecord(const Entity & entity)
 	}
 	else
 	{
-		record->entity = new MobileEntity(entity);
+		///////////
+		// Added test code for target nullification
+		///////////
+		static Entity target(Position(40, 10));
+		MobileEntity* entityTemp = new MobileEntity(entity);
+		record->entity = entityTemp;
+		entityTemp->setTarget(&target);
 		//setStats(*record->entity);
 	}
 
