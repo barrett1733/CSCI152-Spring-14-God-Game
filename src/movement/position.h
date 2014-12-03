@@ -24,9 +24,6 @@ enum
 	D_RIGHT = 0x02,
 	D_DOWN  = 0x04,
 	D_LEFT  = 0x08,
-};
-enum
-{
 	D_NORTH = 100,
 	D_EAST,
 	D_SOUTH,

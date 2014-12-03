@@ -5,6 +5,7 @@ double Movement::evaluateScore(MobileEntity* entity, Position nextPos, Obstructi
 	double score = 0;
 	Position pos = entity->getPosition();
 	Position target = entity->getTarget()->getPosition();
+	/*
 	switch (entity->pathMap[nextPos])
 	{
 	case PathMemory::PathMapState::VISITED:
@@ -16,7 +17,7 @@ double Movement::evaluateScore(MobileEntity* entity, Position nextPos, Obstructi
 	case PathMemory::PathMapState::OBSERVED:
 		score += 1;
 		break;
-	}
+	}*/
 	score += EuclideanDistance(pos, target) - EuclideanDistance(nextPos, target);
 	return score;
 }

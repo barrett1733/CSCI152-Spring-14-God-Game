@@ -28,13 +28,10 @@ private:
 	struct Memory{
 		Position target;
 		Position start;
-		Path path; // last element is closest to the start
+		Path path; // first element is closest to the start
 		bool pathComplete;
-		//std::vector<MobileEntity*> entities;
 	};
 	std::vector<Memory*> pathMemories;
-	std::vector<Position> lookedAt;
-	std::vector<Position> walkedOn;
 	Memory* currentPath;
 	Position* currentPos;
 

@@ -1,7 +1,7 @@
 #include "PathMemory.h"
 
 
-PathMemory::PathMemory() : currentPath(NULL), pathMap(Position::max_x)
+PathMemory::PathMemory() : currentPath(NULL), pathMap(Position::max_x+1)
 {
 	pathMemories.reserve(Position::max_x * Position::max_y);
 }
@@ -84,6 +84,7 @@ Position PathMemory::moveOnPath(Position current, Position next, Position end)
 		{
 			startPath(current, end);
 		}
+		return next;
 	}
 	else
 	{
@@ -93,9 +94,15 @@ Position PathMemory::moveOnPath(Position current, Position next, Position end)
 		{
 			return getNextPosition(current);
 		}
-		else if (current == next)
+		else if (pathMap[next] == VISITED)
 		{
-			//travel back
+			if (currentPath->path.size() >= 2)
+			{
+				Position pos = *(currentPath->path.end() - 2);
+				currentPath->path.erase(currentPath->path.end() - 1);
+				return pos;
+			}
+			return currentPath->start;
 		}
 		else
 		{

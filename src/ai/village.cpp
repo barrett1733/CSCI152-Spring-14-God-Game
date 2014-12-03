@@ -76,12 +76,11 @@ void Village::update(ObstructionMap* obstructionMap)
 {
 	// Testing pathfinding on villagers
 	Position nextPosition;
-	Position goal;
 	for (int i = 0; i < villagerList.size(); i++)
 	{
 		Position currentPos = villagerList[i]->getPosition();
 
-		Entity target(Position(0, 0));
+		Entity target(Position(40, 10));
 
 		villagerList[i]->setTarget(&target);
 
@@ -103,7 +102,7 @@ void Village::update(ObstructionMap* obstructionMap)
 		obstructionMap->set(currentPos, OT_EMPTY);
 
 		if (!obstructionMap->isConsidered(nextPosition))
-			villagerList[i]->setPosition(villagerList[i]->moveOnPath(currentPos, nextPosition, goal));
+			villagerList[i]->setPosition(villagerList[i]->moveOnPath(currentPos, nextPosition, villagerList[i]->getTarget()->getPosition()));
 
 		obstructionMap->set(currentPos, OT_CONSIDERED);
 	}
