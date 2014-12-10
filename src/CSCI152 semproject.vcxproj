@@ -24,7 +24,6 @@
     <ClCompile Include="miracle-entity.cpp" />
     <ClCompile Include="miracle-manager.cpp" />
     <ClCompile Include="movement\distance.cpp" />
-    <ClCompile Include="movement\grid.cpp" />
     <ClCompile Include="movement\Movement.cpp" />
     <ClCompile Include="movement\nodemap.cpp" />
     <ClCompile Include="movement\nodelist.cpp" />

@@ -73,7 +73,7 @@ Position Movement::moveTowardsTarget(MobileEntity* entity, ObstructionMap* obsMa
 	for (int dir = D_NORTH; dir < D_COUNT; dir++)
 	{
 		neighbor = start.getNeighbor(dir);
-		if (obsMap->isOpen(neighbor))
+		if (obsMap->isOpen(neighbor) && neighbor.checkSanity())
 		{
 			score = evaluateScore(entity, neighbor, obsMap);
 			if (score > bestScore)
